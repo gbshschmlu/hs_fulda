@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Übung 2: Comp und CSS3</title>
+    <style>
+        /* Allgemeine Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Klassenselektor */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ID-Selektor */
+        #header {
+            background-color: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        /* Layout mit Flexbox für die Positionierung */
+        .main-content {
+            display: flex;
+        }
+
+        #menu {
+            width: 30%;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-left: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #content {
+            width: 70%;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Kontextsensitiver Elementselektor */
+        #menu ul li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        #menu ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        #menu ul li a:hover {
+            color: #0078d7;
+        }
+
+        .logo {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header id="header">
+        <img src="./gb_logo.png" alt="Logo" class="logo">
+        <h1>Meine Webseite</h1>
+    </header>
+
+    <div class="main-content">
+        <div class="menu" id="menu">
+            <h2>Menü</h2>
+            <ul>
+                <li><a href="#">Startseite</a></li>
+                <li><a href="#">Über uns</a></li>
+                <li><a href="#">Dienstleistungen</a></li>
+                <li><a href="#">Kontakt</a></li>
+            </ul>
+        </div>
+
+        <div class="content" id="content">
+            <h2>Inhalt</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc id aliquam tincidunt, nisl nunc tincidunt nunc, id tincidunt nisl nunc id nunc. Nullam auctor, nunc id aliquam tincidunt, nisl nunc tincidunt nunc, id tincidunt nisl nunc id nunc.</p>
+            <p>Fusce at massa nec sapien auctor gravida in in tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices.</p>
+            <p>Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla.</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <address>
+        Grenzebach BSH GmbH
+        <br>
+        Rudolf-Grenzebach-Straße 1
+        <br>
+        36251 Bad Hersfeld
+        <br>
+        Deutschland
+    </address>
+    <p>&copy; 2025 Grenzebach BSH GmbH. Alle Rechte vorbehalten.</p>
+</footer>
+</body>
+</html>
