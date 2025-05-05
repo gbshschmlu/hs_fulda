@@ -5,79 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Übung 2: Comp und CSS3</title>
     <style>
-        /* Allgemeine Styles */
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        :root {
+            --gb-dark-anthracite-grey: #282d32;
+            --gb-light-anthracite-grey: #8c9498;
+            --gb-lighter-light-anthracite-grey: #ebedf0;
+            --gb-darker-white-anthracite-grey: #f6f7f8;
+            --gb-white-anthracite-grey: #f8f9fa;
+
+            --gb-grenzebach-red: #ed1b24;
         }
 
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
         }
 
-        /* Klassenselektor */
         .container {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
         }
-
-        /* ID-Selektor */
+        
         #header {
-            background-color: #f8f8f8;
-            padding: 20px;
+            background-color: var(--gb-darker-white-anthracite-grey);
+            padding: 1rem;
             text-align: center;
-            border: 1px solid #ddd;
+            border: 1px solid var(--gb-darker-white-anthracite-grey);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Layout mit Flexbox für die Positionierung */
         .main-content {
             display: flex;
         }
 
         #menu {
             width: 30%;
-            padding: 20px;
-            background-color: #f0f0f0;
-            border-left: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
+            padding: 1rem;
+            background-color: var(--gb-lighter-light-anthracite-grey);
+            border-left: 1px solid var(--gb-darker-white-anthracite-grey);
+            border-bottom: 1px solid var(--gb-darker-white-anthracite-grey);
         }
 
         #content {
             width: 70%;
-            padding: 20px;
-            border-left: 1px solid #ddd;
-            border-right: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
+            padding: 1rem;
+            border-left: 1px solid var(--gb-darker-white-anthracite-grey);
+            border-right: 1px solid var(--gb-darker-white-anthracite-grey);
+            border-bottom: 1px solid var(--gb-darker-white-anthracite-grey);
         }
 
-        /* Kontextsensitiver Elementselektor */
+        #menu h2 {
+            margin-bottom: 0.75rem;
+        }
+
         #menu ul li {
             list-style: none;
-            margin-bottom: 10px;
+            margin-bottom: 0.75rem;
         }
 
         #menu ul li a {
             text-decoration: none;
-            color: #333;
+            color: var(--gb-dark-anthracite-grey);
         }
 
         #menu ul li a:hover {
-            color: #0078d7;
+            color: var(--gb-grenzebach-red);
         }
 
         .logo {
             max-width: 150px;
-            margin-bottom: 20px;
         }
 
         footer {
-            background-color: #f8f8f8;
-            padding: 20px;
+            background-color: var(--gb-darker-white-anthracite-grey);
+            padding: 1rem;
             text-align: center;
-            margin-top: 20px;
         }
     </style>
 </head>
@@ -106,19 +112,19 @@
             <p>Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla.</p>
         </div>
     </div>
+    <footer>
+        <address>
+            Grenzebach BSH GmbH
+            <br>
+            Rudolf-Grenzebach-Straße 1
+            <br>
+            36251 Bad Hersfeld
+            <br>
+            Deutschland
+        </address>
+        <!-- &copy; ist der "unicode" für copyright -->
+        <p>&copy; 2025 Grenzebach BSH GmbH</p>
+    </footer>
 </div>
-
-<footer>
-    <address>
-        Grenzebach BSH GmbH
-        <br>
-        Rudolf-Grenzebach-Straße 1
-        <br>
-        36251 Bad Hersfeld
-        <br>
-        Deutschland
-    </address>
-    <p>&copy; 2025 Grenzebach BSH GmbH. Alle Rechte vorbehalten.</p>
-</footer>
 </body>
 </html>
