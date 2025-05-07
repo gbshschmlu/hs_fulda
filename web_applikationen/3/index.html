@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Übung 3: Bootstrap</title>
+    <!-- Bootstrap CSS -->
+    <link href="include/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --gb-dark-anthracite-grey: #282d32;
+            --gb-light-anthracite-grey: #8c9498;
+            --gb-lighter-light-anthracite-grey: #ebedf0;
+            --gb-darker-white-anthracite-grey: #f6f7f8;
+            --gb-white-anthracite-grey: #f8f9fa;
+            --gb-grenzebach-red: #ed1b24;
+        }
+
+        .custom-navbar {
+            background-color: var(--gb-darker-white-anthracite-grey);
+        }
+
+        .sidebar {
+            background-color: var(--gb-lighter-light-anthracite-grey);
+        }
+
+        .sidebar a {
+            color: var(--gb-dark-anthracite-grey);
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            color: var(--gb-grenzebach-red);
+        }
+
+        .logo {
+            max-width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="./gb_logo.png" alt="Logo" class="logo">
+        </a>
+        Grenzebach BSH
+    </div>
+</nav>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-3 sidebar p-3">
+            <h2>Menü</h2>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a href="#">Startseite</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#">Über uns</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#">Dienstleistungen</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#">Kontakt</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-9 p-3">
+            <h2>Inhalt</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc id aliquam tincidunt, nisl
+                nunc tincidunt nunc.
+            </p>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Grenzebach Information</h5>
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc id aliquam
+                        tincidunt,
+                        nisl nunc tincidunt nunc.
+                    </p>
+                    <a href="#" class="btn btn-danger">Mehr erfahren</a>
+                </div>
+            </div>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc id aliquam tincidunt, nisl
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-light py-3 mt-4">
+    <div class="container text-center">
+        <address>
+            Grenzebach BSH GmbH
+            <br>
+            Rudolf-Grenzebach-Straße 1
+            <br>
+            36251 Bad Hersfeld
+            <br>
+            Deutschland
+        </address>
+        <p>&copy; 2025 Grenzebach BSH GmbH</p>
+    </div>
+</footer>
+
+<script src="include/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
