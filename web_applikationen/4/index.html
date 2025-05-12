@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farbpalette</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #preview {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #666;
+        }
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .color-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .function-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .function-btn {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        #history {
+            list-style-type: none;
+            padding: 0;
+        }
+        #history li {
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Farbpalette</h1>
+    
+    <div id="preview">Vorschau - Wähle eine Farbe</div>
+    
+    <div class="color-palette">
+        <!-- Ein Farbbutton mit inline onclick-Event -->
+        <button class="color-btn" style="background-color: red;" onclick="selectColor('red')">Rot</button>
+        
+        <!-- Andere Farbbuttons werden per JS mit addEventListener verknüpft -->
+        <button class="color-btn" style="background-color: blue;">Blau</button>
+        <button class="color-btn" style="background-color: green;">Grün</button>
+        <button class="color-btn" style="background-color: yellow;">Gelb</button>
+        <button class="color-btn" style="background-color: black;">Schwarz</button>
+        <button class="color-btn" style="background-color: white;">Weiß</button>
+    </div>
+    
+    <div class="function-btns">
+        <button class="function-btn" id="resetBtn">Zurücksetzen</button>
+        <button class="function-btn" id="removeLastBtn">Letzte Farbe entfernen</button>
+        <button class="function-btn" id="showHistoryBtn">Historie anzeigen</button>
+    </div>
+    
+    <h2>Farbhistorie:</h2>
+    <ul id="history"></ul>
+
+    <script>
+        // Inline JavaScript
+        function selectColor(color) {
+            // Vorschau aktualisieren
+            const previewElem = document.getElementById('preview');
+            previewElem.style.backgroundColor = color;
+            previewElem.textContent = '';
+            
+            // Farbe zur Historie hinzufügen
+            addToHistory(color);
+            
+            console.log(`Ausgewählte Farbe: ${color}`);
+        }
+    </script>
+    
+    <!-- Einbindung der externen JavaScript-Datei -->
+    <script src="script.js"></script>
+</body>
+</html>
