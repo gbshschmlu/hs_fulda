@@ -4,103 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farbpalette</title>
+    <!-- Bootstrap CSS -->
+    <link href="../3/include/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="../3/include/js/bootstrap.bundle.min.js" defer></script>
+    <!-- eigenes js -->
+    <script src="script.js" defer></script>
     <style>
+        :root {
+            --gb-dark-anthracite-grey: #282d32;
+            --gb-light-anthracite-grey: #8c9498;
+            --gb-lighter-light-anthracite-grey: #ebedf0;
+            --gb-darker-white-anthracite-grey: #f6f7f8;
+            --gb-white-anthracite-grey: #f8f9fa;
+            --gb-grenzebach-red: #ed1b24;
+        }
+
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: var(--gb-white-anthracite-grey);
+            color: var(--gb-dark-anthracite-grey);
         }
+
         h1 {
             text-align: center;
-            color: #333;
+            color: var(--gb-dark-anthracite-grey);
+            border-bottom: 2px solid var(--gb-grenzebach-red);
+            padding-bottom: 10px;
         }
+
+        h2 {
+            color: var(--gb-dark-anthracite-grey);
+        }
+
         #preview {
             width: 100%;
             height: 200px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--gb-light-anthracite-grey);
             margin: 20px 0;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 18px;
-            color: #666;
+            color: var(--gb-light-anthracite-grey);
+            background-color: var(--gb-darker-white-anthracite-grey);
+            border-radius: 5px;
         }
+
         .color-palette {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 20px;
         }
-        .color-btn {
-            width: 50px;
-            height: 50px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
+
+        .btn.farb-btn {
+            text-align: center;
+            transition: transform 0.2s;
         }
-        .function-btns {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+
+        .btn.farb-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
-        .function-btn {
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-        #history {
-            list-style-type: none;
-            padding: 0;
-        }
-        #history li {
-            margin: 5px 0;
-            padding: 8px;
-            border-radius: 3px;
+
+        footer {
+            margin-top: 30px;
+            padding: 10px;
+            text-align: center;
+            background-color: var(--gb-lighter-light-anthracite-grey);
+            color: var(--gb-dark-anthracite-grey);
+            border-top: 2px solid var(--gb-grenzebach-red);
         }
     </style>
 </head>
 <body>
+<div class="container">
     <h1>Farbpalette</h1>
-    
-    <div id="preview">Vorschau - Wähle eine Farbe</div>
-    
-    <div class="color-palette">
-        <!-- Ein Farbbutton mit inline onclick-Event -->
-        <button class="color-btn" style="background-color: red;" onclick="selectColor('red')">Rot</button>
-        
-        <!-- Andere Farbbuttons werden per JS mit addEventListener verknüpft -->
-        <button class="color-btn" style="background-color: blue;">Blau</button>
-        <button class="color-btn" style="background-color: green;">Grün</button>
-        <button class="color-btn" style="background-color: yellow;">Gelb</button>
-        <button class="color-btn" style="background-color: black;">Schwarz</button>
-        <button class="color-btn" style="background-color: white;">Weiß</button>
-    </div>
-    
-    <div class="function-btns">
-        <button class="function-btn" id="resetBtn">Zurücksetzen</button>
-        <button class="function-btn" id="removeLastBtn">Letzte Farbe entfernen</button>
-        <button class="function-btn" id="showHistoryBtn">Historie anzeigen</button>
-    </div>
-    
-    <h2>Farbhistorie:</h2>
-    <ul id="history"></ul>
 
-    <script>
-        // Inline JavaScript
-        function selectColor(color) {
-            // Vorschau aktualisieren
-            const previewElem = document.getElementById('preview');
-            previewElem.style.backgroundColor = color;
-            previewElem.textContent = '';
-            
-            // Farbe zur Historie hinzufügen
-            addToHistory(color);
-            
-            console.log(`Ausgewählte Farbe: ${color}`);
-        }
-    </script>
-    
-    <!-- Einbindung der externen JavaScript-Datei -->
-    <script src="script.js"></script>
+    <div id="preview" class="shadow-sm">Vorschau - Wähle eine Farbe</div>
+
+    <div class="color-palette">
+        <!-- inline onclick -->
+        <button class="btn farb-btn" style="background-color: #ffb3ba;" onclick="selectColor('#ffb3ba')">Pastell Rosa
+        </button>
+        <!-- event listener -->
+        <button class="btn farb-btn" style="background-color: #ffdfba;">Pastell Orange</button>
+        <button class="btn farb-btn" style="background-color: #ffffba;">Pastell Gelb</button>
+        <button class="btn farb-btn" style="background-color: #baffc9;">Pastell Grün</button>
+        <button class="btn farb-btn" style="background-color: #bae1ff;">Pastell Blau</button>
+        <button class="btn farb-btn" style="background-color: #e2baff;">Pastell Lila</button>
+    </div>
+
+    <div class="d-flex gap-2 mb-3">
+        <button class="btn btn-danger" id="resetBtn">Zurücksetzen</button>
+        <button class="btn btn-secondary" id="removeLastBtn">Letzte Farbe entfernen</button>
+        <button class="btn btn-primary" id="showHistoryBtn">Historie anzeigen</button>
+    </div>
+
+    <h2>Farbhistorie:</h2>
+    <ul id="history" class="list-group"></ul>
+</div>
+
+<footer class="mt-4">
+    <p>&copy; 2025 Grenzebach BSH GmbH</p>
+</footer>
+
+<script>
+    // Inline JavaScript
+    function selectColor(color) {
+        // Vorschau aktualisieren
+        const previewElem = document.getElementById('preview');
+        previewElem.style.backgroundColor = color;
+        previewElem.textContent = '';
+
+        // Farbe zur Historie hinzufügen
+        addToHistory(color);
+
+        console.log(`Ausgewählte Farbe: ${color}`);
+    }
+</script>
 </body>
 </html>

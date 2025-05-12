@@ -10,7 +10,7 @@ const removeLastBtn = document.getElementById('removeLastBtn');
 const showHistoryBtn = document.getElementById('showHistoryBtn');
 
 // Alle Farbbuttons außer dem mit Inline-Event
-const colorButtons = document.querySelectorAll('.color-btn:not([onclick])');
+const colorButtons = document.querySelectorAll('.farb-btn:not([onclick])');
 
 // Event-Listener mit addEventListener für Farbbuttons
 colorButtons.forEach(button => {
@@ -42,11 +42,10 @@ function addToHistory(color) {
     const listItem = document.createElement('li');
     listItem.textContent = color;
     listItem.style.backgroundColor = color;
-
-    // Weißer Text für dunkle Farben
-    if (color === 'black' || color === 'blue') {
-        listItem.style.color = 'white';
-    }
+    listItem.classList.add('list-group-item');
+    
+    // Dunkler Text für alle Pastellfarben, da sie hell sind
+    listItem.style.color = 'var(--gb-dark-anthracite-grey)';
 
     // Zur Liste hinzufügen
     historyList.appendChild(listItem);
@@ -98,3 +97,4 @@ function displayColorHistory() {
     }
     console.log("-----------------");
 }
+
