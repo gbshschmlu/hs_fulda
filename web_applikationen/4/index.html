@@ -89,7 +89,8 @@
 
     <div class="color-palette">
         <!-- inline onclick -->
-        <button class="btn farb-btn" style="background-color: #ffb3ba;" onclick="selectColor('#ffb3ba')">Pastell Rosa
+        <button class="btn farb-btn" style="background-color: #ffb3ba;"
+                onclick="selectColor('#ffb3ba', 'Pastell Rosa')">Pastell Rosa
         </button>
         <!-- event listener -->
         <button class="btn farb-btn" style="background-color: #ffdfba;">Pastell Orange</button>
@@ -115,14 +116,14 @@
 
 <script>
     // Inline JavaScript
-    function selectColor(color) {
+    function selectColor(color, name) {
         // Vorschau aktualisieren
         const previewElem = document.getElementById('preview');
         previewElem.style.backgroundColor = color;
         previewElem.textContent = '';
 
         // Farbe zur Historie hinzufügen
-        addToHistory(color);
+        addToHistory(color, name);
 
         console.log(`Ausgewählte Farbe: ${color}`);
     }

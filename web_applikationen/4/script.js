@@ -2,6 +2,14 @@
 // Array zur Speicherung der Farbhistorie (let, da es sich ändern wird)
 let colorHistory = [];
 
+class ColorInfo {
+    constructor(name, color) {
+        this.name = name;
+        this.color = color;
+        this.timestamp = new Date();
+    }
+}
+
 // DOM-Referenzen (const, da die Referenzen nicht neu zugewiesen werden)
 const previewElem = document.getElementById('preview');
 const historyList = document.getElementById('history');
@@ -16,8 +24,9 @@ const colorButtons = document.querySelectorAll('.farb-btn:not([onclick])');
 colorButtons.forEach(button => {
     button.addEventListener('click', () => {
         const color = button.style.backgroundColor;
+        const name = button.innerText;
         updatePreview(color);
-        addToHistory(color);
+        addToHistory(color, name);
     });
 });
 
@@ -34,16 +43,16 @@ const updatePreview = (color) => {
 };
 
 // Klassische Funktionsdefinition zum Hinzufügen zur Historie
-function addToHistory(color) {
-    colorHistory.push(color);
+function addToHistory(color, name) {
+    colorHistory.push(new ColorInfo(color, name));
     console.log(`Neue Länge der Historie: ${colorHistory.length}`);
 
     // Neues Listenelement erstellen
     const listItem = document.createElement('li');
-    listItem.textContent = color;
+    listItem.textContent = `${name} (${color}) - ${new Date().toLocaleString()}`;
     listItem.style.backgroundColor = color;
     listItem.classList.add('list-group-item');
-    
+
     // Dunkler Text für alle Pastellfarben, da sie hell sind
     listItem.style.color = 'var(--gb-dark-anthracite-grey)';
 
@@ -59,8 +68,8 @@ function removeLastColor() {
     }
 
     // Letztes Element aus Array entfernen
-    const removedColor = colorHistory.pop();
-    console.log(`Entfernte Farbe: ${removedColor}`);
+    const removedColorInfo = colorHistory.pop();
+    console.log(`Entfernte Farbe: ${removedColorInfo.color} mit dem Namen ${removedColorInfo.name} - ${removedColorInfo.timestamp}`);
 
     // Letztes child aus der Liste entfernen
     historyList.removeChild(historyList.lastChild);
@@ -93,8 +102,7 @@ function resetPreview() {
 function displayColorHistory() {
     console.log("-Farbhistorie-");
     for (let i = 0; i < colorHistory.length; i++) {
-        console.log(`${i + 1}. Farbe: ${colorHistory[i]}`);
+        console.log(`${i + 1}. Farbe: ${colorHistory[i].color} mit dem Namen ${colorHistory[i].name} - ${colorHistory[i].timestamp}`);
     }
     console.log("-----------------");
 }
-
