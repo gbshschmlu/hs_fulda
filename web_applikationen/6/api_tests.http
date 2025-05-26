@@ -1,0 +1,90 @@
+### ==================================================
+### Blog Routen Tests (aus routes/blog.js)
+### ==================================================
+
+### GET Alle Blog-Einträge abrufen
+# Ruft alle vorhandenen Blog-Einträge ab.
+GET http://localhost:3000/blog/
+Accept: application/json
+
+### POST Einen neuen Blog-Eintrag erstellen
+# Erstellt einen neuen Blog-Eintrag.
+POST http://localhost:3000/blog/
+Content-Type: application/json
+
+{
+  "jahr": "2024",
+  "monat": "07",
+  "tag": "19",
+  "autor": "Test Autor",
+  "titel": "Ein neuer Testbeitrag",
+  "text": "Dies ist der Inhalt des neuen Testbeitrags."
+}
+
+### POST Einen neuen Blog-Eintrag erstellen (Fehlende Felder)
+# Versucht, einen neuen Blog-Eintrag mit fehlenden Feldern zu erstellen (sollte 400 Fehler geben).
+POST http://localhost:3000/blog/
+Content-Type: application/json
+
+{
+  "jahr": "2025",
+  "monat": "01",
+  "autor": "Unvollständiger Autor"
+}
+
+### GET Einen spezifischen Blog-Eintrag anhand der ID abrufen (ID 1)
+# Ruft den Blog-Eintrag mit der ID 1 ab.
+GET http://localhost:3000/blog/1
+Accept: application/json
+
+### GET Einen spezifischen Blog-Eintrag anhand der ID abrufen (ID 2)
+# Ruft den Blog-Eintrag mit der ID 2 ab.
+GET http://localhost:3000/blog/2
+Accept: application/json
+
+### GET Einen spezifischen Blog-Eintrag anhand der ID abrufen (Nicht existierende ID)
+# Versucht, einen Blog-Eintrag mit einer nicht existierenden ID abzurufen (sollte 404 Fehler geben).
+GET http://localhost:3000/blog/999
+Accept: application/json
+
+
+### ==================================================
+### Index Routen Tests (aus routes/index.js)
+### ==================================================
+
+### GET Startseite
+# Ruft die Hauptseite der Anwendung ab.
+GET http://localhost:3000/
+Accept: text/html
+
+### GET Alt Seite
+# Ruft die alternative Seite der Anwendung ab.
+GET http://localhost:3000/alt
+Accept: text/html
+
+### GET Route mit URL-Parametern für Datum
+# Testet die Route, die Datumsparameter aus der URL extrahiert.
+GET http://localhost:3000/2024/12/25
+Accept: text/plain
+
+### GET Route mit Query-Parametern für Name
+# Testet die Route, die einen Namensparameter aus der Query-String extrahiert.
+GET http://localhost:3000/names?name=Maximilian
+Accept: text/plain
+
+### GET Route, die URL- und Query-Parameter kombiniert
+# Testet die Route, die sowohl URL- als auch Query-Parameter verwendet.
+GET http://localhost:3000/2023/05/10/details?filter=wichtig
+Accept: text/plain
+
+### POST Route zum Senden von Daten
+# Testet eine POST-Route, die JSON-Daten im Body erwartet.
+POST http://localhost:3000/submit-data
+Content-Type: application/json
+
+{
+  "nachricht": "Hallo Welt von HTTP Client",
+  "wert": 12345
+}
+
+###
