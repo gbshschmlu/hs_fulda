@@ -1,6 +1,6 @@
-### ==================================================
-### Blog Routen Tests (aus routes/blog.js)
-### ==================================================
+## ==================================================
+## log Routen Tests (aus routes/blog.js)
+## ==================================================
 
 ### GET Alle Blog-Einträge abrufen
 # Ruft alle vorhandenen Blog-Einträge ab.
@@ -48,9 +48,9 @@ GET http://localhost:3000/blog/999
 Accept: application/json
 
 
-### ==================================================
-### Index Routen Tests (aus routes/index.js)
-### ==================================================
+## ==================================================
+## Index Routen Tests (aus routes/index.js)
+## ==================================================
 
 ### GET Startseite
 # Ruft die Hauptseite der Anwendung ab.
