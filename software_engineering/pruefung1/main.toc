@@ -1,0 +1,10 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{Abbildungsverzeichnis}{I}{section*.1}%
+\contentsline {section}{Inhaltsverzeichnis}{I}{section*.2}%
+\contentsline {section}{\numberline {1}Funktionsbeschreibung des Musikautomaten}{1}{section.1}%
+\contentsline {section}{\numberline {2}UML-Diagramme}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Aktivitätsdiagramm: Songauswahl und -wiedergabe}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Sequenzdiagramm: Songwiedergabe und Interaktion mit externem Gerät}{2}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Fazit}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Diagrammqualität und funktionale Abdeckung}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Methodische Limitationen}{3}{subsection.3.2}%
