@@ -1,0 +1,97 @@
+<svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" style="background-color: #ecf0f1;">
+  <defs>
+    <pattern id="speakerGrille" patternUnits="userSpaceOnUse" width="4" height="4">
+      <rect width="4" height="1" fill="#7f8c8d"/>
+    </pattern>
+    <linearGradient id="cabinetGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#34495e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Front View -->
+  <g id="front-view" transform="translate(-30, -50)">
+    <!-- Main cabinet -->
+    <rect x="50" y="80" width="200" height="400" fill="url(#cabinetGradient)" stroke="#34495e" stroke-width="2" rx="8"/>
+    
+    <!-- Branding area -->
+    <rect x="60" y="90" width="180" height="50" fill="#2c3e50" stroke="#7f8c8d" stroke-width="1" rx="4"/>
+    <text x="150" y="120" text-anchor="middle" fill="#ecf0f1" font-family="Arial" font-size="16" font-weight="bold">JUKEBOX</text>
+    
+    <!-- Large touchscreen -->
+    <rect x="70" y="160" width="160" height="120" fill="#1a1a1a" stroke="#7f8c8d" stroke-width="3" rx="6"/>
+    <rect x="75" y="165" width="150" height="110" fill="#000" rx="3"/>
+    <text x="150" y="210" text-anchor="middle" fill="#3498db" font-family="Arial" font-size="14">♪ Song Auswahl</text>
+    <text x="150" y="230" text-anchor="middle" fill="#2ecc71" font-family="Arial" font-size="11">Tippe zum wählen</text>
+    
+    <!-- Status LEDs -->
+    <circle cx="220" cy="170" r="3" fill="#2ecc71"/>
+    <circle cx="220" cy="185" r="3" fill="#f39c12"/>
+    <circle cx="220" cy="200" r="3" fill="#e74c3c"/>
+    
+    <!-- Coin slot -->
+    <rect x="90" y="300" width="70" height="20" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2" rx="10"/>
+    <rect x="95" y="305" width="60" height="10" fill="#34495e" rx="5"/>
+    <text x="125" y="330" text-anchor="middle" fill="#ecf0f1" font-family="Arial" font-size="10">COIN</text>
+    
+    <!-- Speakers -->
+    <rect x="60" y="350" width="35" height="80" fill="#2c3e50" stroke="#7f8c8d" stroke-width="2" rx="4"/>
+    <rect x="65" y="360" width="25" height="60" fill="url(#speakerGrille)"/>
+    
+    <rect x="195" y="350" width="35" height="80" fill="#2c3e50" stroke="#7f8c8d" stroke-width="2" rx="4"/>
+    <rect x="200" y="360" width="25" height="60" fill="url(#speakerGrille)"/>
+    
+    <!-- Service panel removed from front -->
+    
+    <!-- Base -->
+    <rect x="40" y="480" width="220" height="10" fill="#34495e" rx="5"/>
+    
+    <!-- Component labels -->
+    <line x1="150" y1="150" x2="280" y2="140" stroke="#e74c3c" stroke-width="1"/>
+    <text x="285" y="138" fill="#e74c3c" font-family="Arial" font-size="10">(1) Touchscreen</text>
+    
+    <line x1="125" y1="290" x2="280" y2="170" stroke="#e74c3c" stroke-width="1"/>
+    <text x="285" y="168" fill="#e74c3c" font-family="Arial" font-size="10">(2) Münzeinwurf</text>
+    
+    <line x1="77" y1="340" x2="280" y2="198" stroke="#e74c3c" stroke-width="1"/>
+    <text x="285" y="196" fill="#e74c3c" font-family="Arial" font-size="10">(3) Stereo-Lautsprecher</text>
+  </g>
+  
+  <!-- Side View -->
+  <g id="side-view" transform="translate(-80, -50)">
+    <!-- Main cabinet -->
+    <rect x="450" y="80" width="120" height="400" fill="url(#cabinetGradient)" stroke="#34495e" stroke-width="2" rx="8"/>
+    
+    <!-- Service panel (large, rear) -->
+    <rect x="465" y="250" width="80" height="120" fill="#7f8c8d" stroke="#95a5a6" stroke-width="2" rx="4"/>
+    <rect x="470" y="255" width="70" height="110" fill="#95a5a6" stroke="#bdc3c7" stroke-width="1" rx="2"/>
+    
+    <!-- Service panel components -->
+    <rect x="480" y="270" width="20" height="8" fill="#3498db" stroke="#2980b9" stroke-width="1" rx="1"/>
+    <text x="490" y="276" text-anchor="middle" fill="#ecf0f1" font-family="Arial" font-size="6">WiFi</text>
+    
+    <circle cx="485" cy="295" r="3" fill="#34495e"/>
+    <circle cx="495" cy="295" r="3" fill="#34495e"/>
+    <circle cx="505" cy="295" r="3" fill="#34495e"/>
+    <text x="495" y="310" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-size="7">USB</text>
+    
+    <rect x="480" y="320" width="25" height="6" fill="#e74c3c" stroke="#c0392b" stroke-width="1" rx="1"/>
+    <text x="492" y="335" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-size="7">Power</text>
+    
+    <rect x="480" y="345" width="25" height="6" fill="#2ecc71" stroke="#27ae60" stroke-width="1" rx="1"/>
+    <text x="492" y="360" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-size="7">Network</text>
+    
+    <!-- Ventilation -->
+    <rect x="555" y="150" width="8" height="50" fill="none" stroke="#7f8c8d" stroke-width="1" rx="2"/>
+    <line x1="557" y1="155" x2="557" y2="195" stroke="#7f8c8d" stroke-width="0.5"/>
+    <line x1="559" y1="155" x2="559" y2="195" stroke="#7f8c8d" stroke-width="0.5"/>
+    <line x1="561" y1="155" x2="561" y2="195" stroke="#7f8c8d" stroke-width="0.5"/>
+    
+    <!-- Base -->
+    <rect x="440" y="480" width="140" height="10" fill="#34495e" rx="5"/>
+
+    <!-- Component labels -->
+    <line x1="545" y1="310" x2="580" y2="260" stroke="#e74c3c" stroke-width="1"/>
+    <text x="585" y="258" fill="#e74c3c" font-family="Arial" font-size="10">(4) Service-Zugang</text>
+  </g>
+</svg>

@@ -1,0 +1,62 @@
+@startuml
+title Aktivitätsdiagramm:
+
+|Nutzer|
+start
+:Coin einwerfen;
+note right
+  Objekt: Coin
+end note
+
+|Jukebox-System|
+:Coin validieren;
+if (Coin gültig?) then (ja)
+  :Auswahlmodus aktivieren;
+else (nein)
+  :Coin zurückgeben;
+  :Fehlermeldung anzeigen;
+  stop
+endif
+
+|Nutzer|
+repeat
+  :Songs durchsuchen\n(Kategorien, Suche);
+  :Song auswählen;
+  note right
+    Objekt: Ausgewählter Song
+  end note
+
+|Jukebox-System|
+  :Song-Verfügbarkeit prüfen\n(inkl. Lizenzcheck mit Externem Gerät);
+  if (Song verfügbar UND Queue nicht voll?) then (ja)
+    :Song zu Queue hinzufügen;
+    note left
+      Objekt: Song-Queue
+    end note
+  else (nein)
+    :Fehlermeldung anzeigen;
+    ' Verbindung zurück zum Nutzer-Auswahlprozess oder zu einer Abbruch-Option
+    ' Diese Verzweigung wird hier vereinfacht dargestellt, Nutzer kann neu wählen oder Prozess endet.
+  endif
+|Nutzer|
+repeat while (Weiteren Song wählen?) is (ja) not (nein)
+
+|Jukebox-System|
+if (Song-Queue nicht leer?) then (ja)
+  while (Weitere Songs in Queue?) is (ja)
+    :Nächsten Song aus Queue nehmen;
+    fork
+      :Song abspielen\n(startAudioPlayback);
+    fork again
+      :Metadaten anzeigen\n(showCurrentSong);
+    fork again
+      :Song-Nutzung an Externes Gerät melden\n(reportSongPlayed);
+    end fork
+  endwhile (nein)
+  :Alle Songs aus Queue abgespielt;
+endif
+:Zum Leerlauf zurückkehren;
+' Periodische Kommunikation mit Externem Gerät (Software-Updates, Katalog-Sync, Status)
+' findet im Hintergrund statt und ist nicht Teil dieses Haupt-User-Flows.
+stop
+@enduml

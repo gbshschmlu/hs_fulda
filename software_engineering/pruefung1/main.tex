@@ -22,8 +22,8 @@
 \usepackage[ngerman]{babel}
 
 %folgende zeile auskommentieren und die darunter verwenden, um die link-border zu verbergen
-\usepackage[bookmarks]{hyperref}
-%\usepackage[bookmarks,hidelinks]{hyperref}
+%\usepackage[bookmarks]{hyperref}
+\usepackage[bookmarks,hidelinks]{hyperref}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[a-1b]{pdfx}
@@ -153,13 +153,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Funktionsbeschreibung des Musikautomaten} \label{sec:funktionsbeschreibung}
-Der Musikautomat ist ein moderner, coin-betriebener Automat für öffentliche Bereiche. Nutzer werfen einen speziellen Coin ein, um Zugang zu einem digitalen Musikkatalog zu erhalten. Die Bedienung erfolgt über ein Touchscreen-Display zur Navigation durch Kategorien (Genre, Künstler, Charts) oder eine Suchfunktion.\\
+Der Musikautomat ist ein moderner, coin-betriebener Automat für öffentliche Bereiche. Nutzer werfen einen speziellen Coin ein, um Zugang zu einem digitalen Musikkatalog zu erhalten. Die Bedienung erfolgt über ein Touchscreen zur Navigation durch Kategorien (Genre, Künstler, Charts) oder eine Suchfunktion.\\
 Nach der Songauswahl werden Titel einer Warteschlange (Queue) hinzugefügt und in der Reihenfolge abgespielt. Das System zeigt während der Wiedergabe Metadaten wie Interpret und Titel an. Steuerungsoptionen wie Pause oder Skip sind bewusst deaktiviert, um Missbrauch zu vermeiden.\\
 Der Automat ist permanent mit einem externem Gerät des Besitzers vernetzt. Diese ermöglicht die Fernaktualisierung des Musikkatalogs, Konfiguration von Lautstärke und Betriebszeiten sowie die Sammlung von Nutzungsstatistiken für Lizenzabrechnung. Wartung erfolgt sowohl digital (Software-Updates, Katalog-Synchronisation) als auch physisch (Reinigung, Coin-Entleerung, Hardware-Reparaturen).
 
 \begin{figure}[H]
     \centering
-    \todo{Erstelle eine detaillierte technische Skizze des Musikautomaten mit folgenden Elementen: (1) Großes Touchscreen-Display (ca. 21-24 Zoll) mit Benutzeroberfläche zur Songauswahl, (2) Coin-Einwurfschlitz mit Validierungseinheit, (3) Hochwertige Stereo-Lautsprecher, (4) Verschließbare Service-Zugangsklappe für Wartungspersonal, (5) Netzwerkanschluss/WLAN-Antenne, (6) Status-LED-Anzeigen. Die Skizze sollte sowohl Frontal- als auch Seitenansicht zeigen.}
+    \includegraphics[width=\textwidth]{images/jukebox_technical_sketch.png}
     \caption{Technische Skizze eines modernen Musikautomaten}
     \label{fig:jukebox_skizze}
 \end{figure}
@@ -170,12 +170,12 @@ Die primäre Nutzerinteraktion konzentriert sich auf das zentrale Touchscreen-Di
 Die folgenden beiden UML-Diagramme zeigen verschiedene Aspekte des Musikautomaten und ergänzen sich in ihrer Darstellung.
 
 \subsection{Aktivitätsdiagramm: Songauswahl und -wiedergabe}
-Das Aktivitätsdiagramm in Abbildung \ref{fig:activity_diagram} stellt den typischen Nutzungsprozess vom Coin-Einwurf bis zur Songwiedergabe dar. Swimlanes trennen die Verantwortlichkeiten zwischen 'Nutzer' und 'Jukebox-System'.
+Das Aktivitätsdiagramm in Abbildung \ref{fig:activity_diagram} stellt den typischen Nutzungsprozess vom Coin-Einwurf bis zur Songwiedergabe dar.
 
 \begin{figure}[H]
     \centering
-    \todo{Erstelle ein UML-Aktivitätsdiagramm mit Swimlanes für 'Nutzer' und 'Jukebox-System'. Nutzer-Aktivitäten: 'Coin einwerfen', 'Songs durchsuchen', 'Song auswählen', Entscheidung 'Weiteren Song wählen?'. System-Aktivitäten: 'Coin validieren', Entscheidung 'Coin gültig?', 'Auswahlmodus aktivieren', 'Song-Verfügbarkeit prüfen', Entscheidung 'Song verfügbar und Queue nicht voll?', 'Song zu Queue hinzufügen', 'Fehlermeldung anzeigen', Fork für parallele Wiedergabe: 'Song abspielen', 'Metadaten anzeigen', 'Status an Zentrale melden'. Objektknoten: 'Coin', 'Song-Queue', 'Ausgewählter Song'.}
-    \caption{Aktivitätsdiagramm: Songauswahl und -wiedergabe mit Nutzer-System-Interaktionen. (Diagramm erstellt von: Luca M. Schmidt)}
+    \includegraphics[width=\textwidth]{images/activity_diagram.png}
+    \caption{Aktivitätsdiagramm: Songauswahl und -wiedergabe mit Nutzer-System-Interaktionen}
     \label{fig:activity_diagram}
 \end{figure}
 \noindent
@@ -186,14 +186,13 @@ Das Sequenzdiagramm in Abbildung \ref{fig:sequence_diagram} fokussiert sich auf 
 
 \begin{figure}[H]
     \centering
-    \todo{Erstelle ein UML-Sequenzdiagramm mit folgenden Lifelines: Nutzer, Jukebox-UI, Jukebox-Steuerung, LokaleMusikdatenbank, Überwachungszentrale. Zeige den zeitlichen Ablauf der Nachrichten: selectSong(), spieleSongAnfrage(), getSongStream(), songDatenLiefern(), playSongRequest(), showCurrentSong(), meldeSongGespielt(), confirmReceipt(). Verwende Aktivierungsbalken und korrekte UML-Notation.}
+    \includegraphics[width=\textwidth]{images/sequence_diagram.png}
     \caption{UML-Sequenzdiagramm: Zeitliche Abfolge der Komponenten-Interaktionen bei Songwiedergabe}
     \label{fig:sequence_diagram}
 \end{figure}
-
-
-\textbf{Interaktionsanalyse:}\\
-Der Ablauf beginnt mit der Songauswahl durch den Nutzer (\texttt{selectSong()}) über die UI, die eine \texttt{playSongRequest()} an die Steuerung sendet. Diese fragt parallel Audiodaten von der lokalen Datenbank ab (\texttt{getSongStream()}, \texttt{deliverSongData()}) und validiert die Lizenz über das externe Gerät (\texttt{validateLicense()}, \texttt{licenseConfirmation()}). Nach erfolgreicher Validierung startet die Wiedergabe (\texttt{startAudioPlayback()}) und die UI wird aktualisiert (\texttt{showCurrentSong()}). Abschließend wird die Wiedergabe protokolliert (\texttt{reportSongPlayed()}, \texttt{confirmReceipt()}) während kontinuierliches Monitoring zwischen Steuerung und dem externem Gerät erfolgt (\texttt{sendStatusUpdate()}, \texttt{configurationUpdate()}).
+\noindent
+\textbf{Ablauf:}\\
+Der Ablauf beginnt mit der Songauswahl (\texttt{selectSong()}) durch den Nutzer über die UI. Die Steuerung ruft parallel Audiodaten von der lokalen Datenbank ab und validiert die Lizenz über das externe Gerät (\texttt{validateLicense()}). Nach erfolgreicher Validierung startet die Wiedergabe (\texttt{startAudioPlayback()}) und die UI wird entsprechend aktualisiert. Abschließend wird die Wiedergabe protokolliert, während kontinuierliches Monitoring zwischen Steuerung und externem Gerät erfolgt.
 
 \section{Fazit} \label{sec:fazit}
 

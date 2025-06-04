@@ -1,0 +1,65 @@
+@startuml
+title Sequenzdiagramm
+
+actor Nutzer
+boundary "Jukebox-UI" as UI
+control "Jukebox-Steuerung" as Steuerung
+entity "LokaleMusikdatenbank" as DB
+participant "Externes Gerät" as ExternalDevice
+
+activate Nutzer
+Nutzer -> UI: selectSong(SongID)
+activate UI
+UI -> Steuerung: playSongRequest(SongID)
+activate Steuerung
+deactivate UI
+
+par Parallele Abfragung
+    Steuerung -> DB: getSongStream(SongID)
+    activate DB
+    DB --> Steuerung: deliverSongData(AudioStream, Metadaten)
+    deactivate DB
+
+    Steuerung -> ExternalDevice: validateLicense(SongID)
+    activate ExternalDevice
+    ExternalDevice --> Steuerung: licenseConfirmation(Status)
+    deactivate ExternalDevice
+end par
+
+alt Erfolgreiche Validierung
+    Steuerung -> Steuerung: addToQueue(SongID, AudioStream, Metadaten)
+    note right: Zur Queue hinzugefügt
+
+    loop Queue nicht leer
+        Steuerung -> Steuerung: getNextSongFromQueueToPlay()
+        note right: Nächster Song
+
+        Steuerung -> Steuerung: startAudioPlayback(AudioStream)
+        note right of Steuerung: Wiedergabe start
+
+        par Parallele Aktivitäten
+            Steuerung -> UI: showCurrentSong(Metadaten)
+            activate UI
+            UI --> Steuerung
+            deactivate UI
+        else
+            Steuerung -> ExternalDevice: reportSongPlayed(SongID, Zeitstempel)
+            activate ExternalDevice
+            ExternalDevice --> Steuerung: confirmReceipt()
+            deactivate ExternalDevice
+        end par
+    end loop
+
+else Fehler bei Validierung
+    Steuerung -> UI: showError("Fehler")
+    activate UI
+    deactivate UI
+end alt
+
+Steuerung ->> ExternalDevice: sendStatusUpdate(SystemHealth)
+ExternalDevice ->> Steuerung: configurationUpdate(Parameter)
+
+deactivate Steuerung
+deactivate Nutzer
+
+@enduml
