@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0" version="26.3.0">
+  <diagram name="Seite-1" id="PfA5FL0PnUNqewh5VeCs">
+    <mxGraphModel dx="1713" dy="924" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-2" target="8qm_sJYlEEvmHJbUJB7R-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="20" y="90" />
+              <mxPoint x="20" y="360" />
+              <mxPoint x="171" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-2" target="8qm_sJYlEEvmHJbUJB7R-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-2" target="8qm_sJYlEEvmHJbUJB7R-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-2" value="Fußballspieler" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-3" target="8qm_sJYlEEvmHJbUJB7R-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="100" y="250" />
+              <mxPoint x="100" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-3" target="8qm_sJYlEEvmHJbUJB7R-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-3" value="IT-Support" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="220" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-4" target="8qm_sJYlEEvmHJbUJB7R-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-4" target="8qm_sJYlEEvmHJbUJB7R-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-4" value="Trainer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="380" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-5" target="8qm_sJYlEEvmHJbUJB7R-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-5" target="8qm_sJYlEEvmHJbUJB7R-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-5" value="Physiotherapeut" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="540" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-7" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;dashed=1;dashPattern=1 2;" vertex="1" parent="1">
+          <mxGeometry x="120" y="35" width="560" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-8" value="DB" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="60" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-9" value="Display" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="540" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-10" value="Schrittzähler App" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="325" y="10" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-11" target="8qm_sJYlEEvmHJbUJB7R-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-11" value="Schrittzählfunktion Aktivieren/Deaktivieren" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="60" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-12">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="720" y="570" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="700" y="205" />
+              <mxPoint x="700" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-12" value="Eigenen Leistungsstand anzeigen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="170" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-13" value="Datenzusammenstellung konfigurieren" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="280" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-14" value="Anmelden" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="390" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-15">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="720" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-15" value="Leistungstand anderer anzeigen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="500" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-32" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-18" target="8qm_sJYlEEvmHJbUJB7R-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-18" value="Schritte zählen und speichern" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="60" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="8qm_sJYlEEvmHJbUJB7R-19">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="720" y="90" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-19" value="Daten an DB übertragen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="60" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="8qm_sJYlEEvmHJbUJB7R-34" value="zeigt aktuelle Schritte" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="470" y="110" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
