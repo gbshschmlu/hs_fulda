@@ -1,0 +1,146 @@
+<div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+        <h1 class="display-5 mb-4">Über Snippeteer</h1>
+
+        <!-- Bootstrap tabs -->
+        <ul class="nav nav-tabs mb-4" id="aboutTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="about-tab" data-bs-toggle="tab" data-bs-target="#about-section"
+                        type="button" role="tab" aria-controls="about-section" aria-selected="true">Über uns
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="references-tab" data-bs-toggle="tab" data-bs-target="#references-section"
+                        type="button" role="tab" aria-controls="references-section" aria-selected="false">Referenzen
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab content -->
+        <div class="tab-content" id="aboutTabsContent">
+            <!-- About section -->
+            <div class="tab-pane fade show active" id="about-section" role="tabpanel" aria-labelledby="about-tab">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-3">Unsere Mission</h3>
+                        <p class="card-text">
+                            Snippeteer wurde entwickelt, um Entwicklern eine einfache und effiziente Möglichkeit
+                            zu bieten, ihre Code-Snippets zu organisieren.
+                            Mit unserer Plattform können Sie Ihre wichtigsten
+                            Code-Fragmente speichern, kategorisieren und schnell wiederfinden.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-3">Funktionen</h3>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-transparent ps-0 border-0">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Speichern Sie Code-Snippets in verschiedenen Programmiersprachen
+                            </li>
+                            <li class="list-group-item bg-transparent ps-0 border-0">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Organisieren Sie Ihre Sammlung mit Tags und Filtern
+                            </li>
+                            <li class="list-group-item bg-transparent ps-0 border-0">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Bearbeiten und aktualisieren Sie Ihre Snippets bei Bedarf
+                            </li>
+                            <li class="list-group-item bg-transparent ps-0 border-0">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Syntax-Highlighting für bessere Lesbarkeit
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-3">Unsere Technologie</h3>
+                        <p class="card-text">
+                            Diese Anwendung wurde mit modernen Webtechnologien entwickelt, darunter Node.js, Express
+                            und Bootstrap.
+                            Wir verwenden Highlight.js für die Syntax-Hervorhebung und bieten eine
+                            benutzerfreundliche Oberfläche für die einfache Verwaltung Ihrer Code-Snippet.
+                        </p>
+                        <p class="card-text">
+                            Unser Ziel ist es, eine schlanke, schnelle und intuitive Plattform bereitzustellen, die
+                            Entwicklern hilft, produktiver zu arbeiten und ihren Code besser zu organisieren.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- References section -->
+            <div class="tab-pane fade" id="references-section" role="tabpanel" aria-labelledby="references-tab">
+                <!-- Added card to match About section's styling -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-3">Referenzen</h3>
+                        <p class="card-text">
+                            Quellen und Ressourcen, die bei der Erstellung dieser Webseite verwendet wurden.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    <% if (references && references.length > 0) { %>
+                        <% references.forEach(function(reference) { %>
+                            <div class="col">
+                                <div class="card h-100 shadow-sm border-0 hover-effect">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary"><%= reference.name %></h5>
+                                        <p class="card-text text-muted"><%= reference.description %></p>
+                                        <% if (reference.author) { %>
+                                            <p class="card-text">
+                                                <small class="text-body-secondary">
+                                                    <i class="bi bi-person"></i> Autor: <%= reference.author %>
+                                                </small>
+                                            </p>
+                                        <% } %>
+                                    </div>
+                                    <% if (reference.link) { %>
+                                        <div class="card-footer bg-transparent border-top-0">
+                                            <a href="<%= reference.link %>" class="btn btn-outline-primary w-100"
+                                               target="_blank">
+                                                <i class="bi bi-box-arrow-up-right me-1"></i>Ressource besuchen
+                                            </a>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="col-12">
+                            <div class="alert alert-info">Keine Referenzen verfügbar.</div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-effect {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-effect:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Keep tab styling consistent with the original design */
+    .nav-tabs .nav-link {
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: #0d6efd;
+        font-weight: 600;
+    }
+</style>

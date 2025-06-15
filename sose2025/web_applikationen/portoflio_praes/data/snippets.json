@@ -1,0 +1,62 @@
+[
+  {
+    "id": "a23f45c7-9d12-4b50-8e67-f25a16c9d8b1",
+    "name": "JavaScript Example",
+    "tags": [
+      "javascript",
+      "function"
+    ],
+    "language": "JavaScript",
+    "lastModified": "2025-05-24T12:06:04.015Z"
+  },
+  {
+    "id": "b85e71d3-6a28-4fe3-9c14-88d9b52a7e45",
+    "name": "Java Example",
+    "tags": [
+      "java",
+      "class"
+    ],
+    "language": "Java",
+    "lastModified": "2025-05-22T09:15:32.456Z"
+  },
+  {
+    "id": "c47f93e2-d51a-4c79-b632-1254e87fa903",
+    "name": "C# Example",
+    "tags": [
+      "csharp",
+      "method"
+    ],
+    "language": "C#",
+    "lastModified": "2025-05-24T13:41:01.536Z"
+  },
+  {
+    "id": "d59a12f8-e4b7-4d25-a943-3687cfe0b821",
+    "name": "Go Example",
+    "tags": [
+      "go",
+      "function"
+    ],
+    "language": "Go",
+    "lastModified": "2025-05-22T09:25:07.321Z"
+  },
+  {
+    "id": "e68b23g1-f5c8-5e36-b054-4798df1c9730",
+    "name": "Ruby Example",
+    "tags": [
+      "ruby",
+      "method"
+    ],
+    "language": "Ruby",
+    "lastModified": "2025-05-22T09:30:42.654Z"
+  },
+  {
+    "id": "f79c34h2-g6d9-6f47-c165-5809eg2d0841",
+    "name": "PHP Example",
+    "tags": [
+      "php",
+      "function"
+    ],
+    "language": "PHP",
+    "lastModified": "2025-05-22T09:35:28.987Z"
+  }
+]

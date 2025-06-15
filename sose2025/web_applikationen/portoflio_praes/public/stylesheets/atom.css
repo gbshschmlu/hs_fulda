@@ -1,0 +1,678 @@
+/* Grabbed from Palaxy (http://github.com/lumisxh/palaxy) */
+
+/* ===== FONT FACES ===== */
+/* FIXME: These should be pulled from google  or put in 'public' for express */
+@font-face {
+    font-family: 'Fira Code';
+    font-style: normal;
+    font-weight: 100 900;
+    src: url('/fonts/FiraCode.woff2') format('woff2'); /* Ensure this path is correct for your new project */
+    font-display: swap;
+    font-variation-settings: 'wght' var(--wght, 400);
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300 700;
+    src: url('/fonts/Roboto.woff2') format('woff2'); /* Ensure this path is correct for your new project */
+    font-display: swap;
+    font-variation-settings: 'wght' var(--wght, 400);
+}
+
+/* ===== THEME VARIABLES ===== */
+:root {
+    /* Font weight */
+    --wght: 400;
+
+    /* Base/Background Colors */
+    --theme-color-background: rgb(250, 250, 252);
+    --theme-color-background-secondary: rgb(240 240 245);
+    --theme-color-background-tertiary: rgb(230 230 235);
+
+    /* Content/Text Colors */
+    --theme-color-content: rgb(40 44 52);
+    --theme-color-content-secondary: rgb(92 99 112);
+    --theme-color-content-tertiary: rgb(140 145 155);
+
+    /* Accent Colors */
+    --theme-color-primary: rgb(97, 175, 239);
+    --theme-color-primary-hover: rgb(87, 155, 214);
+    --theme-color-primary-active: rgb(77, 140, 199);
+    --theme-color-primary-light: rgb(225, 240, 250);
+
+    --theme-color-secondary: rgb(198, 120, 221);
+    --theme-color-secondary-hover: rgb(180, 110, 200);
+    --theme-color-secondary-active: rgb(160, 100, 180);
+    --theme-color-secondary-light: rgb(245, 230, 250);
+
+    --theme-color-success: rgb(152, 195, 121);
+    --theme-color-success-light: rgb(230, 245, 225);
+
+    --theme-color-warning: rgb(229, 192, 123);
+    --theme-color-warning-light: rgb(250, 240, 220);
+
+    --theme-color-error: rgb(224, 108, 117);
+    --theme-color-error-light: rgb(250, 225, 230);
+
+    --theme-color-info: rgb(86, 182, 194);
+    --theme-color-info-light: rgb(220, 245, 250);
+
+    /* Design Tokens */
+    --theme-radius-sm: 0.25rem;
+    --theme-radius: 0.375rem;
+    --theme-radius-md: 0.5rem;
+    --theme-radius-lg: 0.75rem;
+    --theme-radius-xl: 1rem;
+
+    --theme-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --theme-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px 0 rgb(0 0 0 / 0.06);
+    --theme-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06);
+    --theme-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+
+    /* Typography */
+    --theme-font-sans: 'Roboto', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif;
+    --theme-font-mono: 'Fira Code', JetBrains Mono, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+
+    /* ===== BOOTSTRAP VARIABLE OVERRIDES ===== */
+    /* Colors */
+    --bs-primary: var(--theme-color-primary);
+    --bs-primary-rgb: 97, 175, 239;
+    --bs-secondary: var(--theme-color-secondary);
+    --bs-secondary-rgb: 198, 120, 221;
+    --bs-success: var(--theme-color-success);
+    --bs-success-rgb: 152, 195, 121;
+    --bs-info: var(--theme-color-info);
+    --bs-info-rgb: 86, 182, 194;
+    --bs-warning: var(--theme-color-warning);
+    --bs-warning-rgb: 229, 192, 123;
+    --bs-danger: var(--theme-color-error);
+    --bs-danger-rgb: 224, 108, 117;
+    --bs-light: var(--theme-color-background-secondary);
+    --bs-light-rgb: 240, 240, 245;
+    --bs-dark: var(--theme-color-content); /* Or a darker gray if needed */
+    --bs-dark-rgb: 40, 44, 52;
+
+    /* Body */
+    --bs-body-bg: var(--theme-color-background);
+    --bs-body-color: var(--theme-color-content);
+    --bs-body-font-family: var(--theme-font-sans);
+    --bs-emphasis-color: var(--theme-color-content);
+
+    /* Typography */
+    --bs-font-sans-serif: var(--theme-font-sans);
+    --bs-font-monospace: var(--theme-font-mono);
+    --bs-link-color: var(--theme-color-primary);
+    --bs-link-color-rgb: 97, 175, 239;
+    --bs-link-hover-color: var(--theme-color-primary-hover);
+    --bs-link-hover-color-rgb: 87, 155, 214;
+
+    /* Borders */
+    --bs-border-color: var(--theme-color-background-tertiary);
+    --bs-border-radius: var(--theme-radius);
+    --bs-border-radius-sm: var(--theme-radius-sm);
+    --bs-border-radius-lg: var(--theme-radius-lg);
+    --bs-border-radius-xl: var(--theme-radius-xl);
+    --bs-border-radius-2xl: var(--theme-radius-xl); /* BS5 doesn't have 2xl, map to xl */
+
+    /* Shadows */
+    --bs-box-shadow: var(--theme-shadow-md);
+    --bs-box-shadow-sm: var(--theme-shadow-sm);
+    --bs-box-shadow-lg: var(--theme-shadow-lg);
+
+    /* Forms */
+    --bs-form-control-bg: var(--theme-color-background);
+    --bs-form-control-disabled-bg: var(--theme-color-background-secondary);
+    --bs-form-select-disabled-bg: var(--theme-color-background-secondary);
+    --bs-form-check-input-checked-bg-color: var(--theme-color-primary);
+    --bs-form-check-input-checked-border-color: var(--theme-color-primary);
+    --bs-form-switch-checked-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(255,255,255,1.0)'/%3e%3c/svg%3e");
+
+
+    /* Focus Ring */
+    --bs-focus-ring-width: 0.125rem; /* approx 2px */
+    --bs-focus-ring-opacity: 1;
+    --bs-focus-ring-color: rgba(var(--bs-primary-rgb), 0.5);
+    --bs-form-control-focus-box-shadow: 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+    --bs-btn-focus-box-shadow: 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+
+    /* Buttons */
+    --bs-btn-padding-x: 1rem;
+    --bs-btn-padding-y: 0.5rem;
+    --bs-btn-font-weight: 500;
+    --bs-btn-hover-bg-shade-amount: 10%;
+    --bs-btn-active-bg-shade-amount: 15%;
+
+    /* Primary Button Text Color */
+    --bs-btn-color: var(--theme-color-content); /* Default for non-primary/secondary etc. */
+    --bs-btn-hover-color: var(--theme-color-content);
+    --bs-btn-active-color: var(--theme-color-content);
+
+    /* Specific button variants text color */
+    /* (Bootstrap usually handles this, but we can enforce if needed) */
+    /* For .btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-info */
+    /* Bootstrap calculates contrast, but if you want to force white: */
+    /* --bs-btn-primary-color: #fff; (example) */
+
+    /* Cards */
+    --bs-card-bg: var(--theme-color-background);
+    --bs-card-border-color: transparent; /* Original card has no border, relies on shadow */
+    --bs-card-cap-bg: var(--theme-color-background-secondary); /* For card-header/footer */
+    --bs-card-box-shadow: var(--theme-shadow);
+
+    /* Alerts */
+    --bs-alert-bg-scale: -80%; /* Default, makes it lighter */
+    --bs-alert-border-scale: -70%; /* Default */
+    --bs-alert-color-scale: 40%; /* Default, makes text darker */
+
+    /* For specific alert variants to match theme's light colors */
+    --bs-alert-success-bg: var(--theme-color-success-light);
+    --bs-alert-success-border-color: var(--theme-color-success);
+    --bs-alert-success-color: var(--theme-color-success); /* Or a darker shade for contrast */
+
+    --bs-alert-info-bg: var(--theme-color-info-light);
+    --bs-alert-info-border-color: var(--theme-color-info);
+    --bs-alert-info-color: var(--theme-color-info);
+
+    --bs-alert-warning-bg: var(--theme-color-warning-light);
+    --bs-alert-warning-border-color: var(--theme-color-warning);
+    --bs-alert-warning-color: var(--theme-color-warning); /* Or a darker shade */
+
+    --bs-alert-danger-bg: var(--theme-color-error-light);
+    --bs-alert-danger-border-color: var(--theme-color-error);
+    --bs-alert-danger-color: var(--theme-color-error);
+}
+
+/* ===== DARK MODE THEME VARIABLES & BOOTSTRAP OVERRIDES ===== */
+[data-bs-theme="dark"] {
+    --theme-color-background: rgb(40 44 52);
+    --theme-color-background-secondary: rgb(45 49 57);
+    --theme-color-background-tertiary: rgb(52 56 64);
+
+    --theme-color-content: rgb(171 178 191);
+    --theme-color-content-secondary: rgb(145 150 160);
+    --theme-color-content-tertiary: rgb(120 125 135);
+
+    /* Accent Colors Dark Mode (Light variants for backgrounds) */
+    --theme-color-primary-light: rgb(35, 50, 70);
+    --theme-color-secondary-light: rgb(60, 40, 65);
+    --theme-color-success-light: rgb(40, 60, 35);
+    --theme-color-warning-light: rgb(60, 50, 30);
+    --theme-color-error-light: rgb(60, 35, 40);
+    --theme-color-info-light: rgb(30, 60, 65);
+
+    /* Shadows Dark */
+    --theme-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --theme-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --theme-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -1px rgb(0 0 0 / 0.4);
+    --theme-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -2px rgb(0 0 0 / 0.4);
+
+    /* Bootstrap Overrides for Dark Mode */
+    --bs-body-bg: var(--theme-color-background);
+    --bs-body-color: var(--theme-color-content);
+    --bs-emphasis-color: var(--theme-color-content);
+    --bs-border-color: var(--theme-color-background-tertiary);
+    --bs-border-color-translucent: rgba(255, 255, 255, 0.15); /* Default BS dark */
+
+    /* Shadows */
+    --bs-box-shadow: var(--theme-shadow-md);
+    --bs-box-shadow-sm: var(--theme-shadow-sm);
+    --bs-box-shadow-lg: var(--theme-shadow-lg);
+
+    /* Forms */
+    --bs-form-control-bg: var(--theme-color-background-secondary);
+    --bs-form-control-disabled-bg: var(--theme-color-background-tertiary);
+    --bs-form-select-disabled-bg: var(--theme-color-background-tertiary);
+    --bs-form-check-input-bg: var(--theme-color-background-tertiary); /* For unchecked state */
+    --bs-form-switch-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(255,255,255,0.25)'/%3e%3c/svg%3e"); /* Darker thumb */
+
+
+    /* Cards */
+    --bs-card-bg: var(--theme-color-background-secondary);
+    --bs-card-cap-bg: var(--theme-color-background-tertiary);
+    --bs-card-box-shadow: var(--theme-shadow);
+
+    /* Alerts */
+    --bs-alert-success-bg: var(--theme-color-success-light);
+    --bs-alert-success-color: var(--theme-color-success);
+
+    --bs-alert-info-bg: var(--theme-color-info-light);
+    --bs-alert-info-color: var(--theme-color-info);
+
+    --bs-alert-warning-bg: var(--theme-color-warning-light);
+    --bs-alert-warning-color: var(--theme-color-warning);
+
+    --bs-alert-danger-bg: var(--theme-color-error-light);
+    --bs-alert-danger-color: var(--theme-color-error);
+
+    /* Focus Ring for Dark Mode */
+    --bs-focus-ring-color: rgba(var(--bs-primary-rgb), 0.6); /* Brighter ring on dark */
+}
+
+/* ===== BASE HTML STYLING ===== */
+body {
+    font-family: var(--bs-body-font-family), system-ui;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code, pre, kbd, samp {
+    font-family: var(--bs-font-monospace), monospace;
+}
+
+/* Typography Scale (matching original CSS) */
+h1, .h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* 24px (text-2xl) */
+h2, .h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* 20px (text-xl) */
+h3, .h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+/* 18px (text-lg) */
+h4, .h4 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* 16px (text-base) */
+h5, .h5 {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* 14px (text-sm) */
+h6, .h6 {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* 14px (text-sm) */
+
+p {
+    font-size: 1rem; /* 16px (text-base) */
+    line-height: 1.6;
+}
+
+a {
+    color: var(--bs-link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--bs-link-hover-color);
+    text-decoration: underline;
+}
+
+/* Focus styles - Bootstrap handles this with --bs-focus-ring variables */
+*:focus-visible {
+    outline: none; /* Bootstrap's focus ring should be sufficient */
+    box-shadow: 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color),
+    0 0 0 calc(var(--bs-focus-ring-width) + 2px) var(--bs-body-bg); /* Ring offset effect */
+}
+
+/* For buttons and form controls, Bootstrap applies its own focus box-shadow */
+.btn:focus-visible, .form-control:focus-visible, .form-select:focus-visible, .form-check-input:focus-visible {
+    box-shadow: 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color); /* Standard BS focus */
+}
+
+
+/* ===== COMPONENT SPECIFIC STYLING (IF NEEDED BEYOND VARIABLES) ===== */
+
+/* Buttons: Ensure text contrast for specific backgrounds if Bootstrap's auto contrast isn't enough */
+.btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-info {
+    color: #fff; /* Force white text on these colored buttons */
+}
+
+.btn-warning {
+    color: #000; /* Force black text on warning */
+}
+
+.btn-primary:hover, .btn-secondary:hover, .btn-success:hover, .btn-danger:hover, .btn-info:hover {
+    color: #fff;
+}
+
+.btn-warning:hover {
+    color: #000;
+}
+
+/* Outline Buttons Text Color */
+.btn-outline-primary {
+    --bs-btn-color: var(--theme-color-primary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--theme-color-secondary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
+.btn-outline-success {
+    --bs-btn-color: var(--theme-color-success);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
+.btn-outline-danger {
+    --bs-btn-color: var(--theme-color-error);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
+.btn-outline-warning {
+    --bs-btn-color: var(--theme-color-warning);
+    --bs-btn-hover-color: #000;
+    --bs-btn-active-color: #000;
+}
+
+.btn-outline-info {
+    --bs-btn-color: var(--theme-color-info);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
+.btn-outline-light {
+    --bs-btn-color: var(--theme-color-content-secondary);
+}
+
+.btn-outline-dark {
+    --bs-btn-color: var(--theme-color-content);
+}
+
+[data-bs-theme="dark"] .btn-outline-light {
+    --bs-btn-color: var(--theme-color-content-secondary);
+}
+
+[data-bs-theme="dark"] .btn-outline-dark {
+    --bs-btn-color: var(--theme-color-content);
+}
+
+
+/* Cards */
+.card {
+    box-shadow: var(--bs-card-box-shadow);
+}
+
+.card-header {
+    background-color: var(--bs-card-cap-bg);
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: 0.75rem 1rem; /* Adjust padding if needed */
+}
+
+.card-footer {
+    background-color: var(--bs-card-cap-bg);
+    border-top: 1px solid var(--bs-border-color);
+    padding: 0.75rem 1rem;
+}
+
+/* Alerts: Add left border like original theme */
+.alert {
+    border-left-width: 0.25rem;
+    border-left-style: solid;
+}
+
+.alert-success {
+    border-left-color: var(--bs-success);
+}
+
+.alert-info {
+    border-left-color: var(--bs-info);
+}
+
+.alert-warning {
+    border-left-color: var(--bs-warning);
+}
+
+.alert-danger {
+    border-left-color: var(--bs-danger);
+}
+
+/* For alerts with light backgrounds from theme */
+[data-bs-theme="light"] .alert-success {
+    background-color: var(--theme-color-success-light);
+    color: var(--theme-color-success);
+    border-color: var(--theme-color-success);
+}
+
+[data-bs-theme="light"] .alert-info {
+    background-color: var(--theme-color-info-light);
+    color: var(--theme-color-info);
+    border-color: var(--theme-color-info);
+}
+
+[data-bs-theme="light"] .alert-warning {
+    background-color: var(--theme-color-warning-light);
+    color: var(--theme-color-warning);
+    border-color: var(--theme-color-warning);
+}
+
+[data-bs-theme="light"] .alert-danger {
+    background-color: var(--theme-color-error-light);
+    color: var(--theme-color-error);
+    border-color: var(--theme-color-error);
+}
+
+[data-bs-theme="dark"] .alert-success {
+    background-color: var(--theme-color-success-light);
+    color: var(--theme-color-success);
+    border-color: var(--theme-color-success);
+}
+
+[data-bs-theme="dark"] .alert-info {
+    background-color: var(--theme-color-info-light);
+    color: var(--theme-color-info);
+    border-color: var(--theme-color-info);
+}
+
+[data-bs-theme="dark"] .alert-warning {
+    background-color: var(--theme-color-warning-light);
+    color: var(--theme-color-warning);
+    border-color: var(--theme-color-warning);
+}
+
+[data-bs-theme="dark"] .alert-danger {
+    background-color: var(--theme-color-error-light);
+    color: var(--theme-color-error);
+    border-color: var(--theme-color-error);
+}
+
+
+/* Form Switch (Toggle) to better match original theme */
+.form-switch .form-check-input {
+    height: 1.25em; /* approx 20px if font-size is 16px */
+    width: 2.5em; /* approx 40px */
+    background-color: var(--theme-color-background-tertiary);
+    border-color: var(--theme-color-background-tertiary);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb(250,250,252)'/%3e%3c/svg%3e"); /* Light thumb */
+}
+
+.form-switch .form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb(250,250,252)'/%3e%3c/svg%3e"); /* Light thumb */
+}
+
+[data-bs-theme="dark"] .form-switch .form-check-input {
+    background-color: var(--theme-color-background-tertiary);
+    border-color: var(--theme-color-background-tertiary);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb(45,49,57)'/%3e%3c/svg%3e"); /* Darker thumb */
+}
+
+[data-bs-theme="dark"] .form-switch .form-check-input:checked {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb(45,49,57)'/%3e%3c/svg%3e"); /* Darker thumb */
+}
+
+/* Progress bars */
+.progress {
+    background-color: var(--theme-color-background-tertiary);
+    height: 0.625rem; /* progress-md from original */
+}
+
+[data-bs-theme="dark"] .progress {
+    background-color: var(--theme-color-background-tertiary);
+}
+
+.progress-bar {
+    background-color: var(--bs-primary); /* Default to primary */
+}
+
+/* For .bg-success, .bg-info etc. on progress-bar, Bootstrap handles it */
+
+
+/* ===== CUSTOM SCROLLBARS (NON-MACOS) ===== */
+@supports (scrollbar-width: thin) {
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--theme-color-content-tertiary) var(--theme-color-background-tertiary);
+    }
+
+    [data-bs-theme="dark"] * {
+        scrollbar-color: var(--theme-color-content-tertiary) var(--theme-color-background-tertiary);
+    }
+}
+
+@supports selector(::-webkit-scrollbar) {
+    /* Exclude macOS with this selector approach */
+    @media not all and (-webkit-min-device-pixel-ratio: 0) {
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--theme-color-background-tertiary);
+            border-radius: var(--theme-radius-sm);
+        }
+
+        [data-bs-theme="dark"] ::-webkit-scrollbar-track {
+            background: var(--theme-color-background-tertiary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--theme-color-content-tertiary);
+            border-radius: var(--theme-radius-sm);
+            transition: background 0.2s ease;
+        }
+
+        [data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+            background: var(--theme-color-content-tertiary);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--theme-color-content-secondary);
+        }
+
+        [data-bs-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+            background: var(--theme-color-content-secondary);
+        }
+    }
+}
+
+/* Selection highlight */
+::selection {
+    background-color: rgba(var(--bs-secondary-rgb), 0.2); /* Using secondary color with opacity */
+    color: var(--bs-body-color); /* Keep original text color for better readability */
+}
+
+::-moz-selection {
+    background-color: rgba(var(--bs-secondary-rgb), 0.2);
+    color: var(--bs-body-color);
+}
+
+a::selection, a::-moz-selection {
+    color: inherit; /* Links should keep their color on selection */
+}
+
+
+/* ===== ANIMATION KEYFRAMES ===== */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-up {
+    0% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-down {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-left {
+    0% {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-right {
+    0% {
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes progress-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Example usage for animations (add these classes to HTML elements) */
+.animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-up {
+    animation: slide-up 0.2s ease-out;
+}
+
+/* ... and so on for other animations */
+
+/* Indeterminate Progress Animation for Bootstrap (if needed) */
+.progress-bar-animated.progress-bar-indeterminate {
+    animation: progress-loading 2s infinite ease, progress-bar-stripes 1s linear infinite; /* Combine with BS stripes */
+    background-size: 200% 200%; /* For progress-loading */
+}

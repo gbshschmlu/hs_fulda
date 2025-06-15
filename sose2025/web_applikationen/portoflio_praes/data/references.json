@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Bootstrap Dokumentation",
+    "description": "Offizielle Dokumentation für das Bootstrap-Framework zur Gestaltung",
+    "link": "https://getbootstrap.com/docs/"
+  },
+  {
+    "name": "Express.js",
+    "description": "Web-Anwendungs-Framework für die Entwicklung serverseitiger Anwendungen",
+    "link": "https://expressjs.com/"
+  },
+  {
+    "name": "EJS Dokumentation",
+    "description": "Eingebettete JavaScript-Template-Sprache zur Generierung von HTML-Markup",
+    "link": "https://ejs.co/"
+  },
+  {
+    "name": "atom.css",
+    "description": "CSS-Datei, die Bootstrap-Styles Erscheinungsbild überschreibt. Sie wurde von einer Tailwind-basierten Datei angepasst.",
+    "link": "https://github.com/lumisxh/palaxy",
+    "author": "Luca M. Schmidt"
+  },
+  {
+    "name": "Claude 3.7 Sonnet",
+    "description": "KI-Modell, das für die Überarbeitung und Dokumentation von Teilen des Codes verwendet wurde",
+    "link": "https://www.anthropic.com/claude"
+  }
+]

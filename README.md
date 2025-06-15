@@ -1,6 +1,17 @@
 # HS Fulda Unterlagen
 
-Dieses Repository enthält alle Aufgaben/Lösungen zu den verschiedenen Modulen die etwas mit Programmierung zu tun haben.
+Dieses Repository enthält alle Aufgaben/Lösungen zu den verschiedenen Modulen die ich im Verlauf des Studiums an der
+Hochschule Fulda bearbeitet habe.
+
+## Struktur
+
+- Semester
+  - Module
+  - Unterlagen
+    - Aufgaben
+    - Lösungen
+    - Skripte
+    - Sonstiges
 
 ## Tools
 

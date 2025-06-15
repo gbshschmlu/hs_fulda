@@ -1,0 +1,41 @@
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{Inhaltsverzeichnis}{II}{section*.2}%
+\contentsline {section}{\numberline {1}Einleitung}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Relevanz von Dokumentation und Versionskontrolle}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Unternehmenskontext: Grenzebach BSH im Überblick}{1}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Zielsetzung und Aufbau der Arbeit}{1}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Theoretische Grundlagen}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Dokumentation in der Softwareentwicklung}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Versionskontrollsysteme und -prozesse}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Aktuelle Standards und Best Practices in der Industrie}{3}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Relation zwischen Dokumentation und Versionskontrolle}{4}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Analyse der Dokumentationspraxis bei Grenzebach BSH}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Aktuelle Vorgehensweisen und Werkzeuge}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Stärken und Schwächen der bisherigen Praxis}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Vergleich mit Branchenstandards}{6}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Evaluation der Versionskontrolle bei Grenzebach BSH}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Eingesetzte Versionskontrollsysteme und Workflows}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Stärken und Schwächen der aktuellen Prozesse}{9}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Vergleich mit Branchenstandards}{9}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Optimierung}{10}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Handlungsempfehlungen zur Dokumentation}{10}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Verbesserung der Konsistenz und Verknüpfung zwischen Confluence und GitHub}{10}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}Stärkung des ``Documentation as Code''-Ansatzes}{11}{subsubsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.3}Steigerung der Motivation und Qualität bei der Dokumentationserstellung}{11}{subsubsection.5.1.3}%
+\contentsline {subsubsection}{\numberline {5.1.4}Verbesserung der Auffindbarkeit und Struktur von Dokumentation}{11}{subsubsection.5.1.4}%
+\contentsline {subsubsection}{\numberline {5.1.5}Systematische Erstellung von Architektur- und Testdokumentation}{12}{subsubsection.5.1.5}%
+\contentsline {subsection}{\numberline {5.2}Optimierungsansätze für die Versionskontrolle}{12}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Verbesserung der CI/CD-Pipeline-Effizienz und -Wartbarkeit}{12}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Förderung der Akzeptanz und Effektivität von Code-Qualitätsstandards}{12}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.3}Stärkung des Code-Review-Prozesses}{12}{subsubsection.5.2.3}%
+\contentsline {subsubsection}{\numberline {5.2.4}Optimierung der Werkzeugnutzung und Integrationen}{12}{subsubsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.3}Integrierte Implementierungsstrategie}{13}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Fazit und Ausblick}{13}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Zusammenfassung der Kernerkenntnisse}{13}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Zukunftsausblick und persönliches Resümee}{14}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Verzeichnis der verwendeten Werkzeuge}{16}{section.7}%
+\contentsline {section}{\numberline {8}Literatur}{17}{section.8}%
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 

@@ -1,0 +1,11 @@
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading"><%= message %></h4>
+    <% if (error && error.status) { %>
+        <p><strong>Status:</strong> <%= error.status %></p>
+    <% } %>
+    <hr>
+    <% if (error && error.stack) { %>
+        <p class="mb-0"><strong>Stack Trace:</strong></p>
+        <pre><%= error.stack %></pre>
+    <% } %>
+</div>

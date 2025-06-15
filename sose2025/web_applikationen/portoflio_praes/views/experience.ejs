@@ -1,0 +1,50 @@
+<div class="row justify-content-center my-5">
+    <div class="col-lg-8 text-center">
+        <h1 class="display-4 fw-bold mb-4">
+            <%= title %>
+        </h1>
+        <p class="lead mb-4">Erfahren Sie, wie Snippets unseren Nutzern im Alltag hilft. Hier berichten Anwender:innen von ihren persönlichen Erfolgen.</p>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    <% if (experiences && experiences.length > 0) { %>
+        <% experiences.forEach(function(experience) { %>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 hover-effect">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <% if (experience.profile_picture) { %>
+                                <img src="<%= experience.profile_picture %>" alt="Profilbild von <%= experience.name %>" class="rounded-circle me-3" style="width:40px; height:40px; object-fit:cover;">
+                            <% } %>
+                            <h5 class="card-title text-primary mb-0">
+                                <%= experience.name %>
+                            </h5>
+                        </div>
+                        <p class="card-text text-muted">
+                            <%= experience.experience %>
+                        </p>
+                        <% if (experience.author) { %>
+                            <p class="card-text">
+                                <small class="text-body-secondary">
+                                    <i class="bi bi-person"></i> Autor: <%= experience.author %>
+                                </small>
+                            </p>
+                        <% } %>
+                    </div>
+                    <% if (experience.link) { %>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="<%= experience.link %>" class="btn btn-outline-primary w-100" target="_blank">
+                                <i class="bi bi-box-arrow-up-right me-1"></i>Ressource besuchen
+                            </a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <div class="col-12">
+            <div class="alert alert-info">Keine Referenzen verfügbar.</div>
+        </div>
+    <% } %>
+</div>

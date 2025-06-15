@@ -1,0 +1,138 @@
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h1>Code-Snippet</h1>
+    </div>
+    <div class="col-auto">
+        <a href="/snippets/new" class="btn btn-success px-4">
+            <i class="bi bi-plus-lg me-1"></i>Neuen Snippet erstellen
+        </a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col">
+        <div class="card shadow-sm border-0">
+            <div class="card-header py-3">
+                <h5 class="card-title mb-0">Snippets filtern</h5>
+            </div>
+            <div class="card-body p-3">
+                <div class="row g-3">
+                    <div class="col-md-5">
+                        <label for="languageFilter" class="form-label small text-muted mb-1">Programmiersprache</label>
+                        <select id="languageFilter" class="form-select">
+                            <option value="">Alle Sprachen</option>
+                            <% if (languages && languages.length> 0) { %>
+                                <% languages.forEach(language=> { %>
+                                    <option value="<%= language %>">
+                                        <%= language %>
+                                    </option>
+                                    <% }) %>
+                                        <% } %>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="tagFilter" class="form-label small text-muted mb-1">Tag</label>
+                        <input type="text" id="tagFilter" class="form-control" placeholder="Nach Tag filtern...">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button id="resetFilters" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-x-circle me-1"></i>Zurücksetzen
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Nach Namen suchen...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 g-4" id="snippetsContainer">
+    <% if (snippets.length===0) { %>
+        <div class="col-12">
+            <div class="alert alert-info">Keine Snippets gefunden.</div>
+        </div>
+        <% } else { %>
+            <% snippets.forEach(snippet=> { %>
+                <div class="col snippet-card" data-language="<%= snippet.language %>"
+                    data-tags="<%= snippet.tags.join(' ') %>" data-name="<%= snippet.name.toLowerCase() %>">
+                    <div class="card h-100 shadow-sm border-0 hover-shadow">
+                        <div class="card-header d-flex justify-content-between align-items-center py-3">
+                            <h5 class="card-title mb-0 text-truncate">
+                                <%= snippet.name %>
+                            </h5>
+                            <span class="badge bg-primary bg-opacity-75 fs-6">
+                                <%= snippet.language %>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <% if (snippet.tags && snippet.tags.length> 0) { %>
+                                <div class="mb-3">
+                                    <% snippet.tags.forEach(tag=> { %>
+                                        <span class="badge bg-secondary me-1 mb-1">
+                                            <%= tag %>
+                                        </span>
+                                        <% }) %>
+                                </div>
+                                <% } %>
+                                    <p class="card-text text-muted small">
+                                        <i class="bi bi-clock me-1"></i>Zuletzt geändert: <%= new
+                                            Date(snippet.lastModified).toLocaleString('de-DE') %>
+                                    </p>
+                                    <a href="/snippets/<%= snippet.id %>" class="btn btn-outline-primary w-100">
+                                        <i class="bi bi-eye me-1"></i>Anzeigen/Bearbeiten
+                                    </a>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+                    <% } %>
+</div>
+
+<script defer>
+    const snippetCards = document.querySelectorAll('.snippet-card');
+    const languageFilter = document.getElementById('languageFilter');
+    const tagFilter = document.getElementById('tagFilter');
+    const searchInput = document.getElementById('searchInput');
+    const resetButton = document.getElementById('resetFilters');
+
+    function applyFilters() {
+        const selectedLanguage = languageFilter.value.toLowerCase();
+        const selectedTag = tagFilter.value.toLowerCase();
+        const searchTerm = searchInput.value.toLowerCase();
+
+        snippetCards.forEach(card => {
+            const language = card.dataset.language.toLowerCase();
+            const tags = card.dataset.tags.toLowerCase();
+            const name = card.dataset.name;
+
+            const languageMatch = !selectedLanguage || language === selectedLanguage;
+            const tagMatch = !selectedTag || tags.includes(selectedTag);
+            const searchMatch = !searchTerm || name.includes(searchTerm);
+
+            card.style.display = (languageMatch && tagMatch && searchMatch) ? '' : 'none';
+        });
+    }
+
+    languageFilter.addEventListener('change', applyFilters);
+    tagFilter.addEventListener('input', applyFilters);
+    searchInput.addEventListener('input', applyFilters);
+
+    resetButton.addEventListener('click', function () {
+        languageFilter.value = '';
+        tagFilter.value = '';
+        searchInput.value = '';
+        applyFilters();
+    });
+</script>
+
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+        transition: all .3s ease;
+    }
+</style>

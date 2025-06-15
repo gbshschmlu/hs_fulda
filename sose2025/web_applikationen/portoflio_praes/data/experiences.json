@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Julia K. – Junior Webentwicklerin",
+        "profile_picture": "https://randomuser.me/api/portraits/women/44.jpg",
+        "experience": "Ich liebe Snippets! Als ich angefangen habe, mit JavaScript zu arbeiten, war ich oft überfordert. Die kleinen Codebeispiele auf Snippets haben mir geholfen, schnell Lösungen zu finden und zu verstehen, wie man Dinge praktisch umsetzt. Ich benutze die Seite fast täglich!",
+        "stars": "5.0"
+    },
+    {
+        "name": "Malik R. – Data Science Student",
+        "profile_picture": "https://randomuser.me/api/portraits/men/32.jpg",
+        "experience": "Snippets hat mir besonders beim Einstieg in Python geholfen. Die Suchfunktion nach Programmiersprache ist super, und ich habe durch die Beispiele sogar ein besseres Gefühl dafür bekommen, wie man sauberen Code schreibt. Eine großartige Ressource für Lernende.",
+        "stars": "4.9"
+    },
+    {
+        "name": "Stefanie M. – Freelancerin im Bereich Frontend",
+        "profile_picture": "https://randomuser.me/api/portraits/women/68.jpg",
+        "experience": "Was ich an Snippets besonders mag, ist, dass die Snippets kurz, aber trotzdem sehr lehrreich sind. Ich habe zum Beispiel ein tolles Snippet gefunden, das mir bei einem CSS-Projekt Stunden gespart hat. Man merkt, dass hier echte Entwickler:innen ihr Wissen teilen.",
+        "stars": "5.0"
+    },
+    {
+        "name": "Thomas B. – Fullstack-Entwickler",
+        "profile_picture": "https://randomuser.me/api/portraits/men/45.jpg",
+        "experience": "In meinem Arbeitsalltag greife ich regelmäßig auf Snippets zurück. Die Qualität der Codebeispiele ist beeindruckend, und die Kommentare der Community haben mir oft geholfen, meine eigenen Lösungen zu optimieren. Besonders die React-Komponenten haben es mir angetan!",
+        "stars": "4.8"
+    },
+    {
+        "name": "Nina H. – DevOps Ingenieurin",
+        "profile_picture": "https://randomuser.me/api/portraits/women/29.jpg",
+        "experience": "Als ich in die Welt von Docker und Kubernetes eintauchen musste, war Snippets meine Rettung. Die Shell-Skripte und Konfigurationsbeispiele haben mir enorm geholfen. Die Plattform ist definitiv nicht nur für Webentwickler nützlich, sondern für alle IT-Bereiche.",
+        "stars": "4.9"
+    },
+    {
+        "name": "Marco K. – Informatikstudent",
+        "profile_picture": "https://randomuser.me/api/portraits/men/22.jpg",
+        "experience": "Snippets hat mir bei meinen Uniprojekten unglaublich geholfen. Ob C++, Java oder Python – ich finde immer hilfreiche Beispiele. Die Community ist super hilfsbereit und die Möglichkeit, eigene Snippets zu teilen, motiviert mich, meinen Code zu verbessern.",
+        "stars": "4.7"
+    },
+    {
+        "name": "Leonie W. – UX Designerin mit Coding-Skills",
+        "profile_picture": "https://randomuser.me/api/portraits/women/57.jpg",
+        "experience": "Obwohl ich hauptsächlich im Design arbeite, muss ich regelmäßig HTML/CSS umsetzen. Snippets bietet mir genau die richtigen Beispiele, ohne dass ich mich durch lange Tutorials arbeiten muss. Die Kategorisierung macht es einfach, genau das zu finden, was ich brauche.",
+        "stars": "5.0"
+    },
+    {
+        "name": "Alexander P. – Backend-Entwickler",
+        "profile_picture": "https://randomuser.me/api/portraits/men/67.jpg",
+        "experience": "Als erfahrener Entwickler nutze ich Snippets hauptsächlich, um Lösungen für spezifische Probleme zu finden. Die Qualitätskontrolle ist hervorragend, und die Performance-Tipps haben meine Node.js-Anwendungen deutlich beschleunigt. Eine unverzichtbare Ressource!",
+        "stars": "4.9"
+    }
+]

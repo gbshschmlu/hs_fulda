@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Code Bracket Elements -->
+    <path d="M80 40 L50 40 L50 160 L80 160" stroke="#61AFEFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <path d="M320 40 L350 40 L350 160 L320 160" stroke="#61AFEFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+    <!-- Code Line Accents -->
+    <line x1="100" y1="70" x2="200" y2="70" stroke="#E06C75FF" stroke-width="8" stroke-linecap="round" />
+    <line x1="100" y1="100" x2="300" y2="100" stroke="#98C379FF" stroke-width="8" stroke-linecap="round" />
+    <line x1="100" y1="130" x2="240" y2="130" stroke="#E5C07BFF" stroke-width="8" stroke-linecap="round" />
+
+    <!-- Cursor blink animation -->
+    <rect x="250" y="122" width="4" height="18" fill="#ffffff">
+        <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite" />
+    </rect>
+</svg>

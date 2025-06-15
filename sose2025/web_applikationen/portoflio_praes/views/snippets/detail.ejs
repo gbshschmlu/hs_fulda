@@ -1,0 +1,316 @@
+<div class="row mb-4">
+    <div class="col">
+        <h1>
+            <%= snippet.name %>
+                <span class="badge bg-primary">
+                    <%= snippet.language %>
+                </span>
+        </h1>
+        <p class="text-muted">Zuletzt geändert: <%= new Date(snippet.lastModified).toLocaleString('de-DE') %>
+        </p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col" id="snippetDetails">
+        <% if (snippet.tags && snippet.tags.length> 0) { %>
+            <div class="mb-3">
+                <strong>Tags:</strong>
+                <% snippet.tags.forEach(tag=> { %>
+                    <span class="badge bg-secondary me-1">
+                        <%= tag %>
+                    </span>
+                    <% }) %>
+            </div>
+            <% } %>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col">
+        <div class="card shadow-sm border-0">
+            <div class="card-header d-flex justify-content-between align-items-center py-3">
+                <h5 class="card-title mb-0">Code-Snippet</h5>
+                <button id="copyButton" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-clipboard me-1"></i> Kopieren
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <pre
+                    class="mb-0"><code class="language-<%= snippet.language.toLowerCase() %> rounded p-3"><%= snippet.content %></code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col">
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+                <i class="bi bi-pencil me-1"></i>Bearbeiten
+            </button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <i class="bi bi-trash me-1"></i>Löschen
+            </button>
+            <a href="/snippets" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i>Zurück zur Liste
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Snippet bearbeiten</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" value="<%= snippet.name %>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="language" class="form-label">Programmiersprache</label>
+                        <select class="form-select" id="language" required>
+                            <% if (languages && languages.length> 0) { %>
+                                <% languages.forEach(lang=> { %>
+                                    <option value="<%= lang %>" <%=lang===snippet.language ? 'selected' : '' %>><%= lang
+                                            %>
+                                    </option>
+                                    <% }) %>
+                                        <% } %>
+                                            <option value="other">Andere</option>
+                        </select>
+                        <input type="text" class="form-control mt-2 d-none" id="otherLanguage"
+                            placeholder="Sprache angeben">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tagsInput" class="form-label">Tags (durch Leerzeichen getrennt)</label>
+                        <input type="text" class="form-control" id="tagsInput" placeholder="z.B. frontend">
+                        <div id="tagsContainer" class="mt-2"></div>
+                        <div class="form-text">Tags durch Leerzeichen trennen.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Inhalt</label>
+                        <textarea class="form-control font-monospace" id="content" rows="10"
+                            required><%= snippet.content %></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" id="saveButton">Änderungen speichern</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Löschen bestätigen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+            </div>
+            <div class="modal-body">
+                <p>Sind Sie sicher, dass Sie den Snippet "<%= snippet.name %>" löschen möchten?</p>
+                <p class="text-danger"><strong>Diese Aktion kann nicht rückgängig gemacht werden.</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-danger" id="deleteButton">Löschen</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script defer>
+    const snippetId = '<%= snippet.id %>';
+
+    // Tag-Mechanik
+    const tagsContainer = document.getElementById('tagsContainer');
+    const tagsInput = document.getElementById('tagsInput');
+    let tags = [];
+    const snippetDetails = document.getElementById('snippetDetails');
+    if (snippetDetails) {
+        const tagBadges = snippetDetails.querySelectorAll('.badge');
+        tagBadges.forEach(badge => {
+            const tagText = badge.textContent.trim();
+            if (tagText && !tags.includes(tagText)) {
+                tags.push(tagText);
+            }
+        });
+    }
+
+    function renderTags() {
+        // Alle Badges entfernen, aber das Inputfeld behalten
+        tagsContainer.innerHTML = '';
+        tags.forEach(tag => {
+            const badge = document.createElement('span');
+            badge.className = 'badge bg-success me-1 mb-1';
+            badge.textContent = tag;
+            badge.style.cursor = 'pointer';
+            badge.onclick = () => {
+                tags = tags.filter(t => t !== tag);
+                renderTags();
+            };
+            tagsContainer.appendChild(badge);
+        });
+        tagsContainer.appendChild(tagsInput);
+        tagsInput.value = '';
+        tagsInput.focus();
+    }
+
+    // Während des Tippens das aktuelle Wort als Badge anzeigen
+    tagsInput.addEventListener('input', function () {
+        // Letztes "Schatten-Badge" entfernen, falls vorhanden
+        const shadowBadge = tagsContainer.querySelector('.shadow-badge');
+        if (shadowBadge) shadowBadge.remove();
+
+        const value = tagsInput.value.trim();
+        if (value) {
+            const badge = document.createElement('span');
+            badge.className = 'badge bg-secondary me-1 mb-1 shadow-badge';
+            badge.textContent = value;
+            tagsContainer.insertBefore(badge, tagsInput);
+        }
+    });
+
+    // Tag abschließen mit Leertaste
+    tagsInput.addEventListener('keydown', function (e) {
+        if (e.key === ' ' && tagsInput.value.trim() !== '') {
+            e.preventDefault();
+            const newTag = tagsInput.value.trim();
+            if (newTag && !tags.includes(newTag)) {
+                tags.push(newTag);
+                renderTags();
+            }
+        }
+        // Backspace: Wenn Feld leer und Tags vorhanden, letztes Tag zum Bearbeiten holen
+        else if (e.key === 'Backspace' && tagsInput.value === '' && tags.length > 0) {
+            e.preventDefault();
+            const lastTag = tags.pop();
+            renderTags();
+            tagsInput.value = lastTag;
+            tagsInput.focus();
+            // Optional: Schatten-Badge anzeigen
+            const badge = document.createElement('span');
+            badge.className = 'badge bg-secondary me-1 mb-1 shadow-badge';
+            badge.textContent = lastTag;
+            tagsContainer.insertBefore(badge, tagsInput);
+        }
+    });
+
+    // Initiales Rendering
+    renderTags();
+
+    // Kopieren-Button
+    document.getElementById('copyButton').addEventListener('click', function () {
+        const content = document.querySelector('pre code').textContent;
+        navigator.clipboard.writeText(content)
+            .then(() => {
+                this.innerHTML = '<i class="bi bi-check me-1"></i> Kopiert!';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="bi bi-clipboard me-1"></i> Kopieren';
+                }, 2000);
+            })
+            .catch(err => console.error('Kopieren fehlgeschlagen: ', err));
+    });
+
+    // Tab-Taste im Textarea
+    document.getElementById('content').addEventListener('keydown', function (e) {
+        if (e.key === 'Tab') {
+            if (e.shiftKey) return;
+
+            const isAtEnd = this.selectionStart === this.selectionEnd &&
+                this.selectionStart === this.value.length;
+
+            if (isAtEnd) return;
+
+            e.preventDefault();
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+
+            this.value = this.value.substring(0, start) + '\t' + this.value.substring(end);
+            this.selectionStart = this.selectionEnd = start + 1;
+        }
+    });
+
+    // Sprachen-Dropdown
+    document.getElementById('language').addEventListener('change', function () {
+        const otherLanguageInput = document.getElementById('otherLanguage');
+        otherLanguageInput.classList.toggle('d-none', this.value !== 'other');
+        otherLanguageInput.required = this.value === 'other';
+    });
+
+    // Speichern-Button
+    document.getElementById('saveButton').addEventListener('click', function () {
+        const name = document.getElementById('name').value;
+        let language = document.getElementById('language').value;
+        if (language === 'other') {
+            language = document.getElementById('otherLanguage').value;
+        }
+
+        // Aktuelles Tag hinzufügen, falls vorhanden
+        const currentTagValue = document.getElementById('tagsInput').value.trim();
+        if (currentTagValue && !tags.includes(currentTagValue)) {
+            tags.push(currentTagValue);
+        }
+
+        const content = document.getElementById('content').value;
+
+        if (!name || !language || !content) {
+            alert('Bitte füllen Sie alle Pflichtfelder aus.');
+            return;
+        }
+
+        fetch(`/api/snippets/${snippetId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, language, tags, content }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    return response.json().then(err => {
+                        throw new Error(err.message || 'Aktualisierung fehlgeschlagen');
+                    });
+                }
+            })
+            .catch(error => alert(`Fehler: ${error.message}`));
+    });
+
+    // Löschen-Button
+    document.getElementById('deleteButton').addEventListener('click', function () {
+        this.disabled = true;
+        this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Wird gelöscht...';
+
+        fetch(`/api/snippets/${snippetId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.ok) {
+                    setTimeout(() => {
+                        window.location.replace(`/snippets?_cache=${new Date().getTime()}`);
+                    }, 300);
+                } else {
+                    return response.json().then(err => {
+                        throw new Error(err.message || 'Löschen fehlgeschlagen');
+                    });
+                }
+            })
+            .catch(error => {
+                this.disabled = false;
+                this.innerHTML = 'Löschen';
+                alert(`Fehler: ${error.message}`);
+            });
+    });
+</script>

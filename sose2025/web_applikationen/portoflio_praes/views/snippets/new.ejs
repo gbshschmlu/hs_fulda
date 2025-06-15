@@ -1,0 +1,165 @@
+<div class="row mb-4">
+    <div class="col">
+        <h1>Neuen Code-Snippet erstellen</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary bg-opacity-10 py-3">
+                <h5 class="card-title mb-0">Snippet-Details</h5>
+            </div>
+            <div class="card-body p-4">
+                <form id="createForm">
+                    <div class="mb-4">
+                        <label for="name" class="form-label fw-bold">Name</label>
+                        <input type="text" class="form-control form-control-lg" id="name" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="language" class="form-label fw-bold">Programmiersprache</label>
+                        <select class="form-select" id="language" required>
+                            <% if (languages && languages.length> 0) { %>
+                                <% languages.forEach(lang=> { %>
+                                    <option value="<%= lang %>">
+                                        <%= lang %>
+                                    </option>
+                                    <% }) %>
+                                        <% } %>
+                                            <option value="other">Andere</option>
+                        </select>
+                        <input type="text" class="form-control mt-2 d-none" id="otherLanguage"
+                            placeholder="Sprache angeben">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="tagsInput" class="form-label fw-bold">Tags (durch Leerzeichen getrennt)</label>
+                        <input type="text" class="form-control" id="tagsInput" placeholder="z.B. frontend">
+                        <div id="tagsContainer" class="mt-2"></div>
+                        <div class="form-text">Tags durch Leerzeichen trennen.</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="content" class="form-label fw-bold">Inhalt</label>
+                        <textarea class="form-control font-monospace" id="content" rows="8" required></textarea>
+                    </div>
+
+                    <div class="d-flex gap-3 pt-2">
+                        <button type="submit" class="btn btn-primary px-4 py-2">Snippet erstellen</button>
+                        <a href="/snippets" class="btn btn-outline-secondary px-4">Abbrechen</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script defer>
+    const tagsContainer = document.getElementById('tagsContainer');
+    const tagsInput = document.getElementById('tagsInput');
+    let tags = [];
+    function renderTags() {
+        // Alle Badges entfernen, aber das Inputfeld behalten
+        tagsContainer.innerHTML = '';
+        tags.forEach(tag => {
+            const badge = document.createElement('span');
+            badge.className = 'badge bg-success me-1 mb-1';
+            badge.textContent = tag;
+            badge.style.cursor = 'pointer';
+            badge.onclick = () => {
+                tags = tags.filter(t => t !== tag);
+                renderTags();
+            };
+            tagsContainer.appendChild(badge);
+        });
+        tagsContainer.appendChild(tagsInput);
+        tagsInput.value = '';
+        tagsInput.focus();
+    }
+
+    // Während des Tippens das aktuelle Wort als Badge anzeigen
+    tagsInput.addEventListener('input', function () {
+        // Letztes "Schatten-Badge" entfernen, falls vorhanden
+        const shadowBadge = tagsContainer.querySelector('.shadow-badge');
+        if (shadowBadge) shadowBadge.remove();
+
+        const value = tagsInput.value.trim();
+        if (value) {
+            const badge = document.createElement('span');
+            badge.className = 'badge bg-secondary me-1 mb-1 shadow-badge';
+            badge.textContent = value;
+            tagsContainer.insertBefore(badge, tagsInput);
+        }
+    });
+
+    // Tag abschließen mit Leertaste
+    tagsInput.addEventListener('keydown', function (e) {
+        if (e.key === ' ' && tagsInput.value.trim() !== '') {
+            e.preventDefault();
+            const newTag = tagsInput.value.trim();
+            if (newTag && !tags.includes(newTag)) {
+                tags.push(newTag);
+                renderTags();
+            }
+        }
+        // Backspace: Wenn Feld leer und Tags vorhanden, letztes Tag zum Bearbeiten holen
+        else if (e.key === 'Backspace' && tagsInput.value === '' && tags.length > 0) {
+            e.preventDefault();
+            const lastTag = tags.pop();
+            renderTags();
+            tagsInput.value = lastTag;
+            tagsInput.focus();
+            // Optional: Schatten-Badge anzeigen
+            const badge = document.createElement('span');
+            badge.className = 'badge bg-secondary me-1 mb-1 shadow-badge';
+            badge.textContent = lastTag;
+            tagsContainer.insertBefore(badge, tagsInput);
+        }
+    });
+
+    // Initiales Rendering
+    renderTags();
+
+
+    // "Andere" Sprache Handling
+    document.getElementById('language').addEventListener('change', function () {
+        const otherLanguageInput = document.getElementById('otherLanguage');
+        otherLanguageInput.classList.toggle('d-none', this.value !== 'other');
+        otherLanguageInput.required = this.value === 'other';
+    });
+
+    // Formular abschicken
+    document.getElementById('createForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Formulardaten sammeln
+        const name = document.getElementById('name').value;
+        let language = document.getElementById('language').value;
+        if (language === 'other') {
+            language = document.getElementById('otherLanguage').value;
+        }
+        const content = document.getElementById('content').value;
+
+        // Validierung
+        if (!name || !language || !content) {
+            alert('Bitte füllen Sie alle Pflichtfelder aus.');
+            return;
+        }
+
+        // API-Anfrage senden
+        fetch('/api/snippets', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, language, tags, content }),
+        })
+            .then(response => {
+                if (response.ok) return response.json();
+                return response.json().then(err => {
+                    throw new Error(err.message || 'Fehler beim Erstellen des Schnipsels');
+                });
+            })
+            .then(data => window.location.href = `/snippets/${data.id}`)
+            .catch(error => alert(`Fehler: ${error.message}`));
+    });
+</script>
