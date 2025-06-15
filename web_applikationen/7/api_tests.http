@@ -21,6 +21,90 @@ Content-Type: application/json
   "text": "Dies ist der Inhalt des neuen Testbeitrags."
 }
 
+### POST Einen neuen Blog-Eintrag erstellen
+# Erstellt einen neuen Blog-Eintrag.
+POST http://localhost:3000/blog/
+Content-Type: application/json
+
+{
+  "jahr": "2024",
+  "monat": "07",
+  "tag": "19",
+  "autor": "Test Autor",
+  "titel": "Ein neuer Testbeitrag ohne Bild",
+  "text": "Dies ist der Inhalt des neuen Testbeitrags ohne Bild."
+}
+
+### POST Einen neuen Blog-Eintrag erstellen (mit Bild)
+# Erstellt einen neuen Blog-Eintrag mit einem Bild.
+# HINWEIS: HTTP-Client-Unterstützung für multipart/form-data kann variieren.
+# Dies ist ein Beispiel, wie es aussehen könnte. Möglicherweise müssen Sie ein Dummy-Bild
+# im selben Verzeichnis wie diese Datei erstellen (z.B. dummy.png).
+POST http://localhost:3000/blog/
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="jahr"
+
+2024
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="monat"
+
+08
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="tag"
+
+01
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="autor"
+
+Bild Hochlader
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="titel"
+
+Beitrag mit Bild
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="text"
+
+Dieser Beitrag sollte ein Bild haben.
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="blogimage"; filename="dummy.png"
+Content-Type: image/png
+
+< ./dummy.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### POST Einen neuen Blog-Eintrag erstellen (ohne Bild, aber als multipart/form-data)
+# Erstellt einen neuen Blog-Eintrag ohne Bild, sendet aber als multipart/form-data.
+POST http://localhost:3000/blog/
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="jahr"
+
+2024
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="monat"
+
+08
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="tag"
+
+02
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="autor"
+
+Formular Absender
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="titel"
+
+Beitrag ohne Bild (Formular)
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="text"
+
+Dieser Beitrag wurde als multipart gesendet, hat aber kein Bild.
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
 ### POST Einen neuen Blog-Eintrag erstellen (Fehlende Felder)
 # Versucht, einen neuen Blog-Eintrag mit fehlenden Feldern zu erstellen (sollte 400 Fehler geben).
 POST http://localhost:3000/blog/

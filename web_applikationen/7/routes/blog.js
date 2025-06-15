@@ -2,8 +2,28 @@ var express = require('express');
 var router = express.Router();
 const fs = require('fs');
 const path = require('path');
+const multer = require('multer');
 
-// Hilfsfunktionen für JSON-Handling
+// Multer für Dateispeicherung konfigurieren
+const uploadDir = path.join(__dirname, '../public/uploads/images');
+
+// Sicherstellen, dass das Upload-Verzeichnis existiert
+if (!fs.existsSync(uploadDir)){
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
+
+// Hilfsfunktionen für JSON-Handhabung
 const blogJsonPath = path.join(__dirname, '../model/blog.json');
 
 function readBlogData() {
@@ -31,13 +51,13 @@ router.get('/', function (req, res, next) {
     res.json(blogEintraege);
 });
 
-/* GET /blog/newpost - Formular anzeigen */
+/* GET /blog/newpost - Formular zum Erstellen eines neuen Blog-Eintrags anzeigen */
 router.get('/newpost', function (req, res, next) {
     res.render('newPost', {title: 'Neuer Blogeintrag'});
 });
 
-/* POST /blog/ - Einen neuen Blog-Eintrag erstellen (ohne Fileupload) */
-router.post('/', function (req, res, next) {
+/* POST /blog/ - Einen neuen Blog-Eintrag erstellen (mit Datei-Upload) */
+router.post('/', upload.single('blogimage'), function (req, res, next) {
     const {jahr, monat, tag, autor, titel, text} = req.body;
     if (!jahr || !monat || !tag || !autor || !titel || !text) {
         return res.status(400).send("Fehlende Felder für den Blog-Eintrag");
@@ -51,10 +71,13 @@ router.post('/', function (req, res, next) {
         autor,
         titel,
         text,
+        imagePath: req.file ? `/uploads/images/${req.file.filename}` : null
     };
     blogEintraege.push(neuerEintrag);
     writeBlogData(blogEintraege);
-    if (req.headers['content-type'] && req.headers['content-type'].includes('application/json')) {
+
+    // Bei Formularübermittlungen (HTML) umleiten. Bei API-Aufrufen (JSON) JSON senden.
+    if (req.accepts('html', 'json') === 'json') {
         res.status(201).json(neuerEintrag);
     } else {
         res.redirect('/blog/');
