@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const fs = require('fs');
 const path = require('path');
+// TODO: express fileupload
 const multer = require('multer');
 
 // Multer für Dateispeicherung konfigurieren
@@ -62,7 +63,7 @@ router.post('/', upload.single('blogimage'), function (req, res, next) {
     if (!autor || !titel || !text) {
         return res.status(400).send("Fehlende Felder für den Blog-Eintrag");
     }
-    
+
     const currentDate = new Date();
     const jahr = currentDate.getFullYear().toString();
     const monat = (currentDate.getMonth() + 1).toString(); // Monate sind 0 basiert - warum?!
