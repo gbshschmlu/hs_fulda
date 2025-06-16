@@ -58,10 +58,16 @@ router.get('/newpost', function (req, res, next) {
 
 /* POST /blog/ - Einen neuen Blog-Eintrag erstellen (mit Datei-Upload) */
 router.post('/', upload.single('blogimage'), function (req, res, next) {
-    const {jahr, monat, tag, autor, titel, text} = req.body;
-    if (!jahr || !monat || !tag || !autor || !titel || !text) {
+    const {autor, titel, text} = req.body;
+    if (!autor || !titel || !text) {
         return res.status(400).send("Fehlende Felder für den Blog-Eintrag");
     }
+    
+    const currentDate = new Date();
+    const jahr = currentDate.getFullYear().toString();
+    const monat = (currentDate.getMonth() + 1).toString(); // Monate sind 0 basiert - warum?!
+    const tag = currentDate.getDate().toString();
+
     const blogEintraege = readBlogData();
     const neuerEintrag = {
         id: getNextId(blogEintraege),
@@ -76,12 +82,7 @@ router.post('/', upload.single('blogimage'), function (req, res, next) {
     blogEintraege.push(neuerEintrag);
     writeBlogData(blogEintraege);
 
-    // Bei Formularübermittlungen (HTML) umleiten. Bei API-Aufrufen (JSON) JSON senden.
-    if (req.accepts('html', 'json') === 'json') {
-        res.status(201).json(neuerEintrag);
-    } else {
-        res.redirect('/blog/');
-    }
+    res.status(201).json(neuerEintrag);
 });
 
 /* GET /blog/:id - Einen spezifischen Blog-Eintrag anhand der ID abrufen */
