@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.4.30)  11 JUN 2025 14:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.4.30)  25 JUN 2025 10:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1181,7 +1181,7 @@ Package hyperref Info: Link coloring OFF on input line 121.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<logo_new_2.png, id=150, 2007.5pt x 831.105pt>
+<logo_new_2.png, id=154, 2007.5pt x 831.105pt>
 File: logo_new_2.png Graphic file (type png)
 <use logo_new_2.png>
 Package pdftex.def Info: logo_new_2.png  used on input line 131.
@@ -1198,17 +1198,17 @@ File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 logo_new_2.png>] (Sperrvermerk.tex) [1
 
 ] (main.toc
-LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 7.
 
 (C:\Users\schmlu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 7.
 
 (C:\Users\schmlu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (21.45901pt too wide) in paragraph at lines 31--31
+Overfull \hbox (21.45901pt too wide) in paragraph at lines 32--32
  [][] [][]\T1/ppl/m/n/12 Förderung der Ak-zep-tanz und Ef-fek-ti-vi-tät von Cod
 e-Qualitätsstandards[] [][]  
  []
@@ -1219,306 +1219,187 @@ e-Qualitätsstandards[] [][]
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
- [3]
+ [3] (main.lof
+Overfull \hbox (12.03906pt too wide) in paragraph at lines 5--5
+ \T1/ppl/m/n/12 fung mit Ban-dit, Tests und Do-ku-men-ta-ti-ons-ge-ne-rie-rung 
+mit fi-na-ler Release- 
+ []
+
+)
+\tf@lof=\write6
+\openout6 = `main.lof'.
+
+ [4
+
+]
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.190 
+l.180 
        [1
 
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 2
-07.
+Overfull \hbox (4.42252pt too wide) in paragraph at lines 190--193
+\T1/ppl/m/n/12 Grundsätzlich wird zwi-schen Prozess- und Pro-dukt-do-ku-men-ta-
+ti-on un-ter-schie-den. Wäh-
+ []
 
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 1
+94.
 (C:\Users\schmlu\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )
-[2]
-Overfull \hbox (6.08797pt too wide) in paragraph at lines 212--213
-[]\T1/ppl/b/n/12 Betriebsdokumentation: \T1/ppl/m/n/12 Ent-hält In-for-ma-tio-n
-en für In-stal-la-ti-on, Kon-fi-gu-ra-ti-on und
+Overfull \hbox (8.52422pt too wide) in paragraph at lines 197--198
+[]\T1/ppl/b/n/12 Testdokumentation: \T1/ppl/m/n/12 Sie bein-hal-tet Test-plä-ne
+, Test-fall-s-pe-zi-fi-ka-tio-nen, Test-da-ten und
  []
 
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 22
-2.
-(C:\Users\schmlu\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pcr.fd
+[2]
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 20
+7.
+ (C:\Users\schmlu\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-Overfull \hbox (25.43488pt too wide) in paragraph at lines 220--225
-\T1/ppl/m/n/12 (\T1/pcr/m/n/12 main \T1/ppl/m/n/12 oder \T1/pcr/m/n/12 master\T
-1/ppl/m/n/12 ). Die In-te-gra-ti-on ver-schie-de-ner Bran-ches er-folgt durch M
-erge-Vorgänge.
+Overfull \hbox (30.61197pt too wide) in paragraph at lines 205--210
+\T1/ppl/m/n/12 Der ty-pi-sche Git-Arbeitszyklus be-ginnt mit dem in-itia-len Ko
+-pie-ren ei-nes Remote-Repositories
  []
 
 
-Overfull \hbox (21.79443pt too wide) in paragraph at lines 220--225
-\T1/ppl/m/n/12 Der Git-Arbeitszyklus um-fasst ty-pi-scher-wei-se: in-itia-les K
-o-pie-ren ei-nes Remote-Repositories
+Overfull \hbox (9.0755pt too wide) in paragraph at lines 205--210
+\T1/ppl/m/n/12 spei-chert (\T1/pcr/m/n/12 git commit\T1/ppl/m/n/12 ), an das Re
+mote-Repository über-tra-gen (\T1/pcr/m/n/12 git push\T1/ppl/m/n/12 ) und schli
+eÿ-
  []
 
-
-Overfull \hbox (28.17038pt too wide) in paragraph at lines 228--238
-\T1/ppl/m/n/12 flow oder dem agi-le-ren Trunk-Based De-ve-lop-ment [[]]. Stan-d
-ar-di-sier-te Commit-Nachrichten
- []
-
-[3]
-Overfull \hbox (5.99408pt too wide) in paragraph at lines 241--246
-\T1/ppl/m/n/12 Text-ba-sier-te Do-ku-men-te wer-den ge-mein-sam mit dem Quell-c
-o-de ver-sio-niert. Durch Bran-
- []
-
-
-Overfull \hbox (9.70686pt too wide) in paragraph at lines 251--251
+[3] [4]
+Overfull \hbox (9.70686pt too wide) in paragraph at lines 230--230
 []\T1/ppl/b/n/17.28 Analyse der Do-ku-men-ta-ti-ons-pra-xis bei Gren-ze-bach BS
 H 
  []
 
 
-Overfull \hbox (1.89848pt too wide) in paragraph at lines 253--254
-\T1/ppl/m/n/12 eta-blier-ten Pro-zes-se und ein-ge-setz-ten Werk-zeu-ge zur Ide
-n-ti-fi-ka-ti-on von Stär-ken, Schwä-
- []
-
-
-Overfull \hbox (28.03757pt too wide) in paragraph at lines 257--264
-\T1/ppl/m/n/12 Diagramme, Screens-hots, Click-Dummies, Pro-to-ty-pen, Wi-re-f-r
-a-mes, Interface-Spezifikationen
- []
-
-
-Overfull \hbox (5.6175pt too wide) in paragraph at lines 257--264
-\T1/ppl/m/n/12 Die tech-ni-sche Do-ku-men-ta-ti-on ist eng mit GitHub und den C
-I/CD-Prozessen via GitHub
- []
-
-
-Overfull \hbox (17.05775pt too wide) in paragraph at lines 257--264
-\T1/ppl/m/n/12 über-führt und in-te-griert. GitHub Ac-ti-ons ak-tua-li-sie-ren 
-au-to-ma-tisch Bad-ges in \T1/pcr/m/n/12 README.md\T1/ppl/m/n/12 -
- []
-
-[4]
-Overfull \hbox (22.2201pt too wide) in paragraph at lines 267--272
-\T1/ppl/m/n/12 sier-te Syn-chro-ni-sa-ti-on. Dies kann In-kon-sis-ten-zen ver-u
-r-sa-chen: ver-al-te-te Code-Kommentare,
- []
-
-
-Overfull \hbox (29.82574pt too wide) in paragraph at lines 267--272
-\T1/ppl/m/n/12 GitHub für code-spezifische In-for-ma-tio-nen ge-nutzt wird. Die
- Qua-li-tät der Code-Kommentare
+Overfull \hbox (1.25436pt too wide) in paragraph at lines 236--243
+\T1/ppl/m/n/12 in-te-griert. GitHub Ac-ti-ons ak-tua-li-sie-ren zu-dem au-to-ma
+-tisch Bad-ges in den \T1/pcr/m/n/12 README.md\T1/ppl/m/n/12 -
  []
 
 [5]
-Overfull \hbox (10.71773pt too wide) in paragraph at lines 275--282
-\T1/ppl/m/n/12 Positiv sind die GitHub-Actions-basierte HTML-Generierung, die V
-er-sio-nie-rung im ``Doc-
+Overfull \hbox (18.05554pt too wide) in paragraph at lines 246--251
+\T1/ppl/m/n/12 det. Dies kann zu In-kon-sis-ten-zen wie ver-al-te-ten Code-Komm
+entaren, \T1/pcr/m/n/12 README.md\T1/ppl/m/n/12 -Dateien,
  []
 
 
-Overfull \hbox (4.35774pt too wide) in paragraph at lines 275--282
-\T1/ppl/m/n/12 Optimierungspotenzial zeigt sich in der Durch-gän-gig-keit des `
-`Do-cu-men-ta-ti-on as Code''-
- []
-
-
-Overfull \hbox (0.10912pt too wide) in paragraph at lines 275--282
-\T1/ppl/m/n/12 Die Tren-nung auf Con-flu-ence und GitHub-generierte Sei-ten wei
-cht po-ten-zi-ell vom ``Sin-
+Overfull \hbox (1.45773pt too wide) in paragraph at lines 246--251
+\T1/ppl/m/n/12 GitHub für code-spezifische In-hal-te ge-nutzt wird. Zu-dem va-r
+i-iert die Qua-li-tät der Code-
  []
 
 [6]
-Overfull \hbox (5.03471pt too wide) in paragraph at lines 292--299
+Overfull \hbox (1.61424pt too wide) in paragraph at lines 271--278
+\T1/ppl/m/n/12 Hosting-Plattform dient. Die-ses Sys-tem wird durch GitHub Ac-ti
+-ons für CI/CD-Prozesse
+ []
+
+
+Overfull \hbox (5.03471pt too wide) in paragraph at lines 271--278
 \T1/ppl/m/n/12 Das Branching-Modell ist klar de-fi-niert und wird kon-se-quent 
 ein-ge-hal-ten. Der \T1/pcr/m/n/12 develop\T1/ppl/m/n/12 -
  []
 
 
-Overfull \hbox (6.59483pt too wide) in paragraph at lines 292--299
-\T1/ppl/m/n/12 Branch ist der Haupt-ent-wick-lungs-zweig. Feature-Branches fol-
-gen dem Sche-ma \T1/pcr/m/n/12 GBV-xxx
+Overfull \hbox (16.0502pt too wide) in paragraph at lines 271--278
+\T1/ppl/m/n/12 Pull Re-quests (PRs) sind ein zen-tra-ler Be-stand-teil des Work
+-flows. Än-de-run-gen aus Feature-
  []
 
-
-Overfull \hbox (21.93008pt too wide) in paragraph at lines 292--299
-\T1/ppl/m/n/12 Pull Re-quests (PRs) sind zen-tra-ler Workflow-Bestandteil. Än-d
-e-run-gen aus Feature-Branches
- []
-
-
-Overfull \hbox (25.59381pt too wide) in paragraph at lines 300--301
-[]\T1/ppl/m/n/12 Abbildung []2[] vi-sua-li-siert den be-schrie-be-nen Git-Workf
+[7]
+Overfull \hbox (25.59381pt too wide) in paragraph at lines 279--280
+[]\T1/ppl/m/n/12 Abbildung []1[] vi-sua-li-siert den be-schrie-be-nen Git-Workf
 low mit dem eta-blier-ten Branching-
  []
 
-<images/git_branching.png, id=282, 917.4275pt x 459.7175pt>
+<images/git_branching.png, id=309, 917.4275pt x 459.7175pt>
 File: images/git_branching.png Graphic file (type png)
 <use images/git_branching.png>
-Package pdftex.def Info: images/git_branching.png  used on input line 304.
+Package pdftex.def Info: images/git_branching.png  used on input line 283.
 (pdftex.def)             Requested size: 391.61586pt x 196.23665pt.
-[7]
-Overfull \hbox (3.72487pt too wide) in paragraph at lines 308--311
-\T1/ppl/m/n/12 fasst: Pro-jekt-in-for-ma-ti-ons-ex-trak-ti-on und \T1/pcr/m/n/1
-2 README.md\T1/ppl/m/n/12 -Aktualisierung, Code-Linting und
- []
-
-<images/git_workflow.png, id=289, 1563.8425pt x 276.03125pt>
+[8]
+<images/git_workflow.png, id=317, 1563.8425pt x 276.03125pt>
 File: images/git_workflow.png Graphic file (type png)
 <use images/git_workflow.png>
-Package pdftex.def Info: images/git_workflow.png  used on input line 314.
-(pdftex.def)             Requested size: 414.6463pt x 73.18584pt.
+Package pdftex.def Info: images/git_workflow.png  used on input line 294.
+(pdftex.def)             Requested size: 460.72124pt x 81.319pt.
+ [9 <./images/git_branching.png (PNG copy)> <./images/git_workflow.png>]
+Overfull \hbox (5.16124pt too wide) in paragraph at lines 306--317
+\T1/ppl/m/n/12 Ein wei-te-rer Schwach-punkt ist die feh-len-de tiefe-re In-te-g
+ra-ti-on zwi-schen Ji-ra und GitHub.
+ []
 
-Overfull \hbox (2.657pt too wide) in paragraph at lines 319--323
-\T1/ppl/m/n/12 die Soft-wa-re auf ei-nem in-ter-nen PyPi-Server be-reit-ge-stel
-lt. Die-ser ak-tua-li-siert sich selbst-
+[10]
+Overfull \hbox (14.0172pt too wide) in paragraph at lines 320--333
+\T1/ppl/m/n/12 Das prak-ti-zier-te Branching-Modell kom-bi-niert ge-schickt Ele
+-men-te von Git-flow und Trunk-
  []
 
 
-Overfull \hbox (38.78569pt too wide) in paragraph at lines 319--323
-\T1/ppl/m/n/12 Die Jira-Verknüpfung er-folgt pri-mär über Branch-Benennung nach
- Tick-et-num-mern (\T1/pcr/m/n/12 GBV-xxx\T1/ppl/m/n/12 ),
+Overfull \hbox (19.02672pt too wide) in paragraph at lines 320--333
+\T1/ppl/m/n/12 Based De-ve-lop-ment. Die Tren-nung zwi-schen dem \T1/pcr/m/n/12
+ develop\T1/ppl/m/n/12 -Branch und ex-pli-zi-ten Release-
  []
 
-
-Overfull \hbox (3.40106pt too wide) in paragraph at lines 319--323
-\T1/ppl/m/n/12 was die Nach-ver-folg-bar-keit er-leich-tert. Ei-ne au-to-ma-ti-
-sier-te Jira-GitHub-Synchronisation
- []
-
-[8 <./images/git_branching.png (PNG copy)> <./images/git_workflow.png>]
-Overfull \hbox (20.80962pt too wide) in paragraph at lines 326--337
-\T1/ppl/m/n/12 Die au-to-ma-ti-sche Do-ku-men-ta-ti-ons-ge-ne-rie-rung und \T1/
-pcr/m/n/12 README.md\T1/ppl/m/n/12 -Aktualisierung mit Status-
- []
-
-
-Overfull \hbox (37.52916pt too wide) in paragraph at lines 326--337
-\T1/ppl/m/n/12 Actions-Fehlern kann kom-plex und zeit-auf-wen-dig sein. Die Tes
-t-Ausführungsgeschwindigkeit
- []
-
-
-Overfull \hbox (6.701pt too wide) in paragraph at lines 326--337
-\T1/ppl/m/n/12 Die feh-len-de tiefe-re Jira-GitHub-Integration ist ein Schwach-
-punkt. Au-to-ma-ti-sches Ticket-
- []
-
-
-Overfull \hbox (3.24622pt too wide) in paragraph at lines 340--353
-\T1/ppl/m/n/12 licht sta-bi-les Release-Management. Die zeit-na-he Feature-Bran
-ch-Integration in \T1/pcr/m/n/12 develop
- []
-
-
-Overfull \hbox (2.86208pt too wide) in paragraph at lines 340--353
-\T1/ppl/m/n/12 Der Ein-Personen-Code-Review ent-spricht grund-le-gen-den Best P
-rac-ti-ces [[]]. Bran-chen-
- []
-
-[9]
-Overfull \hbox (21.44841pt too wide) in paragraph at lines 365--365
+[11]
+Overfull \hbox (21.44841pt too wide) in paragraph at lines 345--345
 []\T1/ppl/b/n/12 Verbesserung der Kon-sis-tenz und Ver-knüp-fung zwi-schen Con-
 flu-ence und GitHub 
  []
 
-
-Overfull \hbox (0.7362pt too wide) in paragraph at lines 369--370
-[]\T1/ppl/b/n/12 Link-Management-Tool ein-füh-ren: \T1/ppl/m/n/12 Ein ``Broken-
-Link-Checker'' könn-te feh-ler-haf-
- []
-
-[10]
-Overfull \hbox (1.50282pt too wide) in paragraph at lines 381--382
-\T1/ppl/m/n/12 Da die Do-ku-men-ta-ti-ons-pfle-ge pri-mär in Code-Kommentaren e
-r-folgt, wür-de kon-se-quen-
- []
-
-
-Overfull \hbox (44.24486pt too wide) in paragraph at lines 385--386
-\T1/ppl/m/n/12 Die va-ri-ie-ren-de Kom-men-tar-qua-li-tät und un-ter-schied-li-
-ches En-ga-ge-ment deu-ten auf Motivations-
- []
-
-
-Overfull \hbox (5.81088pt too wide) in paragraph at lines 387--388
-[]\T1/ppl/b/n/12 Klare Ver-ant-wort-lich-kei-ten: \T1/ppl/m/n/12 De-fi-ni-ti-on
- von Zu-stän-dig-kei-ten für Confluence-Seiten
- []
-
-
-Overfull \hbox (7.0711pt too wide) in paragraph at lines 389--390
-[]\T1/ppl/b/n/12 Code-Kommentar-Richtlinien: \T1/ppl/m/n/12 Pra-xis-na-he Richt
--li-ni-en kön-nen Kon-sis-tenz stei-gern,
- []
-
-
-Overfull \hbox (22.86371pt too wide) in paragraph at lines 390--391
-[]\T1/ppl/b/n/12 Effektivere Scrum-Thematisierung: \T1/ppl/m/n/12 Ein fes-ter A
-genda-Punkt (z.B. ``Doku-Mittwoch'')
- []
-
-[11]
-Overfull \hbox (5.7264pt too wide) in paragraph at lines 411--412
-\T1/ppl/m/n/12 Mo-du-la-re-re GitHub-Actions-Workflows wür-den Pro-jek-tan-pass
--bar-keit er-hö-hen und War-
- []
-
-
-Overfull \hbox (13.63734pt too wide) in paragraph at lines 411--412
-\T1/ppl/m/n/12 tungs-ab-hän-gig-kei-ten re-du-zie-ren. Zur Durch-lauf-zei-ten-v
-er-kür-zung soll-te zu-sätz-li-che Code-
- []
-
-
-Overfull \hbox (6.16959pt too wide) in paragraph at lines 423--424
-\T1/ppl/m/n/12 Es soll-te ge-prüft wer-den, in-wie-weit GitHub Ap-ps oder Ac-ti
--ons ei-ne stär-ke-re Jira-GitHub-
- []
-
 [12]
-Overfull \hbox (31.42105pt too wide) in paragraph at lines 427--438
-\T1/ppl/m/n/12 mög-licht Er-fah-rungs-samm-lung vor voll-stän-di-gem Rol-lout. 
-Kon-ti-nu-ier-li-che Team-Einbindung
- []
-
-
-Overfull \hbox (17.47423pt too wide) in paragraph at lines 448--455
-\T1/ppl/m/n/12 Commit-Nachrichten-Standardisierung iden-ti-fi-ziert, was im Kon
--trast zur er-folg-ten Branch-
- []
-
-
-Overfull \hbox (3.32582pt too wide) in paragraph at lines 448--455
-\T1/ppl/m/n/12 zur Nach-voll-zieh-bar-keits-stei-ge-rung und CI/CD-Workflow-Wei
-terentwicklung zur Qua-
+Overfull \hbox (8.197pt too wide) in paragraph at lines 370--371
+\T1/ppl/m/n/12 Punkt, bei-spiels-wei-se ein ``Doku-Mittwoch'' ana-log zum be-re
+its exis-tie-ren-den ``Test-
  []
 
 [13]
-! Undefined control sequence.
-l.461     \newlineT
-                   
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-Overfull \hbox (8.01752pt too wide) in paragraph at lines 458--465
-\T1/ppl/m/n/12 Nach Um-set-zung prio-ri-sier-ter Emp-feh-lun-gen könn-te die An
--schaf-fung zu-sätz-li-cher Code-
+Overfull \hbox (15.68976pt too wide) in paragraph at lines 387--388
+\T1/ppl/m/n/12 keit. Die fol-gen-den Emp-feh-lun-gen adres-sie-ren die in Ab-sc
+hnitt []4.2[] iden-ti-fi-zier-ten Schwach-
  []
 
 
-Overfull \hbox (4.88957pt too wide) in paragraph at lines 458--465
-\T1/ppl/m/n/12 mög-li-chen und die Ge-samtef-fi-zi-enz stei-gern. Ei-ne tiefe-r
-e Atlassian-Toolchain-Integration
+Overfull \hbox (20.47742pt too wide) in paragraph at lines 391--392
+\T1/ppl/m/n/12 Nut-zung von Pre-Commit-Hooks für lo-ka-le Vor-ab-prü-fun-gen. M
+o-du-la-rer ge-stal-te-te GitHub-
  []
 
-[14] [15] (Werkzeuge.tex) [16
+[14] [15]
+Overfull \hbox (11.5456pt too wide) in paragraph at lines 428--435
+\T1/ppl/m/n/12 Be-son-ders po-si-tiv sind die eta-blier-ten und weit-ge-hend au
+-to-ma-ti-sier-ten CI/CD-Workflows
+ []
+
+
+Overfull \hbox (1.45737pt too wide) in paragraph at lines 428--435
+\T1/ppl/m/n/12 dach-ten Ba-lan-ce zwi-schen Sta-bi-li-tät und Fle-xi-bi-li-tät.
+ Als we-sent-li-che Schwach-stel-le wur-
+ []
+
+
+Overfull \hbox (0.32579pt too wide) in paragraph at lines 428--435
+\T1/ppl/m/n/12 Kon-trast zur be-reits er-folg-reich um-ge-setz-ten Stan-dar-di-
+sie-rung der Branch-Namen steht. 
+ []
+
+[16]
+Overfull \hbox (4.04991pt too wide) in paragraph at lines 438--445
+\T1/ppl/m/n/12 wer-den. Tech-no-lo-gi-sche Trends wie KI-gestützte Do-ku-men-ta
+-ti-ons-werk-zeu-ge soll-ten auf-
+ []
+
+[17] [18] (Werkzeuge.tex) [19
 
 ] (main.bbl
 Underfull \hbox (badness 1688) in paragraph at lines 4--11
@@ -1606,7 +1487,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 56--63
 ile -[] anforderungen/$[]\T1/ppl/m/n/12 ,
  []
 
-[17
+[20
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 97--103
@@ -1620,22 +1501,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 97--103
 it/12 :\T1/pcr/m/n/12 com / apps / 1216106 / github -[] links -[] for -[]
  []
 
-) (Erklaerung.tex [18]) [19] (main.aux)
+) (Erklaerung.tex [21]) [22] (main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 421467979C8703849C7C20637ACDA961;9960.
+(rerunfilecheck)             Checksum: 34BD0E2F9932377F487D3B9BCD6D217E;10110.
  ) 
 Here is how much of TeX's memory you used:
- 20987 strings out of 474486
- 333041 string characters out of 5743283
- 1939542 words of memory out of 5000000
- 42836 multiletter control sequences out of 15000+600000
+ 21006 strings out of 474486
+ 333298 string characters out of 5743283
+ 1940542 words of memory out of 5000000
+ 42847 multiletter control sequences out of 15000+600000
  583436 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1141b,2494s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,1323b,2494s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/schmlu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
 /cmmi12.pfb><C:/Users/schmlu/AppData/Local/Programs/MiKTeX/fonts/type1/urw/cour
 ier/ucrr8a.pfb><C:/Users/schmlu/AppData/Local/Programs/MiKTeX/fonts/type1/urw/h
@@ -1643,9 +1524,9 @@ elvetic/uhvb8a.pfb><C:/Users/schmlu/AppData/Local/Programs/MiKTeX/fonts/type1/u
 rw/palatino/uplb8a.pfb><C:/Users/schmlu/AppData/Local/Programs/MiKTeX/fonts/typ
 e1/urw/palatino/uplr8a.pfb><C:/Users/schmlu/AppData/Local/Programs/MiKTeX/fonts
 /type1/urw/palatino/uplri8a.pfb>
-Output written on main.pdf (23 pages, 283531 bytes).
+Output written on main.pdf (27 pages, 302196 bytes).
 PDF statistics:
- 447 PDF objects out of 1000 (max. 8388607)
- 77 named destinations out of 1000 (max. 500000)
- 316 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 497 PDF objects out of 1000 (max. 8388607)
+ 82 named destinations out of 1000 (max. 500000)
+ 324 words of extra memory for PDF output out of 10000 (max. 10000000)
 

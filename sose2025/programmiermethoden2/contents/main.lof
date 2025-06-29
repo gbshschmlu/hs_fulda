@@ -1,5 +1,7 @@
 \babel@toc {ngerman}{}\relax 
 \babel@toc {ngerman}{}\relax 
 \babel@toc {ngerman}{}\relax 
+\contentsline {figure}{\numberline {1}{\ignorespaces Git-Workflow bei Grenzebach BSH: Feature- und Bugfix-Branches (GBV-xxx) durchlaufen einen Pull-Request-Prozess mit Review vor dem Merge in develop. Ein Push auf develop löst automatisch den CI/CD-Workflow und Release-Prozess aus}}{9}{figure.caption.4}%
+\contentsline {figure}{\numberline {2}{\ignorespaces GitHub Actions CI/CD-Pipeline (general.yml) bei Grenzebach BSH: Sequenzielle Ausführung von CLI-Checks, Code-Linting, Sicherheitsprüfung mit Bandit, Tests und Dokumentationsgenerierung mit finaler Release-Erstellung}}{9}{figure.caption.5}%
 \babel@toc {ngerman}{}\relax 
 \babel@toc {ngerman}{}\relax 
