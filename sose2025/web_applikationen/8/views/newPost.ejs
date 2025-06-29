@@ -1,0 +1,12 @@
+<h1>Neuen Blogeintrag erstellen</h1>
+<form action="/blog/" method="post" enctype="multipart/form-data">
+    <label for="autor">Autor:</label>
+    <input type="text" id="autor" name="autor" required><br>
+    <label for="titel">Titel:</label>
+    <input type="text" id="titel" name="titel" required><br>
+    <label for="text">Text:</label>
+    <textarea id="text" name="text" required></textarea><br>
+    <label for="blogimage">Bild:</label>
+    <input type="file" id="blogimage" name="blogimage"><br>
+    <button type="submit">Absenden</button>
+</form>

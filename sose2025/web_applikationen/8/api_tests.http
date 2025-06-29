@@ -1,0 +1,177 @@
+## ==================================================
+## Blog Routen Tests (aus routes/blog.js)
+## ==================================================
+
+### GET Alle Blog-Einträge abrufen
+# Ruft alle vorhandenen Blog-Einträge ab.
+GET http://localhost:3000/blog/
+Accept: application/json
+
+### POST Einen neuen Blog-Eintrag erstellen
+# Erstellt einen neuen Blog-Eintrag.
+POST http://localhost:3000/blog/
+Content-Type: application/json
+
+{
+  "autor": "Test Autor",
+  "titel": "Ein neuer Testbeitrag",
+  "text": "Dies ist der Inhalt des neuen Testbeitrags."
+}
+
+### POST Einen neuen Blog-Eintrag erstellen (mit Bild)
+# Erstellt einen neuen Blog-Eintrag mit einem Bild.
+POST http://localhost:3000/blog/
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="autor"
+
+Bild Hochlader
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="titel"
+
+Beitrag mit Bild
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="text"
+
+Dieser Beitrag sollte ein Bild haben.
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="blogimage"; filename="dummy.png"
+Content-Type: image/png
+
+< ./dummy.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### POST Einen neuen Blog-Eintrag erstellen (Fehlende Felder)
+# Versucht, einen neuen Blog-Eintrag mit fehlenden Feldern zu erstellen (sollte 400 Fehler geben).
+POST http://localhost:3000/blog/
+Content-Type: application/json
+
+{
+  "autor": "Unvollständiger Autor"
+}
+
+### GET Einen spezifischen Blog-Eintrag anhand der ID abrufen (ID 1)
+# Ruft den Blog-Eintrag mit der ID 1 ab.
+GET http://localhost:3000/blog/1
+Accept: application/json
+
+### GET Einen spezifischen Blog-Eintrag anhand der ID abrufen (ID 2)
+# Ruft den Blog-Eintrag mit der ID 2 ab.
+GET http://localhost:3000/blog/2
+Accept: application/json
+
+### GET Einen spezifischen Blog-Eintrag anhand der ID abrufen (Nicht existierende ID)
+# Versucht, einen Blog-Eintrag mit einer nicht existierenden ID abzurufen (sollte 404 Fehler geben).
+GET http://localhost:3000/blog/999
+Accept: application/json
+
+## ==================================================
+## Neue REST-Routen (PUT und DELETE)
+## ==================================================
+
+### PUT Einen vorhandenen Blog-Eintrag aktualisieren (ID 1)
+# Aktualisiert den Blog-Eintrag mit der ID 1.
+PUT http://localhost:3000/blog/1
+Content-Type: application/json
+
+{
+  "autor": "Aktualisierter Autor",
+  "titel": "Aktualisierter Titel",
+  "text": "Dies ist der aktualisierte Inhalt des Blog-Eintrags."
+}
+
+### PUT Einen vorhandenen Blog-Eintrag aktualisieren (mit Bild)
+# Aktualisiert einen Blog-Eintrag und fügt ein neues Bild hinzu.
+PUT http://localhost:3000/blog/2
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="autor"
+
+Aktualisierter Bild Autor
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="titel"
+
+Aktualisierter Beitrag mit neuem Bild
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="text"
+
+Dieser Beitrag wurde aktualisiert und hat ein neues Bild.
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="blogimage"; filename="new_dummy.png"
+Content-Type: image/png
+
+< ./new_dummy.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### PUT Einen vorhandenen Blog-Eintrag aktualisieren (Nicht existierende ID)
+# Versucht, einen Blog-Eintrag mit einer nicht existierenden ID zu aktualisieren (sollte 404 Fehler geben).
+PUT http://localhost:3000/blog/999
+Content-Type: application/json
+
+{
+  "autor": "Nicht existierender Autor",
+  "titel": "Nicht existierender Titel",
+  "text": "Dieser Eintrag existiert nicht."
+}
+
+### PUT Einen vorhandenen Blog-Eintrag aktualisieren (Fehlende Felder)
+# Versucht, einen Blog-Eintrag mit fehlenden Feldern zu aktualisieren (sollte 400 Fehler geben).
+PUT http://localhost:3000/blog/1
+Content-Type: application/json
+
+{
+  "autor": "Nur Autor"
+}
+
+### DELETE Einen Blog-Eintrag löschen (ID 3)
+# Löscht den Blog-Eintrag mit der ID 3.
+DELETE http://localhost:3000/blog/3
+Accept: application/json
+
+### DELETE Einen Blog-Eintrag löschen (Nicht existierende ID)
+# Versucht, einen Blog-Eintrag mit einer nicht existierenden ID zu löschen (sollte 404 Fehler geben).
+DELETE http://localhost:3000/blog/999
+Accept: application/json
+
+## ==================================================
+## Index Routen Tests (aus routes/index.js)
+## ==================================================
+
+### GET Startseite
+# Ruft die Hauptseite der Anwendung ab.
+GET http://localhost:3000/
+Accept: text/html
+
+### GET Alt Seite
+# Ruft die alternative Seite der Anwendung ab.
+GET http://localhost:3000/alt
+Accept: text/html
+
+### GET Route mit URL-Parametern für Datum
+# Testet die Route, die Datumsparameter aus der URL extrahiert.
+GET http://localhost:3000/2024/12/25
+Accept: text/plain
+
+### GET Route mit Query-Parametern für Name
+# Testet die Route, die einen Namensparameter aus der Query-String extrahiert.
+GET http://localhost:3000/names?name=Maximilian
+Accept: text/plain
+
+### GET Route, die URL- und Query-Parameter kombiniert
+# Testet die Route, die sowohl URL- als auch Query-Parameter verwendet.
+GET http://localhost:3000/2023/05/10/details?filter=wichtig
+Accept: text/plain
+
+### POST Route zum Senden von Daten
+# Testet eine POST-Route, die JSON-Daten im Body erwartet.
+POST http://localhost:3000/submit-data
+Content-Type: application/json
+
+{
+  "nachricht": "Hallo Welt von HTTP Client",
+  "wert": 12345
+}
+
+###

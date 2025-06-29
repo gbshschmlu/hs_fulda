@@ -1,0 +1,72 @@
+[
+  {
+    "id": "1",
+    "jahr": "2025",
+    "monat": "07",
+    "tag": "15",
+    "autor": "Luca",
+    "titel": "Test titel",
+    "text": "Test text",
+    "imagePath": null
+  },
+  {
+    "id": "2",
+    "jahr": "2024",
+    "monat": "06",
+    "tag": "10",
+    "autor": "Anna",
+    "titel": "Mein erster Blogeintrag",
+    "text": "Heute habe ich angefangen, einen Blog zu schreiben. Es macht Spaß!",
+    "imagePath": null
+  },
+  {
+    "id": "3",
+    "jahr": "2024",
+    "monat": "06",
+    "tag": "12",
+    "autor": "Max",
+    "titel": "Sommer in Fulda",
+    "text": "Der Sommer ist endlich da und die Stadt blüht auf. Perfektes Wetter für ein Eis.",
+    "imagePath": null
+  },
+  {
+    "id": "4",
+    "jahr": "2024",
+    "monat": "06",
+    "tag": "14",
+    "autor": "Sophie",
+    "titel": "Neues Rezept ausprobiert",
+    "text": "Ich habe gestern ein neues Kuchenrezept getestet. Es war lecker und einfach zu machen.",
+    "imagePath": null
+  },
+  {
+    "id": "5",
+    "jahr": "2024",
+    "monat": "06",
+    "tag": "16",
+    "autor": "Jonas",
+    "titel": "Wandern in der Rhön",
+    "text": "Am Wochenende war ich wandern. Die Aussicht war fantastisch und das Wetter perfekt.",
+    "imagePath": null
+  },
+  {
+    "id": "6",
+    "jahr": "2004",
+    "monat": "7",
+    "tag": "15",
+    "autor": "fewfrw",
+    "titel": "gfgdfgdfgdf",
+    "text": "efwrefewfeweffwe",
+    "imagePath": "/uploads/images/1749970257783.jpg"
+  },
+  {
+    "id": "7",
+    "jahr": "2025",
+    "monat": "6",
+    "tag": "16",
+    "autor": "Treterz",
+    "titel": "twregter",
+    "text": "rwgteherz",
+    "imagePath": null
+  }
+]
