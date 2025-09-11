@@ -6,7 +6,7 @@
 | Zeit          | Montag                     | Dienstag               | Mittwoch | Donnerstag                  | Freitag             |
 |---------------|----------------------------|------------------------|----------|-----------------------------|---------------------|
 | 8:00 - 9:30   | IT-Sicherheit SU           | Datenbanksysteme P     | FREI     | IT-Sicherheit SU (14-tägig) | Betriebssysteme P * |
-| 9:50 - 10:35  |                            | Algorithmen P          | FREI     | Betriebssysteme SU          |                     |
+| 9:50 - 11:20  |                            | Algorithmen P          | FREI     | Betriebssysteme SU          |                     |
 | 11:40 - 13:10 | IT-Sicherheit P (14-tägig) | Algorithmen SU         | FREI     | Cloud Services SU           |                     |
 | 13:45 - 15:15 |                            | [Wiss. Präsentation] * | FREI     | Datenbanksysteme SU         |                     |
 | 15:30 - 17:00 |                            |                        | FREI     |                             |                     |
@@ -24,8 +24,8 @@
 2. Dienstag 15:30-17:00 _(zu spät)_
 
 #### Algorithmen P (4 Kurse verfügbar - 1 wählen)
-1. **Dienstag 9:50-10:35** ✅ _(gewählt - kompakt mit anderen Fächern)_
-2. Freitag 9:50-10:35 
+1. **Dienstag 9:50-11:20** ✅ _(gewählt - kompakt mit anderen Fächern)_
+2. Freitag 9:50-11:20 
 3. Freitag 15:30-17:00 _(zu spät)_
 4. Dienstag 13:45-15:15 _(kollidiert mit Wiss. Präsentation)_
 
@@ -49,7 +49,7 @@
 
 #### Betriebssysteme P (4 Kurse verfügbar - 1 wählen, alle mit aktiver Teilnahme)
 1. **Freitag 8:00-9:30** ✅ _(gewählt - früh, kombinierbar mit Algorithmen P)_
-2. Freitag 9:50-10:35 _(Alternative - mit Algorithmen P kombiniert)_
+2. Freitag 9:50-11:20 _(Alternative - mit Algorithmen P kombiniert)_
 3. Freitag 11:40-13:10
 4. Freitag 13:45-15:15
 

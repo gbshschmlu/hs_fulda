@@ -8,7 +8,7 @@
 | Zeit          | Montag | Dienstag | Mittwoch | Donnerstag | Freitag |
 |---------------|--------|----------|----------|------------|---------|
 | 8:00 - 9:30   |        |          |          |            |         |
-| 9:50 - 10:35  |        |          |          |            |         |
+| 9:50 - 11:20  |        |          |          |            |         |
 | 11:40 - 13:10 |        | X        |          |            |         |
 | 13:45 - 15:15 |        |          |          |            |         |
 | 15:30 - 17:00 |        | X        |          |            |         |
@@ -18,7 +18,7 @@
 | Zeit          | Montag | Dienstag | Mittwoch | Donnerstag | Freitag |
 |---------------|--------|----------|----------|------------|---------|
 | 8:00 - 9:30   |        |          |          |            |         |
-| 9:50 - 10:35  |        |          |          |            | x       |
+| 9:50 - 11:20  |        |          |          |            | x       |
 | 11:40 - 13:10 |        |          |          |            |         |
 | 13:45 - 15:15 |        | x        |          |            |         |
 | 15:30 - 17:00 |        | x        |          |            | x       |
@@ -30,7 +30,7 @@
 | Zeit          | Montag | Dienstag | Mittwoch | Donnerstag | Freitag |
 |---------------|--------|----------|----------|------------|---------|
 | 8:00 - 9:30   |        |          |          |            |         |
-| 9:50 - 10:35  |        |          |          |            |         |
+| 9:50 - 11:20  |        |          |          |            |         |
 | 11:40 - 13:10 |        |          |          |            |         |
 | 13:45 - 15:15 |        |          |          | x          |         |
 | 15:30 - 17:00 |        |          |          |            |         |
@@ -40,7 +40,7 @@
 | Zeit          | Montag | Dienstag | Mittwoch | Donnerstag | Freitag |
 |---------------|--------|----------|----------|------------|---------|
 | 8:00 - 9:30   |        | x        |          |            |         |
-| 9:50 - 10:35  |        |          |          |            |         |
+| 9:50 - 11:20  |        |          |          |            |         |
 | 11:40 - 13:10 |        | x        |          |            |         |
 | 13:45 - 15:15 |        | x        |          |            |         |
 | 15:30 - 17:00 |        |          |          |            | x       |
@@ -52,7 +52,7 @@
 | Zeit          | Montag | Dienstag | Mittwoch | Donnerstag   | Freitag |
 |---------------|--------|----------|----------|--------------|---------|
 | 8:00 - 9:30   | X      |          |          | x (14-Tägig) |         |
-| 9:50 - 10:35  |        |          |          |              |         |
+| 9:50 - 11:20  |        |          |          |              |         |
 | 11:40 - 13:10 |        |          |          |              |         |
 | 13:45 - 15:15 |        |          |          |              |         |
 | 15:30 - 17:00 |        |          |          |              |         |
@@ -62,7 +62,7 @@
 | Zeit          | Montag                                   | Dienstag                                | Mittwoch | Donnerstag | Freitag |
 |---------------|------------------------------------------|-----------------------------------------|----------|------------|---------|
 | 8:00 - 9:30   |                                          |                                         |          |            |         |
-| 9:50 - 10:35  |                                          |                                         |          |            |         |
+| 9:50 - 11:20  |                                          |                                         |          |            |         |
 | 11:40 - 13:10 | x (2 Kurse, unterschiedlicher Rhythmus)  |                                         |          |            |         |
 | 13:45 - 15:15 | x (2 Kurse, unterschiedlicher Rhythmus)  | x (2 Kurse, unterschiedlicher Rhythmus) |          |            |         |
 | 15:30 - 17:00 | x                                        |                                         |          |            |         |
@@ -89,7 +89,7 @@ Termine:
 | Zeit          | Montag | Dienstag | Mittwoch | Donnerstag | Freitag |
 |---------------|--------|----------|----------|------------|---------|
 | 8:00 - 9:30   |        |          |          |            |         |
-| 9:50 - 10:35  |        |          |          | x          |         |
+| 9:50 - 11:20  |        |          |          | x          |         |
 | 11:40 - 13:10 |        |          |          |            |         |
 | 13:45 - 15:15 |        |          |          |            |         |
 | 15:30 - 17:00 |        |          |          |            |         |
@@ -101,42 +101,20 @@ Jedes "x" = ein Kurs.
 | Zeit          | Montag | Dienstag | Mittwoch | Donnerstag | Freitag |
 |---------------|--------|----------|----------|------------|---------|
 | 8:00 - 9:30   |        |          |          |            | x       |
-| 9:50 - 10:35  |        |          |          |            | x       |
+| 9:50 - 11:20  |        |          |          |            | x       |
 | 11:40 - 13:10 |        |          |          |            | x       |
 | 13:45 - 15:15 |        |          |          |            | x       |
 | 15:30 - 17:00 |        |          |          |            |         |
 
-## Wahlpflichtmodul Cloud Services
+## Verteilte Systeme
 
 ### Seminaristischer Unterricht (SU) 
 
-| Zeit          | Montag | Dienstag | Mittwoch | Donnerstag            | Freitag |
-|---------------|--------|----------|----------|-----------------------|---------|
-| 8:00 - 9:30   |        |          |          |                       |         |
-| 9:50 - 10:35  |        |          |          | x   (1 Geeinter kurs) |         |
-| 11:40 - 13:10 |        |          |          | x   (1 Geeinter kurs) |         |
-| 13:45 - 15:15 |        |          |          |                       |         |
-| 15:30 - 17:00 |        |          |          |                       |         |
-
-### Praxis (P) [Noch keine Informationen]
-
 | Zeit          | Montag | Dienstag | Mittwoch | Donnerstag | Freitag |
 |---------------|--------|----------|----------|------------|---------|
 | 8:00 - 9:30   |        |          |          |            |         |
-| 9:50 - 10:35  |        |          |          |            |         |
-| 11:40 - 13:10 |        |          |          |            |         |
-| 13:45 - 15:15 |        |          |          |            |         |
-| 15:30 - 17:00 |        |          |          |            |         |
-
-## Wahlpflichtmodul Kubernetes
-
-### Seminaristischer Unterricht (SU) [Noch keine Informationen]
-
-| Zeit          | Montag | Dienstag | Mittwoch | Donnerstag | Freitag |
-|---------------|--------|----------|----------|------------|---------|
-| 8:00 - 9:30   |        |          |          |            |         |
-| 9:50 - 10:35  |        |          |          |            |         |
-| 11:40 - 13:10 |        |          |          |            |         |
+| 9:50 - 11:20  |        |          |          |            |         |
+| 11:40 - 13:10 |        | x        |          |            |         |
 | 13:45 - 15:15 |        |          |          |            |         |
 | 15:30 - 17:00 |        |          |          |            |         |
 
@@ -145,11 +123,10 @@ Jedes "x" = ein Kurs.
 | Zeit          | Montag | Dienstag | Mittwoch | Donnerstag | Freitag |
 |---------------|--------|----------|----------|------------|---------|
 | 8:00 - 9:30   |        |          |          |            |         |
-| 9:50 - 10:35  |        |          |          |            |         |
+| 9:50 - 11:20  | x      |          |          |            |         |
 | 11:40 - 13:10 |        |          |          |            |         |
 | 13:45 - 15:15 |        |          |          |            |         |
 | 15:30 - 17:00 |        |          |          |            |         |
-
 
 ---
 
@@ -179,7 +156,6 @@ Meine Rahmenbedingungen (Versuche zu erfüllen):
 - Nur 1 Fach pro Tag sollte vermieden werden
 - Mittwoch frei (Praxistag im Unternehmen)
 - Kurse ohne aktive Teilnahme dürfen parallel zu "Wissenschaftliche Präsentation und Kommunikation" liegen (Dienstag 13:45-18:45)
-- SU dürfen sich mit Wahlpflichtmodulen überschneiden, sofern nicht die volle Zeit des Wahlpflichtmoduls belegt wird
 
 Output-Format:
 Für jede Variation:
