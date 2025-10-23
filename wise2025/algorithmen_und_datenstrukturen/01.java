@@ -2,7 +2,9 @@ public class Main {
 
     // Aufgabe 1.1: Lineare Suche
     public static int linearSearch(int[] arr, int target) {
+        // Durchlaufe das Array
         for (int i = 0; i < arr.length; i++) {
+            // Überprüfe, ob das aktuelle Element das Ziel ist
             if (arr[i] == target) {
                 return i;
             }
@@ -15,12 +17,16 @@ public class Main {
         int left = 0;
         int right = arr.length - 1;
 
+        // Solange der linke Index kleiner oder gleich dem rechten Index ist
         while (left <= right) {
+            // Mittleren Index im aktuellen Bereich berechnen
             int mid = left + (right - left) / 2;
 
+            // Überprüfen, ob das mittlere Element das Ziel ist
             if (arr[mid] == target) {
                 return mid;
             }
+            // Entscheiden, ob im linken oder rechten Teil weitergesucht wird
             if (arr[mid] < target) {
                 left = mid + 1;
             } else {
@@ -33,9 +39,13 @@ public class Main {
     // Aufgabe 1.2: Bubble Sort
     public static void bubbleSort(int[] arr) {
         int n = arr.length;
+        // Wie oft man durch das Array gehen muss
         for (int i = 0; i < n - 1; i++) {
+            // Vergleiche benachbarte Elemente
+            // n - i - 1, da die letzten i Elemente bereits sortiert sind
             for (int j = 0; j < n - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
+                    // Tausche arr[j] und arr[j + 1] wenn sie in der falschen Reihenfolge sind
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -47,13 +57,17 @@ public class Main {
     // Aufgabe 1.3: Selection Sort
     public static void selectionSort(int[] arr) {
         int n = arr.length;
+        // i trennt das unsortierte und sortierte Segment
         for (int i = 0; i < n - 1; i++) {
+            // Finde das kleinste Element im unsortierten Segment
             int minIdx = i;
             for (int j = i + 1; j < n; j++) {
                 if (arr[j] < arr[minIdx]) {
                     minIdx = j;
                 }
             }
+
+            // Tausche das gefundene kleinste Element mit dem ersten Element des unsortierten Segments
             int temp = arr[minIdx];
             arr[minIdx] = arr[i];
             arr[i] = temp;
