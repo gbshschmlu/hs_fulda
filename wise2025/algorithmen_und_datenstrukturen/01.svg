@@ -1,0 +1,277 @@
+<svg viewBox="0 0 1200 1600" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font: bold 24px sans-serif; fill: #333; }
+    .subtitle { font: bold 16px sans-serif; fill: #666; }
+    .label { font: 14px sans-serif; fill: #333; }
+    .small-label { font: 12px sans-serif; fill: #666; }
+    .array-box { fill: #e0e0e0; stroke: #333; stroke-width: 2; }
+    .highlight { fill: #4CAF50; }
+    .compare { fill: #FFC107; }
+    .found { fill: #2196F3; }
+    .sorted { fill: #9C27B0; }
+    .arrow { stroke: #f44336; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+  </style>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#f44336" />
+    </marker>
+  </defs>
+
+  <!-- Lineare Suche -->
+  <g transform="translate(50, 50)">
+    <text x="0" y="0" class="title">1. Lineare Suche (Suche nach 9)</text>
+    
+    <!-- Schritt 1 -->
+    <text x="0" y="40" class="subtitle">Schritt 1: Index 0</text>
+    <rect x="0" y="60" width="50" height="50" class="array-box"/>
+    <rect x="60" y="60" width="50" height="50" class="array-box"/>
+    <rect x="120" y="60" width="50" height="50" class="array-box"/>
+    <rect x="180" y="60" width="50" height="50" class="array-box"/>
+    <rect x="240" y="60" width="50" height="50" class="array-box"/>
+    
+    <rect x="0" y="60" width="50" height="50" class="compare"/>
+    
+    <text x="25" y="92" class="label" text-anchor="middle">3</text>
+    <text x="85" y="92" class="label" text-anchor="middle">7</text>
+    <text x="145" y="92" class="label" text-anchor="middle">2</text>
+    <text x="205" y="92" class="label" text-anchor="middle">9</text>
+    <text x="265" y="92" class="label" text-anchor="middle">1</text>
+    
+    <path d="M 25 40 L 25 55" class="arrow"/>
+    <text x="25" y="130" class="small-label" text-anchor="middle">3 ≠ 9</text>
+    
+    <!-- Schritt 2 -->
+    <text x="0" y="170" class="subtitle">Schritt 2: Index 1</text>
+    <rect x="0" y="190" width="50" height="50" class="array-box"/>
+    <rect x="60" y="190" width="50" height="50" class="array-box"/>
+    <rect x="120" y="190" width="50" height="50" class="array-box"/>
+    <rect x="180" y="190" width="50" height="50" class="array-box"/>
+    <rect x="240" y="190" width="50" height="50" class="array-box"/>
+    
+    <rect x="60" y="190" width="50" height="50" class="compare"/>
+    
+    <text x="25" y="222" class="label" text-anchor="middle">3</text>
+    <text x="85" y="222" class="label" text-anchor="middle">7</text>
+    <text x="145" y="222" class="label" text-anchor="middle">2</text>
+    <text x="205" y="222" class="label" text-anchor="middle">9</text>
+    <text x="265" y="222" class="label" text-anchor="middle">1</text>
+    
+    <path d="M 85 170 L 85 185" class="arrow"/>
+    <text x="85" y="260" class="small-label" text-anchor="middle">7 ≠ 9</text>
+    
+    <!-- Schritt 4 -->
+    <text x="0" y="300" class="subtitle">Schritt 4: Index 3 - Gefunden!</text>
+    <rect x="0" y="320" width="50" height="50" class="array-box"/>
+    <rect x="60" y="320" width="50" height="50" class="array-box"/>
+    <rect x="120" y="320" width="50" height="50" class="array-box"/>
+    <rect x="180" y="320" width="50" height="50" class="array-box"/>
+    <rect x="240" y="320" width="50" height="50" class="array-box"/>
+    
+    <rect x="180" y="320" width="50" height="50" class="found"/>
+    
+    <text x="25" y="352" class="label" text-anchor="middle">3</text>
+    <text x="85" y="352" class="label" text-anchor="middle">7</text>
+    <text x="145" y="352" class="label" text-anchor="middle">2</text>
+    <text x="205" y="352" class="label" text-anchor="middle">9</text>
+    <text x="265" y="352" class="label" text-anchor="middle">1</text>
+    
+    <path d="M 205 300 L 205 315" class="arrow"/>
+    <text x="205" y="390" class="small-label" text-anchor="middle">9 = 9 ✓</text>
+  </g>
+
+  <!-- Binäre Suche -->
+  <g transform="translate(600, 50)">
+    <text x="0" y="0" class="title">2. Binäre Suche (Suche nach 7)</text>
+    
+    <!-- Schritt 1 -->
+    <text x="0" y="40" class="subtitle">Schritt 1: Mitte prüfen</text>
+    <rect x="0" y="60" width="50" height="50" class="array-box"/>
+    <rect x="60" y="60" width="50" height="50" class="array-box"/>
+    <rect x="120" y="60" width="50" height="50" class="array-box"/>
+    <rect x="180" y="60" width="50" height="50" class="array-box"/>
+    <rect x="240" y="60" width="50" height="50" class="array-box"/>
+    
+    <rect x="120" y="60" width="50" height="50" class="compare"/>
+    
+    <text x="25" y="92" class="label" text-anchor="middle">1</text>
+    <text x="85" y="92" class="label" text-anchor="middle">2</text>
+    <text x="145" y="92" class="label" text-anchor="middle">3</text>
+    <text x="205" y="92" class="label" text-anchor="middle">7</text>
+    <text x="265" y="92" class="label" text-anchor="middle">9</text>
+    
+    <path d="M 145 40 L 145 55" class="arrow"/>
+    <text x="145" y="130" class="small-label" text-anchor="middle">3 &lt; 7</text>
+    <text x="145" y="145" class="small-label" text-anchor="middle">→ suche rechts</text>
+    
+    <!-- Schritt 2 -->
+    <text x="0" y="180" class="subtitle">Schritt 2: Rechte Hälfte</text>
+    <rect x="0" y="200" width="50" height="50" class="array-box" opacity="0.3"/>
+    <rect x="60" y="200" width="50" height="50" class="array-box" opacity="0.3"/>
+    <rect x="120" y="200" width="50" height="50" class="array-box" opacity="0.3"/>
+    <rect x="180" y="200" width="50" height="50" class="array-box"/>
+    <rect x="240" y="200" width="50" height="50" class="array-box"/>
+    
+    <rect x="180" y="200" width="50" height="50" class="compare"/>
+    
+    <text x="25" y="232" class="label" text-anchor="middle" opacity="0.3">1</text>
+    <text x="85" y="232" class="label" text-anchor="middle" opacity="0.3">2</text>
+    <text x="145" y="232" class="label" text-anchor="middle" opacity="0.3">3</text>
+    <text x="205" y="232" class="label" text-anchor="middle">7</text>
+    <text x="265" y="232" class="label" text-anchor="middle">9</text>
+    
+    <path d="M 205 180 L 205 195" class="arrow"/>
+    <text x="205" y="270" class="small-label" text-anchor="middle">7 = 7 ✓</text>
+  </g>
+
+  <!-- Bubble Sort -->
+  <g transform="translate(50, 480)">
+    <text x="0" y="0" class="title">3. Bubble Sort</text>
+    
+    <!-- Start -->
+    <text x="0" y="40" class="subtitle">Start</text>
+    <rect x="0" y="60" width="50" height="50" class="array-box"/>
+    <rect x="60" y="60" width="50" height="50" class="array-box"/>
+    <rect x="120" y="60" width="50" height="50" class="array-box"/>
+    <rect x="180" y="60" width="50" height="50" class="array-box"/>
+    <rect x="240" y="60" width="50" height="50" class="array-box"/>
+    
+    <text x="25" y="92" class="label" text-anchor="middle">5</text>
+    <text x="85" y="92" class="label" text-anchor="middle">2</text>
+    <text x="145" y="92" class="label" text-anchor="middle">8</text>
+    <text x="205" y="92" class="label" text-anchor="middle">1</text>
+    <text x="265" y="92" class="label" text-anchor="middle">4</text>
+    
+    <!-- Schritt 1 -->
+    <text x="0" y="150" class="subtitle">Vergleiche 5 und 2 → Tausch</text>
+    <rect x="0" y="170" width="50" height="50" class="compare"/>
+    <rect x="60" y="170" width="50" height="50" class="compare"/>
+    <rect x="120" y="170" width="50" height="50" class="array-box"/>
+    <rect x="180" y="170" width="50" height="50" class="array-box"/>
+    <rect x="240" y="170" width="50" height="50" class="array-box"/>
+    
+    <text x="25" y="202" class="label" text-anchor="middle">2</text>
+    <text x="85" y="202" class="label" text-anchor="middle">5</text>
+    <text x="145" y="202" class="label" text-anchor="middle">8</text>
+    <text x="205" y="202" class="label" text-anchor="middle">1</text>
+    <text x="265" y="202" class="label" text-anchor="middle">4</text>
+    
+    <!-- Schritt 2 -->
+    <text x="0" y="260" class="subtitle">Vergleiche 5 und 8 → kein Tausch</text>
+    <rect x="0" y="280" width="50" height="50" class="array-box"/>
+    <rect x="60" y="280" width="50" height="50" class="compare"/>
+    <rect x="120" y="280" width="50" height="50" class="compare"/>
+    <rect x="180" y="280" width="50" height="50" class="array-box"/>
+    <rect x="240" y="280" width="50" height="50" class="array-box"/>
+    
+    <text x="25" y="312" class="label" text-anchor="middle">2</text>
+    <text x="85" y="312" class="label" text-anchor="middle">5</text>
+    <text x="145" y="312" class="label" text-anchor="middle">8</text>
+    <text x="205" y="312" class="label" text-anchor="middle">1</text>
+    <text x="265" y="312" class="label" text-anchor="middle">4</text>
+    
+    <!-- Nach Durchlauf 1 -->
+    <text x="0" y="370" class="subtitle">Nach Durchlauf 1 (größte Zahl rechts)</text>
+    <rect x="0" y="390" width="50" height="50" class="array-box"/>
+    <rect x="60" y="390" width="50" height="50" class="array-box"/>
+    <rect x="120" y="390" width="50" height="50" class="array-box"/>
+    <rect x="180" y="390" width="50" height="50" class="array-box"/>
+    <rect x="240" y="390" width="50" height="50" class="sorted"/>
+    
+    <text x="25" y="422" class="label" text-anchor="middle">2</text>
+    <text x="85" y="422" class="label" text-anchor="middle">1</text>
+    <text x="145" y="422" class="label" text-anchor="middle">5</text>
+    <text x="205" y="422" class="label" text-anchor="middle">4</text>
+    <text x="265" y="422" class="label" text-anchor="middle">8</text>
+    
+    <text x="265" y="460" class="small-label" text-anchor="middle">sortiert</text>
+  </g>
+
+  <!-- Selection Sort -->
+  <g transform="translate(600, 480)">
+    <text x="0" y="0" class="title">4. Selection Sort</text>
+    
+    <!-- Start -->
+    <text x="0" y="40" class="subtitle">Start</text>
+    <rect x="0" y="60" width="50" height="50" class="array-box"/>
+    <rect x="60" y="60" width="50" height="50" class="array-box"/>
+    <rect x="120" y="60" width="50" height="50" class="array-box"/>
+    <rect x="180" y="60" width="50" height="50" class="array-box"/>
+    <rect x="240" y="60" width="50" height="50" class="array-box"/>
+    
+    <text x="25" y="92" class="label" text-anchor="middle">5</text>
+    <text x="85" y="92" class="label" text-anchor="middle">2</text>
+    <text x="145" y="92" class="label" text-anchor="middle">8</text>
+    <text x="205" y="92" class="label" text-anchor="middle">1</text>
+    <text x="265" y="92" class="label" text-anchor="middle">4</text>
+    
+    <!-- Schritt 1 -->
+    <text x="0" y="150" class="subtitle">Finde kleinstes Element: 1</text>
+    <rect x="0" y="170" width="50" height="50" class="compare"/>
+    <rect x="60" y="170" width="50" height="50" class="array-box"/>
+    <rect x="120" y="170" width="50" height="50" class="array-box"/>
+    <rect x="180" y="170" width="50" height="50" class="highlight"/>
+    <rect x="240" y="170" width="50" height="50" class="array-box"/>
+    
+    <text x="25" y="202" class="label" text-anchor="middle">5</text>
+    <text x="85" y="202" class="label" text-anchor="middle">2</text>
+    <text x="145" y="202" class="label" text-anchor="middle">8</text>
+    <text x="205" y="202" class="label" text-anchor="middle">1</text>
+    <text x="265" y="202" class="label" text-anchor="middle">4</text>
+    
+    <text x="205" y="240" class="small-label" text-anchor="middle">kleinstes</text>
+    
+    <!-- Nach Tausch 1 -->
+    <text x="0" y="280" class="subtitle">Tausche 5 und 1</text>
+    <rect x="0" y="300" width="50" height="50" class="sorted"/>
+    <rect x="60" y="300" width="50" height="50" class="array-box"/>
+    <rect x="120" y="300" width="50" height="50" class="array-box"/>
+    <rect x="180" y="300" width="50" height="50" class="array-box"/>
+    <rect x="240" y="300" width="50" height="50" class="array-box"/>
+    
+    <text x="25" y="332" class="label" text-anchor="middle">1</text>
+    <text x="85" y="332" class="label" text-anchor="middle">2</text>
+    <text x="145" y="332" class="label" text-anchor="middle">8</text>
+    <text x="205" y="332" class="label" text-anchor="middle">5</text>
+    <text x="265" y="332" class="label" text-anchor="middle">4</text>
+    
+    <text x="25" y="370" class="small-label" text-anchor="middle">sortiert</text>
+    
+    <!-- Schritt 2 -->
+    <text x="0" y="400" class="subtitle">Finde nächstes kleinstes: 2</text>
+    <rect x="0" y="420" width="50" height="50" class="sorted"/>
+    <rect x="60" y="420" width="50" height="50" class="highlight"/>
+    <rect x="120" y="420" width="50" height="50" class="array-box"/>
+    <rect x="180" y="420" width="50" height="50" class="array-box"/>
+    <rect x="240" y="420" width="50" height="50" class="array-box"/>
+    
+    <text x="25" y="452" class="label" text-anchor="middle">1</text>
+    <text x="85" y="452" class="label" text-anchor="middle">2</text>
+    <text x="145" y="452" class="label" text-anchor="middle">8</text>
+    <text x="205" y="452" class="label" text-anchor="middle">5</text>
+    <text x="265" y="452" class="label" text-anchor="middle">4</text>
+    
+    <text x="85" y="490" class="small-label" text-anchor="middle">bereits richtig</text>
+  </g>
+
+  <!-- Legende -->
+  <g transform="translate(50, 1000)">
+    <text x="0" y="0" class="title">Legende</text>
+    
+    <rect x="0" y="20" width="40" height="30" class="array-box"/>
+    <text x="50" y="40" class="label">Normal</text>
+    
+    <rect x="150" y="20" width="40" height="30" class="compare"/>
+    <text x="200" y="40" class="label">Wird verglichen</text>
+    
+    <rect x="350" y="20" width="40" height="30" class="highlight"/>
+    <text x="400" y="40" class="label">Ausgewählt/Minimum</text>
+    
+    <rect x="600" y="20" width="40" height="30" class="found"/>
+    <text x="650" y="40" class="label">Gefunden</text>
+    
+    <rect x="800" y="20" width="40" height="30" class="sorted"/>
+    <text x="850" y="40" class="label">Sortiert</text>
+  </g>
+
+</svg>
