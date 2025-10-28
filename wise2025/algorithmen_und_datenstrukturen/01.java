@@ -1,6 +1,7 @@
 public class Main {
 
     // Aufgabe 1.1: Lineare Suche
+    // Komplexität: O(n)
     public static int linearSearch(int[] arr, int target) {
         // Durchlaufe das Array
         for (int i = 0; i < arr.length; i++) {
@@ -13,6 +14,7 @@ public class Main {
     }
 
     // Aufgabe 1.1: Binäre Suche
+    // Komplexität: O(log n)
     public static int binarySearch(int[] arr, int target) {
         int left = 0;
         int right = arr.length - 1;
@@ -37,6 +39,7 @@ public class Main {
     }
 
     // Aufgabe 1.2: Bubble Sort
+    // Komplexität: O(n^2)
     public static void bubbleSort(int[] arr) {
         int n = arr.length;
         // Wie oft man durch das Array gehen muss
@@ -55,6 +58,7 @@ public class Main {
     }
 
     // Aufgabe 1.3: Selection Sort
+    // Komplexität: O(n^2)
     public static void selectionSort(int[] arr) {
         int n = arr.length;
         // i trennt das unsortierte und sortierte Segment
