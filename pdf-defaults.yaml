@@ -1,0 +1,68 @@
+from: markdown
+to: pdf
+pdf-engine: xelatex
+
+variables:
+    documentclass: article
+    papersize: a4
+    fontsize: 11pt
+    geometry:
+        - margin=2.5cm
+        - top=3cm
+    mainfont: Arial
+    monofont: Menlo
+    colorlinks: true
+    linkcolor: blue
+    author: "Luca Michael Schmidt"
+    institute: "Grenzebach BSH GmbH | HS Fulda"
+    header-includes: |
+        \usepackage{fancyhdr}
+        \usepackage{xcolor}
+        \usepackage{graphicx}
+        \usepackage{lastpage}
+        \usepackage{longtable}
+        \usepackage{array}
+        \usepackage{colortbl}
+        \usepackage{fancyvrb}
+        \usepackage{fvextra}
+
+        \definecolor{grenzebachred}{RGB}{237, 27, 36}
+        \definecolor{grenzebachblack}{RGB}{0, 0, 0}
+        \definecolor{codebg}{RGB}{245, 245, 245}
+        \definecolor{codeborder}{RGB}{220, 220, 220}
+        \definecolor{inlinecode}{RGB}{240, 240, 240}
+
+        % Tabellen Styling
+        \setlength{\arrayrulewidth}{0.5pt}
+        \arrayrulecolor{grenzebachblack}
+        \rowcolors{2}{white}{codebg}
+
+        % Code-Block Styling
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+          breaklines,
+          breakanywhere,
+          commandchars=\\\{\},
+          frame=single,
+          framesep=3mm,
+          rulecolor=\color{codeborder},
+          fillcolor=\color{codebg}
+        }
+
+        % Inline Code Styling
+        \let\oldtexttt\texttt
+        \renewcommand{\texttt}[1]{%
+          \colorbox{inlinecode}{\oldtexttt{#1}}%
+        }
+
+        % Header/Footer
+        \pagestyle{fancy}
+        \fancyhf{}
+        \fancyhead[L]{\textcolor{grenzebachred}{\textbf{Grenzebach BSH}}}
+        \fancyhead[R]{\textcolor{grenzebachblack}{Luca Michael Schmidt}}
+        \fancyfoot[L]{\textcolor{grenzebachblack}{\small Duales Studium | HS Fulda}}
+        \fancyfoot[R]{\textcolor{grenzebachblack}{\small Seite \thepage\ von \pageref{LastPage}}}
+
+        \renewcommand{\headrulewidth}{0.5pt}
+        \renewcommand{\footrulewidth}{0.5pt}
+        \renewcommand{\headrule}{\hbox to\headwidth{\color{grenzebachred}\leaders\hrule height \headrulewidth\hfill}}
+        \renewcommand{\footrule}{\hbox to\headwidth{\color{grenzebachred}\leaders\hrule height \footrulewidth\hfill}}
