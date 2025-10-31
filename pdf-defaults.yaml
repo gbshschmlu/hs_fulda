@@ -9,6 +9,7 @@ variables:
     geometry:
         - margin=2.5cm
         - top=3cm
+        - headheight=1.3cm
     mainfont: Arial
     monofont: Menlo
     colorlinks: true
@@ -25,6 +26,7 @@ variables:
         \usepackage{colortbl}
         \usepackage{fancyvrb}
         \usepackage{fvextra}
+        \usepackage{hyperref}
 
         \definecolor{grenzebachred}{RGB}{237, 27, 36}
         \definecolor{grenzebachblack}{RGB}{0, 0, 0}
@@ -57,9 +59,11 @@ variables:
         % Header/Footer
         \pagestyle{fancy}
         \fancyhf{}
-        \fancyhead[L]{\textcolor{grenzebachred}{\textbf{Grenzebach BSH}}}
+
+        \fancyhead[L]{\raisebox{-0.25\height}{\includegraphics[height=1cm]{gb.jpg}}}
         \fancyhead[R]{\textcolor{grenzebachblack}{Luca Michael Schmidt}}
-        \fancyfoot[L]{\textcolor{grenzebachblack}{\small Duales Studium | HS Fulda}}
+
+        \fancyfoot[L]{\textcolor{grenzebachblack}{\small Duales Studium | HS Fulda \\ \href{mailto:Luca.Schmidt@grenzebach.com}{Luca.schmidt@grenzebach.com}}}
         \fancyfoot[R]{\textcolor{grenzebachblack}{\small Seite \thepage\ von \pageref{LastPage}}}
 
         \renewcommand{\headrulewidth}{0.5pt}
