@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Übungsblatt 2 - Visualisierungen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .explanation {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .visualization {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 300px;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .array-container {
+            display: flex;
+            gap: 5px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .array-item {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        .array-item.comparing {
+            background: #ffd700;
+            transform: scale(1.1);
+        }
+        
+        .array-item.sorted {
+            background: #90EE90;
+            border-color: #228B22;
+        }
+        
+        .array-item.current {
+            background: #ff6b6b;
+            border-color: #c92a2a;
+        }
+        
+        .tree-node {
+            background: #e7f5ff;
+            border: 2px solid #339af0;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 5px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        
+        .step-indicator {
+            background: #fff3bf;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .highlight {
+            background: #fff3bf;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Übungsblatt 2 - Interaktive Erklärungen</h1>
+        
+        <!-- Aufgabe 2.1 -->
+        <div class="section">
+            <h2>Aufgabe 2.1: Binäre Exponentiation</h2>
+            
+            <div class="explanation">
+                <h3>Das Problem</h3>
+                <p>Wir wollen 2^n berechnen. Die naive Methode würde n-mal multiplizieren (2 * 2 * 2 * ...). Das ist langsam!</p>
+                <p><strong>Binäre Exponentiation</strong> nutzt einen Trick: Wir können die Anzahl der Schritte drastisch reduzieren.</p>
+            </div>
+            
+            <div class="visualization">
+                <h3>Schritt-für-Schritt Simulation</h3>
+                <div class="controls">
+                    <label>n = <input type="number" id="exp-input" value="10" min="0" max="20"></label>
+                    <button onclick="startBinaryExp()">Starten</button>
+                    <button onclick="stepBinaryExp()" id="step-btn" disabled>Nächster Schritt</button>
+                    <button onclick="resetBinaryExp()">Zurücksetzen</button>
+                </div>
+                <div id="exp-steps" style="margin-top: 20px;"></div>
+            </div>
+            
+            <div class="explanation">
+                <h3>Die Schleifeninvariante</h3>
+                <p>Die magische Formel, die immer gilt: <span class="highlight">z * x^y = 2^n</span> und <span class="highlight">y >= 0</span></p>
+                
+                <h4>Wie funktioniert's?</h4>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>y ungerade:</strong> Wir "ziehen" ein x raus → z wird zu z*x, y wird zu y-1</li>
+                    <li><strong>y gerade:</strong> Wir nutzen (x²)^(y/2) = x^y → x wird zu x*x, y wird halbiert</li>
+                </ul>
+                
+                <p style="margin-top: 15px;">Beispiel: 2^10</p>
+                <table>
+                    <tr><th>Schritt</th><th>x</th><th>y</th><th>z</th><th>Aktion</th></tr>
+                    <tr><td>Start</td><td>2</td><td>10</td><td>1</td><td>-</td></tr>
+                    <tr><td>1</td><td>4</td><td>5</td><td>1</td><td>y gerade → x=x*x, y=y/2</td></tr>
+                    <tr><td>2</td><td>4</td><td>4</td><td>4</td><td>y ungerade → z=z*x, y=y-1</td></tr>
+                    <tr><td>3</td><td>16</td><td>2</td><td>4</td><td>y gerade → x=x*x, y=y/2</td></tr>
+                    <tr><td>4</td><td>256</td><td>1</td><td>4</td><td>y gerade → x=x*x, y=y/2</td></tr>
+                    <tr><td>5</td><td>256</td><td>0</td><td>1024</td><td>y ungerade → z=z*x, y=y-1</td></tr>
+                </table>
+                
+                <p style="margin-top: 15px;">Nur 5 Schritte statt 10 Multiplikationen!</p>
+            </div>
+        </div>
+        
+        <!-- Aufgabe 2.2 -->
+        <div class="section">
+            <h2>Aufgabe 2.2: Das Halteproblem</h2>
+            
+            <div class="explanation">
+                <h3>Die Frage</h3>
+                <p>Können wir ein Programm schreiben, das für JEDES andere Programm sagt, ob es stoppt oder nicht?</p>
+                <p><strong>Antwort: NEIN!</strong> Und zwar nicht, weil wir es nicht können, sondern weil es <em>logisch unmöglich</em> ist.</p>
+            </div>
+            
+            <div class="visualization">
+                <h3>Das Paradoxon visualisiert</h3>
+                <svg width="100%" height="400" viewBox="0 0 800 400">
+                    <!-- Fee / Terminates -->
+                    <rect x="50" y="50" width="200" height="100" fill="#e7f5ff" stroke="#339af0" stroke-width="3" rx="10"/>
+                    <text x="150" y="90" text-anchor="middle" font-size="18" font-weight="bold">terminates(P, I)</text>
+                    <text x="150" y="115" text-anchor="middle" font-size="14">Die "Fee"</text>
+                    <text x="150" y="135" text-anchor="middle" font-size="12" fill="#666">gibt true/false zurück</text>
+                    
+                    <!-- Paradox Programm -->
+                    <rect x="300" y="50" width="200" height="100" fill="#fff3bf" stroke="#ffd43b" stroke-width="3" rx="10"/>
+                    <text x="400" y="90" text-anchor="middle" font-size="18" font-weight="bold">paradox(P)</text>
+                    <text x="400" y="115" text-anchor="middle" font-size="12">if terminates(P,P):</text>
+                    <text x="400" y="133" text-anchor="middle" font-size="12">  while True: pass</text>
+                    
+                    <!-- Pfeil 1 -->
+                    <line x1="250" y1="100" x2="300" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <!-- Paradox auf sich selbst -->
+                    <rect x="550" y="50" width="200" height="100" fill="#ffe3e3" stroke="#fa5252" stroke-width="3" rx="10"/>
+                    <text x="650" y="85" text-anchor="middle" font-size="18" font-weight="bold">paradox(paradox)</text>
+                    <text x="650" y="110" text-anchor="middle" font-size="14">Was passiert hier?</text>
+                    <text x="650" y="135" text-anchor="middle" font-size="12" fill="#c92a2a">WIDERSPRUCH!</text>
+                    
+                    <!-- Pfeil 2 -->
+                    <line x1="500" y1="100" x2="550" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <!-- Fall 1: stoppt -->
+                    <rect x="200" y="220" width="180" height="120" fill="#d3f9d8" stroke="#37b24d" stroke-width="2" rx="10"/>
+                    <text x="290" y="245" text-anchor="middle" font-size="14" font-weight="bold">Fall 1: Stoppt</text>
+                    <text x="290" y="270" text-anchor="middle" font-size="12">terminates gibt true</text>
+                    <text x="290" y="290" text-anchor="middle" font-size="12">→ paradox geht in</text>
+                    <text x="290" y="310" text-anchor="middle" font-size="12">Endlosschleife</text>
+                    <text x="290" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#c92a2a">→ stoppt NICHT!</text>
+                    
+                    <!-- Fall 2: stoppt nicht -->
+                    <rect x="420" y="220" width="180" height="120" fill="#ffe3e3" stroke="#fa5252" stroke-width="2" rx="10"/>
+                    <text x="510" y="245" text-anchor="middle" font-size="14" font-weight="bold">Fall 2: Stoppt nicht</text>
+                    <text x="510" y="270" text-anchor="middle" font-size="12">terminates gibt false</text>
+                    <text x="510" y="290" text-anchor="middle" font-size="12">→ paradox stoppt</text>
+                    <text x="510" y="310" text-anchor="middle" font-size="12">sofort</text>
+                    <text x="510" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#37b24d">→ STOPPT!</text>
+                    
+                    <!-- Verbindungslinien -->
+                    <line x1="650" y1="150" x2="290" y2="220" stroke="#666" stroke-width="2" stroke-dasharray="5,5"/>
+                    <line x1="650" y1="150" x2="510" y2="220" stroke="#666" stroke-width="2" stroke-dasharray="5,5"/>
+                    
+                    <!-- Arrow marker definition -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#333"/>
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+            
+            <div class="explanation">
+                <h3>Der Beweis in Kurzform</h3>
+                <ol style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Annahme:</strong> Es gibt eine Funktion terminates(P, I)</li>
+                    <li><strong>Konstruktion:</strong> Wir bauen paradox(P), das das Gegenteil tut</li>
+                    <li><strong>Selbstanwendung:</strong> Was passiert bei paradox(paradox)?</li>
+                    <li><strong>Widerspruch:</strong> Egal was terminates sagt, es führt zum Gegenteil</li>
+                    <li><strong>Schluss:</strong> terminates kann nicht existieren</li>
+                </ol>
+                
+                <p style="margin-top: 15px;"><strong>Die Fee:</strong> Eine Metapher für "magisches, allwissendes Orakel". Der Beweis zeigt: Selbst eine Fee würde hier scheitern - nicht aus Unvermögen, sondern weil es logisch unmöglich ist.</p>
+            </div>
+        </div>
+        
+        <!-- Aufgabe 2.3 -->
+        <div class="section">
+            <h2>Aufgabe 2.3: Insertion Sort</h2>
+            
+            <div class="explanation">
+                <h3>Die Idee</h3>
+                <p>Wie beim Kartensortieren: Nimm eine Karte und schiebe sie an die richtige Stelle im bereits sortierten Teil.</p>
+            </div>
+            
+            <div class="visualization">
+                <h3>Animation</h3>
+                <div class="controls">
+                    <button onclick="startInsertionSort()">Zufälliges Array</button>
+                    <button onclick="stepInsertionSort()" id="insertion-step-btn" disabled>Nächster Schritt</button>
+                    <button onclick="autoInsertionSort()" id="insertion-auto-btn" disabled>Auto-Play</button>
+                    <button onclick="resetInsertionSort()">Stop</button>
+                </div>
+                <div id="insertion-array" class="array-container"></div>
+                <div id="insertion-status" class="step-indicator"></div>
+            </div>
+            
+            <div class="explanation">
+                <h3>Komplexität</h3>
+                <table>
+                    <tr>
+                        <th>Fall</th>
+                        <th>Array</th>
+                        <th>Komplexität</th>
+                        <th>Erklärung</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Best Case</strong></td>
+                        <td>[1, 2, 3, 4, 5]</td>
+                        <td>O(n)</td>
+                        <td>Schon sortiert, nur 1 Vergleich pro Element</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Worst Case</strong></td>
+                        <td>[5, 4, 3, 2, 1]</td>
+                        <td>O(n²)</td>
+                        <td>Absteigend sortiert, jedes Element muss ganz nach vorne</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Average Case</strong></td>
+                        <td>[3, 1, 4, 2, 5]</td>
+                        <td>O(n²)</td>
+                        <td>Im Durchschnitt n/2 Verschiebungen pro Element</td>
+                    </tr>
+                </table>
+                
+                <h4 style="margin-top: 20px;">Deine Messergebnisse</h4>
+                <p>Von n=1000 auf n=10000 (Faktor 10):</p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Worst Case:</strong> 3.8ms → 34.3ms (Faktor ~9) → passt zu O(n²)</li>
+                    <li><strong>Best Case:</strong> 0.005ms → 0.021ms (Faktor ~4) → passt zu O(n)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Aufgabe 2.4 -->
+        <div class="section">
+            <h2>Aufgabe 2.4: Merge Sort</h2>
+            
+            <div class="explanation">
+                <h3>Das Prinzip: Divide & Conquer</h3>
+                <ol style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Divide:</strong> Teile das Array in zwei Hälften</li>
+                    <li><strong>Conquer:</strong> Sortiere beide Hälften rekursiv</li>
+                    <li><strong>Merge:</strong> Verschmelze die sortierten Hälften</li>
+                </ol>
+            </div>
+            
+            <div class="visualization">
+                <h3>Visueller Merge-Baum</h3>
+                <div class="controls">
+                    <button onclick="showMergeSortStep(0)">Start</button>
+                    <button onclick="prevMergeStep()">Zurück</button>
+                    <button onclick="nextMergeStep()">Weiter</button>
+                    <button onclick="showMergeSortStep(mergeSortSteps.length-1)">Ende</button>
+                </div>
+                <div id="merge-step-indicator" class="step-indicator"></div>
+                <div id="merge-visualization" style="overflow-x: auto; padding: 20px;"></div>
+            </div>
+            
+            <div class="explanation">
+                <h3>Warum ist Merge Sort gut?</h3>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Komplexität:</strong> Immer O(n log n) - egal ob best, worst oder average case</li>
+                    <li><strong>Stabil:</strong> Gleiche Elemente behalten ihre relative Reihenfolge</li>
+                    <li><strong>Vorhersagbar:</strong> Performance ist konsistent</li>
+                    <li><strong>Nachteil:</strong> Braucht O(n) extra Speicher für das Merging</li>
+                </ul>
+                
+                <h4 style="margin-top: 20px;">Vergleich: Insertion Sort vs Merge Sort</h4>
+                <table>
+                    <tr>
+                        <th>Kriterium</th>
+                        <th>Insertion Sort</th>
+                        <th>Merge Sort</th>
+                    </tr>
+                    <tr>
+                        <td>Best Case</td>
+                        <td class="highlight">O(n)</td>
+                        <td>O(n log n)</td>
+                    </tr>
+                    <tr>
+                        <td>Worst Case</td>
+                        <td>O(n²)</td>
+                        <td class="highlight">O(n log n)</td>
+                    </tr>
+                    <tr>
+                        <td>Speicher</td>
+                        <td class="highlight">O(1)</td>
+                        <td>O(n)</td>
+                    </tr>
+                    <tr>
+                        <td>Einfachheit</td>
+                        <td class="highlight">Sehr einfach</td>
+                        <td>Komplex</td>
+                    </tr>
+                    <tr>
+                        <td>Beste Nutzung</td>
+                        <td>Kleine/fast sortierte Arrays</td>
+                        <td>Große Arrays</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Aufgabe 2.1: Binäre Exponentiation
+        let expState = {
+            n: 10,
+            x: 2,
+            y: 0,
+            z: 1,
+            steps: [],
+            currentStep: 0,
+            running: false
+        };
+        
+        function startBinaryExp() {
+            const n = parseInt(document.getElementById('exp-input').value);
+            expState = {
+                n: n,
+                x: 2,
+                y: n,
+                z: 1,
+                steps: [{x: 2, y: n, z: 1, action: 'Start', check: `1 * 2^${n} = 2^${n}`}],
+                currentStep: 0,
+                running: true
+            };
+            
+            document.getElementById('step-btn').disabled = false;
+            calculateSteps();
+            displayExpStep();
+        }
+        
+        function calculateSteps() {
+            let {x, y, z, n} = expState;
+            
+            while (y > 0) {
+                if (y % 2 === 1) {
+                    z = z * x;
+                    y = y - 1;
+                    expState.steps.push({
+                        x: x,
+                        y: y,
+                        z: z,
+                        action: `y ungerade → z = z * x = ${z}, y = ${y}`,
+                        check: `${z} * ${x}^${y} = 2^${n}`
+                    });
+                } else {
+                    x = x * x;
+                    y = y / 2;
+                    expState.steps.push({
+                        x: x,
+                        y: y,
+                        z: z,
+                        action: `y gerade → x = x * x = ${x}, y = ${y}`,
+                        check: `${z} * ${x}^${y} = 2^${n}`
+                    });
+                }
+            }
+        }
+        
+        function stepBinaryExp() {
+            if (expState.currentStep < expState.steps.length - 1) {
+                expState.currentStep++;
+                displayExpStep();
+            }
+            
+            if (expState.currentStep >= expState.steps.length - 1) {
+                document.getElementById('step-btn').disabled = true;
+            }
+        }
+        
+        function displayExpStep() {
+            const step = expState.steps[expState.currentStep];
+            const html = `
+                <div style="background: #e7f5ff; padding: 20px; border-radius: 10px; border-left: 5px solid #339af0;">
+                    <h4>Schritt ${expState.currentStep}</h4>
+                    <p style="font-size: 18px; margin: 10px 0;"><strong>Variablen:</strong> x = ${step.x}, y = ${step.y}, z = ${step.z}</p>
+                    <p style="font-size: 16px; margin: 10px 0;"><strong>Aktion:</strong> ${step.action}</p>
+                    <p style="font-size: 16px; margin: 10px 0; background: #fff3bf; padding: 10px; border-radius: 5px;">
+                        <strong>Invariante check:</strong> ${step.check} ✓
+                    </p>
+                    ${step.y === 0 ? `<p style="color: #37b24d; font-weight: bold; margin-top: 15px; font-size: 18px;">Fertig! Ergebnis: z = ${step.z} = 2^${expState.n}</p>` : ''}
+                </div>
+            `;
+            document.getElementById('exp-steps').innerHTML = html;
+        }
+        
+        function resetBinaryExp() {
+            expState.currentStep = 0;
+            expState.running = false;
+            document.getElementById('step-btn').disabled = true;
+            document.getElementById('exp-steps').innerHTML = '';
+        }
+        
+        // Aufgabe 2.3: Insertion Sort
+        let insertionState = {
+            originalArray: [],
+            array: [],
+            i: 1,
+            j: -1,
+            current: null,
+            running: false,
+            intervalId: null,
+            phase: 'idle'
+        };
+        
+        function startInsertionSort() {
+            // Erstelle neues Array
+            insertionState.originalArray = Array.from({length: 10}, () => Math.floor(Math.random() * 99) + 1);
+            insertionState.array = [...insertionState.originalArray]; // Echte Kopie
+            insertionState.i = 1;
+            insertionState.j = -1;
+            insertionState.current = null;
+            insertionState.running = true;
+            insertionState.phase = 'ready';
+            
+            document.getElementById('insertion-step-btn').disabled = false;
+            document.getElementById('insertion-auto-btn').disabled = false;
+            
+            displayInsertionArray();
+            updateInsertionStatus('Array erstellt. Drücke "Nächster Schritt" oder "Auto-Play"');
+        }
+        
+        function displayInsertionArray() {
+            const container = document.getElementById('insertion-array');
+            container.innerHTML = '';
+            
+            // Erstelle eine Kopie für die Anzeige
+            const displayArray = [...insertionState.array];
+            
+            displayArray.forEach((val, idx) => {
+                const div = document.createElement('div');
+                div.className = 'array-item';
+                div.textContent = val;
+                
+                // Markiere sortierten Bereich
+                if (idx < insertionState.i && insertionState.running && insertionState.phase !== 'idle') {
+                    div.classList.add('sorted');
+                }
+                
+                // Markiere aktuelles Element das eingefügt wird
+                if (insertionState.phase === 'selecting' && idx === insertionState.i) {
+                    div.classList.add('current');
+                }
+                
+                // Markiere Vergleichsposition
+                if (insertionState.phase === 'shifting' && (idx === insertionState.j || idx === insertionState.j + 1)) {
+                    div.classList.add('comparing');
+                }
+                
+                container.appendChild(div);
+            });
+        }
+        
+        function stepInsertionSort() {
+            if (!insertionState.running) return;
+            
+            // Check ob fertig
+            if (insertionState.i >= insertionState.array.length) {
+                insertionState.phase = 'done';
+                updateInsertionStatus('Fertig sortiert!');
+                insertionState.running = false;
+                document.getElementById('insertion-step-btn').disabled = true;
+                document.getElementById('insertion-auto-btn').disabled = true;
+                displayInsertionArray();
+                return;
+            }
+            
+            if (insertionState.phase === 'ready' || insertionState.phase === 'inserted') {
+                // Starte neue Iteration: wähle Element aus
+                insertionState.current = insertionState.array[insertionState.i];
+                insertionState.j = insertionState.i - 1;
+                insertionState.phase = 'selecting';
+                updateInsertionStatus(`Wähle Element ${insertionState.current} an Position ${insertionState.i} aus`);
+                displayInsertionArray();
+            } else if (insertionState.phase === 'selecting') {
+                // Starte das Verschieben
+                insertionState.phase = 'shifting';
+                if (insertionState.j >= 0 && insertionState.array[insertionState.j] > insertionState.current) {
+                    updateInsertionStatus(`Vergleiche: ${insertionState.array[insertionState.j]} > ${insertionState.current}? Ja, verschiebe...`);
+                } else {
+                    updateInsertionStatus(`Richtige Position gefunden für ${insertionState.current}`);
+                }
+                displayInsertionArray();
+            } else if (insertionState.phase === 'shifting') {
+                // Verschiebe Elemente oder füge ein
+                if (insertionState.j >= 0 && insertionState.array[insertionState.j] > insertionState.current) {
+                    // Verschiebe Element nach rechts
+                    insertionState.array[insertionState.j + 1] = insertionState.array[insertionState.j];
+                    insertionState.j--;
+                    
+                    if (insertionState.j >= 0 && insertionState.array[insertionState.j] > insertionState.current) {
+                        updateInsertionStatus(`Element verschoben. Vergleiche weiter mit ${insertionState.array[insertionState.j]}...`);
+                    } else {
+                        updateInsertionStatus(`Element verschoben. Richtige Position gefunden!`);
+                    }
+                    displayInsertionArray();
+                } else {
+                    // Füge current an richtiger Position ein
+                    insertionState.array[insertionState.j + 1] = insertionState.current;
+                    updateInsertionStatus(`Element ${insertionState.current} an Position ${insertionState.j + 1} eingefügt`);
+                    insertionState.i++;
+                    insertionState.phase = 'inserted';
+                    displayInsertionArray();
+                }
+            }
+        }
+        
+        function autoInsertionSort() {
+            if (insertionState.intervalId) {
+                clearInterval(insertionState.intervalId);
+                insertionState.intervalId = null;
+                document.getElementById('insertion-auto-btn').textContent = 'Auto-Play';
+            } else {
+                insertionState.intervalId = setInterval(stepInsertionSort, 600);
+                document.getElementById('insertion-auto-btn').textContent = 'Pause';
+            }
+        }
+        
+        function resetInsertionSort() {
+            if (insertionState.intervalId) {
+                clearInterval(insertionState.intervalId);
+                insertionState.intervalId = null;
+            }
+            insertionState.running = false;
+            insertionState.array = [];
+            insertionState.originalArray = [];
+            insertionState.phase = 'idle';
+            insertionState.i = 1;
+            insertionState.j = -1;
+            insertionState.current = null;
+            document.getElementById('insertion-step-btn').disabled = true;
+            document.getElementById('insertion-auto-btn').disabled = true;
+            document.getElementById('insertion-auto-btn').textContent = 'Auto-Play';
+            document.getElementById('insertion-array').innerHTML = '';
+            updateInsertionStatus('Bereit für ein neues Array');
+        }
+        
+        function updateInsertionStatus(msg) {
+            document.getElementById('insertion-status').textContent = msg;
+        }
+        
+        // Aufgabe 2.4: Merge Sort
+        const mergeSortSteps = [
+            {level: 0, arrays: [[31, 41, 59, 26, 41, 58, 1, 12, 43]], desc: 'Start: Unsortiertes Array'},
+            {level: 1, arrays: [[31, 41, 59, 26], [41, 58, 1, 12, 43]], desc: 'Erste Teilung in 2 Hälften'},
+            {level: 2, arrays: [[31, 41], [59, 26], [41, 58], [1, 12, 43]], desc: 'Weiter teilen...'},
+            {level: 3, arrays: [[31], [41], [59], [26], [41], [58], [1], [12, 43]], desc: 'Weiter teilen...'},
+            {level: 4, arrays: [[31], [41], [59], [26], [41], [58], [1], [12], [43]], desc: 'Basis erreicht: Einzelelemente'},
+            {level: 3, arrays: [[31, 41], [26, 59], [41, 58], [1], [12, 43]], desc: 'Merge: [31],[41] → [31,41] und [59],[26] → [26,59]'},
+            {level: 2, arrays: [[26, 31, 41, 59], [41, 58], [1, 12, 43]], desc: 'Merge: [31,41],[26,59] → [26,31,41,59]'},
+            {level: 2, arrays: [[26, 31, 41, 59], [1, 12, 41, 43, 58]], desc: 'Merge: [41,58],[1,12,43] → [1,12,41,43,58]'},
+            {level: 1, arrays: [[1, 12, 26, 31, 41, 41, 43, 58, 59]], desc: 'Finaler Merge: Fertig sortiert!'}
+        ];
+        
+        let currentMergeStep = 0;
+        
+        function showMergeSortStep(step) {
+            currentMergeStep = Math.max(0, Math.min(step, mergeSortSteps.length - 1));
+            const stepData = mergeSortSteps[currentMergeStep];
+            
+            document.getElementById('merge-step-indicator').textContent = 
+                `Schritt ${currentMergeStep + 1}/${mergeSortSteps.length}: ${stepData.desc}`;
+            
+            let html = '<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">';
+            stepData.arrays.forEach(arr => {
+                html += `<div class="tree-node">[${arr.join(', ')}]</div>`;
+            });
+            html += '</div>';
+            
+            document.getElementById('merge-visualization').innerHTML = html;
+        }
+        
+        function nextMergeStep() {
+            if (currentMergeStep < mergeSortSteps.length - 1) {
+                showMergeSortStep(currentMergeStep + 1);
+            }
+        }
+        
+        function prevMergeStep() {
+            if (currentMergeStep > 0) {
+                showMergeSortStep(currentMergeStep - 1);
+            }
+        }
+        
+        // Initial display
+        showMergeSortStep(0);
+    </script>
+</body>
+</html>

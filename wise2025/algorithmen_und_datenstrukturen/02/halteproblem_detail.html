@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halteproblem - Die Paradox-Falle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+            line-height: 1.8;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            background: #fff3bf;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .step-box {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background: #ffe3e3;
+            border: 3px solid #fa5252;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .paradox-box {
+            background: linear-gradient(135deg, #fff3bf 0%, #ffe3e3 100%);
+            border: 4px solid #fa5252;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(250, 82, 82, 0.3);
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 20px 40px 20px 60px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .timeline-item::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 10px;
+            top: 20px;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .interactive-demo {
+            background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            border: 2px solid #ddd;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+        }
+        
+        .success {
+            background: #d3f9d8;
+        }
+        
+        .error {
+            background: #ffe3e3;
+        }
+        
+        .visualization-box {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 200px;
+        }
+        
+        #paradox-viz {
+            text-align: center;
+        }
+        
+        .function-box {
+            display: inline-block;
+            background: #e7f5ff;
+            border: 3px solid #339af0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            min-width: 200px;
+        }
+        
+        .arrow {
+            font-size: 3em;
+            color: #fa5252;
+            margin: 20px;
+        }
+        
+        .call-stack {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Das Halteproblem - Der Selbstreferenz-Trick</h1>
+        
+        <div class="explanation">
+            <h2>Deine Frage ist der Schlüssel zum Verständnis!</h2>
+            <p style="font-size: 1.2em;">
+                Ja, genau! Wir werfen die <span class="highlight">paradox</span> Funktion <strong>in sich selbst</strong>!
+                Das ist der Trick der den Beweis funktionieren lässt.
+            </p>
+            <p style="margin-top: 15px;">
+                Es ist wie ein Spiegel, der in einen Spiegel schaut - daraus entsteht das Paradoxon.
+            </p>
+        </div>
+        
+        <h2>Schritt für Schritt: Was passiert bei paradox(paradox)?</h2>
+        
+        <div class="explanation">
+            <h3>Erstmal: Was haben wir?</h3>
+            <div class="code-block">
+# Annahme: Diese Funktion existiert
+def terminates(program, input):
+    # Gibt True zurück wenn program(input) stoppt
+    # Gibt False zurück wenn program(input) nicht stoppt
+    ...
+    
+# Wir bauen diese böse Funktion
+def paradox(program):
+    if terminates(program, program):  # <- Hier geben wir program als Input!
+        while True:  # Endlosschleife
+            pass
+    else:
+        return  # Stoppt sofort
+            </div>
+        </div>
+        
+        <div class="timeline">
+            <h3>Jetzt passiert der Selbstreferenz-Trick:</h3>
+            
+            <div class="timeline-item" data-step="1">
+                <h4>Wir rufen auf: paradox(paradox)</h4>
+                <p>Das heißt: Die Funktion paradox bekommt <strong>sich selbst</strong> als Input!</p>
+                <div class="code-block" style="margin-top: 10px;">
+paradox(paradox)  # <- paradox analysiert sich selbst!
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-step="2">
+                <h4>Was macht paradox?</h4>
+                <p>paradox ruft terminates auf:</p>
+                <div class="code-block" style="margin-top: 10px;">
+terminates(paradox, paradox)  # Stoppt paradox(paradox)?
+                </div>
+                <p style="margin-top: 10px;">Die "Fee" muss jetzt sagen: Stoppt <code>paradox(paradox)</code> oder nicht?</p>
+            </div>
+            
+            <div class="timeline-item" data-step="3" style="background: #ffe3e3;">
+                <h4>Fall A: terminates sagt "Ja, stoppt"</h4>
+                <div class="code-block" style="margin-top: 10px;">
+if terminates(paradox, paradox):  # Antwort: True
+    while True:  # <- Dann geht paradox in Endlosschleife!
+        pass
+                </div>
+                <p style="margin-top: 10px; font-weight: bold; color: #c92a2a;">
+                    WIDERSPRUCH! terminates sagt "stoppt", aber paradox stoppt NICHT!
+                </p>
+            </div>
+            
+            <div class="timeline-item" data-step="4" style="background: #ffe3e3;">
+                <h4>Fall B: terminates sagt "Nein, stoppt nicht"</h4>
+                <div class="code-block" style="margin-top: 10px;">
+if terminates(paradox, paradox):  # Antwort: False
+    # If-Block wird übersprungen
+else:
+    return  # <- Dann stoppt paradox sofort!
+                </div>
+                <p style="margin-top: 10px; font-weight: bold; color: #c92a2a;">
+                    WIDERSPRUCH! terminates sagt "stoppt nicht", aber paradox STOPPT!
+                </p>
+            </div>
+        </div>
+        
+        <div class="paradox-box">
+            <h2 style="color: #c92a2a; text-align: center; margin-bottom: 20px;">DAS PARADOXON</h2>
+            <p style="font-size: 1.3em; text-align: center; line-height: 1.8;">
+                Egal was <code>terminates</code> antwortet - es führt IMMER zum Gegenteil!<br>
+                <strong>Das ist logisch unmöglich.</strong><br>
+                Deshalb kann <code>terminates</code> nicht existieren.
+            </p>
+        </div>
+        
+        <h2>Analogie: Der Barbier-Widerspruch</h2>
+        
+        <div class="explanation">
+            <h3>Ein ähnliches Paradoxon:</h3>
+            <p style="font-size: 1.1em; margin-bottom: 15px;">
+                In einem Dorf gibt es einen Barbier mit folgender Regel:<br>
+                <span class="highlight">"Der Barbier rasiert alle Männer, die sich nicht selbst rasieren"</span>
+            </p>
+            
+            <p style="margin-top: 20px; font-size: 1.1em;">
+                <strong>Frage:</strong> Rasiert sich der Barbier selbst?
+            </p>
+            
+            <div class="warning-box" style="margin-top: 20px;">
+                <p><strong>Angenommen er rasiert sich:</strong></p>
+                <p>→ Dann gehört er zu den Männern die sich selbst rasieren</p>
+                <p>→ Dann darf er sich laut Regel NICHT rasieren</p>
+                <p style="margin-top: 15px; color: #c92a2a; font-weight: bold;">WIDERSPRUCH!</p>
+                
+                <p style="margin-top: 20px;"><strong>Angenommen er rasiert sich nicht:</strong></p>
+                <p>→ Dann gehört er zu den Männern die sich nicht selbst rasieren</p>
+                <p>→ Dann MUSS er sich laut Regel rasieren</p>
+                <p style="margin-top: 15px; color: #c92a2a; font-weight: bold;">WIDERSPRUCH!</p>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 1.1em;">
+                Lösung: Ein solcher Barbier kann nicht existieren! Die Regel ist selbstwidersprüchlich.
+            </p>
+            <p style="margin-top: 10px;">
+                Genauso wie <code>terminates</code> nicht existieren kann.
+            </p>
+        </div>
+        
+        <h2>Konkrete Beispiele mit echten Programmen</h2>
+        
+        <div class="explanation">
+            <h3>Beispiel 1: Ein normales Programm</h3>
+            <div class="code-block">
+def add_numbers(a, b):
+    return a + b
+
+terminates(add_numbers, [5, 3])  # → True (stoppt nach einer Berechnung)
+            </div>
+            <p style="margin-top: 10px;">Das funktioniert! add_numbers stoppt immer.</p>
+            
+            <h3 style="margin-top: 30px;">Beispiel 2: Eine Endlosschleife</h3>
+            <div class="code-block">
+def forever():
+    while True:
+        print("Noch am Laufen...")
+
+terminates(forever, None)  # → False (stoppt nie)
+            </div>
+            <p style="margin-top: 10px;">Das funktioniert auch! forever stoppt nie.</p>
+            
+            <h3 style="margin-top: 30px;">Beispiel 3: Die Selbstreferenz-Bombe</h3>
+            <div class="code-block">
+def paradox(program):
+    if terminates(program, program):
+        while True:
+            pass
+    else:
+        return
+
+paradox(paradox)  # <- BOOM! Widerspruch!
+            </div>
+            <p style="margin-top: 10px; color: #c92a2a; font-weight: bold;">
+                Hier bricht das System zusammen! terminates kann hier keine konsistente Antwort geben.
+            </p>
+        </div>
+        
+        <h2>Warum ist das wichtig für die Informatik?</h2>
+        
+        <div class="explanation">
+            <h3>Praktische Konsequenzen:</h3>
+            <ol style="margin-left: 30px; line-height: 2; margin-top: 15px;">
+                <li>
+                    <strong>Keine perfekte Code-Analyse möglich:</strong>
+                    Kein Compiler oder Tool kann für jeden Code garantieren, ob er terminiert.
+                </li>
+                <li>
+                    <strong>Keine universelle Bug-Detection:</strong>
+                    Es gibt Bugs die prinzipiell nicht automatisch erkennbar sind.
+                </li>
+                <li>
+                    <strong>Grenzen der Berechenbarkeit:</strong>
+                    Es gibt Probleme die kein Computer jemals lösen kann - egal wie schnell.
+                </li>
+                <li>
+                    <strong>Turing-Vollständigkeit hat einen Preis:</strong>
+                    Je mächtiger eine Programmiersprache, desto unmöglicher wird vollständige Analyse.
+                </li>
+            </ol>
+            
+            <h3 style="margin-top: 30px;">Aber wir haben doch Debugger und Static Analyzers?</h3>
+            <p>Ja! Die funktionieren für VIELE Fälle. Aber nicht für ALLE Fälle.</p>
+            <p style="margin-top: 10px;">
+                Sie nutzen Heuristiken und Approximationen. Sie können sagen "Hier könnte eine Endlosschleife sein",
+                aber sie können nicht für jeden Code garantieren: "Dieser Code stoppt definitiv" oder "Dieser Code stoppt definitiv nicht".
+            </p>
+        </div>
+        
+        <h2>Visualisierung: Die Paradox-Schleife</h2>
+        
+        <div class="visualization-box">
+            <div id="paradox-viz">
+                <div class="function-box" style="background: #fff3bf; border-color: #ffd43b;">
+                    <h4>terminates(paradox, paradox)</h4>
+                    <p style="margin-top: 10px;">Muss antworten:</p>
+                    <button onclick="showParadoxPath('true')">True (stoppt)</button>
+                    <button onclick="showParadoxPath('false')">False (stoppt nicht)</button>
+                </div>
+                
+                <div id="paradox-result" style="margin-top: 30px;"></div>
+            </div>
+        </div>
+        
+        <div class="interactive-demo">
+            <h3>Interaktive Simulation</h3>
+            <p>Teste selbst was passiert bei verschiedenen Antworten von terminates:</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <button onclick="simulateCase('stop')">Simuliere: terminates sagt "stoppt"</button>
+                <button onclick="simulateCase('notstop')">Simuliere: terminates sagt "stoppt nicht"</button>
+                <button onclick="resetSimulation()">Reset</button>
+            </div>
+            <div id="simulation-output" style="background: white; padding: 20px; border-radius: 10px; min-height: 150px; margin-top: 20px;"></div>
+        </div>
+        
+        <h2>Zusammenfassung</h2>
+        
+        <div class="explanation" style="background: #e7f5ff; border-color: #339af0;">
+            <h3>Der Beweis in drei Sätzen:</h3>
+            <ol style="margin-left: 30px; line-height: 2; font-size: 1.1em; margin-top: 15px;">
+                <li>Angenommen <code>terminates</code> existiert.</li>
+                <li>Dann können wir <code>paradox</code> bauen, das sich selbst widerspricht bei <code>paradox(paradox)</code>.</li>
+                <li>Da das unmöglich ist, kann <code>terminates</code> nicht existieren.</li>
+            </ol>
+            
+            <p style="margin-top: 30px; font-size: 1.2em; font-weight: bold; text-align: center;">
+                Das Halteproblem ist UNENTSCHEIDBAR - nicht weil wir nicht schlau genug sind,
+                sondern weil es logisch unmöglich ist.
+            </p>
+        </div>
+        
+        <div class="explanation">
+            <h3>Fun Fact: Alan Turing (1936)</h3>
+            <p>
+                Alan Turing hat das bereits 1936 bewiesen - bevor es überhaupt richtige Computer gab!
+                Er hat damit gezeigt, dass es fundamentale Grenzen gibt, was Computer jemals berechnen können.
+            </p>
+            <p style="margin-top: 15px;">
+                Das war ein mega wichtiger Meilenstein in der theoretischen Informatik und hat
+                unser Verständnis davon geprägt, was Berechnung überhaupt bedeutet.
+            </p>
+        </div>
+        
+    </div>
+    
+    <script>
+        function showParadoxPath(answer) {
+            const resultDiv = document.getElementById('paradox-result');
+            
+            if (answer === 'true') {
+                resultDiv.innerHTML = `
+                    <div class="call-stack">
+                        <div style="margin-bottom: 20px;">
+                            <strong>terminates antwortet: True (paradox stoppt)</strong>
+                        </div>
+                        <div style="margin: 10px 0; padding: 10px; background: #3d3d3d; border-left: 4px solid #ffd43b;">
+                            → paradox führt aus: if-Zweig (terminates gab True)
+                        </div>
+                        <div style="margin: 10px 0; padding: 10px; background: #3d3d3d; border-left: 4px solid #fa5252;">
+                            → paradox geht in: while True: pass (Endlosschleife!)
+                        </div>
+                        <div style="margin-top: 20px; padding: 15px; background: #fa5252; color: white; border-radius: 8px; font-weight: bold; text-align: center;">
+                            WIDERSPRUCH: terminates sagte "stoppt", aber paradox stoppt NICHT!
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="call-stack">
+                        <div style="margin-bottom: 20px;">
+                            <strong>terminates antwortet: False (paradox stoppt nicht)</strong>
+                        </div>
+                        <div style="margin: 10px 0; padding: 10px; background: #3d3d3d; border-left: 4px solid #ffd43b;">
+                            → paradox führt aus: else-Zweig (terminates gab False)
+                        </div>
+                        <div style="margin: 10px 0; padding: 10px; background: #3d3d3d; border-left: 4px solid #37b24d;">
+                            → paradox führt aus: return (stoppt sofort!)
+                        </div>
+                        <div style="margin-top: 20px; padding: 15px; background: #fa5252; color: white; border-radius: 8px; font-weight: bold; text-align: center;">
+                            WIDERSPRUCH: terminates sagte "stoppt nicht", aber paradox STOPPT!
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        function simulateCase(caseType) {
+            const outputDiv = document.getElementById('simulation-output');
+            let steps = [];
+            
+            if (caseType === 'stop') {
+                steps = [
+                    { time: 0, msg: 'Aufruf: paradox(paradox)', color: '#e7f5ff' },
+                    { time: 500, msg: 'paradox fragt: terminates(paradox, paradox)', color: '#fff3bf' },
+                    { time: 1000, msg: 'terminates antwortet: True (ich denke paradox stoppt)', color: '#ffd43b' },
+                    { time: 1500, msg: 'paradox prüft: if terminates(...) = True', color: '#e7f5ff' },
+                    { time: 2000, msg: 'paradox führt aus: while True: pass', color: '#ffe3e3' },
+                    { time: 2500, msg: 'paradox läuft... und läuft... und läuft...', color: '#ffe3e3' },
+                    { time: 3000, msg: '💥 WIDERSPRUCH: terminates lag falsch!', color: '#fa5252' }
+                ];
+            } else {
+                steps = [
+                    { time: 0, msg: 'Aufruf: paradox(paradox)', color: '#e7f5ff' },
+                    { time: 500, msg: 'paradox fragt: terminates(paradox, paradox)', color: '#fff3bf' },
+                    { time: 1000, msg: 'terminates antwortet: False (ich denke paradox stoppt nicht)', color: '#ffd43b' },
+                    { time: 1500, msg: 'paradox prüft: if terminates(...) = False', color: '#e7f5ff' },
+                    { time: 2000, msg: 'paradox führt aus: return (stoppt sofort)', color: '#d3f9d8' },
+                    { time: 2500, msg: 'paradox ist fertig und hat gestoppt!', color: '#d3f9d8' },
+                    { time: 3000, msg: '💥 WIDERSPRUCH: terminates lag falsch!', color: '#fa5252' }
+                ];
+            }
+            
+            outputDiv.innerHTML = '<div style="text-align: center;">Simulation läuft...</div>';
+            
+            let currentStep = 0;
+            const interval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    const step = steps[currentStep];
+                    outputDiv.innerHTML += `
+                        <div style="background: ${step.color}; padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+                            <strong>Schritt ${currentStep + 1}:</strong> ${step.msg}
+                        </div>
+                    `;
+                    currentStep++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 700);
+        }
+        
+        function resetSimulation() {
+            document.getElementById('simulation-output').innerHTML = '<div style="text-align: center; color: #999;">Wähle eine Simulation aus...</div>';
+            document.getElementById('paradox-result').innerHTML = '';
+        }
+        
+        // Initial
+        resetSimulation();
+    </script>
+</body>
+</html>
+            </div>
+        </div>

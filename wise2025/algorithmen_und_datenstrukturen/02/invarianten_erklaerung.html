@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schleifeninvarianten - Erklärt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+            line-height: 1.8;
+        }
+        
+        .highlight {
+            background: #fff3bf;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        
+        .step-box {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .step-title {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .success {
+            background: #d3f9d8;
+            border-color: #37b24d;
+        }
+        
+        .warning {
+            background: #fff3bf;
+            border-color: #ffd43b;
+        }
+        
+        .error {
+            background: #ffe3e3;
+            border-color: #fa5252;
+        }
+        
+        .visualization {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .invariant-check {
+            background: #e7f5ff;
+            border-left: 5px solid #339af0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .proof-flow {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .proof-step {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .arrow {
+            font-size: 2em;
+            color: #667eea;
+            align-self: center;
+        }
+        
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        
+        .interactive-demo {
+            background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        #demo-output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            min-height: 100px;
+        }
+        
+        .step-visualization {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .var-box {
+            background: #e7f5ff;
+            border: 2px solid #339af0;
+            padding: 15px 25px;
+            margin: 5px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .check-mark {
+            color: #37b24d;
+            font-size: 2em;
+            margin: 0 10px;
+        }
+        
+        .cross-mark {
+            color: #fa5252;
+            font-size: 2em;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Schleifeninvarianten verstehen</h1>
+        
+        <div class="explanation">
+            <h2>Was ist eine Invariante?</h2>
+            <p>Eine <strong>Schleifeninvariante</strong> ist eine Bedingung/Aussage, die:</p>
+            <ol style="margin-left: 30px; margin-top: 15px; line-height: 2;">
+                <li>Vor der ersten Iteration der Schleife gilt (wahr ist)</li>
+                <li>Nach jeder Iteration weiterhin gilt</li>
+                <li>Wenn die Schleife endet, uns etwas Nützliches über das Ergebnis sagt</li>
+            </ol>
+            
+            <p style="margin-top: 20px; font-size: 1.1em;">
+                <strong>Einfach gesagt:</strong> Es ist eine Aussage, die während der gesamten Schleife IMMER wahr bleibt.
+                Das ist wie ein Sicherheitsnetz - wenn die Invariante gilt, wissen wir, dass unser Algorithmus korrekt arbeitet.
+            </p>
+        </div>
+        
+        <h2>Die drei Schritte eines Invarianten-Beweises</h2>
+        
+        <div class="proof-flow">
+            <div class="proof-step" style="background: #d3f9d8;">
+                <div class="step-title">1. Initialisierung</div>
+                <p>Zeige: Die Invariante ist VOR der ersten Iteration wahr</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="proof-step" style="background: #fff3bf;">
+                <div class="step-title">2. Erhaltung</div>
+                <p>Zeige: Wenn die Invariante vor einer Iteration gilt, gilt sie auch danach</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="proof-step" style="background: #e7f5ff;">
+                <div class="step-title">3. Terminierung</div>
+                <p>Nutze die Invariante + Abbruchbedingung um das korrekte Ergebnis zu zeigen</p>
+            </div>
+        </div>
+        
+        <h2>Beispiel 1: Einfache Summe</h2>
+        
+        <div class="explanation">
+            <h3>Der Code</h3>
+            <div class="code-block">
+sum = 0
+for i in range(1, n+1):
+    sum = sum + i
+# Was ist sum jetzt?
+            </div>
+            
+            <h3>Invariante</h3>
+            <p>Wir behaupten: <span class="highlight">sum = 1 + 2 + 3 + ... + (i-1)</span> nach jeder Iteration</p>
+            <p style="margin-top: 10px;">Oder anders formuliert: <span class="highlight">sum = Summe der Zahlen von 1 bis (i-1)</span></p>
+        </div>
+        
+        <div class="step-box success">
+            <div class="step-title">Schritt 1: Initialisierung</div>
+            <p><strong>Vor der ersten Iteration:</strong></p>
+            <ul style="margin-left: 30px; margin-top: 10px; line-height: 1.8;">
+                <li>sum = 0</li>
+                <li>i = 1</li>
+                <li>Behauptung: sum = Summe von 1 bis (i-1) = Summe von 1 bis 0 = 0 ✓</li>
+            </ul>
+            <p style="margin-top: 15px; background: #fff; padding: 10px; border-radius: 5px;">
+                Die Invariante gilt! (Summe von "nichts" ist 0)
+            </p>
+        </div>
+        
+        <div class="step-box warning">
+            <div class="step-title">Schritt 2: Erhaltung</div>
+            <p><strong>Annahme:</strong> Die Invariante gilt zu Beginn einer Iteration</p>
+            <p style="margin-top: 10px;"><strong>Zu zeigen:</strong> Sie gilt auch am Ende der Iteration</p>
+            
+            <div style="margin-top: 15px; background: white; padding: 15px; border-radius: 5px;">
+                <p><strong>Vorher:</strong> sum = 1 + 2 + ... + (i-1)</p>
+                <p style="margin: 10px 0;"><strong>In der Schleife:</strong> sum = sum + i</p>
+                <p><strong>Nachher:</strong> sum = 1 + 2 + ... + (i-1) + i</p>
+                <p style="margin-top: 10px;">Das ist genau die Summe von 1 bis i!</p>
+                <p style="margin-top: 5px;">In der nächsten Iteration ist i dann i+1, also gilt die Invariante weiter ✓</p>
+            </div>
+        </div>
+        
+        <div class="step-box" style="background: #e7f5ff; border-color: #339af0;">
+            <div class="step-title">Schritt 3: Terminierung</div>
+            <p><strong>Schleife endet bei:</strong> i = n+1 (also nach i = n)</p>
+            <p style="margin-top: 10px;"><strong>Invariante sagt:</strong> sum = 1 + 2 + ... + (i-1) = 1 + 2 + ... + n</p>
+            <p style="margin-top: 15px; background: #d3f9d8; padding: 10px; border-radius: 5px; font-weight: bold;">
+                Ergebnis korrekt! sum enthält die Summe aller Zahlen von 1 bis n ✓
+            </p>
+        </div>
+        
+        <div class="interactive-demo">
+            <h3 style="margin-bottom: 20px;">Interaktive Demo: Summe 1 bis n</h3>
+            <div class="controls">
+                <label>n = <input type="number" id="sum-n" value="5" min="1" max="20"></label>
+                <button onclick="startSumDemo()">Start</button>
+                <button onclick="stepSumDemo()" id="sum-step-btn" disabled>Nächster Schritt</button>
+                <button onclick="resetSumDemo()">Reset</button>
+            </div>
+            <div id="demo-output"></div>
+        </div>
+        
+        <h2>Beispiel 2: Binäre Exponentiation (aus deiner Aufgabe)</h2>
+        
+        <div class="explanation">
+            <h3>Der Code</h3>
+            <div class="code-block">
+x = 2
+y = n
+z = 1
+
+while y > 0:
+    if y % 2 == 1:
+        z = z * x
+        y = y - 1
+    else:
+        x = x * x
+        y = y / 2
+
+# z enthält jetzt 2^n
+            </div>
+            
+            <h3>Invariante</h3>
+            <p><span class="highlight">z * x^y = 2^n</span> und <span class="highlight">y >= 0</span></p>
+            <p style="margin-top: 10px;">Diese Aussage bleibt durch die ganze Schleife konstant!</p>
+        </div>
+        
+        <div class="step-box success">
+            <div class="step-title">Schritt 1: Initialisierung</div>
+            <div class="step-visualization">
+                <div class="var-box">x = 2</div>
+                <div class="var-box">y = n</div>
+                <div class="var-box">z = 1</div>
+            </div>
+            <div class="invariant-check">
+                <p><strong>Check:</strong> z * x^y = 1 * 2^n = 2^n ✓</p>
+                <p><strong>Check:</strong> y = n >= 0 ✓</p>
+            </div>
+        </div>
+        
+        <div class="step-box warning">
+            <div class="step-title">Schritt 2: Erhaltung</div>
+            
+            <h4 style="margin-top: 15px;">Fall A: y ist ungerade</h4>
+            <div style="background: white; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                <p><strong>Vorher:</strong> <span class="formula">z * x^y = 2^n</span></p>
+                <p style="margin: 10px 0;"><strong>Änderungen:</strong> z = z * x, y = y - 1</p>
+                <p><strong>Nachher:</strong> <span class="formula">(z * x) * x^(y-1) = z * x^y = 2^n</span> ✓</p>
+            </div>
+            
+            <h4 style="margin-top: 15px;">Fall B: y ist gerade</h4>
+            <div style="background: white; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                <p><strong>Vorher:</strong> <span class="formula">z * x^y = 2^n</span></p>
+                <p style="margin: 10px 0;"><strong>Änderungen:</strong> x = x * x, y = y / 2</p>
+                <p><strong>Nachher:</strong> <span class="formula">z * (x * x)^(y/2) = z * x^y = 2^n</span> ✓</p>
+            </div>
+            
+            <p style="margin-top: 15px; background: #d3f9d8; padding: 10px; border-radius: 5px;">
+                In beiden Fällen bleibt die Invariante erhalten!
+            </p>
+        </div>
+        
+        <div class="step-box" style="background: #e7f5ff; border-color: #339af0;">
+            <div class="step-title">Schritt 3: Terminierung</div>
+            <p><strong>Schleife endet bei:</strong> y = 0</p>
+            <p style="margin-top: 10px;"><strong>Invariante sagt:</strong> z * x^0 = z * 1 = z = 2^n</p>
+            <p style="margin-top: 15px; background: #d3f9d8; padding: 10px; border-radius: 5px; font-weight: bold;">
+                Perfekt! z enthält 2^n ✓
+            </p>
+        </div>
+        
+        <div class="interactive-demo">
+            <h3 style="margin-bottom: 20px;">Interaktive Demo: Binäre Exponentiation</h3>
+            <div class="controls">
+                <label>n = <input type="number" id="exp-n" value="10" min="0" max="20"></label>
+                <button onclick="startExpDemo()">Start</button>
+                <button onclick="stepExpDemo()" id="exp-step-btn" disabled>Nächster Schritt</button>
+                <button onclick="resetExpDemo()">Reset</button>
+            </div>
+            <div id="exp-demo-output"></div>
+        </div>
+        
+        <h2>Beispiel 3: Insertion Sort</h2>
+        
+        <div class="explanation">
+            <h3>Der Code (vereinfacht)</h3>
+            <div class="code-block">
+for i in range(1, len(arr)):
+    # Füge arr[i] an der richtigen Stelle 
+    # in arr[0..i-1] ein
+    ...
+            </div>
+            
+            <h3>Invariante</h3>
+            <p><span class="highlight">arr[0..i-1] ist sortiert</span></p>
+            <p style="margin-top: 10px;">Der Teil links von i ist immer sortiert!</p>
+        </div>
+        
+        <div class="step-box success">
+            <div class="step-title">Schritt 1: Initialisierung</div>
+            <p><strong>i = 1:</strong> arr[0..0] ist nur ein Element → automatisch sortiert ✓</p>
+        </div>
+        
+        <div class="step-box warning">
+            <div class="step-title">Schritt 2: Erhaltung</div>
+            <p><strong>Vorher:</strong> arr[0..i-1] sortiert</p>
+            <p style="margin: 10px 0;"><strong>In der Schleife:</strong> Füge arr[i] an richtiger Stelle in arr[0..i-1] ein</p>
+            <p><strong>Nachher:</strong> arr[0..i] sortiert ✓</p>
+        </div>
+        
+        <div class="step-box" style="background: #e7f5ff; border-color: #339af0;">
+            <div class="step-title">Schritt 3: Terminierung</div>
+            <p><strong>Schleife endet bei:</strong> i = len(arr)</p>
+            <p style="margin-top: 10px;"><strong>Invariante sagt:</strong> arr[0..len(arr)-1] ist sortiert</p>
+            <p style="margin-top: 15px; background: #d3f9d8; padding: 10px; border-radius: 5px; font-weight: bold;">
+                Das ist das ganze Array! ✓
+            </p>
+        </div>
+        
+        <h2>Warum sind Invarianten wichtig?</h2>
+        
+        <div class="explanation">
+            <h3>1. Korrektheitsbeweise</h3>
+            <p>Mit Invarianten können wir mathematisch beweisen, dass ein Algorithmus korrekt ist - nicht nur durch Tests!</p>
+            
+            <h3>2. Debugging</h3>
+            <p>Wenn du eine Invariante hast, kannst du in jeder Iteration prüfen: Gilt sie noch? Wenn nein → Bug gefunden!</p>
+            
+            <div class="code-block" style="margin-top: 15px;">
+# Python: Assertions nutzen!
+for i in range(1, len(arr)):
+    # Invariante: arr[0..i-1] ist sortiert
+    assert all(arr[j] <= arr[j+1] for j in range(i-1)), "Invariante verletzt!"
+    
+    # ... rest des Codes
+            </div>
+            
+            <h3>3. Code verstehen</h3>
+            <p>Eine gute Invariante ist wie ein Kommentar, der dir sagt: "Das hier bleibt immer wahr".</p>
+            
+            <h3>4. Optimierung</h3>
+            <p>Wenn du weißt, was invariant bleibt, kannst du Optimierungen machen ohne die Korrektheit zu verletzen.</p>
+        </div>
+        
+        <h2>Pro-Tipps für eigene Invarianten</h2>
+        
+        <div class="explanation">
+            <h3>Wie finde ich eine gute Invariante?</h3>
+            <ol style="margin-left: 30px; line-height: 2;">
+                <li><strong>Überlege:</strong> Was weiß ich nach jeder Iteration sicher?</li>
+                <li><strong>Schau auf Variablen:</strong> Welche Beziehung zwischen Variablen bleibt konstant?</li>
+                <li><strong>Denk rückwärts:</strong> Was muss am Ende gelten? Was brauchst du dafür während der Schleife?</li>
+                <li><strong>Sei spezifisch:</strong> "arr ist teilweise sortiert" ist besser als "arr ist okay"</li>
+            </ol>
+            
+            <h3>Häufige Muster</h3>
+            <table>
+                <tr>
+                    <th>Muster</th>
+                    <th>Beispiel-Invariante</th>
+                    <th>Typische Nutzung</th>
+                </tr>
+                <tr>
+                    <td>Teilbereich verarbeitet</td>
+                    <td>arr[0..i] erfüllt Eigenschaft X</td>
+                    <td>Sortier-Algorithmen</td>
+                </tr>
+                <tr>
+                    <td>Akkumulator</td>
+                    <td>sum = Summe von a[0..i]</td>
+                    <td>Berechnungen über Arrays</td>
+                </tr>
+                <tr>
+                    <td>Mathematische Gleichung</td>
+                    <td>z * x^y = konstant</td>
+                    <td>Numerische Algorithmen</td>
+                </tr>
+                <tr>
+                    <td>Restgröße</td>
+                    <td>remaining = n - processed</td>
+                    <td>Divide & Conquer</td>
+                </tr>
+                <tr>
+                    <td>Pointer-Beziehung</td>
+                    <td>left < right immer</td>
+                    <td>Binäre Suche</td>
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+    
+    <script>
+        // Demo 1: Einfache Summe
+        let sumState = {
+            n: 5,
+            sum: 0,
+            i: 1,
+            steps: [],
+            currentStep: -1,
+            running: false
+        };
+        
+        function startSumDemo() {
+            const n = parseInt(document.getElementById('sum-n').value);
+            sumState = {
+                n: n,
+                sum: 0,
+                i: 1,
+                steps: [],
+                currentStep: -1,
+                running: true
+            };
+            
+            // Initialisierung
+            sumState.steps.push({
+                phase: 'Init',
+                i: 1,
+                sum: 0,
+                check: `sum = Summe(1..${1-1}) = Summe(1..0) = 0`,
+                valid: true
+            });
+            
+            // Alle Iterationen
+            for (let i = 1; i <= n; i++) {
+                const newSum = sumState.steps[sumState.steps.length - 1].sum + i;
+                sumState.steps.push({
+                    phase: `Iteration ${i}`,
+                    i: i + 1,
+                    sum: newSum,
+                    check: `sum = Summe(1..${i}) = ${newSum}`,
+                    valid: true
+                });
+            }
+            
+            document.getElementById('sum-step-btn').disabled = false;
+            displaySumStep();
+        }
+        
+        function stepSumDemo() {
+            if (sumState.currentStep < sumState.steps.length - 1) {
+                sumState.currentStep++;
+                displaySumStep();
+            }
+            if (sumState.currentStep >= sumState.steps.length - 1) {
+                document.getElementById('sum-step-btn').disabled = true;
+            }
+        }
+        
+        function displaySumStep() {
+            const step = sumState.steps[sumState.currentStep];
+            const isLast = sumState.currentStep === sumState.steps.length - 1;
+            
+            let html = `
+                <div style="background: white; padding: 20px; border-radius: 10px; border: 3px solid ${step.valid ? '#37b24d' : '#fa5252'}">
+                    <h3 style="color: #667eea;">${step.phase}</h3>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
+                        <div class="var-box">i = ${step.i}</div>
+                        <div class="var-box">sum = ${step.sum}</div>
+                    </div>
+                    <div class="invariant-check">
+                        <strong>Invariante Check:</strong> ${step.check}
+                        <span class="check-mark">✓</span>
+                    </div>
+                    ${isLast ? `
+                        <div style="background: #d3f9d8; padding: 15px; border-radius: 8px; margin-top: 15px; font-weight: bold;">
+                            Schleife endet! sum = ${step.sum} = 1+2+...+${sumState.n} ✓
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('demo-output').innerHTML = html;
+        }
+        
+        function resetSumDemo() {
+            sumState.running = false;
+            sumState.currentStep = -1;
+            document.getElementById('sum-step-btn').disabled = true;
+            document.getElementById('demo-output').innerHTML = '';
+        }
+        
+        // Demo 2: Binäre Exponentiation
+        let expState = {
+            n: 10,
+            x: 2,
+            y: 0,
+            z: 1,
+            steps: [],
+            currentStep: -1,
+            running: false
+        };
+        
+        function startExpDemo() {
+            const n = parseInt(document.getElementById('exp-n').value);
+            const target = Math.pow(2, n);
+            
+            expState = {
+                n: n,
+                x: 2,
+                y: n,
+                z: 1,
+                target: target,
+                steps: [{
+                    phase: 'Init',
+                    x: 2,
+                    y: n,
+                    z: 1,
+                    action: 'Initialisierung',
+                    check: `1 * 2^${n} = ${target}`,
+                    valid: true
+                }],
+                currentStep: -1,
+                running: true
+            };
+            
+            let x = 2, y = n, z = 1;
+            let iteration = 1;
+            
+            while (y > 0) {
+                if (y % 2 === 1) {
+                    z = z * x;
+                    y = y - 1;
+                    const result = z * Math.pow(x, y);
+                    expState.steps.push({
+                        phase: `Iteration ${iteration}`,
+                        x: x,
+                        y: y,
+                        z: z,
+                        action: `y ungerade → z = z * x = ${z}, y = ${y}`,
+                        check: `${z} * ${x}^${y} = ${result.toFixed(0)}`,
+                        valid: Math.abs(result - target) < 0.1
+                    });
+                } else {
+                    x = x * x;
+                    y = y / 2;
+                    const result = z * Math.pow(x, y);
+                    expState.steps.push({
+                        phase: `Iteration ${iteration}`,
+                        x: x,
+                        y: y,
+                        z: z,
+                        action: `y gerade → x = x * x = ${x}, y = ${y}`,
+                        check: `${z} * ${x}^${y} = ${result.toFixed(0)}`,
+                        valid: Math.abs(result - target) < 0.1
+                    });
+                }
+                iteration++;
+            }
+            
+            document.getElementById('exp-step-btn').disabled = false;
+            displayExpStep();
+        }
+        
+        function stepExpDemo() {
+            if (expState.currentStep < expState.steps.length - 1) {
+                expState.currentStep++;
+                displayExpStep();
+            }
+            if (expState.currentStep >= expState.steps.length - 1) {
+                document.getElementById('exp-step-btn').disabled = true;
+            }
+        }
+        
+        function displayExpStep() {
+            const step = expState.steps[expState.currentStep];
+            const isLast = expState.currentStep === expState.steps.length - 1;
+            
+            let html = `
+                <div style="background: white; padding: 20px; border-radius: 10px; border: 3px solid ${step.valid ? '#37b24d' : '#fa5252'}">
+                    <h3 style="color: #667eea;">${step.phase}</h3>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
+                        <div class="var-box">x = ${step.x}</div>
+                        <div class="var-box">y = ${step.y}</div>
+                        <div class="var-box">z = ${step.z}</div>
+                    </div>
+                    <p style="text-align: center; margin: 15px 0; font-size: 1.1em;"><strong>${step.action}</strong></p>
+                    <div class="invariant-check">
+                        <strong>Invariante Check:</strong> z * x^y = 2^${expState.n}
+                        <br>
+                        <strong>Konkret:</strong> ${step.check} = ${expState.target}
+                        <span class="check-mark">✓</span>
+                    </div>
+                    ${isLast ? `
+                        <div style="background: #d3f9d8; padding: 15px; border-radius: 8px; margin-top: 15px; font-weight: bold;">
+                            Schleife endet bei y=0! z = ${step.z} = 2^${expState.n} ✓
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('exp-demo-output').innerHTML = html;
+        }
+        
+        function resetExpDemo() {
+            expState.running = false;
+            expState.currentStep = -1;
+            document.getElementById('exp-step-btn').disabled = true;
+            document.getElementById('exp-demo-output').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
