@@ -137,7 +137,7 @@ public class Uebungsblatt03 {
     // ---
 
     public static void main(String[] args) {
-        int[] sizes = { 10000, 50000, 100000 };
+        int[] sizes = { 10_000, 50_000, 100_000 };
 
         // Aufgabe 3.1
         System.out.println("=== Aufgabe 3.1: QUICK SORT (Middle Pivot) ===\n");
