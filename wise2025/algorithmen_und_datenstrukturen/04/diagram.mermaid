@@ -1,0 +1,72 @@
+graph TD
+    %% Styling-Definitionen für bessere Lesbarkeit
+    classDef pathNode fill:#e6f3ff,stroke:#0066cc,stroke-width:2px,color:#000;
+    classDef otherNode fill:#f0f0f0,stroke:#999,color:#666;
+
+    %% Baumstruktur mit kurzen Titeln zur Vermeidung von Layout-Fehlern
+    subgraph "Start"
+        S["Start: [4, 3, 2, 1]"];
+    end
+
+    subgraph "Schritt 1"
+        N1{"3 < 4?"};
+        S --> N1;
+
+        S1_res("Zustand: [3, 4, 2, 1]");
+        S1_other(Anderer Pfad);
+
+        N1 -- Ja --> S1_res;
+        N1 -- Nein --> S1_other;
+    end
+
+    subgraph "Schritt 2"
+        N2{"2 < 4?"};
+        S1_res --> N2;
+
+        N2b{"2 < 3?"};
+        N2 -- Ja --> N2b;
+
+        S2_res("Zustand: [2, 3, 4, 1]");
+        N2b -- Ja --> S2_res;
+
+        S2_other(Anderer Pfad);
+        N2 -- Nein --> S2_other;
+        S2b_other(Anderer Pfad);
+        N2b -- Nein --> S2b_other;
+    end
+
+    subgraph "Schritt 3"
+        N3{"1 < 4?"};
+        S2_res --> N3;
+
+        N3b{"1 < 3?"};
+        N3 -- Ja --> N3b;
+
+        N3c{"1 < 2?"};
+        N3b -- Ja --> N3c;
+
+        S3_res["Ende: [1, 2, 3, 4]"];
+        N3c -- Ja --> S3_res;
+
+        S3_other(Anderer Pfad);
+        N3 -- Nein --> S3_other;
+        S3b_other(Anderer Pfad);
+        N3b -- Nein --> S3b_other;
+        S3c_other(Anderer Pfad);
+        N3c -- Nein --> S3c_other;
+    end
+
+    %% Klassen an die Knoten anwenden
+    class S,N1,S1_res,N2,N2b,S2_res,N3,N3b,N3c,S3_res pathNode;
+    class S1_other,S2_other,S2b_other,S3_other,S3b_other,S3c_other otherNode;
+
+    %% Pfeil-Styling -- korrekte Indizes
+    linkStyle 0 stroke:#0066cc,stroke-width:3px;
+    linkStyle 1 stroke:#0066cc,stroke-width:3px;
+    linkStyle 3 stroke:#0066cc,stroke-width:3px;
+    linkStyle 4 stroke:#0066cc,stroke-width:3px;
+    linkStyle 5 stroke:#0066cc,stroke-width:3px;
+    linkStyle 8 stroke:#0066cc,stroke-width:3px;
+    linkStyle 9 stroke:#0066cc,stroke-width:3px;
+    linkStyle 10 stroke:#0066cc,stroke-width:3px;
+    linkStyle 11 stroke:#0066cc,stroke-width:3px;
