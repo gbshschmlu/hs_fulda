@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortieralgorithmen Visualisierung - Dark Mode</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Roboto', sans-serif;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            color: #60a5fa;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        h3 {
+            color: #93c5fd;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .input-section {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            min-width: 300px;
+            padding: 10px 15px;
+            background-color: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 5px;
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #60a5fa;
+        }
+        
+        input[type="number"] {
+            width: 80px;
+            padding: 10px;
+            background-color: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 5px;
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #2563eb;
+        }
+        
+        .btn-secondary {
+            background-color: #64748b;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #475569;
+        }
+        
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background-color: #059669;
+        }
+        
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background-color: #dc2626;
+        }
+        
+        .btn-active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .btn-inactive {
+            background-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .algorithm-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .step-info {
+            background-color: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #93c5fd;
+        }
+        
+        .step-description {
+            color: #cbd5e1;
+        }
+        
+        svg {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .legend {
+            background-color: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border: 1px solid #334155;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            border: 1px solid #475569;
+        }
+        
+        .complexity-info {
+            background-color: #422006;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #92400e;
+        }
+        
+        .helper-text {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+        
+        .buckets-box {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #334155;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .buckets-title {
+            color: #93c5fd;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .count-array-display {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+        
+        .bucket-item {
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const SortingVisualization = () => {
+            const [algorithm, setAlgorithm] = useState('bubblesort');
+            const [step, setStep] = useState(0);
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [customArray, setCustomArray] = useState('0, 8, 1, 16, 0, 32, 19');
+            const [currentArray, setCurrentArray] = useState([0, 8, 1, 16, 0, 32, 19]);
+            const [randomMin, setRandomMin] = useState(0);
+            const [randomMax, setRandomMax] = useState(50);
+            const [randomLength, setRandomLength] = useState(8);
+
+            // Bubblesort steps generator
+            const generateBubblesortSteps = (arr) => {
+                const steps = [];
+                const array = [...arr];
+                steps.push({ array: [...array], comparing: [], swapping: [], sorted: [], description: 'Start' });
+                
+                const n = array.length;
+                for (let i = 0; i < n - 1; i++) {
+                    for (let j = 0; j < n - 1 - i; j++) {
+                        steps.push({
+                            array: [...array],
+                            comparing: [j, j + 1],
+                            swapping: [],
+                            sorted: Array.from({length: i}, (_, k) => n - 1 - k),
+                            description: `Vergleiche ${array[j]} und ${array[j + 1]}`
+                        });
+                        
+                        if (array[j] > array[j + 1]) {
+                            [array[j], array[j + 1]] = [array[j + 1], array[j]];
+                            steps.push({
+                                array: [...array],
+                                comparing: [],
+                                swapping: [j, j + 1],
+                                sorted: Array.from({length: i}, (_, k) => n - 1 - k),
+                                description: `Tausche ${array[j + 1]} und ${array[j]}`
+                            });
+                        }
+                    }
+                    steps.push({
+                        array: [...array],
+                        comparing: [],
+                        swapping: [],
+                        sorted: Array.from({length: i + 1}, (_, k) => n - 1 - k),
+                        description: `Element ${array[n - 1 - i]} ist an finaler Position`
+                    });
+                }
+                
+                steps.push({
+                    array: [...array],
+                    comparing: [],
+                    swapping: [],
+                    sorted: Array.from({length: n}, (_, k) => k),
+                    description: 'Fertig sortiert!'
+                });
+                
+                return steps;
+            };
+
+            // Optimized Bubblesort
+            const generateOptimizedBubblesortSteps = (arr) => {
+                const steps = [];
+                const array = [...arr];
+                steps.push({ array: [...array], comparing: [], swapping: [], sorted: [], description: 'Start (optimierte Version)' });
+                
+                let swapped = true;
+                let pass = 0;
+                const n = array.length;
+                
+                while (swapped) {
+                    swapped = false;
+                    for (let j = 0; j < n - 1 - pass; j++) {
+                        steps.push({
+                            array: [...array],
+                            comparing: [j, j + 1],
+                            swapping: [],
+                            sorted: Array.from({length: pass}, (_, k) => n - 1 - k),
+                            description: `Runde ${pass + 1}: Vergleiche ${array[j]} und ${array[j + 1]}`
+                        });
+                        
+                        if (array[j] > array[j + 1]) {
+                            [array[j], array[j + 1]] = [array[j + 1], array[j]];
+                            swapped = true;
+                            steps.push({
+                                array: [...array],
+                                comparing: [],
+                                swapping: [j, j + 1],
+                                sorted: Array.from({length: pass}, (_, k) => n - 1 - k),
+                                description: `Tausche -> swapped = true`
+                            });
+                        }
+                    }
+                    
+                    if (!swapped) {
+                        steps.push({
+                            array: [...array],
+                            comparing: [],
+                            swapping: [],
+                            sorted: Array.from({length: n}, (_, k) => k),
+                            description: 'Keine Vertauschungen -> Abbruch (OPTIMIERUNG!)'
+                        });
+                    }
+                    pass++;
+                }
+                
+                return steps;
+            };
+
+            // Merge Sort
+            const generateMergeSortSteps = (arr) => {
+                const steps = [];
+                const array = [...arr];
+                steps.push({ array: [...array], comparing: [], merging: [], sorted: [], description: 'Start - Divide Phase' });
+                
+                const mergeSort = (arr, start, end, depth = 0) => {
+                    if (start >= end) return;
+                    
+                    const mid = Math.floor((start + end) / 2);
+                    
+                    steps.push({
+                        array: [...array],
+                        comparing: Array.from({length: end - start + 1}, (_, i) => start + i),
+                        merging: [],
+                        sorted: [],
+                        description: `Teile [${start}..${end}] in [${start}..${mid}] und [${mid + 1}..${end}]`
+                    });
+                    
+                    mergeSort(arr, start, mid, depth + 1);
+                    mergeSort(arr, mid + 1, end, depth + 1);
+                    
+                    merge(arr, start, mid, end);
+                };
+                
+                const merge = (arr, start, mid, end) => {
+                    const left = array.slice(start, mid + 1);
+                    const right = array.slice(mid + 1, end + 1);
+                    
+                    steps.push({
+                        array: [...array],
+                        comparing: [],
+                        merging: Array.from({length: end - start + 1}, (_, i) => start + i),
+                        sorted: [],
+                        description: `Merge: [${left.join(', ')}] mit [${right.join(', ')}]`
+                    });
+                    
+                    let i = 0, j = 0, k = start;
+                    
+                    while (i < left.length && j < right.length) {
+                        if (left[i] <= right[j]) {
+                            array[k] = left[i];
+                            i++;
+                        } else {
+                            array[k] = right[j];
+                            j++;
+                        }
+                        
+                        steps.push({
+                            array: [...array],
+                            comparing: [k],
+                            merging: Array.from({length: end - start + 1}, (_, idx) => start + idx),
+                            sorted: [],
+                            description: `Setze ${array[k]} an Position ${k}`
+                        });
+                        k++;
+                    }
+                    
+                    while (i < left.length) {
+                        array[k] = left[i];
+                        i++;
+                        k++;
+                    }
+                    
+                    while (j < right.length) {
+                        array[k] = right[j];
+                        j++;
+                        k++;
+                    }
+                };
+                
+                mergeSort(array, 0, array.length - 1);
+                
+                steps.push({
+                    array: [...array],
+                    comparing: [],
+                    merging: [],
+                    sorted: Array.from({length: array.length}, (_, k) => k),
+                    description: 'Fertig sortiert!'
+                });
+                
+                return steps;
+            };
+
+            // Quick Sort
+            const generateQuickSortSteps = (arr) => {
+                const steps = [];
+                const array = [...arr];
+                steps.push({ array: [...array], pivot: [], comparing: [], sorted: [], description: 'Start' });
+                
+                const quickSort = (start, end) => {
+                    if (start >= end) return;
+                    
+                    const pivotIndex = end;
+                    steps.push({
+                        array: [...array],
+                        pivot: [pivotIndex],
+                        comparing: Array.from({length: end - start + 1}, (_, i) => start + i),
+                        sorted: [],
+                        description: `Pivot: ${array[pivotIndex]} (Index ${pivotIndex})`
+                    });
+                    
+                    let i = start - 1;
+                    
+                    for (let j = start; j < end; j++) {
+                        steps.push({
+                            array: [...array],
+                            pivot: [pivotIndex],
+                            comparing: [j],
+                            sorted: [],
+                            description: `Vergleiche ${array[j]} mit Pivot ${array[pivotIndex]}`
+                        });
+                        
+                        if (array[j] < array[pivotIndex]) {
+                            i++;
+                            [array[i], array[j]] = [array[j], array[i]];
+                            steps.push({
+                                array: [...array],
+                                pivot: [pivotIndex],
+                                comparing: [i, j],
+                                sorted: [],
+                                description: `${array[j]} < ${array[pivotIndex]} -> Tausche`
+                            });
+                        }
+                    }
+                    
+                    [array[i + 1], array[pivotIndex]] = [array[pivotIndex], array[i + 1]];
+                    const newPivotIndex = i + 1;
+                    
+                    steps.push({
+                        array: [...array],
+                        pivot: [newPivotIndex],
+                        comparing: [],
+                        sorted: [newPivotIndex],
+                        description: `Pivot ${array[newPivotIndex]} an finaler Position ${newPivotIndex}`
+                    });
+                    
+                    quickSort(start, newPivotIndex - 1);
+                    quickSort(newPivotIndex + 1, end);
+                };
+                
+                quickSort(0, array.length - 1);
+                
+                steps.push({
+                    array: [...array],
+                    pivot: [],
+                    comparing: [],
+                    sorted: Array.from({length: array.length}, (_, k) => k),
+                    description: 'Fertig sortiert!'
+                });
+                
+                return steps;
+            };
+
+            // Counting Sort
+            const generateCountingSortSteps = (arr) => {
+                const steps = [];
+                const array = [...arr];
+                
+                const min = Math.min(...array);
+                const max = Math.max(...array);
+                const range = max - min + 1;
+                
+                steps.push({
+                    array: [...array],
+                    counts: Array(range).fill(0),
+                    countsOriginal: null,
+                    output: Array(array.length).fill(null),
+                    phase: 'start',
+                    description: `Start - Min: ${min}, Max: ${max}, Range: ${range}`
+                });
+                
+                const count = Array(range).fill(0);
+                
+                // Phase 1: Count
+                for (let i = 0; i < array.length; i++) {
+                    count[array[i] - min]++;
+                    steps.push({
+                        array: [...array],
+                        counts: [...count],
+                        countsOriginal: null,
+                        output: Array(array.length).fill(null),
+                        highlighting: [i],
+                        phase: 'counting',
+                        description: `Phase 1: Zaehle ${array[i]} → count[${array[i] - min}] = ${count[array[i] - min]}`
+                    });
+                }
+                
+                const countsOriginal = [...count];
+                
+                steps.push({
+                    array: [...array],
+                    counts: [...count],
+                    countsOriginal: [...countsOriginal],
+                    output: Array(array.length).fill(null),
+                    phase: 'counting-done',
+                    description: 'Phase 1 fertig: Histogramm der Vorkommen erstellt'
+                });
+                
+                // Phase 2: Aggregate
+                for (let i = 1; i < count.length; i++) {
+                    const prev = count[i - 1];
+                    count[i] += count[i - 1];
+                    steps.push({
+                        array: [...array],
+                        counts: [...count],
+                        countsOriginal: [...countsOriginal],
+                        output: Array(array.length).fill(null),
+                        phase: 'aggregating',
+                        description: `Phase 2: Kumulative Summe - count[${i}] = ${prev} + ${count[i] - prev} = ${count[i]}`
+                    });
+                }
+                
+                steps.push({
+                    array: [...array],
+                    counts: [...count],
+                    countsOriginal: [...countsOriginal],
+                    output: Array(array.length).fill(null),
+                    phase: 'aggregate-done',
+                    description: 'Phase 2 fertig: Positionen im Zielarray bestimmt'
+                });
+                
+                // Phase 3: Place elements
+                const output = Array(array.length);
+                for (let i = array.length - 1; i >= 0; i--) {
+                    const value = array[i];
+                    const pos = count[value - min] - 1;
+                    output[pos] = value;
+                    count[value - min]--;
+                    
+                    steps.push({
+                        array: [...array],
+                        counts: [...count],
+                        countsOriginal: [...countsOriginal],
+                        output: [...output],
+                        highlighting: [i],
+                        phase: 'placing',
+                        description: `Phase 3: Platziere ${value} an Position ${pos}, dekrementiere count[${value - min}]`
+                    });
+                }
+                
+                steps.push({
+                    array: output,
+                    counts: [...count],
+                    countsOriginal: [...countsOriginal],
+                    output: [...output],
+                    sorted: Array.from({length: array.length}, (_, k) => k),
+                    phase: 'done',
+                    description: 'Fertig sortiert!'
+                });
+                
+                return steps;
+            };
+
+            // Radix Sort
+            const generateRadixSortSteps = (arr) => {
+                const steps = [];
+                const array = [...arr];
+                
+                const max = Math.max(...array);
+                const maxDigits = max.toString().length;
+                
+                steps.push({
+                    array: [...array],
+                    buckets: [],
+                    currentDigit: null,
+                    description: `Start - Max: ${max}, Anzahl Stellen: ${maxDigits}`
+                });
+                
+                for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
+                    const digit = Math.log10(exp);
+                    const digitName = digit === 0 ? 'Einerstelle' : digit === 1 ? 'Zehnerstelle' : 'Hunderterstelle';
+                    const buckets = Array.from({length: 10}, () => []);
+                    
+                    steps.push({
+                        array: [...array],
+                        buckets: buckets.map(b => [...b]),
+                        currentDigit: digitName,
+                        description: `Sortiere nach ${digitName}`
+                    });
+                    
+                    // Distribute phase
+                    for (let i = 0; i < array.length; i++) {
+                        const d = Math.floor(array[i] / exp) % 10;
+                        buckets[d].push(array[i]);
+                        
+                        steps.push({
+                            array: [...array],
+                            buckets: buckets.map(b => [...b]),
+                            currentDigit: digitName,
+                            highlighting: [i],
+                            description: `${array[i]} → Bucket ${d} (${digitName}: ${d})`
+                        });
+                    }
+                    
+                    steps.push({
+                        array: [...array],
+                        buckets: buckets.map(b => [...b]),
+                        currentDigit: digitName,
+                        description: `Alle Elemente nach ${digitName} verteilt`
+                    });
+                    
+                    // Gather phase
+                    let index = 0;
+                    for (let i = 0; i < 10; i++) {
+                        for (let j = 0; j < buckets[i].length; j++) {
+                            array[index++] = buckets[i][j];
+                        }
+                    }
+                    
+                    steps.push({
+                        array: [...array],
+                        buckets: [],
+                        currentDigit: digitName,
+                        description: `Eingesammelt nach ${digitName}: [${array.join(', ')}]`
+                    });
+                }
+                
+                steps.push({
+                    array: [...array],
+                    buckets: [],
+                    currentDigit: null,
+                    sorted: Array.from({length: array.length}, (_, k) => k),
+                    description: 'Fertig sortiert!'
+                });
+                
+                return steps;
+            };
+
+            const algorithms = {
+                bubblesort: { name: 'Bubblesort (Naive)', generator: generateBubblesortSteps },
+                bubblesort_opt: { name: 'Bubblesort (Optimiert)', generator: generateOptimizedBubblesortSteps },
+                mergesort: { name: 'Merge Sort', generator: generateMergeSortSteps },
+                quicksort: { name: 'Quick Sort', generator: generateQuickSortSteps },
+                countingsort: { name: 'Counting Sort', generator: generateCountingSortSteps },
+                radixsort: { name: 'Radix Sort', generator: generateRadixSortSteps }
+            };
+
+            const steps = algorithms[algorithm].generator(currentArray);
+            const currentStep = steps[step] || steps[0];
+
+            useEffect(() => {
+                let interval;
+                if (isPlaying && step < steps.length - 1) {
+                    interval = setInterval(() => {
+                        setStep(s => s + 1);
+                    }, 800);
+                } else if (step >= steps.length - 1) {
+                    setIsPlaying(false);
+                }
+                return () => clearInterval(interval);
+            }, [isPlaying, step, steps.length]);
+
+            const resetAnimation = () => {
+                setStep(0);
+                setIsPlaying(false);
+            };
+
+            const applyCustomArray = () => {
+                try {
+                    const parsed = customArray.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+                    if (parsed.length > 0) {
+                        setCurrentArray(parsed);
+                        resetAnimation();
+                    }
+                } catch (e) {
+                    alert('Ungültiges Array-Format! Nutze: 1, 2, 3, 4, 5');
+                }
+            };
+
+            const generateRandomArray = () => {
+                const length = Math.max(1, Math.min(20, randomLength));
+                const min = Math.min(randomMin, randomMax);
+                const max = Math.max(randomMin, randomMax);
+                const random = Array.from({length}, () => Math.floor(Math.random() * (max - min + 1)) + min);
+                setCurrentArray(random);
+                setCustomArray(random.join(', '));
+                resetAnimation();
+            };
+
+            const maxVal = Math.max(...currentArray);
+            const barWidth = 50;
+            const barSpacing = 10;
+            const height = 300;
+            const width = Math.max(800, (barWidth + barSpacing) * currentArray.length + 100);
+
+            return (
+                <div className="container">
+                    <h2>Sortieralgorithmen Visualisierung</h2>
+                    
+                    <div className="input-section">
+                        <h3>Array konfigurieren</h3>
+                        <div className="input-row">
+                            <input 
+                                type="text" 
+                                value={customArray} 
+                                onChange={(e) => setCustomArray(e.target.value)}
+                                placeholder="Zahlen mit Komma getrennt: 0, 8, 1, 16, 0, 32, 19"
+                            />
+                            <button className="btn-primary" onClick={applyCustomArray}>
+                                Array setzen
+                            </button>
+                        </div>
+                        <div className="helper-text">Aktuelles Array: [{currentArray.join(', ')}]</div>
+                        
+                        <div className="input-row" style={{marginTop: '15px'}}>
+                            <span>Zufällig generieren:</span>
+                            <input 
+                                type="number" 
+                                value={randomLength}
+                                onChange={(e) => setRandomLength(parseInt(e.target.value) || 8)}
+                                placeholder="Länge"
+                                min="1"
+                                max="20"
+                            />
+                            <span>Elemente, von</span>
+                            <input 
+                                type="number" 
+                                value={randomMin}
+                                onChange={(e) => setRandomMin(parseInt(e.target.value) || 0)}
+                                placeholder="Min"
+                            />
+                            <span>bis</span>
+                            <input 
+                                type="number" 
+                                value={randomMax}
+                                onChange={(e) => setRandomMax(parseInt(e.target.value) || 50)}
+                                placeholder="Max"
+                            />
+                            <button className="btn-danger" onClick={generateRandomArray}>
+                                Zufällig generieren
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="algorithm-buttons">
+                        {Object.entries(algorithms).map(([key, { name }]) => (
+                            <button
+                                key={key}
+                                onClick={() => { setAlgorithm(key); resetAnimation(); }}
+                                className={algorithm === key ? 'btn-active' : 'btn-inactive'}
+                            >
+                                {name}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="step-info">
+                        <div className="step-title">
+                            Schritt {step + 1} von {steps.length}
+                        </div>
+                        <div className="step-description">
+                            {currentStep.description}
+                        </div>
+                    </div>
+
+                    <svg width={width} height={height + 50}>
+                        {currentStep.array.map((value, index) => {
+                            const x = 50 + index * (barWidth + barSpacing);
+                            const barHeight = (value / maxVal) * (height - 50);
+                            const y = height - barHeight - 20;
+                            
+                            let fill = '#64748b';
+                            if (currentStep.sorted && currentStep.sorted.includes(index)) fill = '#22c55e';
+                            else if (currentStep.comparing && currentStep.comparing.includes(index)) fill = '#f59e0b';
+                            else if (currentStep.swapping && currentStep.swapping.includes(index)) fill = '#ef4444';
+                            else if (currentStep.merging && currentStep.merging.includes(index)) fill = '#8b5cf6';
+                            else if (currentStep.pivot && currentStep.pivot.includes(index)) fill = '#ec4899';
+                            else if (currentStep.highlighting && currentStep.highlighting.includes(index)) fill = '#3b82f6';
+                            
+                            return (
+                                <g key={index}>
+                                    <rect
+                                        x={x}
+                                        y={y}
+                                        width={barWidth}
+                                        height={barHeight}
+                                        fill={fill}
+                                        stroke="#94a3b8"
+                                        strokeWidth="2"
+                                        rx="3"
+                                    />
+                                    <text
+                                        x={x + barWidth / 2}
+                                        y={y - 5}
+                                        textAnchor="middle"
+                                        fontSize="14"
+                                        fontWeight="bold"
+                                        fill="#e2e8f0"
+                                    >
+                                        {value}
+                                    </text>
+                                    <text
+                                        x={x + barWidth / 2}
+                                        y={height + 10}
+                                        textAnchor="middle"
+                                        fontSize="12"
+                                        fill="#94a3b8"
+                                    >
+                                        {index}
+                                    </text>
+                                </g>
+                            );
+                        })}
+                    </svg>
+
+                    {algorithm === 'countingsort' && currentStep.counts && (
+                        <div className="buckets-box">
+                            <div className="buckets-title">
+                                {currentStep.phase === 'counting' || currentStep.phase === 'counting-done' ? 'Phase 1: Histogramm (Anzahl Vorkommen)' : 
+                                 currentStep.phase === 'aggregating' || currentStep.phase === 'aggregate-done' ? 'Phase 2: Kumulative Summen (Positionen)' :
+                                 currentStep.phase === 'placing' ? 'Phase 3: Zurueckschreiben' : 'Count Array'}
+                            </div>
+                            
+                            {currentStep.countsOriginal && currentStep.phase !== 'counting' && currentStep.phase !== 'counting-done' && (
+                                <div style={{marginBottom: '15px'}}>
+                                    <div style={{color: '#94a3b8', fontSize: '12px', marginBottom: '5px'}}>Original (Histogramm):</div>
+                                    <div className="count-array-display">
+                                        {currentStep.countsOriginal.map((count, i) => (
+                                            <div key={i} style={{color: '#64748b'}}>
+                                                [{i}] = {count}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                            
+                            <div style={{color: '#93c5fd', fontSize: '12px', marginBottom: '5px'}}>
+                                {currentStep.phase === 'aggregating' || currentStep.phase === 'aggregate-done' || currentStep.phase === 'placing' ? 'Aggregiert (Positionen):' : 'Aktuelle Werte:'}
+                            </div>
+                            <div className="count-array-display">
+                                {currentStep.counts.map((count, i) => (
+                                    <div key={i}>
+                                        [{i}] = {count}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {algorithm === 'radixsort' && currentStep.buckets && currentStep.buckets.length > 0 && (
+                        <div className="buckets-box">
+                            <div className="buckets-title">
+                                Buckets (Fächer) - {currentStep.currentDigit}
+                            </div>
+                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px', marginTop: '10px'}}>
+                                {currentStep.buckets.map((bucket, i) => (
+                                    <div key={i} style={{
+                                        backgroundColor: '#0f172a',
+                                        padding: '10px',
+                                        borderRadius: '5px',
+                                        border: bucket.length > 0 ? '2px solid #3b82f6' : '1px solid #334155'
+                                    }}>
+                                        <div style={{color: '#60a5fa', fontWeight: 'bold', marginBottom: '5px'}}>
+                                            Bucket {i}
+                                        </div>
+                                        <div style={{color: '#cbd5e1', fontSize: '13px'}}>
+                                            {bucket.length > 0 ? `[${bucket.join(', ')}]` : '[ ]'}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="controls">
+                        <button
+                            onClick={() => setStep(Math.max(0, step - 1))}
+                            disabled={step === 0}
+                            className="btn-primary"
+                        >
+                            ← Zurueck
+                        </button>
+                        
+                        <button
+                            onClick={() => setIsPlaying(!isPlaying)}
+                            className="btn-success"
+                        >
+                            {isPlaying ? '⏸ Pause' : '▶ Play'}
+                        </button>
+                        
+                        <button
+                            onClick={() => setStep(Math.min(steps.length - 1, step + 1))}
+                            disabled={step === steps.length - 1}
+                            className="btn-primary"
+                        >
+                            Weiter →
+                        </button>
+                        
+                        <button
+                            onClick={resetAnimation}
+                            className="btn-secondary"
+                        >
+                            ↺ Reset
+                        </button>
+                    </div>
+
+                    <div className="legend">
+                        <h3>Legende</h3>
+                        <div className="legend-grid">
+                            <div className="legend-item">
+                                <div className="legend-color" style={{backgroundColor: '#f59e0b'}}></div>
+                                <span>Wird verglichen</span>
+                            </div>
+                            <div className="legend-item">
+                                <div className="legend-color" style={{backgroundColor: '#ef4444'}}></div>
+                                <span>Wird getauscht</span>
+                            </div>
+                            <div className="legend-item">
+                                <div className="legend-color" style={{backgroundColor: '#22c55e'}}></div>
+                                <span>Sortiert</span>
+                            </div>
+                            <div className="legend-item">
+                                <div className="legend-color" style={{backgroundColor: '#8b5cf6'}}></div>
+                                <span>Merge-Bereich</span>
+                            </div>
+                            <div className="legend-item">
+                                <div className="legend-color" style={{backgroundColor: '#ec4899'}}></div>
+                                <span>Pivot</span>
+                            </div>
+                            <div className="legend-item">
+                                <div className="legend-color" style={{backgroundColor: '#3b82f6'}}></div>
+                                <span>Aktuell bearbeitet</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="complexity-info">
+                        <h3>Komplexitaet</h3>
+                        <div>
+                            {algorithm === 'bubblesort' && 'O(n²) - Worst & Average | O(n²) - Best (naive)'}
+                            {algorithm === 'bubblesort_opt' && 'O(n²) - Worst & Average | O(n) - Best (optimiert)'}
+                            {algorithm === 'mergesort' && 'O(n log n) - immer | Stabil | Braucht O(n) Extra-Speicher'}
+                            {algorithm === 'quicksort' && 'O(n log n) - Average | O(n²) - Worst | In-Place'}
+                            {algorithm === 'countingsort' && 'O(n + k) - wobei k = Wertebereich | Nicht-vergleichsbasiert'}
+                            {algorithm === 'radixsort' && 'O(d × n) - wobei d = Anzahl Stellen | Nicht-vergleichsbasiert'}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<SortingVisualization />, document.getElementById('root'));
+    </script>
+</body>
+</html>
