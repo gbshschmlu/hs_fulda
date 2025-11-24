@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Übungsblatt 5 - Vorstellungshilfe</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 20px;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+
+            header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 40px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 10px;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+                opacity: 0.9;
+            }
+
+            .content {
+                padding: 40px;
+            }
+
+            .task {
+                margin-bottom: 60px;
+                border-left: 5px solid #667eea;
+                padding-left: 30px;
+            }
+
+            h2 {
+                color: #667eea;
+                font-size: 2em;
+                margin-bottom: 20px;
+            }
+
+            h3 {
+                color: #764ba2;
+                font-size: 1.5em;
+                margin: 30px 0 15px 0;
+            }
+
+            h4 {
+                color: #555;
+                font-size: 1.2em;
+                margin: 20px 0 10px 0;
+            }
+
+            .concept-box {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px 0;
+                border-left: 4px solid #667eea;
+            }
+
+            .important {
+                background: #fff3cd;
+                border-left: 4px solid #ffc107;
+                padding: 15px;
+                margin: 15px 0;
+                border-radius: 5px;
+            }
+
+            .tip {
+                background: #d1ecf1;
+                border-left: 4px solid #17a2b8;
+                padding: 15px;
+                margin: 15px 0;
+                border-radius: 5px;
+            }
+
+            .code-block {
+                background: #2d2d2d;
+                color: #f8f8f2;
+                padding: 20px;
+                border-radius: 8px;
+                overflow-x: auto;
+                margin: 15px 0;
+                font-family: "Courier New", monospace;
+                font-size: 0.9em;
+            }
+
+            .visual {
+                background: #e3f2fd;
+                padding: 20px;
+                border-radius: 10px;
+                margin: 20px 0;
+                text-align: center;
+            }
+
+            .visual pre {
+                text-align: left;
+                display: inline-block;
+                font-family: monospace;
+                font-size: 1.1em;
+                line-height: 1.8;
+            }
+
+            ul,
+            ol {
+                margin-left: 25px;
+                margin-bottom: 15px;
+            }
+
+            li {
+                margin-bottom: 10px;
+            }
+
+            .checklist {
+                background: #d4edda;
+                border-left: 4px solid #28a745;
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 5px;
+            }
+
+            .checklist h4 {
+                color: #155724;
+                margin-top: 0;
+            }
+
+            .complexity {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+                font-weight: bold;
+            }
+
+            .pros-cons {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                margin: 20px 0;
+            }
+
+            .pros,
+            .cons {
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            .pros {
+                background: #d4edda;
+                border-left: 4px solid #28a745;
+            }
+
+            .cons {
+                background: #f8d7da;
+                border-left: 4px solid #dc3545;
+            }
+
+            @media (max-width: 768px) {
+                .pros-cons {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Übungsblatt 5</h1>
+                <p class="subtitle">
+                    Algorithmen und Datenstrukturen - Vorstellungshilfe
+                </p>
+            </header>
+
+            <div class="content">
+                <!-- Aufgabe 5.1 -->
+                <div class="task">
+                    <h2>Aufgabe 5.1: Queue (Verkettete Liste)</h2>
+
+                    <div class="concept-box">
+                        <h3>Was ist eine Queue?</h3>
+                        <p><strong>Queue = Warteschlange</strong></p>
+                        <p>
+                            Eine Datenstruktur, die nach dem
+                            <strong>FIFO-Prinzip</strong> (First-In, First-Out)
+                            arbeitet. Wer zuerst reinkommt, kommt auch zuerst wieder
+                            raus - wie bei einer Warteschlange an der Kasse.
+                        </p>
+                    </div>
+
+                    <h3>Kernkonzept</h3>
+                    <p>
+                        Statt einem Array wird hier eine
+                        <strong>verkettete Liste</strong> verwendet. Jedes Element
+                        (Knoten) kennt nur seinen Nachfolger.
+                    </p>
+
+                    <div class="visual">
+                        <h4>Visualisierung der Queue:</h4>
+                        <pre>
+first → [Dies] → [ist] → [ein] → [Test] ← last
+         ↓                                ↓
+    dequeue()                        enqueue()
+    (entfernen)                      (hinzufügen)
+                    </pre
+                        >
+                    </div>
+
+                    <h3>Die zwei wichtigen Operationen</h3>
+
+                    <h4>1. enqueue(T item) <span class="complexity">O(1)</span></h4>
+                    <div class="code-block">
+                        public void enqueue(T item) { QueueNode&lt;T&gt; oldLast = last;
+                        last = new QueueNode&lt;&gt;(item); if (isEmpty()) { first =
+                        last; // Sonderfall: Queue war leer } else { oldLast.next =
+                        last; // An letzten Knoten anhängen } }
+                    </div>
+
+                    <h4>2. dequeue() <span class="complexity">O(1)</span></h4>
+                    <div class="code-block">
+                        public T dequeue() { if (isEmpty()) { throw new
+                        RuntimeException("Queue ist leer!"); } T item = first.data;
+                        first = first.next; if (first == null) { last = null; // Queue
+                        ist jetzt leer } return item; }
+                    </div>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Vorteile gegenüber Array-Implementierung</h4>
+                            <ul>
+                                <li>Dynamische Größe (kein "Queue full")</li>
+                                <li>Kein Kopieren/Vergrößern nötig</li>
+                                <li>Beide Operationen in O(1)</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Nachteile</h4>
+                            <ul>
+                                <li>Mehr Speicher pro Element (Zeiger)</li>
+                                <li>Kein wahlfreier Zugriff</li>
+                                <li>Cache-unfreundlich</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Tipps für die Vorstellung</h4>
+                        <ol>
+                            <li>
+                                <strong>Zeichne die Visualisierung</strong> an die
+                                Tafel/Whiteboard. Zeige wie die Knoten verlinkt sind.
+                            </li>
+                            <li>
+                                <strong>Erkläre den Sonderfall</strong>: Was passiert
+                                beim ersten enqueue? (first = last)
+                            </li>
+                            <li>
+                                <strong>Zeige das FIFO-Prinzip</strong>: "Dies" kommt
+                                rein → "Dies" kommt raus
+                            </li>
+                            <li>
+                                <strong>Erwähne die Laufzeit</strong>: Beide Operationen
+                                sind O(1), weil wir die Referenzen direkt haben
+                            </li>
+                            <li>
+                                <strong>Vergleiche mit Array</strong>: Warum ist
+                                verkettete Liste hier besser? (keine Größenbeschränkung)
+                            </li>
+                            <li>
+                                <strong>Demo am Code</strong>: Gehe die enqueue-Methode
+                                Zeile für Zeile durch
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="important">
+                        <strong>Häufiger Fehler:</strong> Vergiss nicht, sowohl first
+                        als auch last auf null zu setzen, wenn die Queue leer wird!
+                        Sonst zeigen die Referenzen ins Nirgendwo.
+                    </div>
+                </div>
+
+                <!-- Aufgabe 5.2 -->
+                <div class="task">
+                    <h2>Aufgabe 5.2: Stack (Klammer-Check)</h2>
+
+                    <div class="concept-box">
+                        <h3>Was ist ein Stack?</h3>
+                        <p><strong>Stack = Stapel</strong></p>
+                        <p>
+                            Eine Datenstruktur, die nach dem
+                            <strong>LIFO-Prinzip</strong> (Last-In, First-Out) arbeitet.
+                            Was zuletzt draufgelegt wurde, kommt als erstes wieder
+                            runter - wie ein Stapel Teller.
+                        </p>
+                    </div>
+
+                    <h3>Warum Stack für Klammerprüfung?</h3>
+                    <p>
+                        Die zuletzt geöffnete Klammer muss als erstes wieder geschlossen
+                        werden. Das ist exakt das LIFO-Prinzip!
+                    </p>
+
+                    <div class="visual">
+                        <h4>Beispiel: {x[(a)b]}</h4>
+                        <pre>
+Zeichen │ Stack-Zustand   │ Aktion
+────────┼─────────────────┼─────────────────
+   {    │ {               │ push {
+   x    │ {               │ ignorieren
+   [    │ { [             │ push [
+   (    │ { [ (           │ push (
+   a    │ { [ (           │ ignorieren
+   )    │ { [             │ pop ( - passt!
+   b    │ { [             │ ignorieren
+   ]    │ {               │ pop [ - passt!
+   }    │                 │ pop { - passt!
+────────┴─────────────────┴─────────────────
+Ergebnis: Stack leer → GÜLTIG
+                    </pre
+                        >
+                    </div>
+
+                    <h3>Der Algorithmus - Schritt für Schritt</h3>
+
+                    <ol>
+                        <li>
+                            <strong>Öffnende Klammer</strong> ( [ { → auf Stack legen
+                            (push)
+                        </li>
+                        <li>
+                            <strong>Schließende Klammer</strong> ) ] }:
+                            <ul>
+                                <li>
+                                    Stack leer? → FEHLER (geschlossen ohne zu öffnen)
+                                </li>
+                                <li>Oberstes Element vom Stack nehmen (pop)</li>
+                                <li>
+                                    Passen die Klammern zusammen? Wenn nein → FEHLER
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Andere Zeichen</strong> (a, b, x, ...) → ignorieren
+                        </li>
+                        <li>
+                            <strong>Am Ende</strong>: Stack muss leer sein, sonst FEHLER
+                            (Klammern nicht geschlossen)
+                        </li>
+                    </ol>
+
+                    <div class="code-block">
+                        public static boolean checkBrackets(String input) {
+                        Deque&lt;Character&gt; stack = new ArrayDeque&lt;&gt;(); for
+                        (char c : input.toCharArray()) { // Öffnende Klammern → push if
+                        (c == '(' || c == '[' || c == '{') { stack.push(c); } //
+                        Schließende Klammern → prüfen else if (c == ')' || c == ']' || c
+                        == '}') { if (stack.isEmpty()) { return false; // Fehler: nichts
+                        zu schließen } char lastOpen = stack.pop(); if
+                        (!isMatchingPair(lastOpen, c)) { return false; // Fehler:
+                        falsches Paar } } // Andere Zeichen ignorieren } return
+                        stack.isEmpty(); // Am Ende muss alles geschlossen sein }
+                    </div>
+
+                    <h3>Test-Beispiele verstehen</h3>
+
+                    <div class="important">
+                        <h4>Gültig: {x[(a)b]}</h4>
+                        <p>
+                            Jede geöffnete Klammer wird in der richtigen Reihenfolge
+                            geschlossen. Der Stack wächst und schrumpft korrekt.
+                        </p>
+                    </div>
+
+                    <div class="important">
+                        <h4>Ungültig: {a(b)x[d]</h4>
+                        <p>
+                            Die führende geschweifte Klammer { wird nie geschlossen. Am
+                            Ende bleibt sie auf dem Stack.
+                        </p>
+                    </div>
+
+                    <div class="important">
+                        <h4>Ungültig: (a[b)c]</h4>
+                        <p>
+                            Die Klammern überschneiden sich. Wenn wir bei ) sind, liegt
+                            [ oben auf dem Stack, aber wir erwarten (.
+                        </p>
+                    </div>
+
+                    <h3>Warum ArrayDeque statt Stack?</h3>
+                    <div class="tip">
+                        <p>
+                            Die Klasse <code>java.util.Stack</code> ist veraltet
+                            (legacy). <code>ArrayDeque</code> ist die moderne
+                            Alternative:
+                        </p>
+                        <ul>
+                            <li>Schneller (keine Synchronisation)</li>
+                            <li>Konsistenteres Interface</li>
+                            <li>push() und pop() funktionieren identisch</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Tipps für die Vorstellung</h4>
+                        <ol>
+                            <li>
+                                <strong>Erkläre LIFO</strong>: Vergleich mit
+                                Tellerstapel - was zuletzt drauf, kommt zuerst runter
+                            </li>
+                            <li>
+                                <strong>Zeichne ein Beispiel</strong>: Nimm {x[(a)b]}
+                                und zeige den Stack-Zustand bei jedem Schritt
+                            </li>
+                            <li>
+                                <strong>Zeige beide Fehlertypen</strong>:
+                                <ul>
+                                    <li>
+                                        Stack leer beim Schließen: ))} - zu viele
+                                        schließende Klammern
+                                    </li>
+                                    <li>
+                                        Stack nicht leer am Ende: {[( - zu wenige
+                                        schließende Klammern
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Erkläre isMatchingPair()</strong>: Einfacher
+                                Vergleich, ob öffnende und schließende Klammer
+                                zusammenpassen
+                            </li>
+                            <li>
+                                <strong>Anwendungsbeispiel</strong>: Compiler nutzen
+                                das, um Code zu parsen (Java, Python, etc.)
+                            </li>
+                            <li>
+                                <strong>Laufzeit</strong>: O(n) - wir laufen einmal
+                                durch den String, jede Operation ist O(1)
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="visual">
+                        <h4>Praxisbeispiel - Compiler</h4>
+                        <p>Genau so funktioniert die Syntaxprüfung in IDEs:</p>
+                        <pre>
+if (x > 0) {
+    while (y < 10) {
+        doSomething();
+    }  ← hier prüft der Compiler mit Stack
+}  ← und hier auch
+                    </pre
+                        >
+                    </div>
+                </div>
+
+                <!-- Allgemeine Tipps -->
+                <div class="task">
+                    <h2>Allgemeine Vorstellungstipps</h2>
+
+                    <div class="tip">
+                        <h4>Vorbereitung</h4>
+                        <ul>
+                            <li>
+                                Code nochmal durchgehen und sicherstellen, dass du jede
+                                Zeile erklären kannst
+                            </li>
+                            <li>
+                                Überlege dir 1-2 eigene Beispiele (nicht nur die aus dem
+                                PDF)
+                            </li>
+                            <li>Teste deinen Code vorher nochmal durch</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip">
+                        <h4>Während der Vorstellung</h4>
+                        <ul>
+                            <li>
+                                <strong>Struktur:</strong> Erst das Konzept erklären,
+                                dann den Code zeigen
+                            </li>
+                            <li>
+                                <strong>Visualisierung:</strong> Zeichne die
+                                Datenstruktur an die Tafel
+                            </li>
+                            <li>
+                                <strong>Beispiele:</strong> Gehe ein konkretes Beispiel
+                                Schritt für Schritt durch
+                            </li>
+                            <li>
+                                <strong>Laufzeit:</strong> Erwähne die O-Notation
+                                (zeigt, dass du es verstanden hast)
+                            </li>
+                            <li>
+                                <strong>Vergleiche:</strong> Was sind Vor-/Nachteile
+                                gegenüber anderen Ansätzen?
+                            </li>
+                            <li>
+                                <strong>Tempo:</strong> Nicht zu schnell - deine
+                                Kommilitonen sollen folgen können
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <h4>Häufige Fragen vom Dozenten</h4>
+                        <ul>
+                            <li>
+                                "Was ist die Laufzeit dieser Operation?" → O(1) für
+                                Queue, O(n) für Klammer-Check
+                            </li>
+                            <li>
+                                "Was passiert bei Randfall X?" → Leere Queue/Stack,
+                                einzelnes Element, etc.
+                            </li>
+                            <li>
+                                "Warum nicht Array-basiert?" → Bei Queue: dynamische
+                                Größe wichtig
+                            </li>
+                            <li>
+                                "Andere Anwendungsfälle?" → Queue:
+                                Drucker-Warteschlange, Stack: Undo/Redo
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Zeitplan für die Vorstellung (ca. 10-15 Min)</h4>
+                        <ol>
+                            <li>
+                                <strong>0-2 Min:</strong> Kurze Einleitung - was ist die
+                                Aufgabe?
+                            </li>
+                            <li>
+                                <strong>2-5 Min:</strong> Konzept erklären (FIFO/LIFO,
+                                Datenstruktur)
+                            </li>
+                            <li>
+                                <strong>5-10 Min:</strong> Code durchgehen, wichtige
+                                Methoden zeigen
+                            </li>
+                            <li><strong>10-12 Min:</strong> Beispiel durchspielen</li>
+                            <li><strong>12-15 Min:</strong> Fragen beantworten</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
