@@ -1,0 +1,140 @@
+% Sprachpaket und Worttrennung
+\usepackage[ngerman]{babel}
+
+% Zeichensatz
+\usepackage[utf8]{inputenc}
+
+% besserer Anhang
+\usepackage{appendix}
+
+%Paket für Bilder
+\usepackage{graphicx}
+
+% Paket zur Erstellung von Gantt-Charts
+% Doku: 
+% https://ctan.ebinger.cc/tex-archive/graphics/pgf/contrib/pgfgantt/pgfgantt-doc.pdf
+\usepackage{pgfgantt}
+
+% leicht anderes Abstrakt als normal
+% \usepackage{bookabstract}
+
+% Schönere ausgefranste Ränder
+\usepackage[document]{ragged2e}
+
+% für die darstellung von Quellcode
+\usepackage{listings}
+
+% Paket für die Darstellung des TOC
+% \usepackage{tocloft}
+% \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% pdf-Einstellungen
+% Angaben ggf. aktualisieren!
+\usepackage[
+pdftitle={PDF-Titel},
+pdfsubject={},
+pdfauthor={Mein Name},
+pdfkeywords={},  
+hidelinks % Links nicht einrahmen
+]{hyperref}
+\usepackage[a-1b]{pdfx} % für PDF/A-1b - WICHITG! 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Kopf- und Fußzeilen ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% falls Sie Kopf und Fußzeilen (Einschließlich Seitenummerierung) ändern wollen, schauen Sie hier:
+% https://www.overleaf.com/learn/latex/Headers_and_footers
+\usepackage{fancyhdr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Dokumenteinstellungen ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Seitenränder
+\usepackage[top=25mm, bottom=25mm, inner=30mm, outer=30mm, headsep=10mm, footskip=12mm]{geometry}
+
+% Typographie
+\usepackage[auto]{microtype}
+\usepackage{tabulary}
+\usepackage{array} % Textumbruch in Tabellen
+\urlstyle{same} % URLs haben selbe Schriftart wie der sie umgebende Text 
+
+% Zeilenabstand
+\usepackage{setspace}
+\onehalfspacing
+
+% maximale Tiefe der Bezifferung der einzelnen Sektionen
+\setcounter{secnumdepth}{3}
+
+% maximale Tiefe des Inhaltsverzeichnisses
+\setcounter{tocdepth}{3}
+
+% Abstand zwischen Text und Fußnote
+\setlength{\skip\footins}{8mm}
+
+% Paragapheneinzug
+\setlength{\parskip}{2mm}
+\setlength{\parindent}{0pt}
+
+% entfernt gezwunge Leerseiten
+\let\cleardoublepage\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Literaturverzeichznis ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Stil
+\usepackage[
+backend=biber,
+style=ieee,
+]{biblatex}
+% Speicherort der Literaturangaben und der Bildquellen (*.bib Datei)
+\bibliography{bib/references.bib}
+
+% falls eine zweite Bib-Datei eingebunden werden muss
+%\addbibresource{bib/images.bib}
+
+% Behandlung langer Quellen
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburlucpenalty}{9000}
+\setcounter{biburllcpenalty}{9000}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Bilddarstellung und Untertitel ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Einstellung des Aussehens der Beschriftungen, siehe Paketdokumentation
+\usepackage[font=small, labelfont=bf, margin=0.3cm]{caption}        
+
+% Recommended when making sub-figures
+\usepackage{subcaption}     
+
+% custom command
+% Einfaches Einfügen von Quellen unter Bildern
+\newcommand{\source}[1]{\vspace{-4pt}\caption*{\footnotesize{Quelle: {#1}}}}
+
+% ändere die captionbezeichnung für Listings
+\renewcommand\lstlistingname{Quellcode}
+\renewcommand\lstlistlistingname{Quellcodeverzeichnis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Akronyme und Glossar ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OPTIONAL ggf. auskommentieren
+% Paket für Glossar
+\usepackage[acronym,xindy,toc]{glossaries}
+\makeglossaries
+% Binde die Dateien ein
+\loadglsentries{appendix/acronyms.tex}
+\loadglsentries{appendix/glossar.tex}
+
+% alle Wörter und Akronyme, welche in den Verzeichnissen sind, werden im Fließtext fett markiert
+\renewcommand*{\glstextformat}[1]{\textit{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Bild überlagerungen ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% kann wichtig sein für das Einfügen einer Unterschirft in der Eidesstattlichen Erklärung
+\usepackage[absolute,overlay]{textpos}
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{\TPHorizModule}
+\textblockorigin{0cm}{0cm}

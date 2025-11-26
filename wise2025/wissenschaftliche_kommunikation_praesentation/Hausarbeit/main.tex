@@ -1,0 +1,107 @@
+%laden der Präambel mit Latexbefehlen/-klassen
+\documentclass[a4paper, 12pt, openany]{article}
+
+% Font type
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage{libertine}
+
+% laden aller packages
+\usepackage{preamble}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Frontmatter - Vorderteil ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Titelseitenlayout laden
+\pagestyle{empty}
+% Neue Seitenränder, die nur für die Titelseite gelten
+\newgeometry{top=25mm, bottom=25mm, left=25mm, right=25mm}
+
+% Deckblatt einfügen
+% !suchen Sie sich eine der Titelseiten aus!
+\include{frontpage_v1}
+\include{frontpage_v2}
+
+% Zurück zu den Standard-Seitenrändern für KApitel und Text
+% top=25mm, bottom=25mm, inner=30mm, outer=30mm, headsep=10mm, footskip=12mm
+\restoregeometry
+
+% Abstrakt
+\input{abstract}
+\clearpage
+
+% Inhaltsverzeichnis
+\begin{spacing}{1.3}
+\tableofcontents
+
+% Glossar und Abkürzungsverzeichnis drucken
+\phantomsection
+\printglossary[title=Glossar, toctitle=Glossar]
+\clearpage
+\printglossary[type=\acronymtype, title=Abkürzungsverzeichnis, toctitle=Abkürzungsverzeichnis]
+\clearpage
+
+% Abbildungsverzeichnis
+\phantomsection % Fügt einen unsichtbaren Abschnitt hinzu, um den Link zu korrigieren
+\addcontentsline{toc}{section}{\listfigurename}
+\listoffigures
+\clearpage
+
+% Tabellenverzeichnis
+\phantomsection % Fügt einen unsichtbaren Abschnitt hinzu, um den Link zu korrigieren
+\addcontentsline{toc}{section}{\listtablename}
+\listoftables
+\clearpage
+
+% Listingverzeichnis
+\phantomsection % Fügt einen unsichtbaren Abschnitt hinzu, um den Link zu korrigieren
+\addcontentsline{toc}{section}{Quellcodeverzeichnis}
+\lstlistoflistings
+\clearpage
+
+\end{spacing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Mainmatter - Hauptteil Text ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{plain}
+\justifying
+
+% Einfügen aller Kapitel
+\include{chapters/chapter_1}
+\include{chapters/chapter_2}
+\include{chapters/chapter_3}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Anhang
+%%%%%%%%%%%%%%%%%%%%%%
+% Anhangeinstellungen
+\renewcommand{\appendixtocname}{Anhänge}
+\renewcommand{\appendixpagename}{Anhang}
+\appendix
+\addappheadtotoc
+
+\section{Anhang}
+\input{appendix/anhang_A}
+\input{appendix/gliederung}
+\section{ein weiteres Anhangkapitel?}
+\subsection{zu lange Tabellen}
+\subsection{zu langer Quellcode}
+\subsection{...}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Backmatter - Rückteil Anhang ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Literatur
+\newpage
+\setstretch{1} % andere Zeilenhöhe
+\normalsize
+\printbibliography[title={Literaturverzeichnis}]
+\addcontentsline{toc}{section}{Literaturverzeichnis} 
+\markboth{Literaturverzeichnis}{Literaturverzeichnis}
+
+% Ende Dokument
+\end{document}

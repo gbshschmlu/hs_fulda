@@ -1,0 +1,58 @@
+% Dokumentation für das Paket
+% https://ctan.ebinger.cc/tex-archive/graphics/pgf/contrib/pgfgantt/pgfgantt-doc.pdf
+
+\begin{ganttchart}[
+    vgrid, hgrid, 
+    y unit title=0.75cm, %Höhe der Titelzeilen
+    x unit=1cm, %Breite der einzelnen Zellen
+    y unit chart=1cm, %Höhe der einzelnen Zellen
+    title height=1.1, %Zeilenhöhe des Titels
+    milestone left shift=.5, %Abstand von Links von Milestoneraute
+    milestone right shift=-.1, %Abstand von Rechts von Milestoneraute
+    % Aussehen von Groups(schwarze Balken, die den Gesamtzeitraum eines Scrittes angeben)
+    group left shift=0, %Abstand von Links
+    group right shift=0, %Abstand von Rechts
+    group peaks tip position=0, %Position der Spitze der Dreiecke
+    group peaks height=0.3, %Länge der Dreiecke
+    %
+    title label font=\small,
+    bar label font=\small,
+    group label font=\small\bfseries,
+    milestone label font=\small\itshape,
+    ]{1}{12}
+	%\ganttset{bar height=.5}
+	\gantttitle[]{Bearbeitungszeit in Wochen}{12} \\
+        \gantttitlelist[title list options=%
+                        {var=\y, evaluate=\y as \x%
+                        using "Monat {\y}"}]%
+                        {1,...,3}{4} \\
+	\gantttitlelist{1,...,12}{1} \\
+	
+	%%%% Schritt A
+	\ganttgroup{Schritt A}{1}{6} \\
+ 	\ganttbar[name=e1]{Schritt a1 Te}{1}{2} \\
+	\ganttbar[name=e2]{Schritt a2}{2}{3} \\
+	\ganttbar[name=e3]{Schritt a3}{4}{4}\\
+        \ganttbar[name=e4]{Schritt a4}{4}{6}\\
+	% MS
+	\ganttmilestone[name=e6]{Meilenstein Abk}{6} \\
+        % Links
+        \ganttlink{e2}{e3}
+        \ganttlink{e3}{e6}
+        \ganttlink{e4}{e6}
+	
+	%%%% Schritt B
+	\ganttgroup{Schritt B}{4}{12} \\
+	\ganttbar[name=t1]{Schritt b1}{4}{7} \\
+	\ganttbar[name=t2]{Schritt b2}{6}{8} \\
+	\ganttbar[name=t3]{Schritt b3 Abk}{8}{11} \\
+	\ganttbar[name=t4]{Schritt b4}{11}{12} \\
+
+	% MS
+	\ganttmilestone[name=t9]{Meilenstein Te}{12}
+        % links
+        \ganttlink{t1}{t2}
+        \ganttlink{t2}{t3}
+        \ganttlink{t3}{t4}
+        \ganttlink{t4}{t9}
+\end{ganttchart}
