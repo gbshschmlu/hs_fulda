@@ -1,0 +1,39 @@
+% nutzen Sie \chapter wenn Dokumentenklasse auf "book" ist
+% ansonsten nutzen Sie \section bei articel und anderen
+%\chapter{Stand der Forschung} \label{stand-der-forschung}
+\section{Stand der Forschung} \label{sec:stand-der-forschung}
+
+Cross-Platform-Frameworks für Desktop-Anwendungen sind ein aktives Forschungsfeld.
+Die nachfolgende Darstellung skizziert den aktuellen Forschungsstand und ordnet die geplante Arbeit in den wissenschaftlichen Kontext ein.
+
+\subsection{Electron als etablierter Standard}
+Electron hat sich seit seiner Veröffentlichung 2013 als dominierendes Framework für plattformübergreifende Desktop-Anwendungen etabliert.
+Prominente Anwendungen wie Visual Studio Code, Slack oder Microsoft Teams basieren auf dieser Technologie \cite{electronDocs}.
+Die Architektur kombiniert Chromium als Rendering-Engine mit Node.js für Backend-Funktionalität, wodurch Entwickler mit Web-Technologien vollwertige Desktop-Anwendungen erstellen können.
+
+Thangadurai et al. \cite{thangaduraiElectronVsWeb2024} untersuchten in ihrer vergleichenden Studie den Energie- und Ressourcenverbrauch von Electron-basierten Kommunikationsanwendungen im Vergleich zu äquivalenten Web-Anwendungen.
+Die Autoren stellten fest, dass Electron-Anwendungen aufgrund der gebündelten Chromium-Engine typischerweise zwischen 80--120 MB Speicher im Leerlauf belegen und Installer-Größen von über 60 MB aufweisen.
+Dies stellt insbesondere in Umgebungen mit limitierter Bandbreite oder älteren Systemen eine Herausforderung dar.
+
+\subsection{Alternative Ansätze: Flutter, Qt und Tauri}
+Parallel zu Electron haben sich alternative Frameworks entwickelt, die unterschiedliche Strategien zur Reduzierung des Ressourcenverbrauchs verfolgen:
+
+\begin{itemize}
+    \item \textbf{Flutter Desktop}: Googles UI-Framework nutzt die Dart-Sprache und rendert mit der eigenen Skia-Engine \cite{flutterArch}. Dies ermöglicht native Performance, erfordert jedoch das Erlernen einer neuen Programmiersprache.
+    \item \textbf{Qt}: Als langjähriges natives Framework bietet Qt plattformübergreifende Entwicklung in C++ \cite{qtDocs}. Der Fokus liegt auf nativen Widgets, was zu kleineren Binaries führt, jedoch höhere Einstiegshürden mit sich bringt.
+    \item \textbf{Tauri}: Das 2019 initiierte Framework verfolgt einen hybriden Ansatz, der Web-Technologien im Frontend mit Rust im Backend kombiniert \cite{tauriDocs2025}. Die zentrale Differenzierung zu Electron liegt in der Nutzung der betriebssystemeigenen Webview (WebView2 unter Windows, WebKit unter macOS/Linux) anstelle einer gebündelten Browser-Engine.
+\end{itemize}
+
+\subsection{Forschungslücke: Tauri v2 im Enterprise-Kontext}
+Während die Architektur von Tauri in der technischen Dokumentation \cite{tauriDocs2025} beschrieben ist, existieren zum aktuellen Zeitpunkt nur wenige wissenschaftliche Studien, die Tauri – insbesondere die Version 2 mit erweiterten NSIS-Fähigkeiten – in einem industriellen B2B-Kontext evaluieren.
+Die Arbeit von Thangadurai et al. \cite{thangaduraiElectronVsWeb2024} liefert zwar Messmethodik für Performance-Vergleiche, bezieht Tauri jedoch nicht ein.
+
+Die geplante Abschlussarbeit adressiert diese Lücke durch:
+\begin{enumerate}
+    \item Eine quantitative Evaluierung der Ressourceneffizienz von Tauri v2 im Vergleich zu Electron anhand einer realen Anwendung.
+    \item Die Analyse der NSIS-Integration für Installationsszenarien ohne Administratorrechte – ein Aspekt, der in der bisherigen Literatur nicht behandelt wurde.
+    \item Die Überprüfung, ob die theoretischen Vorteile von Rust (Speichersicherheit, Performance) sich in praxisrelevanten Anwendungsfällen (ZIP-Komprimierung, Dateiverwaltung) messbar niederschlagen.
+\end{enumerate}
+
+Damit leistet die Arbeit einen Beitrag zur empirischen Fundierung der Entscheidung zwischen modernen Cross-Platform-Frameworks in restriktiven Unternehmensumgebungen.
+

@@ -3,8 +3,9 @@
 
 % Font type - 12pt Libertine laut Anforderung
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage{mathpazo}
-%\usepackage{libertine}
+\usepackage[type1]{libertine}
 
 % laden aller packages
 \usepackage{preamble}
@@ -17,9 +18,6 @@
 
 % Deckblatt v1
     \include{frontpage_v1}
-
-% Sperrvermerk
-    \include{sperrvermerk}
 
     \restoregeometry
 
@@ -50,6 +48,7 @@
 
 % Einfügen aller Kapitel
     \input{chapters/chapter_1}
+    \input{chapters/chapter_1_5}
     \input{chapters/chapter_2}
     \input{chapters/chapter_3}
 

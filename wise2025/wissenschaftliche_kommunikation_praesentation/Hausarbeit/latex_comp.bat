@@ -2,6 +2,9 @@
 REM Custom compilation script for TeXworks (PDFLaTeX + Biber)
 REM Usage: compile_biber.bat filename.tex
 
+REM Clean up auxiliary files
+del *.aux *.log *.out *.toc *.bcf *.run.xml /s /q
+
 REM Get the filename without extension
 for %%i in (%1) do set filename=%%~ni
 REM Get the directory path

@@ -1,6 +1,38 @@
 % nutzen Sie \chapter wenn Dokumentenklasse auf "book" ist
 % ansonsten nutzen Sie \section bei articel und anderen
 %\chapter{Kapitel} \label{kapitel}
+\section{Methodik und geplantes Vorgehen} \label{sec:methodik}
+
+Die Arbeit folgt einem methodischen Mix aus \textbf{quantitativer Messung} und \textbf{qualitativer Analyse}. Dabei orientieren sich die Qualitätskriterien an der Norm ISO/IEC 25010 (Effizienz und Portabilität) \cite{iso25010}.
+
+\subsection{Vergleichende Implementierung (Quantitative Methode)}
+Die Kernlogik der GBI-Anwendung ist bereits in Tauri (Rust/SvelteKit) implementiert.
+Für den wissenschaftlichen Vergleich wird ein \textbf{Referenz-Prototyp} in Electron erstellt.
+Dieser Prototyp bildet die kritischen Pfade der Anwendung nach:
+\begin{enumerate}
+    \item Das Rendern der Formulare.
+    \item Das Generieren der JSON-Strukturen und das Packen des ZIP-Archivs (in Electron mittels Node.js-Modulen realisiert).
+\end{enumerate}
+Anschließend werden auf einem Referenzsystem (Windows 10/11) standardisierte Messungen durchgeführt (Speicherverbrauch im Leerlauf, CPU-Peaks beim Zippen, finale Größe der \texttt{.exe}). Als Referenz für die Messmethodik dient die Studie von Thangadurai et al. \cite{thangaduraiElectronVsWeb2024}.
+
+\subsection{Nutzwertanalyse der Deployment-Fähigkeiten (Qualitative Methode)}
+Es wird eine Nutzwertanalyse der Installer-Technologien durchgeführt.
+Die Bewertung erfolgt anhand folgender gewichteter Kriterien:
+
+\begin{itemize}
+    \item \textbf{Konfigurationsaufwand} (Gewichtung 25\%): Zeitaufwand und Komplexität für die initiale Konfiguration des Installers.
+    \item \textbf{Anpassbarkeit} (Gewichtung 30\%): Möglichkeit zur Integration von Lizenztexten, Branding und benutzerdefinierten Dialogen.
+    \item \textbf{Installation ohne Admin-Rechte} (Gewichtung 35\%): Funktionalität und Zuverlässigkeit der User-Mode-Installation.
+    \item \textbf{Update-Mechanismus} (Gewichtung 10\%): Unterstützung für automatische Updates und Code-Signierung.
+\end{itemize}
+
+Die Gewichtungsfaktoren reflektieren die Prioritäten des B2B-Anwendungsfalls, wobei die Installation ohne Administratorrechte als kritischste Anforderung eingestuft wird.
+
+\subsection{Evaluationskriterien}
+Die Bewertung erfolgt auf einer 5-stufigen Skala (1 = ungenügend, 5 = exzellent).
+Für jedes Framework wird der gewichtete Gesamtnutzen berechnet und dokumentiert.
+Zusätzlich wird der Update-Prozess (Signierung, Patch-Verteilung) evaluiert.
+
 \section{Zeitplan und Ressourcen} \label{sec:zeitplan}
 
 \begin{center}

@@ -1,36 +1,48 @@
 graph TD
-    classDef bundle fill:#ffmVie,stroke:#333,stroke-width:2px;
-    classDef component fill:#fff,stroke:#333,stroke-width:1px;
-    classDef os fill:#e6f4ea,stroke:#1e8e3e,stroke-width:2px,stroke-dasharray: 5 5;
+    %% Styling Definitionen für weißen Hintergrund
+    classDef bundle fill:#f4f4f4,stroke:#333,stroke-width:2px,color:#000;
+    classDef component fill:#fff,stroke:#333,stroke-width:1px,color:#000;
+    classDef os fill:#e8f4fa,stroke:#005a9c,stroke-width:2px,stroke-dasharray: 5 5,color:#000;
+    classDef highlight fill:#fff,stroke:#333,stroke-width:1px,color:#000;
 
+    %% Linker Bereich: ELECTRON
     subgraph ELECTRON ["Electron Architektur"]
         direction TB
-        E_Bundle[("Setup.exe / App (~ 80-120 MB)")]:::bundle
+        E_Bundle[("Setup.exe / App
+        (~ 80-120 MB)")]:::bundle
 
         subgraph E_Content ["Im Bundle enthalten"]
+            direction TB
             E1[SvelteKit Frontend]:::component
             E2[Node.js Runtime]:::component
-            E3[Chromium Browser Engine]:::component
+            E3[Chromium Browser Engine]:::highlight
         end
     end
 
+    %% Rechter Bereich: TAURI
     subgraph TAURI ["Tauri Architektur"]
         direction TB
-        T_Bundle[("Setup.exe / App (~ 3-10 MB)")]:::bundle
+        T_Bundle[("Setup.exe / App
+        (~ 3-10 MB)")]:::bundle
 
         subgraph T_Content ["Im Bundle enthalten"]
+            direction TB
             T1[SvelteKit Frontend]:::component
             T2[Rust Core Backend]:::component
         end
 
         OS[("Betriebssystem (OS)")]:::os
-        Webview["OS Webview (WebView2 / WebKit)"]:::component
+        Webview["OS Webview
+        (WebView2 / WebKit)"]:::component
     end
 
+    %% Verbindungen
     E_Bundle --- E_Content
     T_Bundle --- T_Content
 
+    %% Tauri spezifische Verbindungen
     T2 -.-> |nutzt zur Laufzeit| Webview
     Webview --- OS
 
-    linkStyle default stroke-width:2px,fill:none,stroke:333;
+    %% Generelles Styling der Linien
+    linkStyle default stroke-width:2px,fill:none,stroke:#333;

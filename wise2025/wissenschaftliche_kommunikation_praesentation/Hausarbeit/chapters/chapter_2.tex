@@ -14,25 +14,6 @@ Zur Erreichung des Ziels werden folgende Forschungsfragen (FF) beantwortet:
     \item \textbf{FF3 (Installationsprozess):} Inwiefern ermöglicht die NSIS-Integration in Tauri v2 eine flexiblere Anpassung des Setups (Silent Install, Non-Admin Mode, Custom UI) im Vergleich zu Standard-Electron-Buildern?
 \end{itemize}
 
-\section{Methodik und geplantes Vorgehen} \label{sec:methodik}
-
-Die Arbeit folgt einem methodischen Mix aus \textbf{quantitativer Messung} und \textbf{qualitativer Analyse}. Dabei orientieren sich die Qualitätskriterien an der Norm ISO 25010 (Effizienz und Portabilität) \cite{iso25010}.
-
-\subsection{Vergleichende Implementierung (Quantitative Methode)}
-Die Kernlogik der GBI-Anwendung ist bereits in Tauri (Rust/SvelteKit) implementiert.
-Für den wissenschaftlichen Vergleich wird ein \textbf{Referenz-Prototyp} in Electron erstellt.
-Dieser Prototyp bildet die kritischen Pfade der Anwendung nach:
-\begin{enumerate}
-    \item Das Rendern der Formulare.
-    \item Das Generieren der JSON-Strukturen und das Packen des ZIP-Archivs (in Electron mittels Node.js-Modulen realisiert).
-\end{enumerate}
-Anschließend werden auf einem Referenzsystem (Windows 10/11) standardisierte Messungen durchgeführt (Speicherverbrauch im Leerlauf, CPU-Peaks beim Zippen, finale Größe der `.exe`). Als Referenz für die Messmethodik dient die Studie von Thangadurai et al. \cite{thangaduraiElectronVsWeb2024}.
-
-\subsection{Analyse der Deployment-Fähigkeiten (Qualitative Methode)}
-Es wird eine Nutzwertanalyse der Installer-Technologien durchgeführt.
-Dabei wird untersucht, wie granular sich der NSIS-Installer in Tauri konfigurieren lässt (z.B. Einbinden von Lizenzvereinbarungen, Bildmaterial, Installationspfad-Wahl ohne Admin-Rechte) und wie sich dies zum Konfigurationsaufwand in Electron verhält.
-Zusätzlich wird der Update-Prozess (Signierung, Patch-Verteilung) evaluiert.
-
-\section{Erwartete Resultate} \label{sec:erw_resultate}
+\subsection{Erwartete Resultate} \label{sec:erw_resultate}
 Es wird erwartet, dass die Tauri-Anwendung eine Installer-Größe von unter 10 MB erreicht (vs. >60 MB bei Electron), was den E-Mail-Versand ermöglicht.
 Durch die Nutzung von Rust für die ZIP-Komprimierung wird eine performantere Abarbeitung erwartet als im Node.js Main-Process von Electron. Bezüglich des Installers soll gezeigt werden, dass NSIS die Anforderungen an eine benutzerfreundliche Installation ohne Administratorrechte vollständig erfüllt.

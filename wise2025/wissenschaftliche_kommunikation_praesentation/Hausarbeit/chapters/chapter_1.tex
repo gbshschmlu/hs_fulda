@@ -21,11 +21,11 @@ Klassische Ansätze wie Electron lösen das Cross-Platform-Problem durch das Bü
 
 
 \subsection{Motivation} \label{sec:motivation}
-Das Framework Tauri v2 verspricht durch die Trennung von Frontend (Web-Technologien) und Backend (Rust) sowie die Nutzung der im Betriebssystem vorhandenen Webview (WebView2 unter Windows) eine signifikante Reduktion der Artefaktgröße und des Ressourcenverbrauchs.
+Das Framework Tauri v2 verspricht durch die Trennung von Frontend (Web-Technologien) und Backend (Rust) sowie die Nutzung der im Betriebssystem vorhandenen Webview (WebView2 unter Windows \cite{webview2Docs}) eine signifikante Reduktion der Artefaktgröße und des Ressourcenverbrauchs.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\textwidth]{assets/img/architektur_vergleich.png}
-    \caption{Architekturvergleich: Electron bündelt die Browser-Engine (Chromium), während Tauri auf die systemseitige Webview zugreift.}
+    \caption[Architekturvergleich Electron vs. Tauri]{Architekturvergleich: Electron bündelt die Browser-Engine (Chromium), während Tauri auf die systemseitige Webview zugreift.}
     \source{Eigene Darstellung in Anlehnung an \cite{tauriDocs2025}}
     \label{fig:architektur}
 \end{figure}
