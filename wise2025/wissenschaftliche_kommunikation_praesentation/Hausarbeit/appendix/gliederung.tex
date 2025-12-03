@@ -1,34 +1,62 @@
-\subsection {vorläufige Gliederung}
+\subsection{Vorläufige Gliederung der Abschlussarbeit}
 
 \begin{enumerate}
-\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
-\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
-\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
-    \item Einleitung
-    \item Hauptteil
-        \begin{enumerate}
-            \item Text ABC
-            \item Text 123
-            \item Text III          
-        \end{enumerate}
-    \item Hauptteil B
-        \begin{enumerate}
-            \item Test
-                \begin{enumerate}
-                    \item weiterer Test
-                    \item noch ein Unterkapitel
-                \end{enumerate}
-            \item Test X
-                \begin{enumerate}
-                        \item weiterer Test
-                    \item noch ein Unterkapitel
-                \end{enumerate}
-            \item Abschlusstest
-        \end{enumerate}
-    \item Abschlussteil
-        \begin{enumerate}
-            \item Text ABC
-            \item Text 123
-            \item Text III        
-        \end{enumerate}
+    \renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+    \renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+
+    \item \textbf{Einleitung}
+    \begin{enumerate}
+        \item Motivation und Ausgangslage bei der Grenzebach BSH GmbH
+        \item Problemstellung: Herausforderungen bei der Softwareverteilung in heterogenen Lieferantennetzwerken
+        \item Zielsetzung der Arbeit
+        \item Forschungsfragen
+        \item Aufbau der Arbeit
+    \end{enumerate}
+
+    \item \textbf{Theoretische Grundlagen und Stand der Technik}
+    \begin{enumerate}
+        \item Architekturmodelle für Cross-Platform-Desktop-Anwendungen
+        \item Analyse des Frameworks Electron (Node.js und Chromium)
+        \item Analyse des Frameworks Tauri v2 (Rust und System-Webview)
+        \item Technologien zur Software-Installation (NSIS vs. WiX vs. MSI)
+        \item Kriterien der Softwarequalität nach ISO 25010 (Fokus: Effizienz und Portabilität)
+    \end{enumerate}
+
+    \item \textbf{Konzeption der Vergleichsstudie}
+    \begin{enumerate}
+        \item Definition des Anwendungsfalls: Das GBI-Tool
+        \item Anforderungsanalyse an den Rollout-Prozess (Silent Install, Non-Admin)
+        \item Definition der Messmetriken (Artefaktgröße, RAM, CPU, Startzeit)
+        \item Versuchsaufbau und Beschreibung der Testumgebung
+    \end{enumerate}
+
+    \item \textbf{Implementierung der Testumgebung}
+    \begin{enumerate}
+        \item Entwicklung eines Referenz-Prototypen in Electron (Baseline)
+        \item Technische Umsetzung der GBI-Anwendung in Tauri
+        \item Konfiguration des NSIS-Installers für restriktive Benutzerrechte
+        \item Implementierung des Update-Mechanismus
+    \end{enumerate}
+
+    \item \textbf{Evaluation und Ergebnisse}
+    \begin{enumerate}
+        \item Vergleich der Installer- und Anwendungsgrößen
+        \item Messergebnisse zur Laufzeitperformance (Speicher und CPU)
+        \item Qualitative Bewertung des Deployment-Prozesses und der Anpassbarkeit
+        \item Analyse der Kompatibilität auf verschiedenen Windows-Versionen
+    \end{enumerate}
+
+    \item \textbf{Diskussion}
+    \begin{enumerate}
+        \item Interpretation der Messergebnisse im industriellen Kontext
+        \item Abwägung: Entwickler-Experience (Rust) vs. Performance-Gewinn
+        \item Risikobetrachtung: Abhängigkeit von der Webview2-Runtime
+        \item Handlungsempfehlung für die Grenzebach BSH GmbH
+    \end{enumerate}
+
+    \item \textbf{Fazit und Ausblick}
+    \begin{enumerate}
+        \item Zusammenfassung der Ergebnisse
+        \item Ausblick: Portierung auf weitere Plattformen (macOS/Linux)
+    \end{enumerate}
 \end{enumerate}

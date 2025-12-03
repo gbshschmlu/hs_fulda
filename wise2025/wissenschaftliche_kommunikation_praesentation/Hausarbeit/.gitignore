@@ -1,0 +1,5 @@
+*.aux
+main.*
+!main.tex
+!main.pdf
+pdfa.xmpi

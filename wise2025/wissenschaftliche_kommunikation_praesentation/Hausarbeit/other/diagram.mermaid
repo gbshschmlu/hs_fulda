@@ -1,0 +1,36 @@
+graph TD
+    classDef bundle fill:#ffmVie,stroke:#333,stroke-width:2px;
+    classDef component fill:#fff,stroke:#333,stroke-width:1px;
+    classDef os fill:#e6f4ea,stroke:#1e8e3e,stroke-width:2px,stroke-dasharray: 5 5;
+
+    subgraph ELECTRON ["Electron Architektur"]
+        direction TB
+        E_Bundle[("Setup.exe / App (~ 80-120 MB)")]:::bundle
+
+        subgraph E_Content ["Im Bundle enthalten"]
+            E1[SvelteKit Frontend]:::component
+            E2[Node.js Runtime]:::component
+            E3[Chromium Browser Engine]:::component
+        end
+    end
+
+    subgraph TAURI ["Tauri Architektur"]
+        direction TB
+        T_Bundle[("Setup.exe / App (~ 3-10 MB)")]:::bundle
+
+        subgraph T_Content ["Im Bundle enthalten"]
+            T1[SvelteKit Frontend]:::component
+            T2[Rust Core Backend]:::component
+        end
+
+        OS[("Betriebssystem (OS)")]:::os
+        Webview["OS Webview (WebView2 / WebKit)"]:::component
+    end
+
+    E_Bundle --- E_Content
+    T_Bundle --- T_Content
+
+    T2 -.-> |nutzt zur Laufzeit| Webview
+    Webview --- OS
+
+    linkStyle default stroke-width:2px,fill:none,stroke:333;

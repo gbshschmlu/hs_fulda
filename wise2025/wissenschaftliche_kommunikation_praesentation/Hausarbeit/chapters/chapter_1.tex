@@ -1,19 +1,34 @@
 % nutzen Sie \chapter wenn Dokumentenklasse auf "book" ist
 % ansonsten nutzen Sie \section bei articel und anderen
 %\chapter{Einleitung}
-\section{Einleitung}
+\section{Einleitung und Motivation} \label{sec:einleitung}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  ~~~~~~ TODO ~~~~~~
-% --------------------------------------
-% - kurze kreative Einleitung, um die Lesenden neugierig zu machen
-% - Aufbau der Arbeit und Kapitelaufteilung
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Was bedeutet \gls{Software-as-a-Service}  (kurz: \acrshort{saas}) eigentlich? So werden Glossareinträge und Abkürzungen verwendet.
+\subsection{Problemstellung} \label{sec:problemstellung}
+Im Rahmen der Zusammenarbeit mit externen Zulieferern ist eine präzise Übermittlung von Produktspezifikationen (PSPs) essenziell.
+Zur Standardisierung dieses Prozesses wird das Tool \textit{GBI} entwickelt, welches Lieferanten ermöglicht, komplexe Formulare auszufüllen, technische Zeichnungen zu synchronisieren und diese in einem validierten JSON-Format gebündelt als ZIP-Archiv per E-Mail zu versenden.
 
-Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat \cite{heesenWissenschaftlichesArbeitenMethodenwissen2014}.   
+Die technische Verteilung dieser Software unterliegt jedoch strengen Restriktionen:
+\begin{enumerate}
+    \item \textbf{Heterogene Hardware:} Die Ausstattung der Lieferanten ist dem Unternehmen nicht im Detail bekannt.
+    Es muss davon ausgegangen werden, dass teilweise ältere Systeme (Windows 10) mit begrenzten Arbeitsspeicherressourcen zum Einsatz kommen.
+    \item \textbf{Verteilung und Bandbreite:} Da die Software teilweise über E-Mail-Verteiler oder in Regionen mit limitierter Internetbandbreite bereitgestellt wird, ist die Dateigröße des Installers ein kritischer Faktor.
+    \item \textbf{Installationsberechtigungen:} Viele Lieferanten verfügen auf ihren Firmenrechnern über keine Administratorrechte.
+    Der Installationsprozess muss daher ohne Erhöhung der Privilegien ("User Mode") durchführbar sein und gleichzeitig unternehmensspezifische Anpassungen (Lizenztexte, Branding) unterstützen.
+\end{enumerate}
 
-Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.   
+Klassische Ansätze wie Electron lösen das Cross-Platform-Problem durch das Bündeln einer Chromium-Instanz, was jedoch typischerweise zu Installer-Größen von über 80 MB und hohem Speicherverbrauch führt \cite{thangaduraiElectronVsWeb2024}.
 
-Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer...
+
+\subsection{Motivation} \label{sec:motivation}
+Das Framework Tauri v2 verspricht durch die Trennung von Frontend (Web-Technologien) und Backend (Rust) sowie die Nutzung der im Betriebssystem vorhandenen Webview (WebView2 unter Windows) eine signifikante Reduktion der Artefaktgröße und des Ressourcenverbrauchs.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{assets/img/architektur_vergleich.png}
+    \caption{Architekturvergleich: Electron bündelt die Browser-Engine (Chromium), während Tauri auf die systemseitige Webview zugreift.}
+    \source{Eigene Darstellung in Anlehnung an \cite{tauriDocs2025}}
+    \label{fig:architektur}
+\end{figure}
+Zudem bietet Tauri v2 eine tiefe Integration des \textit{Nullsoft Scriptable Install System} (NSIS).
+Dies könnte die Erstellung maßgeschneiderter Setup-Routinen ermöglichen, die ohne Admin-Rechte funktionieren – ein Feature, das mit alternativen Installern (z.B. WiX) nur komplex umsetzbar ist.
+Die Motivation dieser Arbeit liegt in der wissenschaftlichen Überprüfung, ob diese technologischen Vorteile in der Praxis bestand haben und die strengen Anforderungen des Anwendungsfalls erfüllen.
