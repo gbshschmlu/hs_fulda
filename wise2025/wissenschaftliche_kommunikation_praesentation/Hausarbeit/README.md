@@ -111,7 +111,6 @@ Die Bewertung erfolgt unabhängig von der fachlichen Qualität der Aussagen (sof
 *   **Generative KI (z. B. ChatGPT, Claude, Gemini):**
     *   **Textgenerierung:** Sollten Sie KI zur Erstellung von ganzen Textpassagen nutzen, müssen Sie die entsprechenden Stellen kennzeichnen und angeben, welches Tool und **welcher Prompt** verwendet wurde.
     *   **Bildgenerierung:** KI-generierte Bilder müssen gekennzeichnet werden (inkl. Prompt in der Quelle).
-    *   **Chat-Verlauf:** Der komplette Verlauf des Chats sollte laut Folien (S. 31) in den **Anhang** der Arbeit.
 *   **Ausnahmen (keine Prompt-Angabe nötig):**
     *   Reine **Rechtschreib- und Grammatikprüfung**.
     *   Reine **Formulierungshilfen** (z. B. Umformulieren eigener Sätze zur besseren Lesbarkeit).
