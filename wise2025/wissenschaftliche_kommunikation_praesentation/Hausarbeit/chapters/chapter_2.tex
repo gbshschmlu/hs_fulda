@@ -1,19 +1,18 @@
 % nutzen Sie \chapter wenn Dokumentenklasse auf "book" ist
 % ansonsten nutzen Sie \section bei articel und anderen
-%\chapter{Kapitel} \label{kapitel}
 \section{Zielsetzung und Forschungsfragen} \label{sec:zielsetzung}
 
-Ziel der geplanten Abschlussarbeit ist die technische Evaluierung von Tauri v2 als Framework für industrielle Desktop-Anwendungen mit Fokus auf Ressourceneffizienz und Deployment-Flexibilität. Es soll geprüft werden, ob der Einsatz von Rust für dateiintensive Operationen (ZIP-Erstellung, I/O) in Kombination mit einem SvelteKit-Frontend messbare Vorteile gegenüber einer äquivalenten Node.js-basierten Architektur (Electron) bietet \cite{tauriDocs2025}.
+Ziel der Abschlussarbeit ist die technische Evaluierung von Tauri v2 für industrielle Desktop-Anwendungen mit Fokus auf Ressourceneffizienz und Deployment-Flexibilität. Es wird geprüft, ob der Einsatz von Rust für dateiintensive Operationen (ZIP-Erstellung, I/O) mit SvelteKit-Frontend messbare Vorteile gegenüber Node.js-basierter Architektur (Electron) bietet \cite{tauriDocs2025}.
 
 \subsection{Forschungsfragen}
 Zur Erreichung des Ziels werden folgende Forschungsfragen (FF) beantwortet:
 
 \begin{itemize}
     \item \textbf{FF1 (Artefaktgröße \& Verteilbarkeit):} Wie verhalten sich die Dateigrößen der Installationsmedien von Tauri und Electron im Vergleich und wird die E-Mail-Versandfähigkeit durch Tauri gewährleistet?
-    \item \textbf{FF2 (Ressourceneffizienz):} Welchen Einfluss hat die Auslagerung der Dateiverarbeitung (ZIP-Komprimierung, JSON-Generierung) in ein Rust-Backend auf die CPU-Last und den Arbeitsspeicherverbrauch im Vergleich zu einer Node.js-Laufzeitumgebung \cite{electronDocs}?
+    \item \textbf{FF2 (Ressourceneffizienz):} Welchen Einfluss hat die Auslagerung der Dateiverarbeitung (ZIP-Komprimierung, JSON-Generierung) in ein Rust-Backend auf die CPU-Last und den Arbeitsspeicherverbrauch im Vergleich zu einer Node.js-Laufzeitumgebung?
     \item \textbf{FF3 (Installationsprozess):} Inwiefern ermöglicht die NSIS-Integration in Tauri v2 eine flexiblere Anpassung des Setups (Silent Install, Non-Admin Mode, Custom UI) im Vergleich zu Standard-Electron-Buildern?
 \end{itemize}
 
 \subsection{Erwartete Resultate} \label{sec:erw_resultate}
-Es wird erwartet, dass die Tauri-Anwendung eine Installer-Größe von unter 10 MB erreicht (vs. >60 MB bei Electron), was den E-Mail-Versand ermöglicht.
-Durch die Nutzung von Rust für die ZIP-Komprimierung wird eine performantere Abarbeitung erwartet als im Node.js Main-Process von Electron. Bezüglich des Installers soll gezeigt werden, dass NSIS die Anforderungen an eine benutzerfreundliche Installation ohne Administratorrechte vollständig erfüllt.
+Es wird erwartet, dass die Tauri-Anwendung eine Installer-Größe von unter 30 MB erreicht (vs. >60 MB bei Electron), was E-Mail-Versand ermöglicht.
+Die Nutzung von Rust für ZIP-Komprimierung sollte eine performantere Abarbeitung als im Node.js Main-Process von Electron zeigen. NSIS soll eine benutzerfreundliche Installation ohne Admin-Rechte vollständig ermöglichen.

@@ -1,43 +1,49 @@
-% Dokumentation für das Paket
-% https://ctan.ebinger.cc/tex-archive/graphics/pgf/contrib/pgfgantt/pgfgantt-doc.pdf
-\begin{ganttchart}[
-    vgrid, hgrid,
-    y unit title=0.6cm,
-    x unit=0.9cm, % Etwas schmaler, damit es auf die Seite passt
-    title height=1,
-% Styling
-    bar label font=\footnotesize,
-    group label font=\footnotesize\bfseries,
-    milestone label font=\footnotesize\itshape,
-]{1}{12}
+\begin{figure}[htbp]
+    \centering
+    \begin{ganttchart}[
+        expand chart=\textwidth,
+        vgrid, hgrid,
+        y unit chart=0.7cm,
+        bar height=0.4,
+        bar top shift=0.3,
+        title height=1,
+        title label font=\bfseries\small,
+        bar label font=\small,
+        group label font=\small\bfseries,
+        milestone label font=\small\itshape
+    ]{1}{12}
 
-    % Titelzeile: Wochen
-    \gantttitle{Zeitplan in Wochen}{12} \\
-    \gantttitlelist{1,...,12}{1} \\
+        % Titelzeile
+        \gantttitle{Zeitplan in Wochen (12 Wochen Gesamt)}{12} \\
+        \gantttitlelist{1,...,12}{1} \\
 
-    % Phase 1: Vorbereitung
-    \ganttgroup{1. Analyse \& Konzept}{1}{3} \\
-    \ganttbar{Literaturrecherche (ISO, Frameworks)}{1}{2} \\
-    \ganttbar{Detailkonzept Messaufbau}{2}{3} \\
+        % --- Phase 1 ---
+        \ganttgroup{1. Analyse \& Theorie}{1}{4} \\
+        \ganttbar{Recherche \& Framework-Analyse}{1}{2} \\
+        \ganttbar{Verfassen: Stand der Forschung}{2}{4} \\
 
-    % Phase 2: Praxis
-    \ganttgroup{2. Implementierung \& Test}{3}{7} \\
-    \ganttbar{Electron-Prototyp (Baseline)}{3}{4} \\
-    \ganttbar{NSIS-Installer Konfiguration (Tauri)}{4}{6} \\
-    \ganttbar{Durchführung Messreihen (CPU/RAM)}{6}{7} \\
+        % --- Phase 2 ---
+        \ganttgroup{2. Implementierung}{3}{8} \\
+        \ganttbar{Electron-Prototyp (Baseline)}{3}{4} \\
+        \ganttbar{Tauri \& NSIS Konfiguration}{5}{7} \\
+        \ganttbar{Durchführung Messreihen}{8}{8} \\
 
-    % Phase 3: Schreiben
-    \ganttgroup{3. Ausarbeitung}{7}{12} \\
-    \ganttbar{Auswertung der Ergebnisse}{7}{8} \\
-    \ganttbar{Verfassen der Kapitel}{8}{11} \\
-    \ganttbar{Korrekturlesen \& Formatierung}{11}{12} \\
+        % --- Phase 3 ---
+        \ganttgroup{3. Finalisierung}{9}{12} \\
+        \ganttbar{Auswertung \& Diskussion}{9}{10} \\
+        \ganttbar{Feinschliff \& Abstract}{10}{11} \\
+        \ganttbar{Puffer \& Abgabe}{12}{12} \\
 
-    % Meilenstein
-    \ganttmilestone{Abgabe}{12}
+        \ganttmilestone{Abgabe}{12}
 
-    % Verknüpfungen
-    \ganttlink{elem1}{elem2} % Literatur -> Konzept
-    \ganttlink{elem2}{elem4} % Konzept -> Prototyp
-    \ganttlink{elem6}{elem7} % Messung -> Auswertung
+        % Verbindungen (Links) visualisieren Abhängigkeiten
+        \ganttlink{elem1}{elem2} % Recherche -> Schreiben
+        \ganttlink{elem3}{elem4} % Schreiben -> Electron Start
+        \ganttlink{elem4}{elem5} % Electron -> Tauri
+        \ganttlink{elem5}{elem6} % Tauri -> Messen
+        \ganttlink{elem6}{elem7} % Messen -> Auswerten
 
-\end{ganttchart}
+    \end{ganttchart}
+    \caption{Zeitplan der Bachelorarbeit: Paralleles Verfassen der theoretischen Grundlagen während der Implementierungsphase.}
+    \label{fig:zeitplan}
+\end{figure}

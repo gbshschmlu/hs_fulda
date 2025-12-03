@@ -5,23 +5,23 @@
 
 
 \subsection{Problemstellung} \label{sec:problemstellung}
-Im Rahmen der Zusammenarbeit mit externen Zulieferern ist eine präzise Übermittlung von Produktspezifikationen (PSPs) essenziell.
-Zur Standardisierung dieses Prozesses wird das Tool \textit{GBI} entwickelt, welches Lieferanten ermöglicht, komplexe Formulare auszufüllen, technische Zeichnungen zu synchronisieren und diese in einem validierten JSON-Format gebündelt als ZIP-Archiv per E-Mail zu versenden.
+Bei der Zusammenarbeit mit externen Zulieferern ist eine präzise Übermittlung von Produktspezifikationen (PSPs) essenziell.
+Das Tool \textit{GBI} standardisiert diesen Prozess: Lieferanten können Formulare ausfüllen, technische Zeichnungen synchronisieren und diese in validiertem JSON-Format als ZIP-Archiv per E-Mail versenden.
 
-Die technische Verteilung dieser Software unterliegt jedoch strengen Restriktionen:
+Die technische Verteilung dieser Software unterliegt strengen Restriktionen:
 \begin{enumerate}
-    \item \textbf{Heterogene Hardware:} Die Ausstattung der Lieferanten ist dem Unternehmen nicht im Detail bekannt.
-    Es muss davon ausgegangen werden, dass teilweise ältere Systeme (Windows 10) mit begrenzten Arbeitsspeicherressourcen zum Einsatz kommen.
-    \item \textbf{Verteilung und Bandbreite:} Da die Software teilweise über E-Mail-Verteiler oder in Regionen mit limitierter Internetbandbreite bereitgestellt wird, ist die Dateigröße des Installers ein kritischer Faktor.
-    \item \textbf{Installationsberechtigungen:} Viele Lieferanten verfügen auf ihren Firmenrechnern über keine Administratorrechte.
-    Der Installationsprozess muss daher ohne Erhöhung der Privilegien ("User Mode") durchführbar sein und gleichzeitig unternehmensspezifische Anpassungen (Lizenztexte, Branding) unterstützen.
+    \item \textbf{Heterogene Hardware:} Die Ausstattung der Lieferanten ist unbekannt.
+    Teilweise kommen ältere Systeme (Windows 10) mit begrenzten Ressourcen zum Einsatz.
+    \item \textbf{Verteilung und Bandbreite:} Bei Verteilung über E-Mail oder in Regionen mit limitierter Internetbandbreite ist die Dateigröße kritisch.
+    \item \textbf{Installationsberechtigungen:} Viele Lieferanten verfügen über keine Administratorrechte.
+    Die Installation muss im \("\)User Mode\("\) durchführbar sein und unternehmensspezifische Anpassungen (Lizenztexte, Branding) unterstützen.
 \end{enumerate}
 
-Klassische Ansätze wie Electron lösen das Cross-Platform-Problem durch das Bündeln einer Chromium-Instanz, was jedoch typischerweise zu Installer-Größen von über 80 MB und hohem Speicherverbrauch führt \cite{thangaduraiElectronVsWeb2024}.
+Klassische Ansätze wie Electron lösen das Cross-Platform-Problem durch Bündelung einer Chromium-Instanz, was jedoch zu Installer-Größen von über 80 MB und hohem Speicherverbrauch führt \cite{thangaduraiElectronVsWeb2024}.
 
 
 \subsection{Motivation} \label{sec:motivation}
-Das Framework Tauri v2 verspricht durch die Trennung von Frontend (Web-Technologien) und Backend (Rust) sowie die Nutzung der im Betriebssystem vorhandenen Webview (WebView2 unter Windows \cite{webview2Docs}) eine signifikante Reduktion der Artefaktgröße und des Ressourcenverbrauchs.
+Tauri v2 verspricht durch Trennung von Frontend (Web-Technologien) und Backend (Rust) sowie Nutzung der systemeigenen Webview (WebView2 unter Windows \cite{webview2Docs}) eine signifikante Reduktion von Artefaktgröße und Ressourcenverbrauch.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\textwidth]{assets/img/architektur_vergleich.png}
@@ -30,5 +30,5 @@ Das Framework Tauri v2 verspricht durch die Trennung von Frontend (Web-Technolog
     \label{fig:architektur}
 \end{figure}
 Zudem bietet Tauri v2 eine tiefe Integration des \textit{Nullsoft Scriptable Install System} (NSIS).
-Dies könnte die Erstellung maßgeschneiderter Setup-Routinen ermöglichen, die ohne Admin-Rechte funktionieren – ein Feature, das mit alternativen Installern (z.B. WiX) nur komplex umsetzbar ist.
-Die Motivation dieser Arbeit liegt in der wissenschaftlichen Überprüfung, ob diese technologischen Vorteile in der Praxis bestand haben und die strengen Anforderungen des Anwendungsfalls erfüllen.
+Dies ermöglicht maßgeschneiderte Setup-Routinen ohne Admin-Rechte – ein Feature, das mit alternativen Installern (z.B. WiX) komplex umsetzbar ist.
+Diese Arbeit überprüft, ob diese technologischen Vorteile die strengen Anforderungen des Anwendungsfalls erfüllen.

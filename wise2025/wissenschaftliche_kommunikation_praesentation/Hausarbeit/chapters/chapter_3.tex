@@ -1,23 +1,22 @@
 % nutzen Sie \chapter wenn Dokumentenklasse auf "book" ist
 % ansonsten nutzen Sie \section bei articel und anderen
-%\chapter{Kapitel} \label{kapitel}
 \section{Methodik und geplantes Vorgehen} \label{sec:methodik}
 
-Die Arbeit folgt einem methodischen Mix aus \textbf{quantitativer Messung} und \textbf{qualitativer Analyse}. Dabei orientieren sich die Qualitätskriterien an der Norm ISO/IEC 25010 (Effizienz und Portabilität) \cite{iso25010}.
+Die Arbeit folgt einem methodischen Mix aus \textbf{quantitativer Messung} und \textbf{qualitativer Analyse}.
+Die Qualitätskriterien orientieren sich an ISO/IEC 25010 (Effizienz und Portabilität) \cite{iso25010}.
 
 \subsection{Vergleichende Implementierung (Quantitative Methode)}
 Die Kernlogik der GBI-Anwendung ist bereits in Tauri (Rust/SvelteKit) implementiert.
-Für den wissenschaftlichen Vergleich wird ein \textbf{Referenz-Prototyp} in Electron erstellt.
-Dieser Prototyp bildet die kritischen Pfade der Anwendung nach:
+Für den wissenschaftlichen Vergleich wird ein \textbf{Referenz-Prototyp} in Electron erstellt, der die kritischen Pfade abbildet:
 \begin{enumerate}
-    \item Das Rendern der Formulare.
-    \item Das Generieren der JSON-Strukturen und das Packen des ZIP-Archivs (in Electron mittels Node.js-Modulen realisiert).
+    \item Rendern der Formulare.
+    \item Generieren der JSON-Strukturen und Packen des ZIP-Archivs (mittels Node.js-Modulen).
 \end{enumerate}
-Anschließend werden auf einem Referenzsystem (Windows 10/11) standardisierte Messungen durchgeführt (Speicherverbrauch im Leerlauf, CPU-Peaks beim Zippen, finale Größe der \texttt{.exe}). Als Referenz für die Messmethodik dient die Studie von Thangadurai et al. \cite{thangaduraiElectronVsWeb2024}.
+Anschließend werden auf einem Referenzsystem (Windows 10/11) standardisierte Messungen durchgeführt (Speicherverbrauch im Leerlauf, CPU-Peaks beim Zippen, finale \texttt{.exe}-Größe). Messmethodik nach Thangadurai et al. \cite{thangaduraiElectronVsWeb2024}.
 
 \subsection{Nutzwertanalyse der Deployment-Fähigkeiten (Qualitative Methode)}
-Es wird eine Nutzwertanalyse der Installer-Technologien durchgeführt.
-Die Bewertung erfolgt anhand folgender gewichteter Kriterien:
+Die Installer-Technologien werden mittels Nutzwertanalyse bewertet.
+Gewichtete Kriterien:
 
 \begin{itemize}
     \item \textbf{Konfigurationsaufwand} (Gewichtung 25\%): Zeitaufwand und Komplexität für die initiale Konfiguration des Installers.
@@ -30,9 +29,11 @@ Die Gewichtungsfaktoren reflektieren die Prioritäten des B2B-Anwendungsfalls, w
 
 \subsection{Evaluationskriterien}
 Die Bewertung erfolgt auf einer 5-stufigen Skala (1 = ungenügend, 5 = exzellent).
-Für jedes Framework wird der gewichtete Gesamtnutzen berechnet und dokumentiert.
-Zusätzlich wird der Update-Prozess (Signierung, Patch-Verteilung) evaluiert.
+Für jedes Framework wird der gewichtete Gesamtnutzen berechnet.
+Der Update-Prozess (Signierung, Patch-Verteilung) wird ebenfalls evaluiert.
 
+% Neue Seite da sonst der Section-Titel eine Seite darüber steht und viel Platz verschwendet
+\newpage
 \section{Zeitplan und Ressourcen} \label{sec:zeitplan}
 
 \begin{center}

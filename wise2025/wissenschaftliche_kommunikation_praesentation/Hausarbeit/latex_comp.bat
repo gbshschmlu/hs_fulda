@@ -2,9 +2,6 @@
 REM Custom compilation script for TeXworks (PDFLaTeX + Biber)
 REM Usage: compile_biber.bat filename.tex
 
-REM Clean up auxiliary files
-del *.aux *.log *.out *.toc *.bcf *.run.xml /s /q
-
 REM Get the filename without extension
 for %%i in (%1) do set filename=%%~ni
 REM Get the directory path
@@ -12,6 +9,9 @@ for %%i in (%1) do set dirname=%%~dpi
 
 REM Change to the directory of the tex file
 cd /d "%dirname%"
+
+echo [0/4] CLEANING UP AUXILIARY FILES
+del *.aux *.log *.out *.toc *.bcf *.run.xml *.acn *.bbl *.blg *.glo *.lof *.synctex.gz *.xdy *.xmpl /s /q
 
 echo [1/4] Running PDFLaTeX (Initial run)...
 pdflatex -synctex=1 -interaction=nonstopmode "%filename%"
