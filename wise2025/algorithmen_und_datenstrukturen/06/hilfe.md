@@ -1,169 +1,104 @@
-# Hilfe: Übungsblatt 6 - Schnellreferenz für Präsentationen
+# Hilfe: Übungsblatt 6 - Spickzettel für die Präsentation
 
-## 📋 Überblick
+## 📋 Schnellübersicht
 
-- **Aufgabe 1 & 2**: Programmieraufgaben (siehe `06.java`)
-- **Aufgabe 3 & 4**: Papieraufgaben (siehe `06.md`)
+| Aufgabe | Thema           | Methode                   | Ergebnis-Typ            |
+| :------ | :-------------- | :------------------------ | :---------------------- |
+| **6.1** | Nullen & Neunen | Queue (Breitensuche)      | Zahl (z.B. 90)          |
+| **6.2** | Fibonacci       | Queue (Sliding Window)    | Zahl                    |
+| **6.3** | Hashing         | Offen (Verkettung/Listen) | Tabelle mit Listen      |
+| **6.4** | Hashing         | Geschlossen (Sondieren)   | Tabelle mit Kollisionen |
 
 ---
 
 ## 🔢 Aufgabe 6.1: Nullen und Neunen
 
-### Was ist das Ziel?
-Finde die **kleinste Zahl**, die nur aus `0` und `9` besteht und durch N teilbar ist.
+**Ziel:** Kleinste positive Zahl aus nur `0` und `9`, die durch `N` teilbar ist.
 
-### Wie funktioniert's?
-- **Breitensuche (BFS)** mit einer Queue
-- Start: `["9"]`
-- Generiere systematisch: 9 → 90, 99 → 900, 909, 990, 999 → ...
-- Teste jede Zahl: `zahl % N == 0`?
-- Die erste passende Zahl ist automatisch die kleinste (wegen BFS)
+### 🗣️ Was du sagen musst:
 
-### Kerncode
-```
-Queue: ["9"]
-while (!queue.isEmpty()) {
-    String zahl = queue.remove();
-    if (Long.parseLong(zahl) % N == 0) → GEFUNDEN!
-    else: queue.add(zahl + "0") und queue.add(zahl + "9")
-}
-```
-
-### Beispiel
-N = 6 → Antwort: 90 (weil 90 / 6 = 15)
+1.  **Warum Queue?** Wir nutzen eine Queue für eine **Breitensuche (BFS)**.
+2.  **Das Prinzip:** Wir generieren Zahlen nach Länge sortiert: erst 9, dann 90, 99, dann 900...
+3.  **Ablauf:**
+    - Nimm Zahl aus Queue (z.B. "9").
+    - Teste: `9 % N == 0`? Wenn ja: Fertig!
+    - Wenn nein: Hänge "0" und "9" an und packe beide zurück in die Queue (`90`, `99`).
+4.  **Garantie:** Da wir systematisch immer breiter werden, finden wir garantiert die **kleinste** Zahl zuerst.
 
 ---
 
-## 📊 Aufgabe 6.2: Fibonacci mit Queue
+## 📊 Aufgabe 6.2: Fibonacci-Folge
 
-### Was ist das Ziel?
-Berechne f(n) der Fibonacci-Folge: `f(n) = f(n-1) + f(n-2)`
+**Ziel:** `f(n)` berechnen mit `f(n) = f(n-1) + f(n-2)`.
 
-### Wie funktioniert's?
-- Queue als **"sliding window"** für die letzten 2 Werte
-- Start: `[1, 1]` (f(1), f(2))
-- In jedem Schritt:
-  1. `remove()` → ältesten Wert entfernen
-  2. `peek()` → aktuellen Wert anschauen
-  3. Summe bilden und `add(summe)`
+### 🗣️ Was du sagen musst:
 
-### Ablauf für n=5
-```
-Init:    [1, 1]
-i=3:     [1, 2]  (1+1=2)
-i=4:     [2, 3]  (1+2=3)
-i=5:     [3, 5]  (2+3=5)
-Ergebnis: 5
-```
-
-### Warum Queue?
-- Speichereffizient: Nur 2 Werte statt ganzes Array
-- Demonstriert Queue-Prinzip: FIFO (First In, First Out)
+1.  **Idee:** Wir nutzen die Queue als **"Rutschfenster" (Sliding Window)** der Größe 2.
+2.  **Speicher:** Statt alle Zahlen in einem Array zu speichern, merken wir uns nur die letzten zwei.
+3.  **Der Algorithmus:**
+    - Queue Start: `[1, 1]` (für `f(1), f(2)`).
+    - Berechne `New = Vorne + Zweiter`.
+    - `remove()` (das Alte wegwerfen).
+    - `add(New)` (das Neue hinten dran).
+4.  **Beispiel n=4:**
+    - Start: `[1, 1]`
+    - Schritt 1: `1+1=2` → `[1, 2]`
+    - Schritt 2: `1+2=3` → `[2, 3]` → Ergebnis ist 3.
 
 ---
 
-## #️⃣ Aufgabe 6.3: Offenes Hashing (Chaining)
+## #️⃣ Aufgabe 6.3: Offenes Hashing (Verkettung)
 
-### Was ist das?
-**Kollisionsauflösung durch Verkettung** – jeder Tabellenplatz ist eine Liste
+**Hashfunktion:** `h(s) = (Vokale + Länge) mod 8`
 
-### Hashfunktion
-`f(s) = (AnzahlVokale + AnzahlZeichen) mod 8`
+### 🗣️ Was du sagen musst:
 
-### Beispielrechnung
-- Martha: (2 Vokale + 6 Zeichen) mod 8 = **0**
-- Sarah: (2 Vokale + 5 Zeichen) mod 8 = **7**
+1.  **Verfahren:** Bei Kollisionen bilden wir eine **Liste** am Index (Chaining).
+2.  **Beispielrechnung:**
+    - "Patrizia": 4 Vokale + 8 Zeichen = 12. `12 mod 8 = 4`.
+    - "Maike": 3 Vokale + 5 Zeichen = 8. `8 mod 8 = 0`.
+3.  **Die Kollision:**
+    - "Lukas" landet auf Index **7**.
+    - "Sarah" landet auch auf Index **7** (`2+5=7`).
+    - **Lösung:** Sarah wird einfach in die Liste bei Index 7 hinter Lukas gehängt.
+4.  **Fazit:** Die Tabelle wird nie "voll", aber die Listen können lang werden (langsamere Suche).
 
-### Was passiert bei Kollision?
-Element wird **an die Liste angehängt**
+### 📝 Tabellen-Check
 
-### Ergebnis
-```
-0: [Maike]
-1: [Manuel]
-2: []
-3: [Matthias]
-4: [Patrizia]
-5: [Sebastian]
-6: [Nele]
-7: [Lukas, Sarah]  ← Kollision! Beide Hash=7
-```
-
-### Vorteil
-- **Immer** Platz für alle Elemente
-- Einfach zu implementieren
+- **Index 7:** `[Lukas, Sarah]`
+- **Index 5:** `[Sebastian]`
+- **Index 0:** `[Maike]`
 
 ---
 
-## 🔍 Aufgabe 6.4: Geschlossenes Hashing (Probing)
+## 🔍 Aufgabe 6.4: Geschlossenes Hashing (Sondieren)
 
-### Was ist das?
-**Kollisionsauflösung durch Sondierung** – suche einen anderen freien Platz
-
-### Hashfunktion
-`f(x) = ⌊x/100⌋ mod 10` (Hunderterstelle)
+**Hashfunktion:** `h(x) = ⌊x/100⌋ mod 10` (Hunderterstelle)
+**Wichtig:** Tabellengröße `N=10` (keine Primzahl!).
 
 ### 1. Lineares Sondieren
-**Formel:** `(home + i) mod N` mit i = 1, 2, 3, ...
 
-**Beispiel:**
-- 417 will nach Index 4 → besetzt
-- Versuche: 4 → 5 (besetzt) → 6 ✓
+**Formel:** `(Start + i) mod 10`
 
-**Ergebnis:** Alle 9 Schlüssel passen rein
+- **Ablauf:** Wenn Platz besetzt, gehe einfach eins weiter.
+- **Ergebnis:** Alle Zahlen passen rein. Die Tabelle ist am Ende voll bis auf Index 8.
+- **Beispiel 1920:** Will auf die 9. 9, 0, 1 besetzt → landet auf **2**.
 
-### 2. Quadratisches Sondieren
-**Formel:** `(home + i²) mod N` mit i = 1, 2, 3, ...
+### 2. Quadratisches Sondieren (Der Problemfall)
 
-**Beispiel:**
-- 417 will nach Index 4 → besetzt
-- Versuche: (4+1)=5 (besetzt) → (4+4)=8 ✓
+**Formel:** `(Start + i²) mod 10` → Schritte: `+1, +4, +9, +16...`
 
-**Problem:** Schlüssel **1920 kann nicht eingefügt werden!**
+- **Das Problem:** Wir wollen **1920** einfügen.
+    - Start: Index **9** (besetzt durch 900).
+    - `i=1`: `9+1 = 10 ≡ 0` (besetzt durch 1001).
+    - `i=2`: `9+4 = 13 ≡ 3` (besetzt durch 1320).
+    - `i=3`: `9+9 = 18 ≡ 8` (besetzt durch 417).
+    - `i=4`: `9+16 = 25 ≡ 5` (besetzt durch 1542).
+    - `i=5`: `9+25 = 34 ≡ 4` (besetzt durch 429).
+    - `i=6`: `9+36 = 45 ≡ 5` (Wiederholung!).
+- **Fazit:** Wir drehen uns im Kreis. Obwohl die Plätze **2 und 6 frei** sind, erreicht das quadratische Sondieren sie ausgehend von der 9 niemals.
+- **Antwort auf "Was passiert?":** Die Zahl 1920 kann **nicht eingefügt** werden (Endlosschleife/Abbruch), obwohl die Tabelle nicht voll ist.
 
-### Was passiert?
-```
-1920: Hash=9
-Versuche: 9 → 0 → 3 → 8 → 5 → 4 → 5 → ...
-Zyklus! Felder 2, 6, 7 werden NIE erreicht!
-```
+### 💡 Warum passiert das?
 
-### Warum?
-- Tabellengröße 10 ist **keine Primzahl**
-- Quadratisches Sondieren erreicht nicht alle Felder
-- → **Sekundäres Clustering**
-
-### Lösung
-- Primzahl als Tabellengröße wählen
-- Füllgrad < 50% halten
-- Oder: Double Hashing verwenden
-
----
-
-## 🎯 Präsentations-Tipps
-
-### Aufgabe 1 & 2 (Code)
-- Zeige BFS-Baum an der Tafel (9 → 90/99 → ...)
-- Demonstriere Queue-Operationen live
-- Erkläre WARUM Queue besser ist als Stack/Rekursion
-
-### Aufgabe 3 (Offenes Hashing)
-- Zeichne Tabelle mit Listen
-- Markiere Kollision farbig
-- Vorteil: **Immer einfügbar!**
-
-### Aufgabe 4 (Geschlossenes Hashing)
-- Zeige beide Tabellen nebeneinander
-- **Dramatisch:** "1920 passt nicht mehr!" 
-- Erkläre Unterschied: Linear findet immer Platz, Quadratisch nicht immer!
-
----
-
-## ⚡ Quick Facts
-
-| Aufgabe | Datenstruktur    | Kernkonzept           | Schwierigkeit |
-| :------ | :--------------- | :-------------------- | :-----------: |
-| 6.1     | Queue            | BFS                   |      ⭐⭐      |
-| 6.2     | Queue            | Sliding Window        |       ⭐       |
-| 6.3     | ArrayList-Array  | Chaining              |      ⭐⭐      |
-| 6.4     | Array (Integer)  | Probing + Clustering  |     ⭐⭐⭐      |
+Das liegt daran, dass die Tabellengröße **10 keine Primzahl** ist. Quadratisches Sondieren garantiert nur dann das Finden eines freien Platzes (wenn Tabelle ≤ 50% gefüllt), wenn `N` eine Primzahl der Form `4k+3` ist. Hier versagt das Verfahren.
