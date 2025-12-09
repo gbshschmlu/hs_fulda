@@ -4,9 +4,7 @@ import java.util.Scanner;
 
 public class Uebungsblatt06 {
 
-    // === Aufgabe 6.1: Nullen und Neunen ===
-    // Strategie: Breitensuche (BFS) mit einer Queue.
-    // Wir generieren Zahlen als Strings: "9", "90", "99", "900"...
+    // Aufgabe 6.1
     public static void findSmallestMultiple(int n) {
         if (n <= 0) {
             System.out.println("Bitte eine positive Zahl eingeben.");
@@ -18,7 +16,7 @@ public class Uebungsblatt06 {
 
         System.out.println("Suche Vielfaches für N=" + n + "...");
 
-        // Sicherheitsabbruch, falls N sehr groß ist (Long Overflow Gefahr)
+        // Long Overflow Gefahr
         int iterations = 0;
 
         while (!queue.isEmpty()) {
@@ -44,7 +42,6 @@ public class Uebungsblatt06 {
                 }
 
                 // Generiere nächste Zahlen: Erst die mit 0, dann die mit 9
-                // (damit wir die *kleinste* Zahl zuerst finden -> BFS)
                 queue.add(currentS + "0");
                 queue.add(currentS + "9");
             } catch (NumberFormatException e) {
@@ -59,7 +56,7 @@ public class Uebungsblatt06 {
         }
     }
 
-    // === Aufgabe 6.2: Fibonacci mit Queue ===
+    // Aufgabe 6.2
     // f(n) = f(n-1) + f(n-2)
     // Queue speichert immer die letzten zwei Werte [f(i-2), f(i-1)]
     public static void fibonacciWithQueue(int n) {
@@ -77,10 +74,10 @@ public class Uebungsblatt06 {
         q.add(1L);
         q.add(1L);
 
-        // Wir berechnen ab f(3) bis f(n)
+        // Berechnen ab f(3) bis f(n)
         for (int i = 3; i <= n; i++) {
             long f_minus_2 = q.remove(); // Das älteste Element entfernen
-            long f_minus_1 = q.peek(); // Das verbleibende Element ansehen (ist jetzt vorne)
+            long f_minus_1 = q.peek(); // Das verbleibende Element ansehen (vorne)
 
             long f_current = f_minus_1 + f_minus_2;
 
@@ -95,7 +92,7 @@ public class Uebungsblatt06 {
         System.out.println("f(" + n + ") = " + q.peek());
     }
 
-    // === Main ===
+    // Main
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
