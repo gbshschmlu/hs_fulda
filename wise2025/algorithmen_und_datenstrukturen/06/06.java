@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Uebungsblatt06 {
 
     // Aufgabe 6.1
+    // O(k) wobei k die Anzahl der generierten Kandidaten ist (max. 100.000 durch Abbruchbedingung)
     public static void findSmallestMultiple(int n) {
         if (n <= 0) {
             System.out.println("Bitte eine positive Zahl eingeben.");
@@ -59,6 +60,7 @@ public class Uebungsblatt06 {
     // Aufgabe 6.2
     // f(n) = f(n-1) + f(n-2)
     // Queue speichert immer die letzten zwei Werte [f(i-2), f(i-1)]
+    // O(n)
     public static void fibonacciWithQueue(int n) {
         if (n <= 0) {
             System.out.println("n muss > 0 sein.");
@@ -93,6 +95,7 @@ public class Uebungsblatt06 {
     }
 
     // Main
+    // O(1) + Laufzeit der aufgerufenen Funktion
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
