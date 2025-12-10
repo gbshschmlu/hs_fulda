@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Übungsblatt 6 - Visualisierung</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            overflow-x: auto;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .tab.active {
+            color: #667eea;
+            background: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .input-group input {
+            padding: 10px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1em;
+            width: 100px;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .queue-viz {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .queue-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .queue-label {
+            font-weight: 700;
+            color: #667eea;
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+
+        .queue-item {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.2em;
+            color: #495057;
+            min-width: 80px;
+            text-align: center;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .queue-item.processing {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.1);
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .step-info {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .step-info h3 {
+            color: #2196F3;
+            margin-bottom: 10px;
+        }
+
+        .step-info code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+
+        .result {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #721c24;
+        }
+
+        .hash-table {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .hash-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .hash-row:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .hash-index {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .hash-values {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .hash-value {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #495057;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .hash-value.empty {
+            color: #adb5bd;
+            border-style: dashed;
+        }
+
+        .hash-value.highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-color: #ffa500;
+            animation: highlight 0.5s ease;
+        }
+
+        @keyframes highlight {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .calculation-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .calculation-box h4 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .calculation-step {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .tree-viz {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+            overflow-x: auto;
+        }
+
+        .tree-level {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .tree-node {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+            position: relative;
+        }
+
+        .tree-node.found {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .fibonacci-viz {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .fib-step {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .fib-queue {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+
+        .fib-item {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.5em;
+            font-weight: 700;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .fib-item.highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .probe-table {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .probe-cell {
+            aspect-ratio: 1;
+            border: 3px solid #dee2e6;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            position: relative;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .probe-cell .index {
+            font-size: 0.8em;
+            color: #6c757d;
+            position: absolute;
+            top: 5px;
+        }
+
+        .probe-cell .value {
+            font-size: 1em;
+            color: #495057;
+        }
+
+        .probe-cell.filled {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .probe-cell.current {
+            background: #ffc107;
+            border-color: #ffc107;
+            animation: pulse 0.5s ease infinite;
+        }
+
+        .probe-cell.collision {
+            background: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .tab {
+                font-size: 0.9em;
+                padding: 15px 10px;
+            }
+
+            .probe-table {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Aufgabe 6.1: Nullen und Neunen
+        function Aufgabe61() {
+            const [n, setN] = useState(6);
+            const [steps, setSteps] = useState([]);
+            const [currentStep, setCurrentStep] = useState(0);
+            const [isRunning, setIsRunning] = useState(false);
+
+            const generateSteps = (num) => {
+                const steps = [];
+                const queue = ["9"];
+                let found = false;
+                let iterations = 0;
+                const maxIterations = 50;
+
+                while (queue.length > 0 && !found && iterations < maxIterations) {
+                    const current = queue.shift();
+                    const val = parseInt(current);
+                    
+                    steps.push({
+                        queue: [...queue],
+                        current: current,
+                        value: val,
+                        remainder: val % num,
+                        isResult: val % num === 0,
+                        calculation: `${val} % ${num} = ${val % num}`
+                    });
+
+                    if (val % num === 0) {
+                        found = true;
+                        break;
+                    }
+
+                    queue.push(current + "0");
+                    queue.push(current + "9");
+                    iterations++;
+                }
+
+                return steps;
+            };
+
+            const start = () => {
+                if (n <= 0) return;
+                setSteps(generateSteps(n));
+                setCurrentStep(0);
+                setIsRunning(true);
+            };
+
+            const reset = () => {
+                setSteps([]);
+                setCurrentStep(0);
+                setIsRunning(false);
+            };
+
+            const next = () => {
+                if (currentStep < steps.length - 1) {
+                    setCurrentStep(currentStep + 1);
+                }
+            };
+
+            const prev = () => {
+                if (currentStep > 0) {
+                    setCurrentStep(currentStep - 1);
+                }
+            };
+
+            const step = steps[currentStep];
+
+            return (
+                <div>
+                    <h2 style={{marginBottom: '20px', color: '#667eea'}}>Aufgabe 6.1: Nullen und Neunen</h2>
+                    <p style={{marginBottom: '30px', fontSize: '1.1em', color: '#6c757d'}}>
+                        Finde die kleinste Zahl aus nur 0 und 9, die durch N teilbar ist.
+                    </p>
+
+                    <div className="controls">
+                        <div className="input-group">
+                            <label>N:</label>
+                            <input 
+                                type="number" 
+                                value={n} 
+                                onChange={(e) => setN(parseInt(e.target.value) || 0)}
+                                disabled={isRunning}
+                            />
+                        </div>
+                        <button onClick={start} disabled={isRunning}>Start</button>
+                        <button onClick={reset}>Reset</button>
+                        {isRunning && (
+                            <>
+                                <button onClick={prev} disabled={currentStep === 0}>Zurück</button>
+                                <button onClick={next} disabled={currentStep === steps.length - 1}>Weiter</button>
+                                <span style={{fontWeight: 600}}>
+                                    Schritt {currentStep + 1} von {steps.length}
+                                </span>
+                            </>
+                        )}
+                    </div>
+
+                    {step && (
+                        <>
+                            <div className="step-info">
+                                <h3>Schritt {currentStep + 1}</h3>
+                                <p>Prüfe: <code>{step.current}</code></p>
+                                <p>Berechnung: <code>{step.calculation}</code></p>
+                                {step.isResult ? (
+                                    <p style={{color: '#28a745', fontWeight: 700, marginTop: '10px'}}>
+                                        Gefunden! {step.value} ist durch {n} teilbar.
+                                    </p>
+                                ) : (
+                                    <p style={{marginTop: '10px'}}>
+                                        Nicht teilbar. Generiere neue Zahlen: <code>{step.current}0</code> und <code>{step.current}9</code>
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className="queue-viz">
+                                <div className="queue-container">
+                                    <span className="queue-label">Aktuell:</span>
+                                    <div className="queue-item processing">{step.current}</div>
+                                </div>
+                                
+                                <div className="queue-container">
+                                    <span className="queue-label">Queue:</span>
+                                    {step.queue.length === 0 ? (
+                                        <span style={{color: '#6c757d', fontStyle: 'italic'}}>leer</span>
+                                    ) : (
+                                        step.queue.map((item, idx) => (
+                                            <div key={idx} className="queue-item">{item}</div>
+                                        ))
+                                    )}
+                                </div>
+                            </div>
+
+                            {step.isResult && (
+                                <div className="result">
+                                    Ergebnis: {step.value} ({step.value} ÷ {n} = {step.value / n})
+                                </div>
+                            )}
+                        </>
+                    )}
+
+                    {!isRunning && (
+                        <div style={{marginTop: '40px', padding: '20px', background: '#f8f9fa', borderRadius: '10px'}}>
+                            <h3 style={{marginBottom: '15px'}}>Wie funktioniert es?</h3>
+                            <ul style={{lineHeight: '1.8', paddingLeft: '20px'}}>
+                                <li>Wir starten mit "9" in der Queue</li>
+                                <li>Nehmen das erste Element, prüfen ob es durch N teilbar ist</li>
+                                <li>Falls ja: Fertig! Falls nein: Hänge "0" und "9" an</li>
+                                <li>Die Queue garantiert, dass wir die kleinste Zahl zuerst finden (Breitensuche)</li>
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        // Aufgabe 6.2: Fibonacci
+        function Aufgabe62() {
+            const [n, setN] = useState(6);
+            const [steps, setSteps] = useState([]);
+            const [currentStep, setCurrentStep] = useState(0);
+            const [isRunning, setIsRunning] = useState(false);
+
+            const generateSteps = (num) => {
+                if (num <= 0) return [];
+                if (num === 1 || num === 2) return [{ queue: [1], step: num, result: 1 }];
+
+                const steps = [];
+                const queue = [1, 1];
+                
+                steps.push({
+                    step: 2,
+                    queue: [1, 1],
+                    description: "Start: f(1) = 1, f(2) = 1"
+                });
+
+                for (let i = 3; i <= num; i++) {
+                    const a = queue[0];
+                    const b = queue[1];
+                    const sum = a + b;
+                    
+                    steps.push({
+                        step: i,
+                        queue: [a, b],
+                        a: a,
+                        b: b,
+                        sum: sum,
+                        description: `f(${i}) = ${a} + ${b} = ${sum}`
+                    });
+
+                    queue.shift();
+                    queue.push(sum);
+                }
+
+                return steps;
+            };
+
+            const start = () => {
+                if (n <= 0) return;
+                const generatedSteps = generateSteps(n);
+                setSteps(generatedSteps);
+                setCurrentStep(0);
+                setIsRunning(true);
+            };
+
+            const reset = () => {
+                setSteps([]);
+                setCurrentStep(0);
+                setIsRunning(false);
+            };
+
+            const next = () => {
+                if (currentStep < steps.length - 1) {
+                    setCurrentStep(currentStep + 1);
+                }
+            };
+
+            const prev = () => {
+                if (currentStep > 0) {
+                    setCurrentStep(currentStep - 1);
+                }
+            };
+
+            const step = steps[currentStep];
+
+            return (
+                <div>
+                    <h2 style={{marginBottom: '20px', color: '#667eea'}}>Aufgabe 6.2: Fibonacci mit Queue</h2>
+                    <p style={{marginBottom: '30px', fontSize: '1.1em', color: '#6c757d'}}>
+                        Berechne f(n) mit einer Queue als Sliding Window der Größe 2.
+                    </p>
+
+                    <div className="controls">
+                        <div className="input-group">
+                            <label>n:</label>
+                            <input 
+                                type="number" 
+                                value={n} 
+                                onChange={(e) => setN(parseInt(e.target.value) || 0)}
+                                disabled={isRunning}
+                            />
+                        </div>
+                        <button onClick={start} disabled={isRunning}>Start</button>
+                        <button onClick={reset}>Reset</button>
+                        {isRunning && (
+                            <>
+                                <button onClick={prev} disabled={currentStep === 0}>Zurück</button>
+                                <button onClick={next} disabled={currentStep === steps.length - 1}>Weiter</button>
+                                <span style={{fontWeight: 600}}>
+                                    Schritt {currentStep + 1} von {steps.length}
+                                </span>
+                            </>
+                        )}
+                    </div>
+
+                    {step && (
+                        <>
+                            <div className="fib-step">
+                                <h3>Berechnung von f({step.step})</h3>
+                                <p style={{fontSize: '1.2em', margin: '15px 0'}}>{step.description}</p>
+                                
+                                <div className="fib-queue">
+                                    {step.queue.map((val, idx) => (
+                                        <div key={idx} className={`fib-item ${idx < 2 ? 'highlight' : ''}`}>
+                                            {val}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {step.sum && (
+                                    <div style={{marginTop: '20px', textAlign: 'center'}}>
+                                        <p style={{fontSize: '1.1em', color: '#6c757d'}}>
+                                            Nach diesem Schritt:
+                                        </p>
+                                        <div className="fib-queue" style={{marginTop: '10px'}}>
+                                            <div className="fib-item highlight">{step.b}</div>
+                                            <div className="fib-item highlight">{step.sum}</div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {currentStep === steps.length - 1 && (
+                                <div className="result">
+                                    Ergebnis: f({n}) = {step.sum || step.queue[0]}
+                                </div>
+                            )}
+                        </>
+                    )}
+
+                    {!isRunning && (
+                        <div style={{marginTop: '40px', padding: '20px', background: '#f8f9fa', borderRadius: '10px'}}>
+                            <h3 style={{marginBottom: '15px'}}>Das Prinzip:</h3>
+                            <ul style={{lineHeight: '1.8', paddingLeft: '20px'}}>
+                                <li>Die Queue speichert immer nur die letzten 2 Fibonacci-Zahlen</li>
+                                <li>Für f(n) = f(n-1) + f(n-2) addieren wir die beiden Queue-Elemente</li>
+                                <li>Dann: remove() (ältestes Element weg) und add(neues_ergebnis)</li>
+                                <li>Speicher-Vorteil: O(1) statt O(n)</li>
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        // Aufgabe 6.3: Offenes Hashing
+        function Aufgabe63() {
+            const names = ["Patrizia", "Sebastian", "Maike", "Lukas", "Nele", "Sarah", "Matthias", "Manuel"];
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [hashTable, setHashTable] = useState(Array(8).fill(null).map(() => []));
+            const [isRunning, setIsRunning] = useState(false);
+
+            const countVowels = (str) => {
+                return (str.match(/[aeiouäöü]/gi) || []).length;
+            };
+
+            const hashFunction = (str) => {
+                const vowels = countVowels(str);
+                const length = str.length;
+                return (vowels + length) % 8;
+            };
+
+            const start = () => {
+                setHashTable(Array(8).fill(null).map(() => []));
+                setCurrentIndex(0);
+                setIsRunning(true);
+            };
+
+            const reset = () => {
+                setHashTable(Array(8).fill(null).map(() => []));
+                setCurrentIndex(0);
+                setIsRunning(false);
+            };
+
+            const next = () => {
+                if (currentIndex < names.length) {
+                    const name = names[currentIndex];
+                    const hash = hashFunction(name);
+                    const newTable = hashTable.map((bucket, idx) => 
+                        idx === hash ? [...bucket, name] : [...bucket]
+                    );
+                    setHashTable(newTable);
+                    setCurrentIndex(currentIndex + 1);
+                }
+            };
+
+            const prev = () => {
+                if (currentIndex > 0) {
+                    const prevName = names[currentIndex - 1];
+                    const hash = hashFunction(prevName);
+                    const newTable = hashTable.map((bucket, idx) => {
+                        if (idx === hash) {
+                            const newBucket = [...bucket];
+                            newBucket.pop();
+                            return newBucket;
+                        }
+                        return [...bucket];
+                    });
+                    setHashTable(newTable);
+                    setCurrentIndex(currentIndex - 1);
+                }
+            };
+
+            const currentName = currentIndex < names.length ? names[currentIndex] : null;
+            const currentHash = currentName ? hashFunction(currentName) : null;
+
+            return (
+                <div>
+                    <h2 style={{marginBottom: '20px', color: '#667eea'}}>Aufgabe 6.3: Offenes Hashing (Verkettung)</h2>
+                    <p style={{marginBottom: '30px', fontSize: '1.1em', color: '#6c757d'}}>
+                        Hashfunktion: h(s) = (Anzahl_Vokale + Anzahl_Zeichen) mod 8
+                    </p>
+
+                    <div className="controls">
+                        <button onClick={start} disabled={isRunning}>Start</button>
+                        <button onClick={reset}>Reset</button>
+                        {isRunning && (
+                            <>
+                                <button onClick={prev} disabled={currentIndex === 0}>Zurück</button>
+                                <button onClick={next} disabled={currentIndex === names.length}>Weiter</button>
+                                <span style={{fontWeight: 600}}>
+                                    Element {currentIndex} von {names.length}
+                                </span>
+                            </>
+                        )}
+                    </div>
+
+                    {isRunning && currentName && (
+                        <div className="calculation-box">
+                            <h4>Einfügen: {currentName}</h4>
+                            <div className="calculation-step">
+                                Vokale: {countVowels(currentName)}
+                            </div>
+                            <div className="calculation-step">
+                                Länge: {currentName.length}
+                            </div>
+                            <div className="calculation-step">
+                                Hash: ({countVowels(currentName)} + {currentName.length}) mod 8 = {currentHash}
+                            </div>
+                            {hashTable[currentHash].length > 0 && (
+                                <div style={{marginTop: '10px', color: '#dc3545', fontWeight: 600}}>
+                                    Kollision bei Index {currentHash}! Wird an Liste angehängt.
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    <div className="hash-table">
+                        {hashTable.map((bucket, idx) => (
+                            <div key={idx} className={`hash-row ${idx === currentHash && isRunning ? 'highlight' : ''}`}>
+                                <div className="hash-index">{idx}</div>
+                                <div className="hash-values">
+                                    {bucket.length === 0 ? (
+                                        <div className="hash-value empty">leer</div>
+                                    ) : (
+                                        bucket.map((name, nameIdx) => (
+                                            <div key={nameIdx} className={`hash-value ${nameIdx === bucket.length - 1 && idx === currentHash && isRunning ? 'highlight' : ''}`}>
+                                                {name}
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {!isRunning && (
+                        <div style={{marginTop: '40px', padding: '20px', background: '#f8f9fa', borderRadius: '10px'}}>
+                            <h3 style={{marginBottom: '15px'}}>Offenes Hashing:</h3>
+                            <ul style={{lineHeight: '1.8', paddingLeft: '20px'}}>
+                                <li>Bei Kollisionen wird eine Liste (Kette) am Index gebildet</li>
+                                <li>Die Tabelle wird nie "voll"</li>
+                                <li>Aber: Lange Listen bedeuten langsamere Suche</li>
+                                <li>Im Beispiel: Lukas und Sarah kollidieren bei Index 7</li>
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        // Aufgabe 6.4: Geschlossenes Hashing
+        function Aufgabe64() {
+            const keys = [1001, 1542, 429, 1320, 17, 900, 417, 2302, 1920];
+            const [method, setMethod] = useState('linear');
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [table, setTable] = useState(Array(10).fill(null));
+            const [isRunning, setIsRunning] = useState(false);
+            const [probeSequence, setProbeSequence] = useState([]);
+            const [error, setError] = useState(null);
+
+            const hashFunction = (key) => Math.floor(key / 100) % 10;
+
+            const linearProbe = (home, i) => (home + i) % 10;
+            const quadraticProbe = (home, i) => (home + i * i) % 10;
+
+            const findSlot = (key, currentTable, probeMethod) => {
+                const home = hashFunction(key);
+                const sequence = [home];
+                let i = 1;
+                let pos = home;
+                const visited = new Set([home]);
+
+                while (currentTable[pos] !== null) {
+                    pos = probeMethod === 'linear' ? linearProbe(home, i) : quadraticProbe(home, i);
+                    
+                    if (visited.has(pos)) {
+                        return { success: false, sequence, error: 'Zyklus erkannt!' };
+                    }
+                    
+                    visited.add(pos);
+                    sequence.push(pos);
+                    i++;
+
+                    if (i > 20) {
+                        return { success: false, sequence, error: 'Zu viele Versuche!' };
+                    }
+                }
+
+                return { success: true, position: pos, sequence };
+            };
+
+            const start = () => {
+                setTable(Array(10).fill(null));
+                setCurrentIndex(0);
+                setIsRunning(true);
+                setProbeSequence([]);
+                setError(null);
+            };
+
+            const reset = () => {
+                setTable(Array(10).fill(null));
+                setCurrentIndex(0);
+                setIsRunning(false);
+                setProbeSequence([]);
+                setError(null);
+            };
+
+            const next = () => {
+                if (currentIndex < keys.length) {
+                    const key = keys[currentIndex];
+                    const result = findSlot(key, table, method);
+
+                    setProbeSequence(result.sequence);
+
+                    if (result.success) {
+                        const newTable = [...table];
+                        newTable[result.position] = key;
+                        setTable(newTable);
+                        setError(null);
+                    } else {
+                        setError(`${key} kann nicht eingefügt werden! ${result.error}`);
+                    }
+
+                    setCurrentIndex(currentIndex + 1);
+                }
+            };
+
+            const prev = () => {
+                if (currentIndex > 0) {
+                    const prevKey = keys[currentIndex - 1];
+                    const newTable = table.map(val => val === prevKey ? null : val);
+                    setTable(newTable);
+                    setCurrentIndex(currentIndex - 1);
+                    setProbeSequence([]);
+                    setError(null);
+                }
+            };
+
+            const currentKey = currentIndex < keys.length ? keys[currentIndex] : null;
+
+            return (
+                <div>
+                    <h2 style={{marginBottom: '20px', color: '#667eea'}}>Aufgabe 6.4: Geschlossenes Hashing</h2>
+                    <p style={{marginBottom: '30px', fontSize: '1.1em', color: '#6c757d'}}>
+                        Hashfunktion: h(x) = ⌊x/100⌋ mod 10 (Hunderterstelle)
+                    </p>
+
+                    <div className="controls">
+                        <div className="input-group">
+                            <label>Methode:</label>
+                            <select 
+                                value={method} 
+                                onChange={(e) => setMethod(e.target.value)}
+                                disabled={isRunning}
+                                style={{padding: '10px', borderRadius: '8px', border: '2px solid #dee2e6', fontSize: '1em'}}
+                            >
+                                <option value="linear">Lineares Sondieren</option>
+                                <option value="quadratic">Quadratisches Sondieren</option>
+                            </select>
+                        </div>
+                        <button onClick={start} disabled={isRunning}>Start</button>
+                        <button onClick={reset}>Reset</button>
+                        {isRunning && (
+                            <>
+                                <button onClick={prev} disabled={currentIndex === 0}>Zurück</button>
+                                <button onClick={next} disabled={currentIndex === keys.length || error}>Weiter</button>
+                                <span style={{fontWeight: 600}}>
+                                    Schlüssel {currentIndex} von {keys.length}
+                                </span>
+                            </>
+                        )}
+                    </div>
+
+                    {isRunning && currentKey && !error && (
+                        <div className="calculation-box">
+                            <h4>Einfügen: {currentKey}</h4>
+                            <div className="calculation-step">
+                                Home: ⌊{currentKey}/100⌋ mod 10 = {hashFunction(currentKey)}
+                            </div>
+                            {probeSequence.length > 0 && (
+                                <div className="calculation-step">
+                                    Sondierungsfolge: {probeSequence.join(' → ')}
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="error">
+                            {error}
+                        </div>
+                    )}
+
+                    <div className="probe-table">
+                        {table.map((value, idx) => (
+                            <div 
+                                key={idx} 
+                                className={`probe-cell ${
+                                    value !== null ? 'filled' : ''
+                                } ${
+                                    probeSequence.includes(idx) && value === null ? 'current' : ''
+                                } ${
+                                    probeSequence.includes(idx) && value !== null ? 'collision' : ''
+                                }`}
+                            >
+                                <div className="index">{idx}</div>
+                                <div className="value">{value || '-'}</div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {currentIndex === keys.length && !error && (
+                        <div className="result">
+                            Alle Schlüssel erfolgreich eingefügt!
+                        </div>
+                    )}
+
+                    {!isRunning && (
+                        <div style={{marginTop: '40px', padding: '20px', background: '#f8f9fa', borderRadius: '10px'}}>
+                            <h3 style={{marginBottom: '15px'}}>Sondierungsmethoden:</h3>
+                            <ul style={{lineHeight: '1.8', paddingLeft: '20px'}}>
+                                <li><strong>Linear:</strong> (home + i) mod N - einfach der Reihe nach</li>
+                                <li><strong>Quadratisch:</strong> (home + i²) mod N - größere Sprünge</li>
+                                <li><strong>Problem:</strong> Quadratisches Sondieren kann bei TabellengrößeN = 10 (keine Primzahl) nicht alle Plätze erreichen!</li>
+                                <li>Versuch es mit 1920 beim quadratischen Sondieren zu sehen</li>
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        // Main App
+        function App() {
+            const [activeTab, setActiveTab] = useState(0);
+
+            const tabs = [
+                { name: '6.1 - Nullen & Neunen', component: <Aufgabe61 /> },
+                { name: '6.2 - Fibonacci', component: <Aufgabe62 /> },
+                { name: '6.3 - Offenes Hashing', component: <Aufgabe63 /> },
+                { name: '6.4 - Geschlossenes Hashing', component: <Aufgabe64 /> }
+            ];
+
+            return (
+                <div className="container">
+                    <div className="header">
+                        <h1>Übungsblatt 6</h1>
+                        <p>Algorithmen und Datenstrukturen - Interaktive Visualisierung</p>
+                    </div>
+
+                    <div className="tabs">
+                        {tabs.map((tab, idx) => (
+                            <button
+                                key={idx}
+                                className={`tab ${activeTab === idx ? 'active' : ''}`}
+                                onClick={() => setActiveTab(idx)}
+                            >
+                                {tab.name}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="content">
+                        {tabs[activeTab].component}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
