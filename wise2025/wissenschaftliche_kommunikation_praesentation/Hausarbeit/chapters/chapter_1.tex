@@ -8,13 +8,13 @@
 Bei der Zusammenarbeit mit externen Zulieferern ist eine präzise Übermittlung von Produktspezifikationen (PSPs) essenziell.
 Das Tool \textit{GBI} standardisiert diesen Prozess: Lieferanten können Formulare ausfüllen, technische Zeichnungen synchronisieren und diese in validiertem JSON-Format als ZIP-Archiv per E-Mail versenden.
 
-Die technische Verteilung dieser Software unterliegt strengen Restriktionen:
+Die technische Verteilung dieser Software unterliegt verschiedenen Restriktionen:
 \begin{enumerate}
-    \item \textbf{Heterogene Hardware:} Die Ausstattung der Lieferanten ist unbekannt.
-    Teilweise kommen ältere Systeme (Windows 10) mit begrenzten Ressourcen zum Einsatz.
-    \item \textbf{Verteilung und Bandbreite:} Bei Verteilung über E-Mail oder in Regionen mit limitierter Internetbandbreite ist die Dateigröße kritisch.
-    \item \textbf{Installationsberechtigungen:} Viele Lieferanten verfügen über keine Administratorrechte.
-    Die Installation muss im \("\)User Mode\("\) durchführbar sein und unternehmensspezifische Anpassungen (Lizenztexte, Branding) unterstützen.
+    \item \textbf{Unbekannte Zielumgebungen:} Die Systemausstattung der Lieferanten ist nicht bekannt.
+    Teilweise werden ältere Systeme (Windows 10) mit begrenzten Ressourcen verwendet.
+    \item \textbf{Verteilung und Bandbreite:} Bei Verteilung über E-Mail oder in Regionen mit begrenzter Internetbandbreite ist die Dateigröße kritisch.
+    \item \textbf{Installationsberechtigungen:} Viele Lieferanten haben keine Administratorrechte.
+    Die Installation muss im \glqq User Mode\grqq{} durchführbar sein und unternehmensspezifische Anpassungen (Lizenztexte, Branding) unterstützen.
 \end{enumerate}
 
 Klassische Ansätze wie Electron lösen das Cross-Platform-Problem durch Bündelung einer Chromium-Instanz, was jedoch zu Installer-Größen von über 80 MB und hohem Speicherverbrauch führt \cite{thangaduraiElectronVsWeb2024}.
