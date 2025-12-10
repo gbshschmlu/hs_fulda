@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Datenstrukturen Visualisierung (Test 2) - Vollständig</title>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.production.min.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                background-color: #0f172a;
+                color: #e2e8f0;
+                font-family: "Roboto", sans-serif;
+                padding: 20px;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            h2 {
+                color: #60a5fa;
+                margin-bottom: 20px;
+                font-size: 24px;
+            }
+            h3 {
+                color: #93c5fd;
+                margin: 15px 0 10px 0;
+                font-size: 18px;
+            }
+            .nav-tabs {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+            }
+            .nav-btn {
+                padding: 10px 20px;
+                background: #1e293b;
+                border: 1px solid #334155;
+                color: #94a3b8;
+                cursor: pointer;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+            .nav-btn.active {
+                background: #3b82f6;
+                color: white;
+                border-color: #3b82f6;
+            }
+            .canvas-area {
+                background: #1e293b;
+                border-radius: 8px;
+                padding: 20px;
+                border: 1px solid #334155;
+                min-height: 300px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            .controls {
+                margin-top: 20px;
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            input {
+                background: #0f172a;
+                border: 1px solid #475569;
+                color: white;
+                padding: 8px;
+                border-radius: 4px;
+                font-family: "Fira Code", monospace;
+            }
+            button {
+                padding: 8px 16px;
+                background: #3b82f6;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+            button:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            button.secondary {
+                background: #64748b;
+            }
+            button.danger {
+                background: #ef4444;
+            }
+            .node {
+                transition: all 0.3s ease;
+            }
+            .info-box {
+                margin-top: 15px;
+                padding: 15px;
+                background: #334155;
+                border-radius: 5px;
+                border-left: 4px solid #f59e0b;
+                width: 100%;
+                font-family: "Fira Code", monospace;
+                font-size: 14px;
+            }
+
+            /* Stack & Queue */
+            .stack-container,
+            .queue-container {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                min-width: 150px;
+            }
+            .queue-container {
+                flex-direction: row;
+            }
+            .stack-item,
+            .queue-item {
+                background: #1e40af;
+                border: 2px solid #3b82f6;
+                padding: 15px;
+                text-align: center;
+                font-weight: bold;
+                font-size: 18px;
+                border-radius: 4px;
+                min-width: 80px;
+            }
+            .stack-top,
+            .queue-front {
+                background: #22c55e;
+                border-color: #16a34a;
+            }
+
+            /* Lists */
+            .list-container {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+            .list-node {
+                background: #1e40af;
+                border: 2px solid #3b82f6;
+                padding: 15px;
+                border-radius: 4px;
+                min-width: 60px;
+                text-align: center;
+                font-weight: bold;
+                position: relative;
+            }
+            .list-arrow {
+                color: #60a5fa;
+                font-size: 24px;
+            }
+            .list-pointer {
+                font-size: 10px;
+                color: #94a3b8;
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            /* Hashing */
+            .hash-grid {
+                display: flex;
+                gap: 2px;
+                margin-top: 20px;
+            }
+            .hash-cell {
+                width: 60px;
+                height: 60px;
+                border: 1px solid #475569;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background: #0f172a;
+                position: relative;
+                font-size: 12px;
+            }
+            .hash-cell.occupied {
+                background: #1e40af;
+                border-color: #3b82f6;
+            }
+            .hash-cell.collision {
+                background: #991b1b;
+                border-color: #ef4444;
+            }
+            .hash-cell.deleted {
+                background: #3f3f46;
+                border-color: #71717a;
+                color: #a1a1aa;
+            }
+            .hash-index {
+                font-size: 10px;
+                color: #94a3b8;
+                position: absolute;
+                bottom: 2px;
+                right: 2px;
+            }
+            .hash-val {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .bucket-chain {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                margin-top: 5px;
+            }
+            .bucket-item {
+                background: #1e40af;
+                padding: 3px 6px;
+                border-radius: 2px;
+                font-size: 11px;
+            }
+
+            /* Tree */
+            .tree-node circle {
+                fill: #1e293b;
+                stroke: #60a5fa;
+                stroke-width: 2;
+            }
+            .tree-node text {
+                fill: #e2e8f0;
+                font-family: "Fira Code", monospace;
+                font-size: 14px;
+                text-anchor: middle;
+                dominant-baseline: middle;
+            }
+            .tree-node.visited circle {
+                fill: #22c55e;
+                stroke: #22c55e;
+            }
+            .tree-node.current circle {
+                fill: #f59e0b;
+                stroke: #f59e0b;
+            }
+            .tree-node.highlight circle {
+                fill: #ec4899;
+                stroke: #ec4899;
+            }
+            .tree-link {
+                stroke: #475569;
+                stroke-width: 2;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const { useState, useEffect, useRef } = React;
+
+            // --- STACK COMPONENT ---
+            const StackVisualizer = () => {
+                const [stack, setStack] = useState([]);
+                const [inputValue, setInputValue] = useState("");
+                const [log, setLog] = useState(
+                    "Stack ist leer. LIFO: Last In, First Out",
+                );
+
+                const push = () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    setStack([val, ...stack]);
+                    setLog(`push(${val}) - Element auf den Stack gelegt`);
+                    setInputValue("");
+                };
+
+                const pop = () => {
+                    if (stack.length === 0) {
+                        setLog("Fehler: Stack ist leer (Underflow)!");
+                        return;
+                    }
+                    const val = stack[0];
+                    setStack(stack.slice(1));
+                    setLog(`pop() = ${val} - Element vom Stack genommen`);
+                };
+
+                const peek = () => {
+                    if (stack.length === 0) {
+                        setLog("Stack ist leer, kein top() Wert");
+                        return;
+                    }
+                    setLog(`top() = ${stack[0]} - Oberstes Element ohne Entfernen`);
+                };
+
+                return (
+                    <div className="canvas-area">
+                        <h3>Stack (Stapel - LIFO)</h3>
+                        <div className="stack-container">
+                            {stack.length === 0 ? (
+                                <div style={{ color: "#64748b", padding: "20px" }}>
+                                    Stack ist leer
+                                </div>
+                            ) : (
+                                stack.map((item, idx) => (
+                                    <div
+                                        key={idx}
+                                        className={`stack-item ${idx === 0 ? "stack-top" : ""}`}
+                                    >
+                                        {item}
+                                        {idx === 0 && (
+                                            <div
+                                                style={{
+                                                    fontSize: "10px",
+                                                    marginTop: "5px",
+                                                }}
+                                            >
+                                                TOP
+                                            </div>
+                                        )}
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                        <div className="info-box">{log}</div>
+                        <div className="controls">
+                            <input
+                                type="number"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                placeholder="Wert"
+                                onKeyPress={(e) => e.key === "Enter" && push()}
+                            />
+                            <button onClick={push}>push()</button>
+                            <button onClick={pop} disabled={stack.length === 0}>
+                                pop()
+                            </button>
+                            <button onClick={peek} disabled={stack.length === 0}>
+                                top()
+                            </button>
+                            <button
+                                className="secondary"
+                                onClick={() => {
+                                    setStack([]);
+                                    setLog("Stack zurückgesetzt");
+                                }}
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                );
+            };
+
+            // --- QUEUE COMPONENT ---
+            const QueueVisualizer = () => {
+                const [queue, setQueue] = useState([]);
+                const [inputValue, setInputValue] = useState("");
+                const [log, setLog] = useState(
+                    "Queue ist leer. FIFO: First In, First Out",
+                );
+                const [maxSize] = useState(10);
+
+                const enqueue = () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    if (queue.length >= maxSize) {
+                        setLog(`Fehler: Queue ist voll (max ${maxSize} Elemente)`);
+                        return;
+                    }
+
+                    setQueue([...queue, val]);
+                    setLog(`enq(${val}) - Element hinten angefügt`);
+                    setInputValue("");
+                };
+
+                const dequeue = () => {
+                    if (queue.length === 0) {
+                        setLog("Fehler: Queue ist leer (Underflow)!");
+                        return;
+                    }
+                    const val = queue[0];
+                    setQueue(queue.slice(1));
+                    setLog(`deq() = ${val} - Element vorne entfernt`);
+                };
+
+                const front = () => {
+                    if (queue.length === 0) {
+                        setLog("Queue ist leer, kein front() Wert");
+                        return;
+                    }
+                    setLog(`front() = ${queue[0]} - Vorderstes Element ohne Entfernen`);
+                };
+
+                return (
+                    <div className="canvas-area">
+                        <h3>Queue (Warteschlange - FIFO)</h3>
+                        <div
+                            style={{
+                                fontSize: "12px",
+                                color: "#94a3b8",
+                                marginBottom: "10px",
+                            }}
+                        >
+                            HEAD (front) → TAIL (back) | Kapazität: {queue.length}/
+                            {maxSize}
+                        </div>
+                        <div className="queue-container">
+                            {queue.length === 0 ? (
+                                <div style={{ color: "#64748b", padding: "20px" }}>
+                                    Queue ist leer
+                                </div>
+                            ) : (
+                                queue.map((item, idx) => (
+                                    <div
+                                        key={idx}
+                                        className={`queue-item ${idx === 0 ? "queue-front" : ""}`}
+                                    >
+                                        {item}
+                                        {idx === 0 && (
+                                            <div
+                                                style={{
+                                                    fontSize: "10px",
+                                                    marginTop: "5px",
+                                                }}
+                                            >
+                                                HEAD
+                                            </div>
+                                        )}
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                        <div className="info-box">{log}</div>
+                        <div className="controls">
+                            <input
+                                type="number"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                placeholder="Wert"
+                                onKeyPress={(e) => e.key === "Enter" && enqueue()}
+                            />
+                            <button
+                                onClick={enqueue}
+                                disabled={queue.length >= maxSize}
+                            >
+                                enq()
+                            </button>
+                            <button onClick={dequeue} disabled={queue.length === 0}>
+                                deq()
+                            </button>
+                            <button onClick={front} disabled={queue.length === 0}>
+                                front()
+                            </button>
+                            <button
+                                className="secondary"
+                                onClick={() => {
+                                    setQueue([]);
+                                    setLog("Queue zurückgesetzt");
+                                }}
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                );
+            };
+
+            // --- LIST COMPONENT ---
+            const ListVisualizer = () => {
+                const [list, setList] = useState([]);
+                const [inputValue, setInputValue] = useState("");
+                const [log, setLog] = useState("Liste ist leer");
+                const [isDoubly, setIsDoubly] = useState(false);
+
+                const addFront = () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    setList([val, ...list]);
+                    setLog(`Element ${val} vorne eingefügt`);
+                    setInputValue("");
+                };
+
+                const addBack = () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    setList([...list, val]);
+                    setLog(`Element ${val} hinten angefügt`);
+                    setInputValue("");
+                };
+
+                const removeFront = () => {
+                    if (list.length === 0) {
+                        setLog("Liste ist leer!");
+                        return;
+                    }
+                    const val = list[0];
+                    setList(list.slice(1));
+                    setLog(`Element ${val} vorne entfernt`);
+                };
+
+                const removeBack = () => {
+                    if (list.length === 0) {
+                        setLog("Liste ist leer!");
+                        return;
+                    }
+                    const val = list[list.length - 1];
+                    setList(list.slice(0, -1));
+                    setLog(`Element ${val} hinten entfernt`);
+                };
+
+                return (
+                    <div className="canvas-area">
+                        <h3>Verkettete Liste {isDoubly ? "(Doppelt)" : "(Einfach)"}</h3>
+                        <div className="controls" style={{ marginBottom: "10px" }}>
+                            <label
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "5px",
+                                }}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={isDoubly}
+                                    onChange={(e) => setIsDoubly(e.target.checked)}
+                                />
+                                Doppelt verkettet (prev + next)
+                            </label>
+                        </div>
+                        <div className="list-container">
+                            {list.length === 0 ? (
+                                <div style={{ color: "#64748b", padding: "20px" }}>
+                                    Liste ist leer
+                                </div>
+                            ) : (
+                                <>
+                                    {list.map((item, idx) => (
+                                        <React.Fragment key={idx}>
+                                            {isDoubly && idx > 0 && (
+                                                <span className="list-arrow">←→</span>
+                                            )}
+                                            {!isDoubly && idx > 0 && (
+                                                <span className="list-arrow">→</span>
+                                            )}
+                                            <div className="list-node">
+                                                {item}
+                                                {idx === 0 && (
+                                                    <div className="list-pointer">
+                                                        HEAD
+                                                    </div>
+                                                )}
+                                                {idx === list.length - 1 && (
+                                                    <div
+                                                        className="list-pointer"
+                                                        style={{ bottom: "-25px" }}
+                                                    >
+                                                        TAIL
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </React.Fragment>
+                                    ))}
+                                    <span className="list-arrow">→ null</span>
+                                </>
+                            )}
+                        </div>
+                        <div className="info-box">{log}</div>
+                        <div className="controls">
+                            <input
+                                type="number"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                placeholder="Wert"
+                            />
+                            <button onClick={addFront}>Vorne einfügen</button>
+                            <button onClick={addBack}>Hinten einfügen</button>
+                            <button onClick={removeFront} disabled={list.length === 0}>
+                                Vorne löschen
+                            </button>
+                            <button onClick={removeBack} disabled={list.length === 0}>
+                                Hinten löschen
+                            </button>
+                            <button
+                                className="secondary"
+                                onClick={() => {
+                                    setList([]);
+                                    setLog("Liste zurückgesetzt");
+                                }}
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                );
+            };
+
+            // --- HASHING CLOSED COMPONENT ---
+            const HashingClosedVisualizer = () => {
+                const [size, setSize] = useState(11);
+                const [table, setTable] = useState(Array(11).fill(null));
+                const [inputValue, setInputValue] = useState("");
+                const [log, setLog] = useState(
+                    "Bereit. Methode: Lineares Sondieren (Closed Hashing). h(k) = k % size",
+                );
+
+                const hash = (key) => key % size;
+
+                const insert = () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    const newTable = [...table];
+                    let idx = hash(val);
+                    let probes = 0;
+                    let startIdx = idx;
+                    let steps = [];
+
+                    while (
+                        newTable[idx] !== null &&
+                        newTable[idx] !== "G" &&
+                        probes < size
+                    ) {
+                        steps.push(
+                            `Index ${idx} belegt (${newTable[idx]}), versuche ${(idx + 1) % size}`,
+                        );
+                        idx = (idx + 1) % size;
+                        probes++;
+
+                        if (idx === startIdx) {
+                            setLog(`Fehler: Tabelle ist voll! Kein Platz für ${val}.`);
+                            return;
+                        }
+                    }
+
+                    if (probes >= size) {
+                        setLog(`Fehler: Tabelle ist voll! Kein Platz für ${val}.`);
+                        return;
+                    }
+
+                    newTable[idx] = val;
+                    setTable(newTable);
+
+                    const stepsLog = steps.length > 0 ? "\n" + steps.join("\n") : "";
+                    setLog(
+                        `Eingefügt: ${val} → h(${val}) = ${hash(val)} → Index ${idx} (${probes} Sondierungen)${stepsLog}`,
+                    );
+                    setInputValue("");
+                };
+
+                const remove = () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    const newTable = [...table];
+                    let idx = hash(val);
+                    let probes = 0;
+                    let startIdx = idx;
+
+                    while (newTable[idx] !== null && probes < size) {
+                        if (newTable[idx] === val) {
+                            newTable[idx] = "G"; // Marker für Gelöscht (Grave)
+                            setTable(newTable);
+                            setLog(
+                                `Gelöscht: ${val} bei Index ${idx} → Marker 'G' gesetzt (wichtig für Suchkette!)`,
+                            );
+                            setInputValue("");
+                            return;
+                        }
+                        idx = (idx + 1) % size;
+                        probes++;
+
+                        if (idx === startIdx) break;
+                    }
+
+                    setLog(`${val} nicht gefunden in der Tabelle`);
+                    setInputValue("");
+                };
+
+                const search = () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    let idx = hash(val);
+                    let probes = 0;
+                    let startIdx = idx;
+                    let steps = [];
+
+                    while (table[idx] !== null && probes < size) {
+                        steps.push(`Prüfe Index ${idx}: ${table[idx]}`);
+
+                        if (table[idx] === val) {
+                            setLog(
+                                `Gefunden: ${val} bei Index ${idx}\nSchritte:\n${steps.join("\n")}`,
+                            );
+                            return;
+                        }
+
+                        idx = (idx + 1) % size;
+                        probes++;
+
+                        if (idx === startIdx) break;
+                    }
+
+                    setLog(
+                        `${val} nicht gefunden. ${probes} Sondierungen.\nSchritte:\n${steps.join("\n")}`,
+                    );
+                };
+
+                const reset = () => {
+                    setTable(Array(size).fill(null));
+                    setLog("Tabelle zurückgesetzt");
+                };
+
+                return (
+                    <div className="canvas-area">
+                        <h3>Geschlossenes Hashing (Lineares Sondieren)</h3>
+                        <div
+                            style={{
+                                fontSize: "12px",
+                                color: "#94a3b8",
+                                marginBottom: "10px",
+                            }}
+                        >
+                            h(k) = k % {size} | 'G' = Gelöschter Eintrag (Grave-Marker)
+                        </div>
+                        <div className="hash-grid">
+                            {table.map((val, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`hash-cell ${
+                                        val !== null && val !== "G" ? "occupied" : ""
+                                    } ${val === "G" ? "deleted" : ""}`}
+                                >
+                                    <div className="hash-val">{val || "-"}</div>
+                                    <div className="hash-index">[{idx}]</div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="info-box" style={{ whiteSpace: "pre-line" }}>
+                            {log}
+                        </div>
+                        <div className="controls">
+                            <input
+                                type="number"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                placeholder="Wert"
+                            />
+                            <button onClick={insert}>Einfügen</button>
+                            <button onClick={search}>Suchen</button>
+                            <button className="danger" onClick={remove}>
+                                Löschen
+                            </button>
+                            <button className="secondary" onClick={reset}>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                );
+            };
+
+            // --- HASHING OPEN COMPONENT ---
+            const HashingOpenVisualizer = () => {
+                const [size] = useState(7);
+                const [table, setTable] = useState(
+                    Array(7)
+                        .fill(null)
+                        .map(() => []),
+                );
+                const [inputValue, setInputValue] = useState("");
+                const [log, setLog] = useState(
+                    "Bereit. Methode: Offenes Hashing (Chaining). h(k) = k % 7",
+                );
+
+                const hash = (key) => key % size;
+
+                const insert = () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    const idx = hash(val);
+                    const newTable = [...table];
+
+                    if (newTable[idx].includes(val)) {
+                        setLog(`${val} existiert bereits bei Index ${idx}`);
+                        return;
+                    }
+
+                    newTable[idx] = [...newTable[idx], val];
+                    setTable(newTable);
+
+                    const collision = newTable[idx].length > 1;
+                    setLog(
+                        `Eingefügt: ${val} → h(${val}) = ${idx}${collision ? " (Kollision! → Liste erweitert)" : ""}`,
+                    );
+                    setInputValue("");
+                };
+
+                const remove = () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    const idx = hash(val);
+                    const newTable = [...table];
+
+                    const filtered = newTable[idx].filter((x) => x !== val);
+                    if (filtered.length === newTable[idx].length) {
+                        setLog(`${val} nicht gefunden bei Index ${idx}`);
+                    } else {
+                        newTable[idx] = filtered;
+                        setTable(newTable);
+                        setLog(`Gelöscht: ${val} von Index ${idx}`);
+                    }
+                    setInputValue("");
+                };
+
+                const reset = () => {
+                    setTable(
+                        Array(size)
+                            .fill(null)
+                            .map(() => []),
+                    );
+                    setLog("Tabelle zurückgesetzt");
+                };
+
+                return (
+                    <div className="canvas-area">
+                        <h3>Offenes Hashing (Chaining mit Listen)</h3>
+                        <div
+                            style={{
+                                fontSize: "12px",
+                                color: "#94a3b8",
+                                marginBottom: "10px",
+                            }}
+                        >
+                            h(k) = k % {size} | Kollisionen werden in Listen (Buckets)
+                            gespeichert
+                        </div>
+                        <div className="hash-grid">
+                            {table.map((bucket, idx) => (
+                                <div
+                                    key={idx}
+                                    className="hash-cell"
+                                    style={{
+                                        flexDirection: "column",
+                                        height: "auto",
+                                        minHeight: "60px",
+                                    }}
+                                >
+                                    <div className="hash-index">[{idx}]</div>
+                                    {bucket.length === 0 ? (
+                                        <div
+                                            style={{
+                                                color: "#64748b",
+                                                fontSize: "10px",
+                                            }}
+                                        >
+                                            leer
+                                        </div>
+                                    ) : (
+                                        <div className="bucket-chain">
+                                            {bucket.map((val, i) => (
+                                                <div key={i} className="bucket-item">
+                                                    {val}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="info-box">{log}</div>
+                        <div className="controls">
+                            <input
+                                type="number"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                placeholder="Wert"
+                            />
+                            <button onClick={insert}>Einfügen</button>
+                            <button className="danger" onClick={remove}>
+                                Löschen
+                            </button>
+                            <button className="secondary" onClick={reset}>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                );
+            };
+
+            // --- TREE TRAVERSAL COMPONENT ---
+            const TreeTraversalVisualizer = () => {
+                const initialNodes = [
+                    { id: 42, x: 400, y: 50, left: 18, right: 77 },
+                    { id: 18, x: 250, y: 150, left: 5, right: 27 },
+                    { id: 77, x: 550, y: 150, left: 51, right: null },
+                    { id: 5, x: 180, y: 250, left: null, right: null },
+                    { id: 27, x: 320, y: 250, left: null, right: null },
+                    { id: 51, x: 480, y: 250, left: null, right: null },
+                ];
+
+                const [visited, setVisited] = useState([]);
+                const [current, setCurrent] = useState(null);
+                const [orderList, setOrderList] = useState([]);
+
+                const runTraversal = async (type) => {
+                    setVisited([]);
+                    setOrderList([]);
+
+                    const sequence = [];
+
+                    const preOrder = (id) => {
+                        if (!id) return;
+                        const node = initialNodes.find((n) => n.id === id);
+                        sequence.push(id);
+                        preOrder(node.left);
+                        preOrder(node.right);
+                    };
+
+                    const inOrder = (id) => {
+                        if (!id) return;
+                        const node = initialNodes.find((n) => n.id === id);
+                        inOrder(node.left);
+                        sequence.push(id);
+                        inOrder(node.right);
+                    };
+
+                    const postOrder = (id) => {
+                        if (!id) return;
+                        const node = initialNodes.find((n) => n.id === id);
+                        postOrder(node.left);
+                        postOrder(node.right);
+                        sequence.push(id);
+                    };
+
+                    if (type === "pre") preOrder(42);
+                    if (type === "in") inOrder(42);
+                    if (type === "post") postOrder(42);
+
+                    for (let i = 0; i < sequence.length; i++) {
+                        setCurrent(sequence[i]);
+                        await new Promise((r) => setTimeout(r, 800));
+                        setVisited((prev) => [...prev, sequence[i]]);
+                        setOrderList((prev) => [...prev, sequence[i]]);
+                    }
+                    setCurrent(null);
+                };
+
+                return (
+                    <div className="canvas-area">
+                        <h3>Binärbaum Traversierung</h3>
+                        <svg width="800" height="300">
+                            {initialNodes.map((node) => {
+                                const leftChild = initialNodes.find(
+                                    (n) => n.id === node.left,
+                                );
+                                const rightChild = initialNodes.find(
+                                    (n) => n.id === node.right,
+                                );
+                                return (
+                                    <g key={`links-${node.id}`}>
+                                        {leftChild && (
+                                            <line
+                                                x1={node.x}
+                                                y1={node.y}
+                                                x2={leftChild.x}
+                                                y2={leftChild.y}
+                                                className="tree-link"
+                                            />
+                                        )}
+                                        {rightChild && (
+                                            <line
+                                                x1={node.x}
+                                                y1={node.y}
+                                                x2={rightChild.x}
+                                                y2={rightChild.y}
+                                                className="tree-link"
+                                            />
+                                        )}
+                                    </g>
+                                );
+                            })}
+                            {initialNodes.map((node) => (
+                                <g
+                                    key={node.id}
+                                    className={`tree-node ${visited.includes(node.id) ? "visited" : ""} ${current === node.id ? "current" : ""}`}
+                                >
+                                    <circle cx={node.x} cy={node.y} r="20" />
+                                    <text x={node.x} y={node.y}>
+                                        {node.id}
+                                    </text>
+                                </g>
+                            ))}
+                        </svg>
+                        <div className="info-box">
+                            <div>Reihenfolge: [{orderList.join(", ")}]</div>
+                            <div
+                                style={{
+                                    marginTop: "5px",
+                                    fontSize: "12px",
+                                    color: "#94a3b8",
+                                }}
+                            >
+                                Preorder (V-L-R) | Inorder (L-V-R) | Postorder (L-R-V)
+                            </div>
+                        </div>
+                        <div className="controls">
+                            <button onClick={() => runTraversal("pre")}>
+                                Preorder
+                            </button>
+                            <button onClick={() => runTraversal("in")}>Inorder</button>
+                            <button onClick={() => runTraversal("post")}>
+                                Postorder
+                            </button>
+                            <button
+                                className="secondary"
+                                onClick={() => {
+                                    setVisited([]);
+                                    setOrderList([]);
+                                }}
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                );
+            };
+
+            // --- BST COMPONENT ---
+            const BSTVisualizer = () => {
+                const [nodes, setNodes] = useState([
+                    { id: 50, x: 400, y: 50, left: null, right: null },
+                ]);
+                const [inputValue, setInputValue] = useState("");
+                const [log, setLog] = useState("BST: Links < Wert < Rechts");
+                const [highlight, setHighlight] = useState(null);
+
+                const findNode = (id) => nodes.find((n) => n.id === id);
+
+                const recalculatePositions = (nodeList) => {
+                    if (nodeList.length === 0) return nodeList;
+
+                    const root = nodeList[0];
+                    const newNodes = [...nodeList];
+
+                    const layout = (id, x, y, offset) => {
+                        const node = newNodes.find((n) => n.id === id);
+                        if (!node) return;
+
+                        node.x = x;
+                        node.y = y;
+
+                        if (node.left)
+                            layout(node.left, x - offset, y + 100, offset / 2);
+                        if (node.right)
+                            layout(node.right, x + offset, y + 100, offset / 2);
+                    };
+
+                    layout(root.id, 400, 50, 150);
+                    return newNodes;
+                };
+
+                const insert = async () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    if (nodes.find((n) => n.id === val)) {
+                        setLog(`${val} existiert bereits`);
+                        return;
+                    }
+
+                    let newNodes = [...nodes];
+                    let current = newNodes[0];
+                    let path = [current.id];
+
+                    while (true) {
+                        setHighlight(current.id);
+                        await new Promise((r) => setTimeout(r, 500));
+
+                        if (val < current.id) {
+                            if (current.left === null) {
+                                const newNode = {
+                                    id: val,
+                                    x: 0,
+                                    y: 0,
+                                    left: null,
+                                    right: null,
+                                };
+                                current.left = val;
+                                newNodes.push(newNode);
+                                newNodes = recalculatePositions(newNodes);
+                                setNodes(newNodes);
+                                setLog(
+                                    `Eingefügt: ${val} links von ${current.id}\nPfad: ${path.join(" → ")} → ${val}`,
+                                );
+                                setHighlight(null);
+                                setInputValue("");
+                                return;
+                            }
+                            current = findNode(current.left);
+                            path.push(current.id);
+                        } else {
+                            if (current.right === null) {
+                                const newNode = {
+                                    id: val,
+                                    x: 0,
+                                    y: 0,
+                                    left: null,
+                                    right: null,
+                                };
+                                current.right = val;
+                                newNodes.push(newNode);
+                                newNodes = recalculatePositions(newNodes);
+                                setNodes(newNodes);
+                                setLog(
+                                    `Eingefügt: ${val} rechts von ${current.id}\nPfad: ${path.join(" → ")} → ${val}`,
+                                );
+                                setHighlight(null);
+                                setInputValue("");
+                                return;
+                            }
+                            current = findNode(current.right);
+                            path.push(current.id);
+                        }
+                    }
+                };
+
+                const search = async () => {
+                    const val = parseInt(inputValue);
+                    if (isNaN(val)) return;
+
+                    let current = nodes[0];
+                    let path = [];
+
+                    while (current) {
+                        path.push(current.id);
+                        setHighlight(current.id);
+                        await new Promise((r) => setTimeout(r, 500));
+
+                        if (current.id === val) {
+                            setLog(`Gefunden: ${val}\nPfad: ${path.join(" → ")}`);
+                            setHighlight(null);
+                            return;
+                        }
+
+                        if (val < current.id) {
+                            current = findNode(current.left);
+                        } else {
+                            current = findNode(current.right);
+                        }
+                    }
+
+                    setLog(`Nicht gefunden: ${val}\nPfad: ${path.join(" → ")}`);
+                    setHighlight(null);
+                };
+
+                const deleteNode = async (val) => {
+                    const findMin = (node) => {
+                        while (node.left) {
+                            const leftNode = nodes.find((n) => n.id === node.left);
+                            if (!leftNode) break;
+                            node = leftNode;
+                        }
+                        return node;
+                    };
+
+                    const removeById = (id) => {
+                        let newNodes = [...nodes];
+                        const toDelete = newNodes.find((n) => n.id === id);
+
+                        if (!toDelete) return newNodes;
+
+                        const parent = newNodes.find(
+                            (n) => n.left === id || n.right === id,
+                        );
+
+                        if (!toDelete.left && !toDelete.right) {
+                            if (parent) {
+                                if (parent.left === id) parent.left = null;
+                                else parent.right = null;
+                            }
+                            newNodes = newNodes.filter((n) => n.id !== id);
+                        } else if (!toDelete.left || !toDelete.right) {
+                            const child = toDelete.left || toDelete.right;
+                            if (parent) {
+                                if (parent.left === id) parent.left = child;
+                                else parent.right = child;
+                            } else {
+                                newNodes = newNodes.filter((n) => n.id !== id);
+                                const childNode = newNodes.find((n) => n.id === child);
+                                newNodes = [
+                                    childNode,
+                                    ...newNodes.filter((n) => n.id !== child),
+                                ];
+                            }
+                            newNodes = newNodes.filter((n) => n.id !== id);
+                        } else {
+                            const successor = findMin(
+                                newNodes.find((n) => n.id === toDelete.right),
+                            );
+                            const successorVal = successor.id;
+
+                            newNodes = removeById(successorVal);
+
+                            const node = newNodes.find((n) => n.id === id);
+                            if (node) {
+                                node.id = successorVal;
+                            }
+                        }
+
+                        return recalculatePositions(newNodes);
+                    };
+
+                    if (isNaN(val)) return;
+
+                    const node = nodes.find((n) => n.id === val);
+                    if (!node) {
+                        setLog(`${val} nicht im Baum gefunden`);
+                        return;
+                    }
+
+                    setHighlight(val);
+                    await new Promise((r) => setTimeout(r, 500));
+
+                    let message = `Gelöscht: ${val}`;
+                    if (!node.left && !node.right) {
+                        message += " (Blatt)";
+                    } else if (!node.left || !node.right) {
+                        message += " (Ein Kind)";
+                    } else {
+                        const successor = (() => {
+                            let current = nodes.find((n) => n.id === node.right);
+                            while (current.left) {
+                                current = nodes.find((n) => n.id === current.left);
+                            }
+                            return current;
+                        })();
+                        message += ` (Zwei Kinder → Inorder Successor: ${successor.id})`;
+                    }
+
+                    const newNodes = removeById(val);
+                    setNodes(newNodes);
+                    setLog(message);
+                    setHighlight(null);
+                };
+
+                const handleDelete = () => {
+                    const val = parseInt(inputValue);
+                    deleteNode(val);
+                    setInputValue("");
+                };
+
+                const reset = () => {
+                    setNodes([{ id: 50, x: 400, y: 50, left: null, right: null }]);
+                    setLog("BST zurückgesetzt");
+                };
+
+                return (
+                    <div className="canvas-area">
+                        <h3>Binärer Suchbaum (BST)</h3>
+                        <svg width="800" height="400">
+                            {nodes.map((node) => {
+                                const leftChild = nodes.find((n) => n.id === node.left);
+                                const rightChild = nodes.find(
+                                    (n) => n.id === node.right,
+                                );
+                                return (
+                                    <g key={`links-${node.id}`}>
+                                        {leftChild && (
+                                            <line
+                                                x1={node.x}
+                                                y1={node.y}
+                                                x2={leftChild.x}
+                                                y2={leftChild.y}
+                                                className="tree-link"
+                                            />
+                                        )}
+                                        {rightChild && (
+                                            <line
+                                                x1={node.x}
+                                                y1={node.y}
+                                                x2={rightChild.x}
+                                                y2={rightChild.y}
+                                                className="tree-link"
+                                            />
+                                        )}
+                                    </g>
+                                );
+                            })}
+                            {nodes.map((node) => (
+                                <g
+                                    key={node.id}
+                                    className={`tree-node ${highlight === node.id ? "highlight" : ""}`}
+                                >
+                                    <circle cx={node.x} cy={node.y} r="20" />
+                                    <text x={node.x} y={node.y}>
+                                        {node.id}
+                                    </text>
+                                </g>
+                            ))}
+                        </svg>
+                        <div className="info-box" style={{ whiteSpace: "pre-line" }}>
+                            {log}
+                        </div>
+                        <div className="controls">
+                            <input
+                                type="number"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                placeholder="Wert"
+                            />
+                            <button onClick={insert}>Einfügen</button>
+                            <button onClick={search}>Suchen</button>
+                            <button className="danger" onClick={handleDelete}>
+                                Löschen
+                            </button>
+                            <button className="secondary" onClick={reset}>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                );
+            };
+
+            // --- MAIN APP ---
+            const App = () => {
+                const [activeTab, setActiveTab] = useState("stack");
+
+                return (
+                    <div className="container">
+                        <h2>Test 2: Datenstrukturen - Komplette Visualisierung</h2>
+                        <div className="nav-tabs">
+                            <button
+                                className={`nav-btn ${activeTab === "stack" ? "active" : ""}`}
+                                onClick={() => setActiveTab("stack")}
+                            >
+                                Stack
+                            </button>
+                            <button
+                                className={`nav-btn ${activeTab === "queue" ? "active" : ""}`}
+                                onClick={() => setActiveTab("queue")}
+                            >
+                                Queue
+                            </button>
+                            <button
+                                className={`nav-btn ${activeTab === "list" ? "active" : ""}`}
+                                onClick={() => setActiveTab("list")}
+                            >
+                                Listen
+                            </button>
+                            <button
+                                className={`nav-btn ${activeTab === "hash-closed" ? "active" : ""}`}
+                                onClick={() => setActiveTab("hash-closed")}
+                            >
+                                Hash (Closed)
+                            </button>
+                            <button
+                                className={`nav-btn ${activeTab === "hash-open" ? "active" : ""}`}
+                                onClick={() => setActiveTab("hash-open")}
+                            >
+                                Hash (Open)
+                            </button>
+                            <button
+                                className={`nav-btn ${activeTab === "tree" ? "active" : ""}`}
+                                onClick={() => setActiveTab("tree")}
+                            >
+                                Traversierung
+                            </button>
+                            <button
+                                className={`nav-btn ${activeTab === "bst" ? "active" : ""}`}
+                                onClick={() => setActiveTab("bst")}
+                            >
+                                BST
+                            </button>
+                        </div>
+
+                        {activeTab === "stack" && <StackVisualizer />}
+                        {activeTab === "queue" && <QueueVisualizer />}
+                        {activeTab === "list" && <ListVisualizer />}
+                        {activeTab === "hash-closed" && <HashingClosedVisualizer />}
+                        {activeTab === "hash-open" && <HashingOpenVisualizer />}
+                        {activeTab === "tree" && <TreeTraversalVisualizer />}
+                        {activeTab === "bst" && <BSTVisualizer />}
+
+                        <div
+                            style={{
+                                marginTop: "20px",
+                                color: "#64748b",
+                                fontSize: "12px",
+                            }}
+                        >
+                            Komplette Test 2 Vorbereitung: Stack, Queue, Listen, Hashing
+                            (Open/Closed), Traversierung, BST
+                        </div>
+                    </div>
+                );
+            };
+
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render(<App />);
+        </script>
+    </body>
+</html>
