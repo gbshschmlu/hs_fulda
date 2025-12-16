@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Übungsblatt 7 - Suchbaum Visualisierung</title>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.production.min.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <style>
+            body {
+                font-family: "Segoe UI", sans-serif;
+                background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+                min-height: 100vh;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 15px;
+                padding: 30px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            }
+            h1 {
+                color: #56ab2f;
+                margin-bottom: 20px;
+            }
+            .controls {
+                margin-bottom: 20px;
+                padding: 20px;
+                background: #f0f9f0;
+                border-radius: 10px;
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            button {
+                padding: 10px 20px;
+                background: #56ab2f;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: transform 0.1s;
+            }
+            button:hover {
+                transform: scale(1.05);
+            }
+            button:disabled {
+                background: #ccc;
+                cursor: not-allowed;
+            }
+            .secondary-btn {
+                background: #6c757d;
+            }
+            input {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                width: 60px;
+            }
+
+            .tree-container {
+                min-height: 400px;
+                display: flex;
+                justify-content: center;
+                overflow-x: auto;
+                padding: 20px 0;
+            }
+
+            .node {
+                transition: all 0.5s ease;
+            }
+            .node circle {
+                fill: white;
+                stroke: #56ab2f;
+                stroke-width: 3px;
+                transition: all 0.3s;
+            }
+            .node text {
+                font-family: monospace;
+                font-size: 14px;
+                font-weight: bold;
+                text-anchor: middle;
+                dominant-baseline: middle;
+                fill: #333;
+            }
+            .node.highlight circle {
+                fill: #ffd700;
+                stroke: #ff9800;
+                transform: scale(1.1);
+            }
+            .node.candidate circle {
+                fill: #b2dfdb;
+                stroke: #009688;
+            }
+            .node.result circle {
+                fill: #4caf50;
+                stroke: #2e7d32;
+                stroke-width: 4px;
+            }
+
+            .link {
+                fill: none;
+                stroke: #ccc;
+                stroke-width: 2px;
+                transition: all 0.5s;
+            }
+
+            .log-box {
+                margin-top: 20px;
+                padding: 15px;
+                background: #333;
+                color: #0f0;
+                font-family: monospace;
+                border-radius: 5px;
+                height: 100px;
+                overflow-y: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            // Helper Classes
+            class Node {
+                constructor(val) {
+                    this.val = val;
+                    this.left = null;
+                    this.right = null;
+                    this.x = 0;
+                    this.y = 0;
+                }
+            }
+
+            const App = () => {
+                const [root, setRoot] = React.useState(null);
+                const [inputVal, setInputVal] = React.useState(30);
+                const [searchVal, setSearchVal] = React.useState(25);
+                const [log, setLog] = React.useState("Baum ist leer.");
+                const [highlightedNode, setHighlightedNode] = React.useState(null);
+                const [candidateNode, setCandidateNode] = React.useState(null);
+                const [resultNode, setResultNode] = React.useState(null);
+
+                // Insert Logic
+                const insert = (val) => {
+                    const newNode = new Node(val);
+                    if (!root) {
+                        setRoot(newNode);
+                        addToLog(`Eingefügt: ${val} (Wurzel)`);
+                        return;
+                    }
+                    let current = root;
+                    while (true) {
+                        if (val < current.val) {
+                            if (!current.left) {
+                                current.left = newNode;
+                                break;
+                            }
+                            current = current.left;
+                        } else if (val > current.val) {
+                            if (!current.right) {
+                                current.right = newNode;
+                                break;
+                            }
+                            current = current.right;
+                        } else {
+                            addToLog(`Wert ${val} existiert bereits.`);
+                            return;
+                        }
+                    }
+                    addToLog(`Eingefügt: ${val}`);
+                    // Force update
+                    setRoot({ ...root });
+                };
+
+                const loadExercise = () => {
+                    // 30, 40, 24, 58, 48, 26, 11, 13
+                    const vals = [30, 40, 24, 58, 48, 26, 11, 13];
+                    let newRoot = null;
+
+                    // Helper to recreate tree strictly
+                    const add = (r, v) => {
+                        if (!r) return new Node(v);
+                        if (v < r.val) r.left = add(r.left, v);
+                        else r.right = add(r.right, v);
+                        return r;
+                    };
+
+                    vals.forEach((v) => {
+                        newRoot = add(newRoot, v);
+                    });
+                    setRoot(newRoot);
+                    addToLog("Aufgabe 7.1 geladen.");
+                    resetHighlights();
+                };
+
+                // Search Task 7.2 Logic with Animation
+                const findMinGe = async (k) => {
+                    resetHighlights();
+                    if (!root) {
+                        addToLog("Baum ist leer.");
+                        return;
+                    }
+
+                    addToLog(`Suche kleinsten Wert >= ${k}...`);
+                    let current = root;
+                    let candidate = null;
+
+                    while (current) {
+                        setHighlightedNode(current.val);
+                        await new Promise((r) => setTimeout(r, 800));
+
+                        if (current.val === k) {
+                            addToLog(`${current.val} == ${k}. Exakter Treffer!`);
+                            setResultNode(current.val);
+                            setHighlightedNode(null);
+                            setCandidateNode(null);
+                            return;
+                        } else if (current.val > k) {
+                            addToLog(
+                                `${current.val} > ${k}. Kandidat! Suche links weiter...`,
+                            );
+                            candidate = current.val;
+                            setCandidateNode(candidate);
+                            current = current.left;
+                        } else {
+                            addToLog(
+                                `${current.val} < ${k}. Zu klein. Suche rechts weiter...`,
+                            );
+                            current = current.right;
+                        }
+                    }
+
+                    setHighlightedNode(null);
+                    if (candidate !== null) {
+                        addToLog(`Fertig. Ergebnis: ${candidate}`);
+                        setResultNode(candidate);
+                    } else {
+                        addToLog(`Kein Wert >= ${k} gefunden.`);
+                    }
+                };
+
+                const resetHighlights = () => {
+                    setHighlightedNode(null);
+                    setCandidateNode(null);
+                    setResultNode(null);
+                };
+
+                const addToLog = (msg) => {
+                    setLog((prev) => msg + "\n" + prev);
+                };
+
+                // Calculate SVG coordinates
+                const renderTree = () => {
+                    if (!root) return null;
+
+                    const nodes = [];
+                    const links = [];
+
+                    // Assign coordinates (simple level width approach)
+                    const traverse = (node, level, pos) => {
+                        if (!node) return;
+                        // width decreases with depth
+                        const width = 800 / Math.pow(2, level + 1);
+                        node.x = pos;
+                        node.y = level * 60 + 40;
+
+                        if (node.left) {
+                            links.push({
+                                x1: node.x,
+                                y1: node.y,
+                                x2: pos - width / 2,
+                                y2: (level + 1) * 60 + 40,
+                            });
+                            traverse(node.left, level + 1, pos - width / 2);
+                        }
+                        if (node.right) {
+                            links.push({
+                                x1: node.x,
+                                y1: node.y,
+                                x2: pos + width / 2,
+                                y2: (level + 1) * 60 + 40,
+                            });
+                            traverse(node.right, level + 1, pos + width / 2);
+                        }
+                        nodes.push(node);
+                    };
+
+                    traverse(root, 0, 500); // Start center
+
+                    return (
+                        <svg width="1000" height="500" viewBox="0 0 1000 500">
+                            {links.map((l, i) => (
+                                <line
+                                    key={i}
+                                    x1={l.x1}
+                                    y1={l.y1}
+                                    x2={l.x2}
+                                    y2={l.y2}
+                                    className="link"
+                                />
+                            ))}
+                            {nodes.map((n, i) => (
+                                <g
+                                    key={i}
+                                    className={`node ${highlightedNode === n.val ? "highlight" : ""} ${candidateNode === n.val ? "candidate" : ""} ${resultNode === n.val ? "result" : ""}`}
+                                    transform={`translate(${n.x},${n.y})`}
+                                >
+                                    <circle r="20" />
+                                    <text dy="1">{n.val}</text>
+                                </g>
+                            ))}
+                        </svg>
+                    );
+                };
+
+                return (
+                    <div className="container">
+                        <h1>Aufgabe 7: Binäre Suchbäume</h1>
+
+                        <div className="controls">
+                            <div style={{ display: "flex", gap: "5px" }}>
+                                <input
+                                    type="number"
+                                    value={inputVal}
+                                    onChange={(e) =>
+                                        setInputVal(parseInt(e.target.value))
+                                    }
+                                />
+                                <button onClick={() => insert(inputVal)}>
+                                    Einfügen
+                                </button>
+                            </div>
+                            <button className="secondary-btn" onClick={loadExercise}>
+                                Aufgabe 7.1 laden
+                            </button>
+                            <button
+                                className="secondary-btn"
+                                onClick={() => {
+                                    setRoot(null);
+                                    setLog("Baum geleert.");
+                                }}
+                            >
+                                Reset
+                            </button>
+                        </div>
+
+                        <div className="controls" style={{ background: "#e3f2fd" }}>
+                            <h3>Aufgabe 7.2: Finde Min &ge; k</h3>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    gap: "5px",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <label>Suche k=</label>
+                                <input
+                                    type="number"
+                                    value={searchVal}
+                                    onChange={(e) =>
+                                        setSearchVal(parseInt(e.target.value))
+                                    }
+                                />
+                                <button onClick={() => findMinGe(searchVal)}>
+                                    Suchen
+                                </button>
+                            </div>
+                            <div
+                                style={{
+                                    fontSize: "0.9em",
+                                    marginTop: "10px",
+                                    color: "#666",
+                                }}
+                            >
+                                <span style={{ color: "#ff9800" }}>● Aktuell</span>{" "}
+                                &nbsp;
+                                <span style={{ color: "#009688" }}>
+                                    ● Kandidat
+                                </span>{" "}
+                                &nbsp;
+                                <span style={{ color: "#4caf50" }}>● Ergebnis</span>
+                            </div>
+                        </div>
+
+                        <div className="tree-container">{renderTree()}</div>
+
+                        <div className="log-box">
+                            <pre>{log}</pre>
+                        </div>
+                    </div>
+                );
+            };
+
+            ReactDOM.render(<App />, document.getElementById("root"));
+        </script>
+    </body>
+</html>
