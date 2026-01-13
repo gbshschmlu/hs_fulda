@@ -115,3 +115,5 @@ Die Bewertung erfolgt unabhängig von der fachlichen Qualität der Aussagen (sof
     *   Reine **Rechtschreib- und Grammatikprüfung**.
     *   Reine **Formulierungshilfen** (z. B. Umformulieren eigener Sätze zur besseren Lesbarkeit).
 *   **Verantwortung:** Sie tragen die volle Verantwortung für die Richtigkeit aller Inhalte. Seien Sie besonders vorsichtig bei Literaturrecherchen mit LLMs (Halluzinationsgefahr).
+
+> Claude Opus, 4.5
