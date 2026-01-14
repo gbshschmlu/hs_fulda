@@ -10,6 +10,10 @@
   - Entscheidung für Desktop-App (Tauri) statt nur Web (Offline-Fähigkeit, Dateisystem-Zugriff)
 - Fazit: Ausblick auf die Testphase
 
+### TODO:
+
+Quellenseite am Ende (Wie Manu)
+
 ---
 
 ## Hausarbeit
