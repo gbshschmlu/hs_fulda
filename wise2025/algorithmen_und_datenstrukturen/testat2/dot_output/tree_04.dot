@@ -5,18 +5,22 @@ digraph G {
 		fontname=Helvetica, fontweight=bold, fontcolor=white,
 		fontsize=24, fixedsize=true];
 
-	18
-	[fillcolor=red];
+	n0 [label="31"];
+	n1 [label="15"];
+	nil0 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	nil1 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	n2 [label="37"];
+	nil2 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	n3 [label="49", fillcolor=red];
+	nil3 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	nil4 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
 
-	nil0, nil1, nil2, nil3, nil4
-	[label="NIL", shape=record, width=.4, height=.25, fontsize=16];
-
-	30 -> 0;
-	0 -> nil0;
-	0 -> 18;
-	18 -> nil1;
-	18 -> nil2;
-	30 -> 33;
-	33 -> nil3;
-	33 -> nil4;
+	n1 -> nil0;
+	n1 -> nil1;
+	n0 -> n1;
+	n2 -> nil2;
+	n3 -> nil3;
+	n3 -> nil4;
+	n2 -> n3;
+	n0 -> n2;
 }

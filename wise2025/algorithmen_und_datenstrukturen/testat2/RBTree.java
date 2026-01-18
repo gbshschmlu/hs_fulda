@@ -253,7 +253,6 @@ public class RBTree<T extends Comparable<T>> {
     public void printDOT(String filename) {
         StringBuilder sb = new StringBuilder();
 
-        // Header
         sb.append("// Red Black Tree\n");
         sb.append("digraph G {\n");
         sb.append("\tgraph [ratio=.48];\n");
@@ -262,26 +261,18 @@ public class RBTree<T extends Comparable<T>> {
         sb.append("\t\tfontsize=24, fixedsize=true];\n\n");
 
         if (root != null) {
-            // Sammle alle Knoten nach Farbe
-            List<String> redNodes = new ArrayList<>();
-            List<String> blackNodes = new ArrayList<>();
-            List<String> nilNodes = new ArrayList<>();
+            List<String> nodeDefinitions = new ArrayList<>();
             List<String> edges = new ArrayList<>();
+            int[] nodeCounter = {0};
             int[] nilCounter = {0};
 
-            collectNodes(root, redNodes, blackNodes, nilNodes, edges, nilCounter);
+            collectNodes(root, nodeDefinitions, edges, nodeCounter, nilCounter);
 
-            // Rote Knoten definieren
-            if (!redNodes.isEmpty()) {
-                sb.append("\t").append(String.join(", ", redNodes));
-                sb.append("\n\t[fillcolor=red];\n\n");
+            // Knoten-Definitionen ausgeben
+            for (String nodeDef : nodeDefinitions) {
+                sb.append("\t").append(nodeDef).append("\n");
             }
-
-            // NIL-Knoten definieren
-            if (!nilNodes.isEmpty()) {
-                sb.append("\t").append(String.join(", ", nilNodes));
-                sb.append("\n\t[label=\"NIL\", shape=record, width=.4, height=.25, fontsize=16];\n\n");
-            }
+            sb.append("\n");
 
             // Kanten ausgeben
             for (String edge : edges) {
@@ -291,7 +282,6 @@ public class RBTree<T extends Comparable<T>> {
 
         sb.append("}\n");
 
-        // In Datei schreiben
         try (FileWriter writer = new FileWriter(filename)) {
             writer.write(sb.toString());
         } catch (IOException e) {
@@ -300,42 +290,42 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * Hilfsmethode zum rekursiven Sammeln der Knoten und Kanten für die DOT-Ausgabe.
+     * Hilfsmethode zum rekursiven Sammeln der Knoten und Kanten für die DOT-Ausgab mit eindeutiger ID.
      */
-    private void collectNodes(Node node, List<String> redNodes, List<String> blackNodes,
-                              List<String> nilNodes, List<String> edges, int[] nilCounter) {
+    private String collectNodes(Node node, List<String> nodeDefinitions,
+                                List<String> edges, int[] nodeCounter, int[] nilCounter) {
         if (node == null) {
-            return;
+            return null;
         }
 
-        String nodeLabel = node.key.toString();
+        // Eindeutige ID für diesen Knoten
+        String nodeId = "n" + (nodeCounter[0]++);
+        String colorAttr = (node.color == RED) ? ", fillcolor=red" : "";
 
-        // Knoten nach Farbe kategorisieren
-        if (node.color == RED) {
-            redNodes.add(nodeLabel);
-        } else {
-            blackNodes.add(nodeLabel);
-        }
+        // Knoten mit Label (Wert) und Farbe definieren
+        nodeDefinitions.add(nodeId + " [label=\"" + node.key.toString() + "\"" + colorAttr + "];");
 
-        // Linkes Kind verarbeiten
+        // Linkes Kind
         if (node.left != null) {
-            edges.add(nodeLabel + " -> " + node.left.key.toString());
-            collectNodes(node.left, redNodes, blackNodes, nilNodes, edges, nilCounter);
+            String leftId = collectNodes(node.left, nodeDefinitions, edges, nodeCounter, nilCounter);
+            edges.add(nodeId + " -> " + leftId);
         } else {
-            String nilName = "nil" + (nilCounter[0]++);
-            nilNodes.add(nilName);
-            edges.add(nodeLabel + " -> " + nilName);
+            String nilId = "nil" + (nilCounter[0]++);
+            nodeDefinitions.add(nilId + " [label=\"NIL\", shape=record, width=.4, height=.25, fontsize=16];");
+            edges.add(nodeId + " -> " + nilId);
         }
 
-        // Rechtes Kind verarbeiten
+        // Rechtes Kind
         if (node.right != null) {
-            edges.add(nodeLabel + " -> " + node.right.key.toString());
-            collectNodes(node.right, redNodes, blackNodes, nilNodes, edges, nilCounter);
+            String rightId = collectNodes(node.right, nodeDefinitions, edges, nodeCounter, nilCounter);
+            edges.add(nodeId + " -> " + rightId);
         } else {
-            String nilName = "nil" + (nilCounter[0]++);
-            nilNodes.add(nilName);
-            edges.add(nodeLabel + " -> " + nilName);
+            String nilId = "nil" + (nilCounter[0]++);
+            nodeDefinitions.add(nilId + " [label=\"NIL\", shape=record, width=.4, height=.25, fontsize=16];");
+            edges.add(nodeId + " -> " + nilId);
         }
+
+        return nodeId;
     }
 
     /**

@@ -5,34 +5,54 @@ digraph G {
 		fontname=Helvetica, fontweight=bold, fontcolor=white,
 		fontsize=24, fixedsize=true];
 
-	1, 36, 42, 58
-	[fillcolor=red];
+	n0 [label="37"];
+	n1 [label="31"];
+	n2 [label="15"];
+	n3 [label="6", fillcolor=red];
+	nil0 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	nil1 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	nil2 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	n4 [label="35"];
+	nil3 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	nil4 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	n5 [label="49"];
+	n6 [label="47"];
+	n7 [label="37", fillcolor=red];
+	nil5 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	nil6 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	nil7 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	n8 [label="77", fillcolor=red];
+	n9 [label="61"];
+	nil8 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	nil9 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	n10 [label="84"];
+	nil10 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	n11 [label="89", fillcolor=red];
+	nil11 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+	nil12 [label="NIL", shape=record, width=.4, height=.25, fontsize=16];
 
-	nil0, nil1, nil2, nil3, nil4, nil5, nil6, nil7, nil8, nil9, nil10, nil11, nil12
-	[label="NIL", shape=record, width=.4, height=.25, fontsize=16];
-
-	30 -> 12;
-	12 -> 0;
-	0 -> nil0;
-	0 -> 1;
-	1 -> nil1;
-	1 -> nil2;
-	12 -> 18;
-	18 -> nil3;
-	18 -> nil4;
-	30 -> 50;
-	50 -> 36;
-	36 -> 33;
-	33 -> nil5;
-	33 -> nil6;
-	36 -> 41;
-	41 -> nil7;
-	41 -> 42;
-	42 -> nil8;
-	42 -> nil9;
-	50 -> 51;
-	51 -> nil10;
-	51 -> 58;
-	58 -> nil11;
-	58 -> nil12;
+	n3 -> nil0;
+	n3 -> nil1;
+	n2 -> n3;
+	n2 -> nil2;
+	n1 -> n2;
+	n4 -> nil3;
+	n4 -> nil4;
+	n1 -> n4;
+	n0 -> n1;
+	n7 -> nil5;
+	n7 -> nil6;
+	n6 -> n7;
+	n6 -> nil7;
+	n5 -> n6;
+	n9 -> nil8;
+	n9 -> nil9;
+	n8 -> n9;
+	n10 -> nil10;
+	n11 -> nil11;
+	n11 -> nil12;
+	n10 -> n11;
+	n8 -> n10;
+	n5 -> n8;
+	n0 -> n5;
 }
