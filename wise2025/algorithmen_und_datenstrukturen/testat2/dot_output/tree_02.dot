@@ -1,0 +1,18 @@
+// Red Black Tree
+digraph G {
+	graph [ratio=.48];
+	node [style=filled, color=black, shape=circle, width=.6
+		fontname=Helvetica, fontweight=bold, fontcolor=white,
+		fontsize=24, fixedsize=true];
+
+	33
+	[fillcolor=red];
+
+	nil0, nil1, nil2
+	[label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+
+	30 -> nil0;
+	30 -> 33;
+	33 -> nil1;
+	33 -> nil2;
+}

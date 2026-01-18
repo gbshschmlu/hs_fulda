@@ -1,0 +1,42 @@
+// Red Black Tree
+digraph G {
+	graph [ratio=.48];
+	node [style=filled, color=black, shape=circle, width=.6
+		fontname=Helvetica, fontweight=bold, fontcolor=white,
+		fontsize=24, fixedsize=true];
+
+	0, 3, 36, 42, 51, 80
+	[fillcolor=red];
+
+	nil0, nil1, nil2, nil3, nil4, nil5, nil6, nil7, nil8, nil9, nil10, nil11, nil12, nil13, nil14
+	[label="NIL", shape=record, width=.4, height=.25, fontsize=16];
+
+	30 -> 12;
+	12 -> 1;
+	1 -> 0;
+	0 -> nil0;
+	0 -> nil1;
+	1 -> 3;
+	3 -> nil2;
+	3 -> nil3;
+	12 -> 18;
+	18 -> nil4;
+	18 -> nil5;
+	30 -> 50;
+	50 -> 36;
+	36 -> 33;
+	33 -> nil6;
+	33 -> nil7;
+	36 -> 41;
+	41 -> nil8;
+	41 -> 42;
+	42 -> nil9;
+	42 -> nil10;
+	50 -> 58;
+	58 -> 51;
+	51 -> nil11;
+	51 -> nil12;
+	58 -> 80;
+	80 -> nil13;
+	80 -> nil14;
+}
