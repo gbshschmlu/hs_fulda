@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Übungsblatt 9 - Graphen Visualisierung</title>
+    <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #7f8c8d;
+            border-bottom: 3px solid transparent;
+        }
+        .tab.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+        .viz-area {
+            height: 500px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            position: relative;
+            background: #fafafa;
+            overflow: hidden;
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        button {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .log {
+            margin-top: 20px;
+            padding: 15px;
+            background: #2c3e50;
+            color: #2ecc71;
+            font-family: monospace;
+            border-radius: 5px;
+            height: 150px;
+            overflow-y: auto;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        .node circle {
+            fill: white;
+            stroke: #34495e;
+            stroke-width: 2;
+            transition: all 0.3s;
+        }
+        .node text {
+            font-family: sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            user-select: none;
+        }
+        .edge {
+            stroke: #bdc3c7;
+            stroke-width: 2;
+            transition: all 0.3s;
+        }
+        .edge-weight {
+            fill: #e74c3c;
+            font-size: 12px;
+            font-weight: bold;
+            background: white;
+        }
+        /* States */
+        .node.visited circle {
+            fill: #3498db;
+            stroke: #2980b9;
+            fill-opacity: 0.3;
+        }
+        .node.active circle {
+            fill: #f1c40f;
+            stroke: #f39c12;
+            transform: scale(1.1);
+        }
+        .edge.mst {
+            stroke: #2ecc71;
+            stroke-width: 4;
+        }
+        .edge.visited {
+            stroke: #3498db;
+            stroke-width: 3;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+    // Graph Data for 9.6
+    const nodesMST = [
+        { id: "A", x: 100, y: 200 },
+        { id: "B", x: 250, y: 100 },
+        { id: "C", x: 250, y: 200 },
+        { id: "D", x: 400, y: 200 },
+        { id: "E", x: 250, y: 350 },
+        { id: "F", x: 550, y: 350 },
+        { id: "G", x: 400, y: 350 },
+    ];
+
+    const edgesMST = [
+        { u: "A", v: "B", w: 2 },
+        { u: "A", v: "C", w: 7 },
+        { u: "A", v: "E", w: 8 },
+        { u: "B", v: "C", w: 3 },
+        { u: "B", v: "D", w: 4 },
+        { u: "C", v: "D", w: 1 },
+        { u: "C", v: "E", w: 5 },
+        { u: "D", v: "F", w: 6 },
+        { u: "D", v: "G", w: 10 },
+        { u: "E", v: "G", w: 9 },
+        { u: "G", v: "F", w: 0 },
+    ];
+
+    // Graph Data for 9.1
+    const nodes91 = [
+        { id: "A", x: 100, y: 100 },
+        { id: "B", x: 300, y: 100 },
+        { id: "C", x: 300, y: 300 },
+        { id: "D", x: 500, y: 300 },
+        { id: "E", x: 500, y: 100 },
+        { id: "F", x: 100, y: 300 },
+    ];
+    const edges91 = [
+        { u: "A", v: "B", w: 5 }, { u: "A", v: "F", w: 3 },
+        { u: "B", v: "C", w: 8 },
+        { u: "C", v: "D", w: 12 }, { u: "C", v: "E", w: 30 },
+        { u: "D", v: "E", w: 15 },
+        { u: "E", v: "F", w: 0 },
+        { u: "F", v: "B", w: 1 }, { u: "F", v: "C", w: 2 }, { u: "F", v: "D", w: 30 }
+    ];
+
+    const App = () => {
+        const [activeTab, setActiveTab] = React.useState("MST");
+        const [mstEdges, setMstEdges] = React.useState([]);
+        const [activeNode, setActiveNode] = React.useState(null);
+        const [log, setLog] = React.useState([]);
+        const [step, setStep] = React.useState(0);
+        const [algorithm, setAlgorithm] = React.useState(null); // 'PRIM_A', 'PRIM_E', 'KRUSKAL'
+
+        const addLog = (msg) => setLog((prev) => [...prev, msg]);
+
+        const reset = () => {
+            setMstEdges([]);
+            setActiveNode(null);
+            setLog([]);
+            setStep(0);
+            setAlgorithm(null);
+        };
+
+        // Prim Logic Step-by-Step
+        const runPrimStep = (startNode) => {
+            const visited = new Set();
+            const mst = [];
+            const pq = []; // Edge list
+
+            // Pre-calculate full sequence for simplicity in this visualization
+            // A proper implementation would maintain state, but for 7 nodes, re-calc is fine
+            visited.add(startNode);
+
+            // Helpers
+            const getEdges = (n) => edgesMST.filter(e => e.u === n || e.v === n);
+            const other = (e, n) => e.u === n ? e.v : e.u;
+
+            // Simulation of steps
+            const steps = [];
+            steps.push({ type: 'start', node: startNode, msg: `Start bei ${startNode}` });
+
+            let currentVisited = [startNode];
+
+            for(let i=0; i<nodesMST.length-1; i++) {
+                // Find min edge from currentVisited to unvisited
+                let minEdge = null;
+                let minW = Infinity;
+
+                edgesMST.forEach(e => {
+                    const uIn = currentVisited.includes(e.u);
+                    const vIn = currentVisited.includes(e.v);
+                    if (uIn !== vIn) { // XOR: exactly one is visited
+                        if (e.w < minW) {
+                            minW = e.w;
+                            minEdge = e;
+                        }
+                    }
+                });
+
+                if (minEdge) {
+                    const newNode = currentVisited.includes(minEdge.u) ? minEdge.v : minEdge.u;
+                    currentVisited.push(newNode);
+                    steps.push({
+                        type: 'edge',
+                        edge: minEdge,
+                        node: newNode,
+                        msg: `Wähle Kante ${minEdge.u}-${minEdge.v} (${minEdge.w})`
+                    });
+                }
+            }
+            return steps;
+        };
+
+        const runKruskalStep = () => {
+            const sortedEdges = [...edgesMST].sort((a,b) => a.w - b.w);
+            const steps = [];
+            const sets = {};
+            nodesMST.forEach(n => sets[n.id] = n.id);
+
+            const find = (i) => {
+                if (sets[i] !== i) sets[i] = find(sets[i]);
+                return sets[i];
+            };
+            const union = (i, j) => {
+                const rootI = find(i);
+                const rootJ = find(j);
+                if (rootI !== rootJ) sets[rootI] = rootJ;
+            };
+
+            sortedEdges.forEach(e => {
+                if (find(e.u) !== find(e.v)) {
+                    union(e.u, e.v);
+                    steps.push({
+                        type: 'edge',
+                        edge: e,
+                        msg: `Wähle Kante ${e.u}-${e.v} (${e.w})`
+                    });
+                } else {
+                    steps.push({
+                        type: 'skip',
+                        msg: `Überspringe ${e.u}-${e.v} (${e.w}) - Zyklus!`
+                    });
+                }
+            });
+            return steps;
+        };
+
+        const handleNextStep = () => {
+            let steps = [];
+            if (algorithm === 'PRIM_A') steps = runPrimStep('A');
+            else if (algorithm === 'PRIM_E') steps = runPrimStep('E');
+            else if (algorithm === 'KRUSKAL') steps = runKruskalStep();
+            else return;
+
+            if (step < steps.length) {
+                const currentS = steps[step];
+                addLog(currentS.msg);
+                if (currentS.type === 'edge') {
+                    setMstEdges(prev => [...prev, currentS.edge]);
+                    if (currentS.node) setActiveNode(currentS.node);
+                } else if (currentS.type === 'start') {
+                    setActiveNode(currentS.node);
+                }
+                setStep(step + 1);
+            } else {
+                addLog("Algorithmus beendet.");
+            }
+        };
+
+        const startAlgo = (type) => {
+            reset();
+            setAlgorithm(type);
+            addLog(`Starte ${type}...`);
+        };
+
+        // Rendering Helpers
+        const getNode = (id, list) => list.find(n => n.id === id);
+
+        const renderGraph = (nodes, edges, directed) => (
+            <svg>
+                <defs>
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="20" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#bdc3c7" />
+                    </marker>
+                </defs>
+                {edges.map((e, i) => {
+                    const u = getNode(e.u, nodes);
+                    const v = getNode(e.v, nodes);
+                    const isMst = mstEdges.includes(e);
+                    return (
+                        <g key={i}>
+                            <line
+                                x1={u.x} y1={u.y} x2={v.x} y2={v.y}
+                                className={`edge ${isMst ? 'mst' : ''}`}
+                                markerEnd={directed ? "url(#arrow)" : ""}
+                            />
+                            <text x={(u.x+v.x)/2} y={(u.y+v.y)/2 - 5} className="edge-weight">
+                                {e.w}
+                            </text>
+                        </g>
+                    );
+                })}
+                {nodes.map(n => (
+                    <g key={n.id} className={`node ${activeNode === n.id ? 'active' : ''}`} transform={`translate(${n.x},${n.y})`}>
+                        <circle r="20" />
+                        <text dy="1">{n.id}</text>
+                    </g>
+                ))}
+            </svg>
+        );
+
+        return (
+            <div className="container">
+                <h1>Übungsblatt 9 - Graphen</h1>
+                <div className="tabs">
+                    <div className={`tab ${activeTab === 'MST' ? 'active' : ''}`} onClick={() => {setActiveTab('MST'); reset();}}>Aufgabe 9.6 (MST)</div>
+                    <div className={`tab ${activeTab === 'MATRIX' ? 'active' : ''}`} onClick={() => {setActiveTab('MATRIX'); reset();}}>Aufgabe 9.1 (Matrix)</div>
+                </div>
+
+                <div className="viz-area">
+                    {activeTab === 'MST' && renderGraph(nodesMST, edgesMST, false)}
+                    {activeTab === 'MATRIX' && renderGraph(nodes91, edges91, true)}
+                </div>
+
+                {activeTab === 'MST' && (
+                    <div className="controls">
+                        <button onClick={() => startAlgo('PRIM_A')}>Start Prim (A)</button>
+                        <button onClick={() => startAlgo('PRIM_E')}>Start Prim (E)</button>
+                        <button onClick={() => startAlgo('KRUSKAL')}>Start Kruskal</button>
+                        <button onClick={handleNextStep} disabled={!algorithm}>Weiter</button>
+                        <button onClick={reset}>Reset</button>
+                    </div>
+                )}
+
+                <div className="log">
+                    {log.map((l, i) => <div key={i}>{l}</div>)}
+                </div>
+            </div>
+        );
+    };
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+</script>
+</body>
+</html>
