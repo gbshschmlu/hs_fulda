@@ -6,6 +6,7 @@ variables:
     documentclass: article
     papersize: a4
     fontsize: 11pt
+    lang: de-DE
     geometry:
         - margin=2.5cm
         - top=3cm
@@ -13,7 +14,8 @@ variables:
     mainfont: Arial
     monofont: Menlo
     colorlinks: true
-    linkcolor: blue
+    linkcolor: grenzebachred
+    urlcolor: grenzebachred
     author: "Luca Michael Schmidt"
     institute: "Grenzebach BSH GmbH | HS Fulda"
     header-includes: |
@@ -27,6 +29,24 @@ variables:
         \usepackage{fancyvrb}
         \usepackage{fvextra}
         \usepackage{hyperref}
+        \usepackage{needspace}
+        
+        % Vermeide unschöne Seitenumbrüche
+        \widowpenalty=10000
+        \clubpenalty=10000
+        
+        % Versuche Überschriften mit nachfolgendem Inhalt zusammenzuhalten
+        \let\oldsubsection\subsection
+        \renewcommand{\subsection}[1]{%
+          \needspace{5\baselineskip}%
+          \oldsubsection{#1}%
+        }
+        
+        \let\oldsubsubsection\subsubsection
+        \renewcommand{\subsubsection}[1]{%
+          \needspace{5\baselineskip}%
+          \oldsubsubsection{#1}%
+        }
 
         \definecolor{grenzebachred}{RGB}{237, 27, 36}
         \definecolor{grenzebachblack}{RGB}{0, 0, 0}
@@ -38,6 +58,7 @@ variables:
         \setlength{\arrayrulewidth}{0.5pt}
         \arrayrulecolor{grenzebachblack}
         \rowcolors{2}{white}{codebg}
+        \renewcommand{\arraystretch}{1.2}
 
         % Code-Block Styling
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
@@ -53,17 +74,18 @@ variables:
         % Inline Code Styling
         \let\oldtexttt\texttt
         \renewcommand{\texttt}[1]{%
-          \colorbox{inlinecode}{\oldtexttt{#1}}%
+          \setlength{\fboxsep}{2pt}%
+          \colorbox{inlinecode}{\strut\oldtexttt{#1}}%
         }
 
         % Header/Footer
         \pagestyle{fancy}
         \fancyhf{}
 
-        \fancyhead[L]{\raisebox{-0.25\height}{\includegraphics[height=1cm]{gb.jpg}}}
+        \fancyhead[L]{\raisebox{-0.2\height}{\includegraphics[height=1cm]{gb.jpg}}}
         \fancyhead[R]{\textcolor{grenzebachblack}{Luca Michael Schmidt}}
 
-        \fancyfoot[L]{\textcolor{grenzebachblack}{\small Duales Studium | HS Fulda \\ \href{mailto:Luca.Schmidt@grenzebach.com}{Luca.schmidt@grenzebach.com}}}
+        \fancyfoot[L]{\textcolor{grenzebachblack}{\small Duales Studium | HS Fulda \\ \href{mailto:Luca.Schmidt@grenzebach.com}{Luca.Schmidt@grenzebach.com}}}
         \fancyfoot[R]{\textcolor{grenzebachblack}{\small Seite \thepage\ von \pageref{LastPage}}}
 
         \renewcommand{\headrulewidth}{0.5pt}
