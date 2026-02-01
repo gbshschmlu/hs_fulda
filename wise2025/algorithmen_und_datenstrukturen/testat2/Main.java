@@ -1,8 +1,8 @@
 import java.util.Random;
 
 /**
- * Wrapper-Klasse für Integer, die das Comparable-Interface implementiert.
- * Ermöglicht die Verwendung von int-Werten im generischen RBTree.
+ * Wrapper-Klasse für Integer, die das Comparable-Interface implementiert
+ * Ermöglicht die Verwendung von int-Werten im generischen RBTree
  */
 class IntComparable implements Comparable<IntComparable> {
     private final int value;
@@ -40,9 +40,9 @@ class IntComparable implements Comparable<IntComparable> {
 }
 
 /**
- * Testprogramm für die RBTree-Implementierung.
- * Generiert 15 zufällige Integer-Zahlen und fügt sie in den Baum ein.
- * Nach jedem Einfügen wird der aktuelle Baumzustand als DOT-Datei gespeichert.
+ * Testprogramm für die RBTree-Implementierung
+ * Generiert 15 zufällige Integer-Zahlen und fügt sie in den Baum ein
+ * Nach jedem Einfügen wird der aktuelle Baumzustand als DOT-Datei gespeichert
  */
 public class Main {
 
@@ -61,7 +61,6 @@ public class Main {
         RBTree<IntComparable> tree = new RBTree<>();
         Random random = new Random();
 
-        // Optional: Seed setzen für reproduzierbare Ergebnisse
         // random.setSeed(42);
 
         System.out.println("=== Rot-Schwarz-Baum Test ===\n");
@@ -71,6 +70,7 @@ public class Main {
 
         for (int i = 0; i < NUM_INSERTIONS; i++) {
             int value = random.nextInt(RANDOM_BOUND);
+            //int value = 1;
             insertedValues[i] = value;
 
             System.out.printf("Schritt %2d: Füge %2d ein%n", i + 1, value);

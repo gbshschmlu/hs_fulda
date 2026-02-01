@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Rot-Schwarz-Baum Implementierung mit generischen Comparable-Objekten.
+ * Rot-Schwarz-Baum Implementierung mit generischen Comparable-Objekten
  *
  * Rot-Schwarz-Eigenschaften:
  * 1. Jeder Knoten ist entweder rot oder schwarz
  * 2. Die Wurzel ist schwarz
- * 3. Alle Blätter (NIL) sind schwarz
- * 4. Rote Knoten haben nur schwarze Kinder
- * 5. Jeder Pfad von einem Knoten zu seinen Blättern enthält gleich viele schwarze Knoten
+ * 3. Alle NIL-Blätter sind schwarz
+ * 4. Ein roter Knoten darf keine roten Kinder haben
+ * 5. Alle Pfade von einem Knoten zu den Blättern enthalten gleich viele schwarze Knoten
  *
- * @param <T> Typ der zu speichernden Elemente (muss Comparable implementieren)
+ * @param <T> Typ der zu speichernden Elemente
  */
 public class RBTree<T extends Comparable<T>> {
 
@@ -47,8 +47,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * Fügt einen neuen Schlüssel in den Rot-Schwarz-Baum ein.
-     * Orientiert sich an der insertNode-Methode aus der Vorlesung (Folie 309).
+     * Fügt einen neuen Schlüssel in den Rot-Schwarz-Baum ein
      *
      * @param key Der einzufügende Schlüssel
      */
@@ -90,28 +89,27 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * Repariert Rot-Schwarz-Verletzungen nach dem Einfügen.
+     * Repariert Rot-Schwarz-Verletzungen nach dem Einfügen
      *
-     * Es gibt drei Hauptfälle (jeweils gespiegelt für links/rechts):
-     * - Fall 1: Onkel ist rot
-     * - Fall 2: Onkel ist schwarz, Knoten ist inneres Kind
-     * - Fall 3: Onkel ist schwarz, Knoten ist äußeres Kind
+     * - Fall 3: Onkel ist rot
+     * - Fall 4: Onkel ist schwarz, Knoten ist innerer Enkel
+     * - Fall 5: Onkel ist schwarz, Knoten ist äußerer Enkel
      *
      * @param node Der neu eingefügte Knoten
      */
     private void insertFixup(Node node) {
-        // Solange der Parent rot ist, haben wir eine Verletzung (rot-rot)
+        // Solange der Vater rot ist, haben wir eine Verletzung (rot-rot)
         while (node.parent != null && node.parent.color == RED) {
 
             if (node.parent == node.parent.parent.left) {
-                // Parent ist linkes Kind des Großelternknotens
+                // Vater ist linkes Kind des Großvaterknotens
                 Node uncle = node.parent.parent.right;
 
                 if (getColor(uncle) == RED) {
                     // ==========================================
-                    // FALL 1: Onkel ist rot
+                    // Fall 3: Onkel ist rot
                     // ==========================================
-                    // Lösung: Umfärben von Parent, Onkel und Großeltern
+                    // Lösung: Umfärben von Vater, Onkel und Großvater
                     // Dann weiter oben prüfen
                     node.parent.color = BLACK;
                     uncle.color = BLACK;
@@ -120,27 +118,27 @@ public class RBTree<T extends Comparable<T>> {
                 } else {
                     if (node == node.parent.right) {
                         // ==========================================
-                        // FALL 2: Onkel ist schwarz, Knoten ist rechtes Kind (inneres Kind)
+                        // Fall 4: Onkel ist schwarz, Knoten ist rechtes Kind (innerer Enkel)
                         // ==========================================
-                        // Lösung: Linksrotation um Parent, dann Fall 3
+                        // Lösung: Linksrotation um Vater, dann Fall 5
                         node = node.parent;
                         rotateLeft(node);
                     }
                     // ==========================================
-                    // FALL 3: Onkel ist schwarz, Knoten ist linkes Kind (äußeres Kind)
+                    // Fall 5: Onkel ist schwarz, Knoten ist linkes Kind (äußerer Enkel)
                     // ==========================================
-                    // Lösung: Umfärben und Rechtsrotation um Großeltern
+                    // Lösung: Umfärben und Rechtsrotation um Großvater
                     node.parent.color = BLACK;
                     node.parent.parent.color = RED;
                     rotateRight(node.parent.parent);
                 }
             } else {
-                // Parent ist rechtes Kind des Großelternknotens (gespiegelte Fälle)
+                // Vater ist rechtes Kind des Großvaterknotens (gespiegelte Fälle)
                 Node uncle = node.parent.parent.left;
 
                 if (getColor(uncle) == RED) {
                     // ==========================================
-                    // FALL 1 (gespiegelt): Onkel ist rot
+                    // Fall 3 (gespiegelt): Onkel ist rot
                     // ==========================================
                     node.parent.color = BLACK;
                     uncle.color = BLACK;
@@ -149,13 +147,13 @@ public class RBTree<T extends Comparable<T>> {
                 } else {
                     if (node == node.parent.left) {
                         // ==========================================
-                        // FALL 2 (gespiegelt): Onkel ist schwarz, Knoten ist linkes Kind
+                        // Fall 4 (gespiegelt): Onkel ist schwarz, Knoten ist linkes Kind
                         // ==========================================
                         node = node.parent;
                         rotateRight(node);
                     }
                     // ==========================================
-                    // FALL 3 (gespiegelt): Onkel ist schwarz, Knoten ist rechtes Kind
+                    // Fall 5 (gespiegelt): Onkel ist schwarz, Knoten ist rechtes Kind
                     // ==========================================
                     node.parent.color = BLACK;
                     node.parent.parent.color = RED;
@@ -163,14 +161,16 @@ public class RBTree<T extends Comparable<T>> {
                 }
             }
         }
-
-        // Wurzel muss immer schwarz sein (Eigenschaft 2)
+        // ==========================================
+        // Fall 1 und 2: Der Knoten ist die neue Wurzel
+        // ==========================================
+        // Wurzel muss immer schwarz sein
         root.color = BLACK;
     }
 
     /**
-     * Gibt die Farbe eines Knotens zurück.
-     * NIL-Knoten (null) gelten als schwarz.
+     * Gibt die Farbe eines Knotens zurück
+     * NIL-Knoten (null) gelten als schwarz
      */
     private boolean getColor(Node node) {
         if (node == null) {
@@ -180,73 +180,79 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * Führt eine Linksrotation um den gegebenen Knoten durch.
+     * Rechts-Rotation - Eigenschaften
      *
-     *     x                y
-     *    / \              / \
-     *   a   y    -->     x   c
-     *      / \          / \
-     *     b   c        a   b
-     */
-    private void rotateLeft(Node x) {
-        Node y = x.right;
-
-        // b wird rechtes Kind von x
-        x.right = y.left;
-        if (y.left != null) {
-            y.left.parent = x;
-        }
-
-        // y übernimmt die Position von x
-        y.parent = x.parent;
-        if (x.parent == null) {
-            root = y;
-        } else if (x == x.parent.left) {
-            x.parent.left = y;
-        } else {
-            x.parent.right = y;
-        }
-
-        // x wird linkes Kind von y
-        y.left = x;
-        x.parent = y;
-    }
-
-    /**
-     * Führt eine Rechtsrotation um den gegebenen Knoten durch.
+     * ‣ Der linke Sohn L wird zur neuen Wurzel
+     * ‣ Die Wurzel wird zum rechten Kind
+     * ‣ Der rechte Teilbaum LR wird zum linken Sohn von N nach der Rotation
+     * ‣ LL und R behalten ihre relative Position bei
      *
-     *       y              x
+     *       N              L
      *      / \            / \
-     *     x   c   -->    a   y
+     *     L   R   -->    LL  N
      *    / \                / \
-     *   a   b              b   c
+     *   LL  LR             LR  R
+     *
      */
-    private void rotateRight(Node y) {
-        Node x = y.left;
+    private void rotateRight(Node N) {
+        Node L = N.left;
 
-        // b wird linkes Kind von y
-        y.left = x.right;
-        if (x.right != null) {
-            x.right.parent = y;
+        // LR wird linkes Kind von N
+        N.left = L.right;
+        if (L.right != null) {
+            L.right.parent = N;
         }
 
-        // x übernimmt die Position von y
-        x.parent = y.parent;
-        if (y.parent == null) {
-            root = x;
-        } else if (y == y.parent.left) {
-            y.parent.left = x;
+        // L übernimmt die Position von N
+        L.parent = N.parent;
+        if (N.parent == null) {
+            root = L;
+        } else if (N == N.parent.left) {
+            N.parent.left = L;
         } else {
-            y.parent.right = x;
+            N.parent.right = L;
         }
 
-        // y wird rechtes Kind von x
-        x.right = y;
-        y.parent = x;
+        // N wird rechtes Kind von L
+        L.right = N;
+        N.parent = L;
     }
 
     /**
-     * Gibt die aktuelle Baumstruktur im DOT-Format in eine Datei aus.
+     * Linksrotation
+     *
+     *     N                R
+     *    / \              / \
+     *   L   R    -->     N   RR
+     *      / \          / \
+     *    RL   RR       L   RL
+     */
+    private void rotateLeft(Node N) {
+        Node R = N.right;
+
+        // RL wird rechtes Kind von N
+        N.right = R.left;
+        if (R.left != null) {
+            R.left.parent = N;
+        }
+
+        // R übernimmt die Position von N
+        R.parent = N.parent;
+        if (N.parent == null) {
+            root = R;
+        } else if (N == N.parent.left) {
+            N.parent.left = R;
+        } else {
+            N.parent.right = R;
+        }
+
+        // N wird linkes Kind von R
+        R.left = N;
+        N.parent = R;
+    }
+
+    /**
+     * Gibt die aktuelle Baumstruktur im DOT-Format in eine Datei aus
      *
      * @param filename Der Dateiname für die DOT-Ausgabe
      */
@@ -290,7 +296,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * Hilfsmethode zum rekursiven Sammeln der Knoten und Kanten für die DOT-Ausgab mit eindeutiger ID.
+     * Hilfsmethode zum rekursiven Sammeln der Knoten und Kanten für die DOT-Ausgab mit eindeutiger ID
      */
     private String collectNodes(Node node, List<String> nodeDefinitions,
                                 List<String> edges, int[] nodeCounter, int[] nilCounter) {
@@ -329,14 +335,14 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * Gibt die Anzahl der Knoten im Baum zurück.
+     * Gibt die Anzahl der Knoten im Baum zurück
      */
     public int getSize() {
         return size;
     }
 
     /**
-     * Prüft, ob der Baum leer ist.
+     * Prüft, ob der Baum leer ist
      */
     public boolean isEmpty() {
         return root == null;
