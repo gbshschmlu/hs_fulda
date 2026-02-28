@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Übungsblatt 10 - Visualisierung</title>
+    <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        button {
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:disabled { background: #bdc3c7; cursor: not-allowed; }
+        button:hover:not(:disabled) { background: #2980b9; }
+
+        /* Matrix Grid */
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            gap: 2px;
+            margin-top: 10px;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ecf0f1;
+            font-weight: bold;
+            border: 1px solid #bdc3c7;
+        }
+        .cell.header { background: #34495e; color: white; border: none; }
+        .cell.highlight { background: #f1c40f; animation: flash 1s; }
+
+        @keyframes flash {
+            0% { background-color: #e74c3c; color: white; }
+            100% { background-color: #f1c40f; color: black; }
+        }
+
+        /* Graph */
+        .graph-container {
+            position: relative;
+            height: 350px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .node {
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #34495e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+        .node.visited { background: #a5d6a7; border-color: #2e7d32; }
+        .node.current { background: #ffcc80; border-color: #ef6c00; transform: scale(1.2); }
+        .dist-label {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #e74c3c;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        line { stroke: #bdc3c7; stroke-width: 2; }
+        text { fill: #7f8c8d; font-size: 12px; }
+
+        /* Puzzle */
+        .puzzle-board {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            gap: 5px;
+            margin: 20px 0;
+        }
+        .tile {
+            width: 60px;
+            height: 60px;
+            background: #34495e;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        .tile.empty { background: #ecf0f1; border: 2px dashed #bdc3c7; color: transparent; }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    const { useState } = React;
+
+    // --- Floyd Warshall ---
+    const FloydWarshall = () => {
+        const initM = [
+            [0, 9, 999, 4],
+            [9, 0, 1, 6],
+            [999, 1, 0, 3],
+            [4, 6, 3, 0]
+        ];
+        const labels = ['A', 'B', 'C', 'D'];
+        const [matrix, setMatrix] = useState(initM);
+        const [k, setK] = useState(-1);
+        const [highlights, setHighlights] = useState([]);
+
+        const step = () => {
+            if(k >= 3) return;
+            const nk = k + 1;
+            const newM = matrix.map(r => [...r]);
+            const newH = [];
+
+            for(let i=0; i<4; i++) {
+                for(let j=0; j<4; j++) {
+                    if(newM[i][nk] + newM[nk][j] < newM[i][j]) {
+                        newM[i][j] = newM[i][nk] + newM[nk][j];
+                        newH.push(`${i}-${j}`);
+                    }
+                }
+            }
+            setMatrix(newM);
+            setK(nk);
+            setHighlights(newH);
+        };
+
+        const reset = () => {
+            setMatrix(initM);
+            setK(-1);
+            setHighlights([]);
+        };
+
+        return (
+            <div className="card">
+                <h2>10.1 Floyd-Warshall</h2>
+                <div style={{marginBottom: '10px'}}>
+                    Aktueller Zwischenknoten: <strong>{k === -1 ? "Start" : labels[k]}</strong>
+                </div>
+                <div className="matrix">
+                    <div className="cell header"></div>
+                    {labels.map(l => <div key={l} className="cell header">{l}</div>)}
+                    {matrix.map((row, i) => (
+                        <React.Fragment key={i}>
+                            <div className="cell header">{labels[i]}</div>
+                            {row.map((val, j) => (
+                                <div key={j} className={`cell ${highlights.includes(`${i}-${j}`) ? 'highlight' : ''}`}>
+                                    {val === 999 ? '∞' : val}
+                                </div>
+                            ))}
+                        </React.Fragment>
+                    ))}
+                </div>
+                <div style={{marginTop: '15px'}}>
+                    <button onClick={step} disabled={k>=3}>Weiter</button>
+                    <button onClick={reset} style={{backgroundColor: '#95a5a6'}}>Reset</button>
+                </div>
+            </div>
+        );
+    };
+
+    // --- Dijkstra ---
+    const Dijkstra = () => {
+        const nodes = {
+            A: {x: 50, y: 150}, B: {x: 150, y: 50}, C: {x: 250, y: 150},
+            D: {x: 350, y: 150}, E: {x: 150, y: 250}, F: {x: 550, y: 250}, G: {x: 450, y: 250}
+        };
+        const edges = [
+            {u:'A',v:'B',w:2}, {u:'A',v:'C',w:7}, {u:'A',v:'E',w:4},
+            {u:'B',v:'C',w:3}, {u:'B',v:'D',w:2}, {u:'C',v:'D',w:1},
+            {u:'C',v:'E',w:2}, {u:'D',v:'G',w:1}, {u:'D',v:'F',w:2},
+            {u:'E',v:'G',w:7}, {u:'G',v:'F',w:2}
+        ];
+
+        const steps = [
+            {curr: 'A', dists: {A:0,B:2,C:7,E:4,D:99,F:99,G:99}, done: ['A']},
+            {curr: 'B', dists: {A:0,B:2,C:5,E:4,D:4,F:99,G:99}, done: ['A','B']},
+            {curr: 'E', dists: {A:0,B:2,C:5,E:4,D:4,F:99,G:11}, done: ['A','B','E']},
+            {curr: 'D', dists: {A:0,B:2,C:5,E:4,D:4,F:6,G:5}, done: ['A','B','E','D']},
+            {curr: 'C', dists: {A:0,B:2,C:5,E:4,D:4,F:6,G:5}, done: ['A','B','E','D','C']},
+            {curr: 'G', dists: {A:0,B:2,C:5,E:4,D:4,F:6,G:5}, done: ['A','B','E','D','C','G']},
+            {curr: 'F', dists: {A:0,B:2,C:5,E:4,D:4,F:6,G:5}, done: ['A','B','E','D','C','G','F']}
+        ];
+
+        const [stepIdx, setStepIdx] = useState(-1);
+
+        const currentStep = stepIdx >= 0 ? steps[stepIdx] : {dists: {A:0,B:99,C:99,E:99,D:99,F:99,G:99}, done:[], curr:null};
+
+        return (
+            <div className="card">
+                <h2>10.3 Dijkstra (Start A)</h2>
+                <div className="graph-container">
+                    <svg>
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="20" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#bdc3c7" />
+                            </marker>
+                        </defs>
+                        {edges.map((e, i) => (
+                            <g key={i}>
+                                <line x1={nodes[e.u].x} y1={nodes[e.u].y} x2={nodes[e.v].x} y2={nodes[e.v].y} markerEnd="url(#arrow)" />
+                                <text x={(nodes[e.u].x+nodes[e.v].x)/2} y={(nodes[e.u].y+nodes[e.v].y)/2 - 5}>{e.w}</text>
+                            </g>
+                        ))}
+                    </svg>
+                    {Object.keys(nodes).map(n => (
+                        <div key={n}
+                             className={`node ${currentStep.done.includes(n)?'visited':''} ${currentStep.curr===n?'current':''}`}
+                             style={{left: nodes[n].x-18, top: nodes[n].y-18}}>
+                            {n}
+                            <div className="dist-label">{currentStep.dists[n]===99?'∞':currentStep.dists[n]}</div>
+                        </div>
+                    ))}
+                </div>
+                <div style={{marginTop: '15px'}}>
+                    <button onClick={() => setStepIdx(Math.min(stepIdx+1, steps.length-1))}>Weiter</button>
+                    <button onClick={() => setStepIdx(-1)} style={{backgroundColor: '#95a5a6'}}>Reset</button>
+                </div>
+            </div>
+        );
+    };
+
+    // --- A* Puzzle ---
+    const Puzzle = () => {
+        const start = [3,8,4,1,6,2,0,7,5];
+        const [board, setBoard] = useState(start);
+        const [g, setG] = useState(0);
+        const [h, setH] = useState(10);
+        const [msg, setMsg] = useState("Startzustand");
+
+        const solveSteps = [
+            {b: [3,8,4,1,6,2,0,7,5], g:0, h:10, msg: "Start"},
+            {b: [3,8,4,1,6,2,7,0,5], g:1, h:9, msg: "7 nach links (g=1, h=9, f=10)"},
+            {b: [3,8,4,1,0,2,7,6,5], g:2, h:8, msg: "6 nach unten (g=2, h=8, f=10)"},
+            {b: [3,0,4,1,8,2,7,6,5], g:3, h:7, msg: "8 nach unten (g=3, h=7, f=10)"}
+        ];
+        const [step, setStep] = useState(0);
+
+        const next = () => {
+            if(step < solveSteps.length - 1) {
+                const s = solveSteps[step+1];
+                setBoard(s.b);
+                setG(s.g);
+                setH(s.h);
+                setMsg(s.msg);
+                setStep(step+1);
+            }
+        };
+
+        const reset = () => {
+            setStep(0);
+            setBoard(solveSteps[0].b);
+            setG(0); setH(10); setMsg("Start");
+        };
+
+        return (
+            <div className="card">
+                <h2>10.4 A* (8-Puzzle)</h2>
+                <div className="puzzle-board">
+                    {board.map((v, i) => (
+                        <div key={i} className={`tile ${v===0?'empty':''}`}>
+                            {v}
+                        </div>
+                    ))}
+                </div>
+                <div style={{background: '#ecf0f1', padding: '10px', borderRadius: '4px', marginBottom: '10px'}}>
+                    <strong>f = g + h: </strong> {g} + {h} = {g+h} <br/>
+                    {msg}
+                </div>
+                <button onClick={next} disabled={step >= solveSteps.length-1}>Nächster Schritt</button>
+                <button onClick={reset} style={{backgroundColor: '#95a5a6'}}>Reset</button>
+            </div>
+        );
+    };
+
+    const App = () => (
+        <div>
+            <h1 style={{textAlign:'center', color:'#34495e'}}>Übungsblatt 10</h1>
+            <FloydWarshall />
+            <Dijkstra />
+            <Puzzle />
+        </div>
+    );
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>
