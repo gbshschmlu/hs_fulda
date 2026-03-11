@@ -79,6 +79,14 @@ Donnerstag endet 17:00 UND Freitag frei. Aber Overlap-Risiko: GT und FS sind bei
 
 1. Di 8:00-11:20 (einziger Termin)
 
+
+## Einwählen nach prio in Wahlpflicht
+
+1. Bildverarbeitung
+2. Gesundheitstechnik
+3. Wissenschaftliches abreiten IT-Sec
+4. MMK (Block) :(
+
 ---
 
 ## Zusammenfassung
