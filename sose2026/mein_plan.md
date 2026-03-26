@@ -87,6 +87,18 @@ Donnerstag endet 17:00 UND Freitag frei. Aber Overlap-Risiko: GT und FS sind bei
 3. Wissenschaftliches abreiten IT-Sec
 4. MMK (Block) :(
 
+## Angemeldet
+
+- FS
+- VS
+- Robotik
+- KI
+
+- DBV (Plan 1)
+- Wiss. IT-SEC (Plan 3)
+- GT (Plan 2)
+- MMK (Plan 4, bitte nicht)
+
 ---
 
 ## Zusammenfassung
