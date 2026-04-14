@@ -82,7 +82,7 @@ variables:
         \pagestyle{fancy}
         \fancyhf{}
 
-        \fancyhead[L]{\raisebox{-0.2\height}{\includegraphics[height=1cm]{gb.jpg}}}
+        \fancyhead[L]{\raisebox{-0.2\height}{\includegraphics[height=1cm]{/Users/Luca/Documents/Projekte/hs_fulda/tools/gb.jpg}}}
         \fancyhead[R]{\textcolor{grenzebachblack}{Luca Michael Schmidt}}
 
         \fancyfoot[L]{\textcolor{grenzebachblack}{\small Duales Studium | HS Fulda \\ \href{mailto:Luca.Schmidt@grenzebach.com}{Luca.Schmidt@grenzebach.com}}}
