@@ -1,0 +1,83 @@
+% Sprachpaket und Worttrennung
+\usepackage[ngerman]{babel}
+
+% Zeichensatz
+\usepackage[utf8]{inputenc}
+
+% Paket für Bilder
+\usepackage{graphicx}
+
+% Schönere Ränder
+\usepackage[document]{ragged2e}
+
+% Quellcode-Darstellung
+\usepackage{listings}
+
+% Tabellen mit variabler Breite
+\usepackage{tabularx}
+\usepackage{tabulary}
+\usepackage{array}
+
+% PDF-Einstellungen
+\usepackage[
+    pdftitle={KI-Bildanalyse in Industrie und Medizin: Modelltraining und Inhouse-Architekturen},
+    pdfsubject={Fachartikel Gesundheitstechnik SoSe 2026},
+    pdfauthor={Luca Michael Schmidt},
+    pdfkeywords={KI, Bildanalyse, CNN, Transfer Learning, Inhouse-Architektur, DSGVO, Medizin},
+    hidelinks
+]{hyperref}
+\usepackage[a-1b]{pdfx}
+
+% Kopf- und Fußzeilen
+\usepackage{fancyhdr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Dokumenteinstellungen ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Seitenränder (laut Standard 25mm)
+\usepackage[top=25mm, bottom=25mm, left=25mm, right=25mm, headsep=10mm, footskip=12mm]{geometry}
+
+% Typographie
+\usepackage[auto]{microtype}
+\urlstyle{same}
+
+% Zeilenabstand (1,5-zeilig)
+\usepackage{setspace}
+\onehalfspacing
+
+% Nummerierungstiefe
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% Abstand zwischen Text und Fußnote
+\setlength{\skip\footins}{8mm}
+
+% Paragrapheneinzug
+\setlength{\parskip}{2mm}
+\setlength{\parindent}{0pt}
+
+% Keine erzwungenen Leerseiten
+\let\cleardoublepage\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Literaturverzeichnis (IEEE) ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[
+    backend=biber,
+    style=ieee,
+]{biblatex}
+\bibliography{bib/references.bib}
+
+% Lange URLs umbrechen
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburlucpenalty}{9000}
+\setcounter{biburllcpenalty}{9000}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Bilddarstellung ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[font=small, labelfont=bf, margin=0.3cm]{caption}
+\usepackage{subcaption}
+
+% Quellenangabe unter Abbildung
+\newcommand{\source}[1]{\vspace{-4pt}\caption*{\footnotesize{Quelle: {#1}}}}

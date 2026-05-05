@@ -1,0 +1,27 @@
+\section{Modelltraining in der Praxis} \label{sec:modelltraining}
+
+\subsection{Datenlage und öffentliche Datensätze} \label{sec:datenlage}
+% TODO: Wichtige medizinische Bilddatensätze beschreiben
+% - ChestX-ray14 (NIH): >100.000 Röntgenbilder, 14 Krankheitsklassen
+%   -> Basis für CheXNet (Stanford)
+% - LIDC-IDRI (Lungenknoten CT)
+% - ISIC (Hautläsionen)
+% Warum Datenmenge für Deep Learning entscheidend ist
+% Quelle: \cite{chexnet2017}
+
+\subsection{Annotation und Labeling} \label{sec:annotation}
+% TODO: Herausforderungen beim Labeling medizinischer Daten
+% - Experten-Annotationen notwendig (Radiologen)
+% - Inter-Observer-Variabilität (Radiologen sind sich nicht immer einig)
+% - Schwacher Supervision / Semi-supervised Learning als Ausweg
+% Vergleich: Industrie (einfacher zu labeln) vs. Medizin (aufwändig)
+
+\subsection{Trainings- und Validierungsverfahren} \label{sec:training}
+% TODO: Typisches Trainingsvorgehen beschreiben
+% - Train/Validation/Test-Split
+% - Data Augmentation (Rotation, Spiegelung, Helligkeitsanpassung)
+% - Cross-Validation
+% - Overfitting vermeiden
+% Beispiel CheXNet: 121-Layer DenseNet, trainiert auf ChestX-ray14
+% F1-Score 0,435 vs. Radiologen-Durchschnitt 0,387
+% Quelle: \cite{chexnet2017}
