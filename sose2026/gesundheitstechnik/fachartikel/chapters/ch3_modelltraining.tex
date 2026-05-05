@@ -1,0 +1,25 @@
+\section{Messverfahren} \label{sec:messverfahren}
+
+Der Nutzen KI-gestützter Systeme lässt sich durch standardisierte Klassifikationsmetriken
+quantitativ belegen. Im Sinne der SMART-Kriterien werden folgende Messgrößen eingesetzt:
+
+\begin{itemize}
+    \item \textbf{Sensitivität (Recall):} Anteil korrekt erkannter positiver Fälle
+          (z.\,B. erkannte Pneumonien / alle Pneumonien im Testdatensatz).
+    \item \textbf{Spezifität:} Anteil korrekt erkannter negativer Fälle.
+    \item \textbf{F1-Score:} Harmonisches Mittel aus Precision und Recall -- relevant bei
+          unausgewogener Klassenverteilung.
+    \item \textbf{AUC-ROC:} Fläche unter der Receiver-Operating-Characteristic-Kurve;
+          klassenunabhängiges Gesamtmaß der Klassifikationsleistung.
+\end{itemize}
+
+CheXNet wurde in einem direkten Benchmark gegen vier praktizierende Fachradiologen
+getestet. Der erzielte F1-Score von 0{,}435 übertrifft den menschlichen Durchschnitt
+von 0{,}387 statistisch signifikant -- auf einem separaten Testset, das von den vier
+Radiologen manuell annotiert wurde \cite{chexnet2017}. Die Überlegenheit erstreckt sich
+auf beide Dimensionen: Sowohl Sensitivität als auch Spezifität lagen über dem
+Radiologen-Durchschnitt.
+
+Dieses Verfahren -- direkter Vergleich Mensch vs.\ KI auf einem gemeinsamen Testdatensatz
+mit etablierten Metriken -- gilt als Standardbenchmark in der medizinischen KI-Forschung
+und ist auf das Thema dieses Artikels unmittelbar übertragbar.

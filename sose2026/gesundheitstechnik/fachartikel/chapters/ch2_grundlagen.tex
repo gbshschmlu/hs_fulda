@@ -1,0 +1,38 @@
+\section{Themenbeschreibung: KI-Bildanalyse in Industrie und Medizin}
+\label{sec:grundlagen}
+
+Convolutional Neural Networks (CNNs) sind die technische Grundlage moderner KI-Bildanalyse.
+Durch hierarchische Faltungsoperationen extrahieren sie räumliche Merkmale: Frühe Schichten
+erkennen Kanten und Texturen, tiefere Schichten kombinieren diese zu semantischen Strukturen
+wie Anomalien oder Defektmustern.
+
+Transfer Learning ergänzt diesen Ansatz: Ein auf großen allgemeinen Datensätzen
+vortrainiertes Modell wird auf einem domänenspezifischen Zieldatensatz feinabgestimmt
+(Fine-Tuning). Da medizinische Bilddatensätze aufwändig zu annotieren sind, ist dieser
+Ansatz besonders relevant.
+
+Das Stanford-Modell \textbf{CheXNet} demonstriert den Stand der Technik: Ein
+121-schichtiges DenseNet wurde auf ChestX-ray14 trainiert -- einem öffentlichen Datensatz
+des NIH mit über 100\,000 annotierten Röntgenaufnahmen und 14 Krankheitsklassen. Das Modell
+erreicht in der Erkennung von Pneumonie eine Leistung, die den Durchschnitt praktizierender
+Radiologen übertrifft \cite{chexnet2017}.
+
+Die methodische Parallele zur industriellen CV ist direkt: Tabelle~\ref{tab:vergleich}
+zeigt die strukturellen Entsprechungen beider Domänen.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Struktureller Vergleich: Industrial~CV vs.\ medizinische Bildanalyse}
+    \label{tab:vergleich}
+    \begin{tabularx}{\textwidth}{|l|X|X|}
+        \hline
+        \textbf{Aspekt} & \textbf{Industrial CV (ROSI)} & \textbf{Medizinische Bildanalyse} \\
+        \hline
+        Eingabedaten    & Kameraaufnahmen Baustoffe      & Röntgen, CT, MRT \\
+        Anomalieklassen & Risse, Ablösungen, Einschlüsse & Tumore, Frakturen, Läsionen \\
+        Kernmethode     & Segmentierung + Klassifikation & Segmentierung + Klassifikation \\
+        Ausgabe         & Defekttyp + Regelentscheid     & Befund + Diagnoseempfehlung \\
+        \hline
+    \end{tabularx}
+    \source{Eigene Darstellung}
+\end{table}

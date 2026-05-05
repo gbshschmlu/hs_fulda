@@ -1,0 +1,34 @@
+\section{Inhouse-Architekturen und Datensouveränität} \label{sec:inhouse}
+
+\subsection{Anforderungen im Gesundheitswesen} \label{sec:anforderungen}
+% TODO: Besonderheiten medizinischer Daten beschreiben
+% - Medizinische Bilddaten = besondere Kategorie personenbezogener Daten (Art. 9 DSGVO)
+% - Verarbeitung erfordert explizite Rechtsgrundlage
+% - Datenschutzbehörden (BSI, BfDI) und Big-Brother-Award 2023 als Kontext
+% Quelle: \cite{gdprMedical}
+
+\subsection{Cloud vs. On-Premise} \label{sec:cloud_onpremise}
+% TODO: Vergleich der Architekturansätze
+%
+% Cloud-Risiken:
+% - "EU-Region" bei AWS/Azure/Google ≠ EU-Souveränität
+%   (US CLOUD Act: US-Konzerne müssen Daten auch aus EU-Rechenzentren herausgeben)
+% - Datentransfer in Drittstaaten faktisch möglich
+%
+% On-Premise / Air-gapped:
+% - PHI (Protected Health Information) verlässt das Haus nicht
+% - DSGVO-Konformität einfacher nachweisbar
+% - Nachteil: Hoher Wartungsaufwand, begrenzte Rechenkapazität
+%
+% Sovereign Cloud (europäische Anbieter):
+% - Lösungsansatz: Edge AI im Krankenhaus, Inferenz in Echtzeit vor Ort
+% Quelle: \cite{nordcloudPrivacy}, \cite{radChestXray}
+
+\subsection{Federated Learning als Kompromiss} \label{sec:federated}
+% TODO: Federated Learning erklären
+% - Modell-Gewichte werden geteilt, keine Rohdaten
+% - Mehrere Krankenhäuser trainieren gemeinsam, ohne Patientendaten auszutauschen
+% - Technische Sicherung: Differential Privacy, Homomorphic Encryption
+% - Vorteil: Größere Datenbasis ohne zentrale Datenspeicherung
+% - Nachteil: Koordinationsaufwand, heterogene Datenqualität
+% Quelle: \cite{federatedLearning2022}, \cite{federatedMedical2023}

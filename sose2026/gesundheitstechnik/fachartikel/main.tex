@@ -1,0 +1,56 @@
+% Dokumentklasse: A4, 12pt
+\documentclass[a4paper, 12pt, openany]{article}
+
+% Schriftart (Libertine, 12pt -- wie in WiKo-Hausarbeit)
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage{libertine}
+
+% Alle Pakete aus der Präambel laden
+\usepackage{preamble}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Deckblatt ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \pagestyle{empty}
+    \newgeometry{top=25mm, bottom=25mm, left=25mm, right=25mm}
+
+    \include{frontpage}
+
+    \restoregeometry
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Verzeichnisse ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{spacing}{1.1}
+        \tableofcontents
+    \end{spacing}
+    \clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Hauptteil ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \pagestyle{plain}
+
+    \input{chapters/ch1_einleitung}
+    \input{chapters/ch2_grundlagen}
+    \input{chapters/ch3_modelltraining}
+    % TODO (Vollversion): \input{chapters/ch4_inhouse}
+    % TODO (Vollversion): \input{chapters/ch5_fazit}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Literaturverzeichnis ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \newpage
+    \setstretch{1}
+    \printbibliography[title={Literaturverzeichnis}]
+    \addcontentsline{toc}{section}{Literaturverzeichnis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ~~~~~ Eidesstattliche Erklärung ~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \input{erklaerung}
+
+\end{document}

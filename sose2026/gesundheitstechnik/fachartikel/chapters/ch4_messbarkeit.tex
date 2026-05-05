@@ -1,0 +1,48 @@
+\section{Messbarkeit der Vorteile} \label{sec:messbarkeit}
+
+\subsection{Metriken zur Leistungsbewertung} \label{sec:metriken}
+% TODO: SMART-Metriken für KI-Bildanalyse erklären
+% - Sensitivität (Recall): Anteil korrekt erkannter positiver Fälle
+% - Spezifität: Anteil korrekt erkannter negativer Fälle
+% - AUC-ROC: Fläche unter der ROC-Kurve (Gesamtleistung)
+% - F1-Score: Harmonisches Mittel aus Precision und Recall
+% - Bezug zu Seminar: Metriken sollen SMART sein
+%   (Spezifisch, Messbar, Erreichbar, Relevant, Zeitgebunden)
+
+\subsection{KI im Vergleich zum Menschen} \label{sec:ki_vs_mensch}
+% TODO: Benchmarking-Studien beschreiben und vergleichen
+%
+% Ergebnisse aus Meta-Analysen (Tabelle einfügen!):
+% - Pneumonieerkennung (Röntgen):  KI 88% Sens. / 90% Spez.  ~ Radiologen
+% - Frakturerkennung:              KI 91,4% Sens. / 92,1% Spez.  Radiologen spezifischer
+% - Krebsdiagnose (KI-assistiert): 79% Sens. / 87% Spez.  besser als allein
+% - ICH mit KI-Assistenz:          98,9% Sens.  sig. besser als KI allein
+%
+% Quelle: \cite{metaAnalysisChest2025}, \cite{fractureDetection2024}
+%
+% Kernerkenntnis: KI als "zweiter Leser" erhöht Sensitivität um ~9-10 Prozentpunkte
+% bei minimalem Spezifitätsverlust
+
+% Tabelle KI vs. Radiologe
+\begin{table}[htbp]
+    \centering
+    \caption{Leistungsvergleich KI vs. Radiologen in ausgewählten Studien}
+    \label{tab:ki_vergleich}
+    \begin{tabularx}{\textwidth}{|X|c|c|l|}
+        \hline
+        \textbf{Anwendung} & \textbf{Sensitivität} & \textbf{Spezifität} & \textbf{Vergleich} \\
+        \hline
+        Pneumonie (Röntgen) & 88\,\% & 90\,\% & vergleichbar \\
+        Frakturerkennung    & 91,4\,\% & 92,1\,\% & Radiologen spezifischer \\
+        Krebsdiagnose (KI-ass.) & 79\,\% & 87\,\% & besser als allein \\
+        ICH (KI-Assistenz)  & 98,9\,\% & --      & sign.\ besser \\
+        \hline
+    \end{tabularx}
+    \source{\cite{metaAnalysisChest2025}, \cite{fractureDetection2024}}
+\end{table}
+
+\subsection{Weitere Messverfahren} \label{sec:tam}
+% TODO: Technology Acceptance Model (TAM) kurz erwähnen
+% - Aus Seminar: TAM für KI in der Medizin (PU, PEOU, Trust, ELC, TK, PAI)
+% - Ergänzung zum rein technischen Benchmark:
+%   Akzeptanz durch medizinisches Personal entscheidend für realen Nutzen
