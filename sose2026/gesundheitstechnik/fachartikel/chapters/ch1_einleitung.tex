@@ -1,23 +1,19 @@
-\section{Einleitung und Motivation} \label{sec:einleitung}
+\section{Einleitung} \label{sec:einleitung}
 
-\subsection{Ausgangssituation} \label{sec:ausgangssituation}
-% TODO: ROSI-Projekt bei Grenzebach BSH GmbH kurz beschreiben
-% - Was macht ROSI? (KI-gestützte Defekterkennung auf Baustoffen)
-% - Welche Technologien? (Neural Networks, Computer Vision, Regelwerk)
-% - Warum ist das relevant für den Gesundheitsbereich?
-Die industrielle Bildverarbeitung nutzt seit Jahren Methoden der künstlichen Intelligenz,
-um Defekte in Fertigungsprozessen automatisiert zu erkennen und zu klassifizieren.
-Im Rahmen des Projekts \textit{ROSI} bei der Grenzebach BSH GmbH wird ein
-KI-gestütztes Computer-Vision-System eingesetzt, das Risse, Ablösungen und andere
-Anomalien auf Baustoffen erkennt und anhand eines Regelsystems auswertet.
+\subsection{Problemstellung} \label{sec:problemstellung}
 
-% TODO: Überleitung -- dieselbe Methodik, andere Anwendungsdomäne
+Die Auswertung medizinischer Bilddaten -- Röntgen, CT, MRT -- ist zeit- und
+ressourcenintensiv. Die Diagnoseleistung ist von menschlichen Faktoren wie Arbeitsbelastung
+und Ermüdung abhängig. KI-gestützte Systeme können in klar abgegrenzten Aufgaben
+vergleichbare oder bessere Ergebnisse erzielen \cite{chexnet2017}.
 
-\subsection{Zielsetzung und Forschungsfrage} \label{sec:zielsetzung}
-% TODO: Forschungsfrage formulieren, z. B.:
-% "Inwiefern lassen sich die methodischen Prinzipien industrieller KI-Bildanalyse
-%  auf die medizinische Diagnostik übertragen, und wie lassen sich die Vorteile
-%  solcher Systeme quantitativ messen?"
+Im industriellen Umfeld sind entsprechende Verfahren produktiv etabliert: Das System
+\textit{ROSI} der Grenzebach BSH GmbH erkennt Defekte auf Baustoffen automatisiert durch
+neuronale Netze. Die methodischen Grundlagen beider Domänen sind strukturell identisch --
+beide erkennen Anomalien in Bilddaten durch trainierte Mustererkennung.
 
-\subsection{Aufbau der Arbeit} \label{sec:aufbau}
-% TODO: Kurze Übersicht der Kapitelstruktur (2–3 Sätze)
+\subsection{Forschungsfrage} \label{sec:forschungsfrage}
+
+Der Artikel untersucht: (1) welche Verfahren dem Modelltraining medizinischer KI-Bildanalyse
+zugrunde liegen, (2) wie der Nutzen quantitativ messbar ist, und (3) welche Architektur
+eine DSGVO-konforme Implementierung ermöglicht.
