@@ -1,214 +1,221 @@
-# Aufgabe A1.1: Grundlagen von ROS2
+# Hinweis
 
-## Grundbegriffe von ROS2
+Durch die Größe der ROS2-Packages wurden diese nicht angehängt. Sie wurden ausschließlich kompiliert und unmodifiziert gestartet.
 
-- **Node (Knoten):** Ein Knoten ist ein Prozess, der eine spezifische Aufgabe im ROS2-System ausführt. Jeder Knoten sollte für einen einzigen, modularen Zweck verantwortlich sein (z.B. die Steuerung eines Motors, das Auslesen eines Sensors). Knoten können miteinander über Topics, Services oder Actions kommunizieren.
+# A1.1
 
-- **Topic (Thema):** Ein Topic ist ein benannter "Bus", über den Knoten Daten austauschen. Er funktioniert nach dem Publisher-Subscriber-Modell. Ein Knoten (Publisher) sendet Daten an ein Topic, und ein anderer Knoten (Subscriber) kann diese Daten empfangen, indem er das Topic abonniert. Dies ermöglicht eine entkoppelte 1-zu-n-Kommunikation.
+## Topic
 
-- **Message (Nachricht):** Eine Message ist die Datenstruktur, die über ein Topic gesendet wird. Jedes Topic hat einen festen Message-Typ (z.B. `String`, `Int32`, `Point`), der die Struktur und die Datentypen der zu übertragenden Informationen definiert.
+Benannter Datenbus für Publisher/Subscriber-Kommunikation. Publisher senden Daten, Subscriber empfangen diese. Mehrere Nodes können auf dasselbe Topic publizieren und/oder abonnieren. Topics dienen kontinuierlichen Datenströmen wie Sensordaten oder Roboterzustand.
 
-- **Workspace (Arbeitsbereich):** Ein Workspace ist ein Verzeichnis, das eine Sammlung von ROS2-Paketen enthält. Er dient dazu, den eigenen Code zu organisieren, zu kompilieren (build) und zu installieren. Ein typischer Workspace enthält Verzeichnisse wie `src` (Quellcode), `build`, `install` und `log`.
+## Message
 
-- **Package (Paket):** Ein Paket ist die kleinste Organisationseinheit in ROS2. Es bündelt zusammengehörigen Code (Knoten), Konfigurationsdateien, Launchfiles und eine `package.xml`-Datei, die Metadaten wie den Namen, die Version und die Abhängigkeiten des Pakets beschreibt.
+Definierte Datenstruktur (`.msg`-Datei) für Topics. Spezifiziert Felder und Datentypen einer Nachricht.
 
-## Wichtige Werkzeuge zur Inspektion des ROS2-Systems
+## Node
 
-Die wichtigsten Kommandozeilen-Tools (CLI-Tools) zur Inspektion eines laufenden ROS2-Systems beginnen alle mit `ros2`:
+Prozess mit einer spezifischen Aufgabe (modulare Einheit). In C++ oder Python geschrieben, kommuniziert über Topics.
 
-- **`ros2 node list`**: Listet alle aktuell laufenden Knoten auf.
-- **`ros2 topic list`**: Zeigt alle aktiven Topics an. Mit `-t` werden zusätzlich die Message-Typen angezeigt.
-- **`ros2 topic echo <topic_name>`**: Gibt die Nachrichten aus, die auf einem bestimmten Topic live gesendet werden.
-- **`ros2 topic info <topic_name>`**: Zeigt detaillierte Informationen zu einem Topic an, z.B. wie viele Publisher und Subscriber es hat.
-- **`ros2 topic hz <topic_name>`**: Misst und zeigt die durchschnittliche Frequenz an, mit der Nachrichten auf einem Topic veröffentlicht werden.
-- **`ros2 interface show <message_type>`**: Zeigt die Struktur (Felder und Datentypen) eines bestimmten Message-Typs an.
-- **`rqt_graph`**: Ein GUI-Tool, das die Knoten und Topics sowie deren Verbindungen grafisch darstellt.
+## Workspace
 
-## Ablauf des Build-Prozesses eines ROS2-Workspaces
+Verzeichnis mit ROS2-Paketen (Ordner: `src`, `build`, `install`, `log`) zur Organisation und zum Bauen von Projekten.
 
-Der Build-Prozess wird typischerweise mit dem Tool `colcon` durchgeführt und läuft in folgenden Schritten ab:
+## Package
 
-1.  **Workspace erstellen:** Ein Verzeichnis für den Workspace und ein Unterverzeichnis `src` werden angelegt.
-2.  **Pakete platzieren:** Der Quellcode der zu bauenden Pakete wird in das `src`-Verzeichnis kopiert oder geklont.
-3.  **Abhängigkeiten installieren:** Mit dem Befehl `rosdep install --from-paths src -y --ignore-src` werden alle in den `package.xml`-Dateien deklarierten Abhängigkeiten der Pakete im Workspace installiert.
-4.  **Build starten:** Im Wurzelverzeichnis des Workspaces wird der Befehl `colcon build` ausgeführt. Colcon findet die Pakete im `src`-Verzeichnis und kompiliert sie. Dabei entstehen die Verzeichnisse `build`, `install` und `log`.
-5.  **Workspace aktivieren (Sourcing):** Nach dem erfolgreichen Build muss die Umgebung der aktuellen Terminalsitzung mit dem Befehl `source install/setup.bash` (oder `.zsh`) aktualisiert werden. Dadurch werden die gebauten Pakete und deren ausführbare Dateien für das ROS2-System auffindbar gemacht.
+Die kleinste Organisationseinheit (enthält Code, `package.xml` und `CMakeLists.txt`/`setup.py`).
 
-## Was sind Launchfiles?
+## Info-Tools
 
-Ein Launchfile ist eine Datei (in ROS2 meist in Python geschrieben), die es ermöglicht, **mehrere Knoten gleichzeitig zu starten und zu konfigurieren**. Anstatt jeden Knoten manuell in einem eigenen Terminal zu starten, kann man mit einem einzigen Befehl ein komplettes System oder Teilsystem hochfahren.
+- **`ros2 node list`**: Zeigt aktive Knoten
+- **`ros2 topic list`**: Listet alle Topics auf
+- **`ros2 topic info <topic_name>`**: Zeigt Typ und Anzahl der Publisher/Subscriber
+- **`ros2 topic echo <topic_name>`**: Gibt Live-Daten im Terminal aus
+- **`ros2 topic hz <topic_name>`**: Prüft die Sendefrequenz
 
-**Hauptfunktionen von Launchfiles:**
+### Welche Topics sind da?
 
-- **Automatisches Starten** von mehreren Knoten.
-- **Konfiguration** von Knoten durch das Setzen von Parametern.
-- **Umbenennen (Remapping)** von Topic-Namen.
-- **Strukturierung** durch das Setzen von Namensräumen (Namespaces) für Knoten.
-- **Starten anderer Launchfiles**, um komplexe Startvorgänge modular aufzubauen.
+**Volksbot:**
+ros2 topic list
+/cmd_vel
+/joint_states
+/joy
+/joy/set_feedback
+/odom
+/parameter_events
+/robot_description
+/rosout
+/tf
+/tf_static
 
-Sie werden mit dem Befehl `ros2 launch <package_name> <launch_file_name.py>` ausgeführt.
+### Wie oft werden Daten gesendet?
 
-# Aufgabe A1.2: Erstellung eines URDF-Modells für einen Differentialantrieb
+Die Sendefrequenz hängt vom jeweiligen Topic bzw. Ereignis ab.
+Kontinuierliche Daten (z. B. Sensoren) werden regelmäßig gesendet, Eingaben wie Tastendrücke nur bei Änderungen.
 
-Diese Dokumentation beschreibt die Erstellung eines ROS2-Pakets und einer URDF-Datei für einen vierrädrigen Roboter mit den Maßen 50cm x 30cm x 10cm und einem Raddurchmesser von 14cm (Radius 7cm).
+**Volksbot:**
+Jeder Knopfdruck, sogar der Sicherungsknopf sendet an ein Topic.
 
-## 1. Erstellung des ROS2 Packages
+### Message-Typen beim Volksbot
 
-Zuerst wird ein neues Paket im `src`-Ordner des Workspaces erstellt. Wir nennen es `my_robot_description`.
+**Bewegungsbefehle** (`/cmd_vel`) – lineare und rotatorische Geschwindigkeiten
+
+```yaml
+linear:
+    x: -0.0
+    y: 0.0
+    z: 0.0
+angular:
+    x: 0.0
+    y: 0.0
+    z: -0.0
+```
+
+**Gelenkzustände** (`/joint_states`) – Positionen, Geschwindigkeiten, Drehmomente
+
+```yaml
+header:
+    stamp:
+        sec: 177048031
+        nanosec: 68320181
+    frame_id: ""
+name:
+    - left_front_wheel_joint
+    - left_rear_wheel_joint
+    - right_front_wheel_joint
+    - right_rear_wheel_joint
+position:
+    - 9.990349453453654
+    - 9.990349453453654
+    - 33.43428543854355
+    - 33.43428543854355
+velocity: []
+effort: []
+```
+
+## Ablauf Buildprozess des ROS2-Workspaces
+
+1. Im Workspace-Root den Befehl **`colcon build`** ausführen.
+2. Die Umgebung mit **`source install/setup.bash`** laden (Sourcing), damit das System die Pakete findet.
+
+## Launchfiles
+
+Skripte (meist Python), die mehrere Nodes gleichzeitig mit spezifischen Parametern und Konfigurationen starten.
+
+# B 1.1
+
+## `/cmd_vel` – Steuerbefehle
+
+Gewünschte lineare und rotatorische Geschwindigkeit des Roboters.
 
 ```bash
-# Navigieren in den Workspace
-cd ~/ros2_ws/src
-
-# Erstellen des Pakets (ament_cmake für Beschreibungs-Pakete üblich)
-ros2 pkg create --build-type ament_cmake my_robot_description
-
-# Unterordner erstellen
-cd my_robot_description
-mkdir urdf launch
+ros2 topic echo /cmd_vel
 ```
 
-## 2. Das URDF-Modell (`urdf/robot.urdf`)
-
-In der Datei `urdf/robot.urdf` wird die Geometrie definiert. Wir verwenden `fixed` Joints, wie in der Aufgabenstellung gefordert.
-
-**Wichtig:** Maße in URDF sind immer in **Metern**.
-
-```xml
-<?xml version="1.0"?>
-<robot name="my_diff_bot">
-
-  <!-- Materialien für die Visualisierung -->
-  <material name="blue">
-    <color rgba="0 0 0.8 1"/>
-  </material>
-  <material name="black">
-    <color rgba="0 0 0 1"/>
-  </material>
-
-  <!-- BASE LINK (Root Link) -->
-  <link name="base_link">
-  </link>
-
-  <!-- CHASSIS LINK -->
-  <joint name="chassis_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="chassis"/>
-    <!-- Positionierung des Chassis: 5cm über dem Boden (Mitte der 10cm Höhe) -->
-    <origin xyz="0 0 0.1"/>
-  </joint>
-
-  <link name="chassis">
-    <visual>
-      <geometry>
-        <box size="0.5 0.3 0.1"/>
-      </geometry>
-      <material name="blue"/>
-    </visual>
-  </link>
-
-  <!-- Räder Definition (Beispiel für vorne links) -->
-  <!-- Wir wiederholen dies für alle 4 Räder mit entsprechenden Offsets -->
-
-  <!-- Vorne Links -->
-  <joint name="front_left_wheel_joint" type="fixed">
-    <parent link="chassis"/>
-    <child link="front_left_wheel"/>
-    <!-- Radstand x=0.2, Spurweite y=0.17 (0.15 + halbe Radbreite) -->
-    <origin xyz="0.2 0.17 -0.03" rpy="-1.5708 0 0"/>
-  </joint>
-
-  <link name="front_left_wheel">
-    <visual>
-      <geometry>
-        <cylinder radius="0.07" length="0.04"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-  </link>
-
-  <!-- Vorne Rechts -->
-  <joint name="front_right_wheel_joint" type="fixed">
-    <parent link="chassis"/>
-    <child link="front_right_wheel"/>
-    <origin xyz="0.2 -0.17 -0.03" rpy="-1.5708 0 0"/>
-  </joint>
-
-  <link name="front_right_wheel">
-    <visual>
-      <geometry>
-        <cylinder radius="0.07" length="0.04"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-  </link>
-
-  <!-- Hinten Links -->
-  <joint name="rear_left_wheel_joint" type="fixed">
-    <parent link="chassis"/>
-    <child link="rear_left_wheel"/>
-    <origin xyz="-0.2 0.17 -0.03" rpy="-1.5708 0 0"/>
-  </joint>
-
-  <link name="rear_left_wheel">
-    <visual>
-      <geometry>
-        <cylinder radius="0.07" length="0.04"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-  </link>
-
-  <!-- Hinten Rechts -->
-  <joint name="rear_right_wheel_joint" type="fixed">
-    <parent link="chassis"/>
-    <child link="rear_right_wheel"/>
-    <origin xyz="-0.2 -0.17 -0.03" rpy="-1.5708 0 0"/>
-  </joint>
-
-  <link name="rear_right_wheel">
-    <visual>
-      <geometry>
-        <cylinder radius="0.07" length="0.04"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-  </link>
-
-</robot>
+```yaml
+linear:
+    x: -0.0 # Vorwärts-/Rückwärtsgeschwindigkeit in m/s
+    y: 0.0 # Seitwärtsgeschwindigkeit (bei Differentialantrieb immer 0)
+    z: 0.0 # Nicht genutzt
+angular:
+    x: 0.0 # Nicht genutzt
+    y: 0.0 # Nicht genutzt
+    z: -0.0 # Drehgeschwindigkeit um die Hochachse in rad/s
 ```
 
-## 3. Visualisierung in RViz
+---
 
-Um das Modell zu überprüfen, nutzen wir das Tool aus dem `urdf_tutorial` Paket.
+## `/joint_states` – Gelenkzustände
 
-### Vorbereitung
-
-Stellen Sie sicher, dass das Paket installiert ist:
+Aktueller Zustand der vier Radgelenke (Position, Geschwindigkeit, Drehmoment).
 
 ```bash
-sudo apt update
-sudo apt install ros-jazzy-urdf-tutorial
+ros2 topic echo /joint_states
 ```
 
-### Start der Visualisierung
-
-Führen Sie den Launch-Befehl aus und geben Sie den Pfad zu Ihrer Datei an:
-
-```bash
-# Im Workspace-Root
-colcon build --packages-select my_robot_description
-source install/setup.bash
-
-# Starten von RViz mit dem Modell
-ros2 launch urdf_tutorial display.launch.py model:=src/my_robot_description/urdf/robot.urdf
+```yaml
+header:
+    stamp:
+        sec: 177048031
+        nanosec: 68320181
+    frame_id: ""
+name:
+    - left_front_wheel_joint
+    - left_rear_wheel_joint
+    - right_front_wheel_joint
+    - right_rear_wheel_joint
+position:
+    - 9.990349453453654 # Winkelposition des linken Vorderrads in rad
+    - 9.990349453453654 # Winkelposition des linken Hinterrads in rad
+    - 33.43428543854355 # Winkelposition des rechten Vorderrads in rad
+    - 33.43428543854355 # Winkelposition des rechten Hinterrads in rad
+velocity: [] # Aktuell nicht befüllt
+effort: [] # Aktuell nicht befüllt
 ```
 
-## 4. Erklärungen zu den Komponenten
+---
 
-- **Links:** Repräsentieren die physischen Körper (Chassis, Räder). Sie enthalten die `<visual>` Tags, um Form (`geometry`) und Farbe (`material`) zu definieren.
-- **Joints:** Verbinden die Links.
-    - Der Typ `fixed` bedeutet, dass die Räder starr mit dem Chassis verbunden sind (ideal für den ersten Geometrie-Check).
-    - `<origin>` definiert die Transformation (Position und Rotation) vom Parent zum Child.
-    - `rpy="-1.5708 0 0"` wird bei den Rädern genutzt, um den Zylinder (der standardmäßig aufrecht steht) um 90 Grad (Pi/2 Radiant) zu kippen, damit er wie ein Rad rollen könnte.
-- **Robot State Publisher:** Diese Node liest die URDF und veröffentlicht die statischen Transformationen zwischen den Links als TF-Daten, die RViz zur Darstellung benötigt.
+## `/joy` – Joystick-Eingaben
+
+Rohdaten des angeschlossenen Joysticks (Achsen und Tasten).
+
+```yaml
+header:
+    stamp:
+        sec: 177047940
+        nanosec: 618534333
+    frame_id: joy
+axes:
+    - -0.0 # Linker Stick X
+    - -0.0 # Linker Stick Y
+    - 0.0 # Rechter Stick X
+    - 0.0 # Rechter Stick Y
+    - 0.0 # L2-Trigger
+    - 0.0 # R2-Trigger
+buttons:
+    - 0 # Taste 1
+    - 0 # Taste 2
+    - 0 # Taste 3
+    - 0 # Taste 4
+    - ...
+```
+
+---
+
+## Weitere Topics (Überblick)
+
+| Topic                | Bedeutung                                                                        |
+| -------------------- | -------------------------------------------------------------------------------- |
+| `/odom`              | Odometriedaten – berechnete Position und Geschwindigkeit des Roboters im Raum    |
+| `/tf` / `/tf_static` | Koordinatentransformationen zwischen den Frames des Roboters (z. B. Rad → Basis) |
+| `/robot_description` | URDF-Modell des Roboters (Struktur, Gelenke, Dimensionen)                        |
+| `/joy/set_feedback`  | Feedback-Kanal zum Joystick (z. B. Vibration)                                    |
+| `/parameter_events`  | ROS2-interne Ereignisse bei Parameteränderungen                                  |
+| `/rosout`            | Zentrales Logging-Topic für alle ROS2-Nodes                                      |
+
+# B 1.2
+
+### Komponenten der Simulation
+
+Die Simulation basiert auf Gazebo Sim mit folgenden Elementen:
+
+**Welt-Modellierung:**
+
+- **SDF (Simulation Description Format):** Umgebung wird in SDF-Dateien definiert
+- **Physik-Engine:** `dartsim`-Plugin mit `ode` als Kollisionsdetektor
+- **Umgebungsparameter:** Gravitation, Lichtquellen, atmosphärische Bedingungen
+- **Szenen-Objekte:** 3D-Meshes für Campus, Bäume, Gelände
+
+**Roboter-Beschreibung:**
+
+- **Struktur:** Hierarchisch mit zentralem `base_link` im Entity Tree
+- **Visual/Collision:** Jede Komponente hat hochaufgelöste Meshes (Visual) und vereinfachte Geometrien (Collision)
+- **Plugins:** Sensoren und Aktoren integriert für Physik-Interaktion
+
+### Austauschbarkeit von Simulation und Realität
+
+Der simulierte Roboter kann nahtlos durch echte Hardware ersetzt werden:
+
+- **ROS-Abstraktion:** Simulation und echte Hardware kommunizieren über identische ROS-Schnittstellen (Topics, Services, Actions)
+- **Identische API:** Steuerung über denselben Befehlssatz (`geometry_msgs/Twist` auf Topic `cmd_vel`)
+- **Kompatible Sensordaten:** Simulation nutzt dieselben Nachrichtentypen wie reale Treiber
+- **Hardware-Agnostik:** Algorithmen unterscheiden nicht zwischen Gazebo-Plugin und echtem Hardware-Interface
