@@ -1,0 +1,98 @@
+% =============================================================================
+% LaTeX Preamble - Standard Configuration
+% =============================================================================
+
+% Language and encoding
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% =============================================================================
+% Typography and Fonts
+% =============================================================================
+\usepackage{mathpazo}
+\usepackage{libertine}
+\usepackage[auto]{microtype}
+\urlstyle{same}
+
+% Spacing
+\usepackage{setspace}
+\onehalfspacing
+
+% Document margins (25mm standard)
+\usepackage[top=25mm, bottom=25mm, left=25mm, right=25mm, headsep=10mm, footskip=12mm]{geometry}
+
+% Paragraph formatting
+\setlength{\parskip}{2mm}
+\setlength{\parindent}{0pt}
+
+% =============================================================================
+% Headers and Footers
+% =============================================================================
+\usepackage{fancyhdr}
+
+% =============================================================================
+% Graphics and Captions
+% =============================================================================
+\usepackage{graphicx}
+\usepackage[font=small, labelfont=bf, margin=0.3cm]{caption}
+\usepackage{subcaption}
+
+% Source notation under figures
+\newcommand{\source}[1]{\vspace{-4pt}\caption*{\footnotesize{Quelle: {#1}}}}
+
+% =============================================================================
+% Tables
+% =============================================================================
+\usepackage{tabularx}
+\usepackage{tabulary}
+\usepackage{array}
+
+% =============================================================================
+% Code Listings
+% =============================================================================
+\usepackage{listings}
+
+% =============================================================================
+% Hyperlinks and PDFs
+% =============================================================================
+\usepackage{hyperref}
+\usepackage[a-1b]{pdfx}
+
+% PDF Metadata (adjust as needed)
+\hypersetup{
+    pdftitle={Your Title Here},
+    pdfsubject={Your Subject Here},
+    pdfauthor={Your Name},
+    pdfkeywords={keyword1, keyword2, keyword3},
+    hidelinks
+}
+
+% =============================================================================
+% Bibliography (IEEE Style)
+% =============================================================================
+\usepackage[
+    backend=biber,
+    style=ieee,
+]{biblatex}
+\bibliography{bib/references.bib}
+
+% Handle long URLs in bibliography
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburlucpenalty}{9000}
+\setcounter{biburllcpenalty}{9000}
+
+% =============================================================================
+% Document Structure
+% =============================================================================
+\usepackage{ragged2e}
+
+% Numbering depth
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% No forced blank pages
+\let\cleardoublepage\clearpage
+
+% Footnote spacing
+\setlength{\skip\footins}{8mm}
