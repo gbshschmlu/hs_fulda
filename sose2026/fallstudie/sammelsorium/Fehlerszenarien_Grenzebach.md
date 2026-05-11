@@ -1,6 +1,6 @@
 # ROSI – Fehlerszenarien: Inbetriebnahme & Betrieb (Grenzebach-intern)
 
-> Ergänzungsdokument zur Wissensbasis (`ROSI_Wissensbasis.md`)
+> Ergänzungsdokument zur Wissensbasis (`Basis.md`)
 > Ziel der Fallstudie: Problemstellen identifizieren – keine Lösungen erzwingen.
 > Fokus: Grenzebach als Fehlerquelle – Vorbereitung in der Firma, Lieferung, Vor-Ort-Installation, laufender Betrieb.
 

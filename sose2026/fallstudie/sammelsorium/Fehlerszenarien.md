@@ -1,6 +1,6 @@
 # ROSI – Fehlerszenarien während des Betriebs
 
-> Ergänzungsdokument zur Wissensbasis (`ROSI_Wissensbasis.md`)
+> Ergänzungsdokument zur Wissensbasis (`Basis.md`)
 > Ziel der Fallstudie: Problemstellen identifizieren – keine Lösungen erzwingen.
 
 ---

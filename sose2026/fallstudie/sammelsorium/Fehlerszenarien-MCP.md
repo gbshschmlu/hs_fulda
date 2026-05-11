@@ -1,6 +1,6 @@
 # ROSI – Fehlerszenarien: MCP-Schnittstelle (kundenseitig & intern)
 
-> Ergänzungsdokument zur Wissensbasis (`ROSI_Wissensbasis.md`)
+> Ergänzungsdokument zur Wissensbasis (`Basis.md`)
 > Ziel der Fallstudie: Problemstellen identifizieren – keine Lösungen erzwingen.
 > Fokus: Risiken einer programmatischen MCP-Schnittstelle (Model Context Protocol) für ROSI.
 
