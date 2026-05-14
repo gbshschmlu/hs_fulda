@@ -1,109 +1,75 @@
 # HS Fulda Unterlagen
 
-Dieses Repository enthält alle Aufgaben, Lösungen und Unterlagen zu den verschiedenen Modulen aus meinem dualen Studium an der Hochschule Fulda.
+Alle Aufgaben, Lösungen und Unterlagen zu den Modulen meines dualen Studiums an der Hochschule Fulda.
 
 **Dualer Student bei:** Grenzebach BSH GmbH
 
-## 📁 Repository-Struktur
+---
+
+## Struktur
 
 ```
 ├── sose2025/              # Sommersemester 2025
 ├── sose2026/              # Sommersemester 2026
-├── wise2025/              # Wintersemester 2025
-├── tools/                 # Konvertierungsskripte und Konfigurationen
-│   ├── convert.sh         # Markdown → PDF (macOS/Linux)
-│   ├── convert.bat        # Markdown → PDF (Windows)
-│   ├── install.sh         # Abhängigkeiten installieren (macOS)
-│   ├── install.bat        # Abhängigkeiten installieren (Windows)
-│   ├── pdf-defaults.yaml  # Pandoc Konfiguration für Branding
-│   └── gb.jpg             # Grenzebach BSH Logo
-└── README.md              # Diese Datei
+├── wise2025/              # Wintersemester 2025/26
+├── convert/               # Branding-Assets für PDF-Konvertierung
+│   └── layout/            # Profile: Luca_Schmidt, hs_fulda, HZD, Hessen, HZD_Hessen
+├── tools/                 # Legacy-Skripte (Pandoc/LaTeX, nicht mehr aktiv genutzt)
+└── typos.toml             # PDF-Branding-Konfiguration (Profile & Schriften)
 ```
 
-Jedes Semester ist nach Modulen strukturiert:
-- **Module** - Unterordner pro Modul
-- **Unterlagen** - Aufgaben, Lösungen, Skripte, Sonstiges
+Jedes Semester ist nach Modulen gegliedert. Innerhalb eines Moduls gibt es Unterordner für Aufgaben, Lösungen, Skripte und sonstige Unterlagen.
 
-## 🔧 Tools: Markdown zu PDF Konvertierung
+---
 
-Für die Konvertierung von Markdown-Dokumenten zu brandingerten PDF-Dateien stehen automatische Scripts zur Verfügung. Diese verwenden [Pandoc](https://pandoc.org/) und [LaTeX](https://www.latex-project.org/) zur professionellen PDF-Erstellung mit Grenzebach BSH Branding (Logo, Kopf- und Fußzeilen, Seitennummerierung).
+## Markdown → PDF
 
-### Setup
+Die Konvertierung erfolgt mit **[typos](https://github.com/LuMiSxh/typos)** — ein selbstständiges CLI-Tool, das Markdown-Dateien ohne externe Abhängigkeiten (kein LaTeX, kein Pandoc) direkt in gebrandete PDFs umwandelt.
 
-**macOS/Linux:**
+### Installation
 
 ```bash
-chmod +x tools/install.sh
-./tools/install.sh
+cargo install --git https://github.com/LuMiSxh/typos
 ```
 
-Die Installation erfolgt über Homebrew und installiert automatisch:
-- Pandoc (Dokumentenkonverter)
-- BasicTeX/TeX Live (LaTeX Distribution)
+Oder lokal aus dem Quellcode:
 
-**Windows:**
-
-```batch
-tools\install.bat
+```bash
+cargo install --path /pfad/zu/typos
 ```
-
-Falls Homebrew/Scoop nicht installiert sind, können Sie Pandoc und MikTeX manuell von den offiziellen Websites herunterladen.
 
 ### Verwendung
 
-**Von der Projektroot aus:**
-
 ```bash
-# macOS/Linux
-./tools/convert.sh <pfad-zu-datei.md>
+# Einzelne Datei mit einem Profil
+typos convert sose2026/modul/datei.md --profile luca
 
-# Windows
-tools\convert.bat <pfad-zu-datei.md>
+# Mehrere Profile gleichzeitig
+typos convert sose2026/modul/datei.md --profile luca,hs_fulda
+
+# Alle Profile auf einmal
+typos convert sose2026/modul/datei.md --profile all
+
+# Interaktiver Modus (kein Argument nötig)
+typos
 ```
 
-**Beispiele:**
+Das PDF wird standardmäßig neben der Quelldatei abgelegt.
+
+### Profile
+
+Die Branding-Konfiguration steht in `typos.toml` im Repo-Root und wird automatisch gefunden, egal aus welchem Unterordner `typos` aufgerufen wird.
+
+| Profil | Branding |
+|---|---|
+| `luca` | Grenzebach BSH — Rot `#ED1B24` |
+| `hs_fulda` | Hochschule Fulda — Grün `#61BD1A` |
+| `hzd` | HZD — Blau `#003087` |
+| `hessen` | Hessische Landesregierung — Blau `#003087` |
+| `hzd_hessen` | HZD + Hessen kombiniert |
+
+Alle konfigurierten Profile anzeigen:
 
 ```bash
-# Von der Projektroot
-./tools/convert.sh sose2026/gesundheitstechnik/konkretisierung.md
-
-# Oder von innerhalb des Moduls
-cd sose2026/gesundheitstechnik
-../../tools/convert.sh konkretisierung.md
+typos list
 ```
-
-### Features
-
-Das Branding ist automatisch aktiviert und beinhaltet:
-
-- **Header:** Grenzebach BSH Logo (links), Autor (rechts)
-- **Footer:** Studium | HS Fulda + E-Mail (links), Seitennummerierung (rechts)
-- **Farben:** Grenzebach-Rot (#ED1B24) für Linien, Links und Akzente
-- **Typographie:** Arial Hauptfont, Code in Menlo
-- **Layout:** A4, 2.5cm Ränder, verbesserte Tabellen und Code-Blöcke
-- **Seitenumbruch:** Intelligente Platzierung von Überschriften
-
-### Bilder in PDFs
-
-Damit Bilder in konvertierten PDFs korrekt eingebunden werden:
-
-1. **Relative Pfade verwenden:** `![Beschreibung](./image.png)`
-2. **Bilder im selben Verzeichnis** oder in einem bekannten Unterpfad speichern
-3. **HTML-Syntax für Größenangaben (optional):**
-   ```markdown
-   <img src="./image.png" width="200" alt="Beschreibung" />
-   ```
-
-Das Script passt die Ressourcenpfade automatisch an, egal von wo es aufgerufen wird.
-
-### Manuelle Konvertierung
-
-Falls die Scripts nicht verwendet werden:
-
-```bash
-pandoc datei.md -o datei.pdf --defaults=tools/pdf-defaults.yaml
-```
-
-### Online-Alternative
-
-Für schnelle Konvertierungen ohne lokale Installation: [PDFForge Markdown zu PDF](https://www.pdfforge.org/online/en/markdown-to-pdf) (ohne Branding)
