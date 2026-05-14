@@ -2,10 +2,10 @@
 main_font = "Arial"
 mono_font = "Consolas"
 
-# ── Luca Schmidt / Grenzebach ─────────────────────────────────────────────────
+# ── Luca Schmidt (persönlich) ─────────────────────────────────────────────────
 [[profiles]]
 name         = "luca"
-display_name = "Luca Schmidt (Grenzebach)"
+display_name = "Luca Schmidt"
 primary_color      = "#ED1B24"
 text_color         = "#000000"
 author             = "Luca Michael Schmidt"
@@ -16,62 +16,15 @@ logo_height        = "1cm"
 top_margin         = "3cm"
 head_height        = "1.3cm"
 
-# ── Hochschule Fulda ──────────────────────────────────────────────────────────
+# ── Grenzebach (allgemein) ────────────────────────────────────────────────────
 [[profiles]]
-name         = "hs_fulda"
-display_name = "Hochschule Fulda"
-primary_color      = "#61BD1A"
+name         = "gb"
+display_name = "Grenzebach BSH"
+primary_color      = "#ED1B24"
 text_color         = "#000000"
-author             = "Luca Michael Schmidt"
-institute          = "Hochschule Fulda"
-email              = "luca.michael.schmidt@informatik.hs-fulda.de"
-logo               = "convert/layout/hs_fulda/logo.png"
+author             = "Grenzebach BSH GmbH"
+institute          = "Grenzebach BSH GmbH"
+logo               = "convert/layout/Luca_Schmidt/logo.png"
 logo_height        = "1cm"
-top_margin         = "3cm"
-head_height        = "1.3cm"
-
-# ── HZD ───────────────────────────────────────────────────────────────────────
-[[profiles]]
-name         = "hzd"
-display_name = "HZD"
-primary_color      = "#003087"
-text_color         = "#16191E"
-author             = "Luca Michael Schmidt"
-institute          = "Hessische Zentrale für Datenverarbeitung"
-email              = "Luca.Schmidt@hzd.hessen.de"
-logo               = "convert/layout/HZD/logos/logo.png"
-logo_height        = "1cm"
-header_text        = "HZD"
-header_text_color  = "#16191F"
-top_margin         = "3cm"
-head_height        = "1.3cm"
-
-# ── Hessen ────────────────────────────────────────────────────────────────────
-[[profiles]]
-name         = "hessen"
-display_name = "Hessische Landesregierung"
-primary_color      = "#003087"
-text_color         = "#16191E"
-author             = "Luca Michael Schmidt"
-institute          = "Hessische Landesregierung"
-email              = "Luca.Schmidt@hessen.de"
-logo               = "convert/layout/Hessen/logos/logo.png"
-logo_height        = "1cm"
-top_margin         = "3cm"
-head_height        = "1.3cm"
-
-# ── HZD + Hessen (kombiniert) ─────────────────────────────────────────────────
-[[profiles]]
-name         = "hzd_hessen"
-display_name = "HZD (Hessen)"
-primary_color      = "#003087"
-text_color         = "#16191E"
-author             = "Luca Michael Schmidt"
-institute          = "Hessische Zentrale für Datenverarbeitung"
-email              = "Luca.Schmidt@hzd.hessen.de"
-logo               = "convert/layout/HZD_Hessen/logos/logo.png"
-logo_height        = "1cm"
-header_text        = "HZD"
-header_text_color  = "#16191F"
 top_margin         = "3cm"
 head_height        = "1.3cm"

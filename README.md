@@ -13,8 +13,8 @@ Alle Aufgaben, Lösungen und Unterlagen zu den Modulen meines dualen Studiums an
 ├── sose2026/              # Sommersemester 2026
 ├── wise2025/              # Wintersemester 2025/26
 ├── convert/               # Branding-Assets für PDF-Konvertierung
-│   └── layout/            # Profile: Luca_Schmidt, hs_fulda, HZD, Hessen, HZD_Hessen
-├── tools/                 # Legacy-Skripte (Pandoc/LaTeX, nicht mehr aktiv genutzt)
+│   └── layout/Luca_Schmidt/   # Logo und Assets
+├── assets/                # Scripts und sonstige Assets
 └── typos.toml             # PDF-Branding-Konfiguration (Profile & Schriften)
 ```
 
@@ -45,7 +45,7 @@ cargo install --path /pfad/zu/typos
 typos convert sose2026/modul/datei.md --profile luca
 
 # Mehrere Profile gleichzeitig
-typos convert sose2026/modul/datei.md --profile luca,hs_fulda
+typos convert sose2026/modul/datei.md --profile luca,gb
 
 # Alle Profile auf einmal
 typos convert sose2026/modul/datei.md --profile all
@@ -63,10 +63,7 @@ Die Branding-Konfiguration steht in `typos.toml` im Repo-Root und wird automatis
 | Profil | Branding |
 |---|---|
 | `luca` | Grenzebach BSH — Rot `#ED1B24` |
-| `hs_fulda` | Hochschule Fulda — Grün `#61BD1A` |
-| `hzd` | HZD — Blau `#003087` |
-| `hessen` | Hessische Landesregierung — Blau `#003087` |
-| `hzd_hessen` | HZD + Hessen kombiniert |
+| `gb` | Grenzebach BSH (generisch) — Rot `#ED1B24` |
 
 Alle konfigurierten Profile anzeigen:
 
