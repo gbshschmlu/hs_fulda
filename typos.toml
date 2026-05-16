@@ -1,30 +1,39 @@
-[defaults]
-main_font = "Arial"
-mono_font = "Consolas"
-
-# ── Luca Schmidt (persönlich) ─────────────────────────────────────────────────
+# ── Shared base profile ─────────────────────────────────────────────────────
 [[profiles]]
-name         = "luca"
+name = "gb-base"
+
+[profiles.colors]
+primary      = "#ED1B24"
+text         = "#000000"
+link         = "$colors.primary"
+rule         = "$colors.primary"
+quote_border = "$colors.primary"
+
+[profiles.sizes]
+top_margin  = "3cm"
+head_height = "1.3cm"
+logo_height = "1cm"
+
+[profiles.layout]
+logo = "assets/logo.png"
+
+# ── Luca Schmidt (persönlich) ───────────────────────────────────────────────
+[[profiles]]
+name    = "luca"
+extends = "gb-base"
+
+[profiles.identity]
 display_name = "Luca Schmidt"
-primary_color      = "#ED1B24"
-text_color         = "#000000"
-author             = "Luca Michael Schmidt"
-institute          = "Grenzebach BSH GmbH | HS Fulda"
-email              = "Luca.Schmidt@grenzebach.com"
-logo               = "assets/logo.png"
-logo_height        = "1cm"
-top_margin         = "3cm"
-head_height        = "1.3cm"
+author       = "Luca Michael Schmidt"
+institute    = "Grenzebach BSH GmbH | HS Fulda"
+email        = "Luca.Schmidt@grenzebach.com"
 
-# ── Grenzebach (allgemein) ────────────────────────────────────────────────────
+# ── Grenzebach (allgemein) ──────────────────────────────────────────────────
 [[profiles]]
-name         = "gb"
+name    = "gb"
+extends = "gb-base"
+
+[profiles.identity]
 display_name = "Grenzebach BSH"
-primary_color      = "#ED1B24"
-text_color         = "#000000"
-author             = "Grenzebach BSH GmbH"
-institute          = "Grenzebach BSH GmbH"
-logo               = "assets/logo.png"
-logo_height        = "1cm"
-top_margin         = "3cm"
-head_height        = "1.3cm"
+author       = "Grenzebach BSH GmbH"
+institute    = "Grenzebach BSH GmbH"
