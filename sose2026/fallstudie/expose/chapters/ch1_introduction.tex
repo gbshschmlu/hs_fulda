@@ -1,20 +1,28 @@
 % =============================================================================
-% Chapter 1: Introduction
+% Kapitel 1: Kontext & Problemstellung
 % =============================================================================
 
-\section{Einleitung}
+\section{Kontext und Problemstellung}
 
-Write your introduction here. This section should:
-\begin{itemize}
-    \item Introduce the topic and its relevance
-    \item State the research question or objective
-    \item Outline the structure of the document
-\end{itemize}
+ROSI (\textit{Realtime Optical Surface Inspection}) ist ein von der Grenzebach BSH GmbH
+entwickeltes Inline-Scan-System zur automatisierten Qualitätskontrolle von Baustoffen.
+Im laufenden Produktionsprozess werden Materialoberflächen erfasst, Defekte per
+KI-Inferenz erkannt und das Material regelbasiert in Qualitätsstufen eingestuft.
+Der Betrieb erfolgt on-premise direkt in der Produktionsanlage des Kunden im
+24/7-Dauerbetrieb.
 
-\subsection{Background}
+Das System befindet sich in aktiver Entwicklung; die erste Kundeninbetriebnahme ist
+für Mitte/Ende 2026 geplant. Mit dem bevorstehenden produktiven Einsatz steigen die
+Anforderungen an Verfügbarkeit und Fehlertoleranz erheblich: Ausfälle verursachen
+Produktionsstillstand, fehlende Inspektionsergebnisse und im schlimmsten Fall
+unbemerkte Qualitätsmängel beim Kunden.
 
-Provide background information and context for your work.
+\subsection{Zielsetzung}
 
-\subsection{Objectives}
+Ziel dieser Fallstudie ist es, sicherheitskritische Fehlerszenarien im industriellen
+Dauerbetrieb auf Prozess- und Betriebssystem-Ebene zu identifizieren, reproduzierbar
+zu simulieren und anhand messbarer Kriterien systematisch zu bewerten.
 
-Clearly state the objectives and goals of your work.
+Im Fokus stehen stille, schleichende und kaskadierende Fehler, die im
+Entwicklungsbetrieb selten sichtbar werden, im 24/7-Dauerbetrieb jedoch
+systemkritische Auswirkungen haben können.

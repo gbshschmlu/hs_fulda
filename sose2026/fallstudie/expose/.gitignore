@@ -1,0 +1,15 @@
+main.*
+!main.tex
+!main.pdf
+pdfa.xmpi
+*.bbl
+*.log
+*.aux
+*.toc
+*.bcf
+*.blg
+*.out
+*.run.xml
+*.synctex.gz
+*.fls
+*.fdb_latexmk

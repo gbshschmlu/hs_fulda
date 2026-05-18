@@ -1,24 +1,94 @@
 % =============================================================================
-% Chapter 2: Main Content
+% Kapitel 2: Risiken, Failure Cases, Methodik und Meilensteine
 % =============================================================================
 
-\section{Hauptteil}
+\section{Risiken im industriellen 24/7-Betrieb}
 
-This section contains the main content of your work.
+Systeme, die ohne Unterbrechung laufen, sind einer Klasse von Problemen ausgesetzt,
+die im Entwicklungsbetrieb selten sichtbar werden. Für ROSI lassen sich die
+relevanten Risikokategorien wie folgt einteilen:
 
-\subsection{Section 1}
+\begin{itemize}
+    \item \textbf{Speichererschöpfung:} Puffer, Logs oder Datenbanken wachsen schleichend,
+    bis Schreiboperationen systemweit fehlschlagen.
 
-Write your content here. Use subsections to organize your material logically.
+    \item \textbf{Stille Prozessausfälle:} Ein Teilprozess stürzt ab, das System läuft scheinbar
+    weiter -- ohne Alarm und ohne Neustart.
 
-\subsection{Section 2}
+    \item \textbf{Verbindungsabbrüche:} Datenbankverbindungen veralten nach Produktionspausen
+    und führen beim nächsten Zugriff zu unkontrollierten Prozessabstürzen.
 
-You can reference figures, tables, and citations as needed.
+    \item \textbf{Kaskadeneffekte:} Die Verlangsamung einer Komponente blockiert über gemeinsame
+    Queues und Shared Memory das gesamte System.
 
-% Example reference to figure:
-% See Figure \ref{fig:example}
+    \item \textbf{Blinde Flecken im Monitoring:} Vorhandene Überwachungskomponenten erfassen
+    nicht alle kritischen Ressourcen, etwa flüchtige RAM-Dateisysteme oder interne
+    Queue-Tiefen.
+\end{itemize}
 
-% Example reference to table:
-% See Table \ref{tab:example}
+ROSI verfügt aktuell über kein externes Alerting. Probleme werden erst durch ausbleibende
+Inspektionsergebnisse oder manuelle Beobachtung sichtbar. Die vorliegende Fallstudie
+untersucht Fehler dieser Klasse, die im Dauerbetrieb entstehen und reproduzierbar
+simuliert werden können.
 
-% Example citation:
-% According to \cite{author2023}, ...
+\section{Themenblöcke und Failure Cases}
+
+Die identifizierten Failure Cases werden in drei Themenblöcke gegliedert, deren
+inhaltliche Ausrichtung nachfolgend auf übergeordneter Ebene dargestellt wird.
+Die detaillierte Analyse der einzelnen Cases erfolgt in der Ausarbeitung.
+
+\subsection{Block A -- Speicher- und Ressourcenverwaltung}
+
+Forschungsfrage: Wie verhält sich das System unter begrenzten Ressourcen, wenn
+Subsysteme überlaufen oder Prozesse unkontrolliert enden?
+
+Untersucht werden Szenarien rund um den flüchtigen Bildspeicher als Single Point of
+Failure sowie Timing-Konflikte im Shared-Memory-Management des Worker-Pools unter Last.
+
+\subsection{Block B -- Systembeobachtbarkeit und Fehlertoleranz}
+
+Forschungsfrage: In welchem Zeitraum erkennt das System eigene Prozessausfälle, und
+welche Reaktion erfolgt?
+
+Untersucht wird die Lücke zwischen der vorhandenen Prozess-API (State-Management,
+Start/Stop) und der fehlenden Supervisor-Logik in der Laufzeitüberwachung. Ergänzend
+werden konkrete Blind Spots des eingeführten Load Monitors analysiert.
+
+\subsection{Block C -- Datenpersistenz, Retention und Kaskadeneffekte}
+
+Forschungsfrage: Wie verhält sich das System bei unterbrochenen Datenbankverbindungen
+oder unkontrolliert wachsenden Datenmengen, und welche Folgeausfälle entstehen?
+
+Untersucht werden reproduzierbare Verbindungsabbrüche nach Produktionspausen sowie
+Kaskadeneffekte durch blockierende Log-Queues, die zu einem systemweiten Stillstand
+führen können.
+
+\section{Methodik}
+
+Die Untersuchung erfolgt am Referenzsystem im Labor Bad Hersfeld (Xubuntu 24.04 LTS,
+AMD Ryzen 9 9950X, NVIDIA RTX 5090). Alle Failure Cases sind vollständig ohne echte
+Kamerahardware simulierbar; ein vorhandener Simulator erlaubt reproduzierbare Szenarien
+unter kontrollierten Bedingungen.
+
+Pro Case werden konkrete Messgrößen erhoben und systematisch ausgewertet:
+
+\begin{itemize}
+    \item Time-to-Detection bei Prozessausfällen
+    \item Inspektionsdurchsatz (Inspections/s) unter variierender Last
+    \item Queue-Tiefe und Speicherfüllstand über die Zeit
+\end{itemize}
+
+\section{Meilensteine}
+
+\begin{table}[h]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{|l|l|X|}
+        \hline
+        \textbf{Meilenstein} & \textbf{Datum} & \textbf{Zwischenergebnis} \\ \hline
+        M1 & 18. Juni 2026 & Theorierahmen erarbeitet, Testumgebung aufgesetzt, erste Cases gemessen \\ \hline
+        M2 & 16. Juli 2026 & Alle Failure Cases gemessen, Rohdaten vollständig vorhanden \\ \hline
+        M3 & 13. August 2026 & Auswertung aller Cases abgeschlossen, Ausarbeitung begonnen \\ \hline
+        Abgabe & 27. August 2026 & Ausarbeitung (15 Seiten) und Präsentation (15 Minuten) fertig \\ \hline
+    \end{tabularx}
+\end{table}
