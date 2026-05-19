@@ -1,6 +1,6 @@
-# ── Shared base profile ─────────────────────────────────────────────────────
+# ── Luca Schmidt (Grenzebach) ─────────────────────────────────────────────────
 [[profiles]]
-name = "gb-base"
+name = "luca"
 
 [profiles.colors]
 primary      = "#ED1B24"
@@ -14,26 +14,34 @@ top_margin  = "3cm"
 head_height = "1.3cm"
 logo_height = "1cm"
 
-[profiles.layout]
-logo = "assets/logo.png"
-
-# ── Luca Schmidt (persönlich) ───────────────────────────────────────────────
-[[profiles]]
-name    = "luca"
-extends = "gb-base"
-
 [profiles.identity]
-display_name = "Luca Schmidt"
+display_name = "Luca Schmidt (GBSH)"
 author       = "Luca Michael Schmidt"
 institute    = "Grenzebach BSH GmbH | HS Fulda"
 email        = "Luca.Schmidt@grenzebach.com"
 
-# ── Grenzebach (allgemein) ──────────────────────────────────────────────────
+[profiles.layout]
+logo = "assets/gb-logo.png"
+
+# ── HS Fulda (generisch) ──────────────────────────────────────────────────────
 [[profiles]]
-name    = "gb"
-extends = "gb-base"
+name = "hs-fulda"
+
+[profiles.colors]
+primary      = "#61BD1A"
+text         = "#000000"
+link         = "$colors.primary"
+rule         = "$colors.primary"
+quote_border = "$colors.primary"
+
+[profiles.sizes]
+top_margin  = "3cm"
+head_height = "1.3cm"
+logo_height = "1cm"
 
 [profiles.identity]
-display_name = "Grenzebach BSH"
-author       = "Grenzebach BSH GmbH"
-institute    = "Grenzebach BSH GmbH"
+display_name = "Hochschule Fulda"
+institute = "Hochschule Fulda"
+
+[profiles.layout]
+logo = "assets/hs-fulda-logo.png"
