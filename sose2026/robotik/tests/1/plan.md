@@ -1,81 +1,75 @@
-# Lernplan: Robotik Test 1 (Crashkurs in 5 Tagen)
+## Lernplan Robotik Test 1
 
-**Zeitraum:** Freitag bis Donnerstag (Sonntag & Montag sind frei)
-**Ziel:** Wichtige Konzepte, Skizzen, Mathe-Grundlagen und die "orangen Stichwörter" für den Test beherrschen.
+### **Teil 1: Thematische Wissensblöcke**
 
----
+Dieser Teil dient als strukturierte Übersicht der prüfungsrelevanten Inhalte.
 
-## Tag 1: Freitag (Heute) – ROS Basics & Begriffe
+#### **Themenblock A: Grundlagen des Robot Operating System (ROS)**
 
-**Fokus:** Verstehen, wie das Robot Operating System (ROS) grundlegend kommuniziert.
+- **Lernziele:** Die grundlegende Architektur und Kommunikationsweise von ROS verstehen.
+- **Inhalte:**
+    - **ROS Computation Graph:** Die Rollen und das Zusammenspiel von `Node` (einzelnes Programm/Prozess), `Topic` (benannter Kommunikationskanal) und `Message` (die zu übermittelnde Datenstruktur) erklären können.
+    - **Publish/Subscribe-Modell:** Das Prinzip verstehen, bei dem ein Publisher-`Node` Daten auf ein `Topic` sendet, ohne den Empfänger (Subscriber) zu kennen.
+    - **Launch-Files:** Deren Zweck als Werkzeug zum simultanen Starten und Konfigurieren mehrerer `Nodes` definieren.
+    - **Topic Remapping:** Das Konzept verstehen, um die standardmäßigen Topic-Namen einer `Node` zur Laufzeit zu ändern, was die Wiederverwendbarkeit von Code ermöglicht (z.B. bei zwei identischen Sensoren).
+- **Material:** Vorlesungsfolien 35, 49-55; Übungsblatt 1, Aufgabe A1.1.
 
-- **ROS Computation Graph (Nodes & Topics)**
-    - _Was du lernen musst:_ Was ist ein Knoten (Node)? Was ist ein Topic? Wie funktioniert das Publish/Subscribe-Prinzip?
-    - _Wo du es findest:_ **Vorlesung Folie 35** (Der ROS Computation Graph) und **Folien 49-51** (ROS Messaging, Skizzen zu Publisher/Subscriber).
-- **ROS-Begriffe klären**
-    - _Was du lernen musst:_ Definitionen von Workspace, Package, Message, Node und Launchfiles.
-    - _Wo du es findest:_ **Übungsblatt 1, Aufgabe A1.1** (Grundlagen von ROS2) & **Vorlesung Folien 52-53** (ROS - Launch Files).
-- **To-Do heute:** Zeichne das Prinzip von _Publisher $->$ Topic $->$ Subscriber_ aus dem Kopf auf (orientiere dich an Folie 49).
+#### **Themenblock B: Koordinatensysteme und Transformationen**
 
----
+- **Lernziele:** Den Zweck von Transformationen und die dahinterstehenden mathematischen Konzepte auf einer konzeptionellen Ebene verstehen.
+- **Inhalte:**
+    - **Grundproblem:** Erklären können, warum Transformationen notwendig sind (Umrechnung von Daten zwischen verschiedenen Koordinatensystemen, z.B. vom Sensor zum Roboter-Mittelpunkt).
+    - **Homogene Koordinaten:** Das Prinzip verstehen, dass durch die Erweiterung eines 3D-Vektors auf 4D eine Translation (Verschiebung) als Matrixmultiplikation dargestellt werden kann. Dies vereint Rotations- und Translationsoperationen.
+    - **Quaternionen:** Deren primären Anwendungszweck definieren: die Vermeidung des sogenannten _Gimbal Lock_, einem Problem bei der 3D-Rotation, das zum Verlust eines Freiheitsgrades führt.
+- **Material:** Vorlesungsfolien 60-68.
 
-## Tag 2: Samstag – Mathe-Grundlagen (Transformationen)
+#### **Themenblock C: Kinematik und Antriebsarten**
 
-**Fokus:** Matrizen für Drehung und Verschiebung (Wichtig zum Rechnen in der Klausur!).
+- **Lernziele:** Verschiedene mobile Roboterplattformen und ihre Bewegungsprinzipien unterscheiden können.
+- **Inhalte:**
+    - **Rad-Typen:** Die grundlegenden Eigenschaften und Freiheitsgrade (DOF) von Standard-Rad, Laufrad (castor wheel) und Mecanum-Rad kennen.
+    - **Holonome vs. Nicht-holonome Systeme:** Den Unterschied erklären können. Ein holonomes System (z.B. mit Mecanum-Rädern) kann sich in jede Richtung bewegen (auch seitwärts), ein nicht-holonomes System (z.B. ein Auto) unterliegt Bewegungseinschränkungen.
+    - **Differenzialantrieb:** Das Funktionsprinzip verstehen. Die Formeln dienen hierbei als konzeptionelle Grundlage:
+        - Die Geschwindigkeit $v = frac(v_R + v_L, 2)$ beschreibt, dass die translatorische Geschwindigkeit des Roboters dem Durchschnitt der Radgeschwindigkeiten entspricht.
+        - Die Winkelgeschwindigkeit $omega = frac(v_L - v_R, b)$ beschreibt, dass die Rotation aus der _Differenz_ der Radgeschwindigkeiten resultiert.
+- **Material:** Vorlesungsfolien 113-116, 129-138.
 
-- **Rotationsmatrizen (2D & 3D)**
-    - _Was du lernen musst:_ Wie sieht die Matrix für eine 2D-Rotation um den Winkel $alpha$ aus?
-    - _Wo du es findest:_ **Vorlesung Folie 60** (Rotationen 1).
-- **Homogene Koordinaten & Basiswechsel**
-    - _Was du lernen musst:_ Wie vereint man Translation (Verschiebung) und Rotation in einer Matrix? Wie rechnet man Punkte von einem Koordinatensystem in ein anderes um?
-    - _Wo du es findest:_ **Vorlesung Folien 63-68** (Homogene Koordinaten & Basiswechsel).
-- **To-Do heute:** Rechne **Übungsblatt 2, Aufgabe A2.1 (Transformationen)** komplett durch. Du musst wissen, an welchen Stellen der Matrix Translation und Rotation stehen (Folie 64 hilft dir dabei!).
+#### **Themenblock D: Sensorik und Messtechnik**
 
----
-
-_(Sonntag & Montag: Frei)_
-
----
-
-## Tag 3: Dienstag – Radkinematiken, Stabilität & Skizzen
-
-**Fokus:** Welche Räder gibt es, wie skizziert man die Antriebsarten und wann kippt der Roboter um?
-
-- **Räder & Freiheitsgrade (DOF)**
-    - _Was du lernen musst:_ Aktive vs. passive Freiheitsgrade. Merke dir die 4 Radtypen und ihre DOFs.
-    - _Wo du es findest:_ **Vorlesung Folie 113** (Freiheitsgrade / Holonomie) und **Folie 114** (Räder – Unbedingt die Skizzen einprägen!).
-- **Kinematiken & Stabilität skizzieren**
-    - _Was du lernen musst:_ Wie zeichnet man ein Zweirad, Dreirad oder vier Räder (Ackermann)? Wann ist ein Zweirad "statisch stabil"? (Antwort: Schwerpunkt unter der Achse!).
-    - _Wo du es findest:_ **Vorlesung Folien 115-116** (Radkinematiken).
-- **To-Do heute:** Skizziere aus dem Kopf: Standard-Rad, Laufrad, Mecanum-Rad sowie einen Differenzialantrieb. Notiere jeweils die aktiven/passiven Freiheitsgrade daneben.
+- **Lernziele:** Sensoren klassifizieren, ihre Eigenschaften benennen und grundlegende Messprinzipien (insbesondere von Encodern) verstehen.
+- **Inhalte:**
+    - **Sensor-Klassifikation:** Die Unterscheidung zwischen `Propriozeptiv` (interner Zustand, z.B. Gelenkwinkel) und `Exterozeptiv` (externe Umgebung, z.B. Abstand) sowie zwischen `Aktiv` (sendet Energie aus, z.B. Laser) und `Passiv` (empfängt nur, z.B. Kamera) kennen.
+    - **Sensor-Eigenschaften:** Begriffe wie `Messbereich (Range)` und `Auflösung (Resolution)` definieren können.
+    - **Fehlertypen:** `Systematische Fehler` (konsistent, prinzipiell korrigierbar) von `Zufälligen Fehlern` (Rauschen) unterscheiden.
+    - **Encoder:** Den fundamentalen Unterschied zwischen `Inkrementalgebern` (zählen nur Änderungen, Position bei Start unbekannt) und `Absolutgebern` (Position immer bekannt) erklären. Innerhalb der Absolutgeber den Vorteil von `Graycode` (nur 1 Bit ändert sich pro Schritt, robust gegen Lesefehler) gegenüber `Binärcode` verstehen.
+- **Material:** Vorlesungsfolien 88-95, 104-108.
 
 ---
 
-## Tag 4: Mittwoch – Differenzialantrieb, Formeln & Odometrie
+### **Teil 2: Chronologischer Lernplan**
 
-**Fokus:** Die Mechanik und Wegberechnung (Odometrie) des Roboters (Klausur-Klassiker!).
+Dieser Plan baut auf Ihren bisherigen Aktivitäten auf und führt Sie strukturiert zur Prüfungsreife.
 
-- **Differenzialantrieb (Die harten Formeln)**
-    - _Was du lernen musst:_ Wie berechnet man die Bahngeschwindigkeit $v$ und die Winkelgeschwindigkeit $omega$ bzw. $theta$ aus den Einzelgeschwindigkeiten der Räder ($v_L$, $v_R$) und der Spurweite ($b$)?
-    - _Wo du es findest:_ **Vorlesung Folien 129-130** (Differenzialantrieb).
-- **Odometrie & Integration**
-    - _Was du lernen musst:_ Wie berechnet der Roboter seine aktuelle X/Z-Position aus den Radumdrehungen?
-    - _Wo du es findest:_ **Vorlesung Folien 131-138** (Berechnung der Orientierung / Berechnung von $x$ und $z$).
-- **To-Do heute:** Löse **Übungsblatt 2, Aufgabe B2.1 (Differenzialantrieb)**. Wende die Formeln für $Delta d$ und $Delta theta$ an.
+- **Freitag:**
+    - **Aktivität:** Erste Sichtung der ROS-Grundlagen.
+    - **Ergebnis:** Ein grundlegendes Verständnis für die Komponenten aus **Themenblock A** wurde etabliert.
 
----
+- **Samstag:**
+    - **Aktivität:** Erste Durchsicht der Folien zu Transformationen.
+    - **Ergebnis:** Eine erste, konzeptionelle Auseinandersetzung mit **Themenblock B** fand statt.
 
-## Tag 5: Donnerstag – Die "Orangen Stichwörter", Motoren & Encoder
+- **Sonntag & Montag:**
+    - Lernfreie Tage.
 
-**Fokus:** Buzzwords auswendig lernen und Wissen festigen.
+- **Dienstag:**
+    - **Aktivität:** Bearbeitung von Übungsblatt 02 in der Gruppe.
+    - **Heutiges Ziel:** Festigung des Verständnisses von Transformationen und Kinematik durch die praktische Diskussion.
+    - **Aufgabe:** Reflektieren Sie die Übungsaufgaben. Fokussieren Sie sich darauf, die Prinzipien aus **Themenblock B (Transformationen)** und **Themenblock C (Kinematik)** mit eigenen Worten zu erklären. Warum wurde welche Formel im Konzept benötigt?
 
-- **Sensoren: Grobklassifikation & Eigenschaften**
-    - _Was du lernen musst:_ Aktiv vs. Passiv, Propriozeptiv vs. Exterozeptiv. Eigenschaften wie Messbereich, Dynamik, Auflösung, Linearität.
-    - _Wo du es findest:_ **Vorlesung Folie 88** (Grobklassifikation) und **Folien 89-92** (Sensoreigenschaften).
-- **Sensorfehler**
-    - _Was du lernen musst:_ Systematische Fehler (z.B. Linsenverzerrung) vs. Zufällige Fehler (Rauschen).
-    - _Wo du es findest:_ **Vorlesung Folien 93-95** (Sensorfehler 1 & 2).
-- **Motoren (PWM) & Encoder (Absolutgeber)**
-    - _Was du lernen musst:_ Was ist PWM (Pulsweitenmodulation)? Was ist der Unterschied zwischen einem binären Absolutgeber und einem Graycode-Absolutgeber? Warum nutzt man Graycode? (Antwort: Nur 1 Bit ändert sich beim Sektorübergang $->$ weniger Ablesefehler).
-    - _Wo du es findest:_ **Vorlesung Folie 110** (Motoransteuerung / PWM) und **Folien 104-108** (Absolutgeber & Inkrementalgeber).
-- **To-Do heute:** Bearbeite **Übungsblatt 2, Aufgabe A2.3 (Absolutgeber - Theorie)**. Lass dich danach von einem Kumpel oder Kommilitonen zu allen orangen Stichwörtern abfragen.
+- **Mittwoch:**
+    - **Ziel:** Die Hardware-Komponenten und die übergeordnete Software-Architektur verstehen.
+    - **Aufgabe:** Arbeiten Sie **Themenblock D (Sensorik)** vollständig durch. Erstellen Sie eine vergleichende Liste (z.B. Inkremental vs. Absolut). Wiederholen Sie anschließend die fortgeschrittenen Konzepte aus **Themenblock A** (insbesondere Launch-Files und Topic Remapping).
+
+- **Donnerstag:**
+    - **Ziel:** Finale Wissenskonsolidierung und Vorbereitung auf das Prüfungsformat.
+    - **Aufgabe:** Gehen Sie alle vier Themenblöcke nochmals durch. Formulieren Sie für jeden zentralen Begriff (insbesondere die orange markierten) eine prägnante Ein-Satz-Definition. Simulieren Sie Multiple-Choice-Fragen, indem Sie sich fragen: "Was ist der entscheidende Unterschied zwischen X und Y?".
