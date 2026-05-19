@@ -1,25 +1,55 @@
-\section{Messverfahren} \label{sec:messverfahren}
+\section{Transfer in die medizinische Diagnostik} \label{sec:transfer}
 
-Der Nutzen KI-gestützter Systeme lässt sich durch standardisierte Klassifikationsmetriken
-quantitativ belegen. Im Sinne der SMART-Kriterien werden folgende Messgrößen eingesetzt:
+\subsection{Transfer Learning: Methodische Übertragung zwischen Domänen}
+\label{sec:transfer_learning}
 
-\begin{itemize}
-    \item \textbf{Sensitivität (Recall):} Anteil korrekt erkannter positiver Fälle
-          (z.\,B. erkannte Pneumonien / alle Pneumonien im Testdatensatz).
-    \item \textbf{Spezifität:} Anteil korrekt erkannter negativer Fälle.
-    \item \textbf{F1-Score:} Harmonisches Mittel aus Precision und Recall -- relevant bei
-          unausgewogener Klassenverteilung.
-    \item \textbf{AUC-ROC:} Fläche unter der Receiver-Operating-Characteristic-Kurve;
-          klassenunabhängiges Gesamtmaß der Klassifikationsleistung.
-\end{itemize}
+Transfer Learning ermöglicht die methodische Übertragung von Modellwissen zwischen
+Anwendungsdomänen. Ein auf einem großen allgemeinen Bilddatensatz vortrainiertes Modell
+verfügt über hierarchische Repräsentationen grundlegender Bildstrukturen -- Kanten,
+Texturen, geometrische Formen. Diese Repräsentationen lassen sich durch gezieltes
+Fine-Tuning auf medizinische Bilddaten spezialisieren. Da medizinische Bildbestände
+annotationsaufwändig und im Vergleich zu allgemeinen Datensätzen deutlich kleiner sind,
+überbrückt dieser Ansatz den Datenmangel systematisch \cite{transferMedical2024}.
 
-CheXNet wurde in einem direkten Benchmark gegen vier praktizierende Fachradiologen
-getestet. Der erzielte F1-Score von 0{,}435 übertrifft den menschlichen Durchschnitt
-von 0{,}387 statistisch signifikant -- auf einem separaten Testset, das von den vier
-Radiologen manuell annotiert wurde \cite{chexnet2017}. Die Überlegenheit erstreckt sich
-auf beide Dimensionen: Sowohl Sensitivität als auch Spezifität lagen über dem
-Radiologen-Durchschnitt.
+Aktuelle Forschungsergebnisse zeigen, dass eine intermediäre Vortrainingsphase auf
+domänenverwandten Daten -- etwa mikroskopische Zellbilder als Zwischenschritt zwischen
+allgemeinen Bildern und klinischen Aufnahmen -- die Transferleistung weiter verbessert,
+da die Domänendistanz zum medizinischen Zieldatensatz sinkt \cite{aiMedicalImaging2025}.
+Das Verfahren entspricht dem in der industriellen Praxis bewährten Prinzip der
+schrittweisen Modellspezialisierung.
 
-Dieses Verfahren -- direkter Vergleich Mensch vs.\ KI auf einem gemeinsamen Testdatensatz
-mit etablierten Metriken -- gilt als Standardbenchmark in der medizinischen KI-Forschung
-und ist auf das Thema dieses Artikels unmittelbar übertragbar.
+\subsection{CheXNet: Empirischer Beleg des Transfers} \label{sec:chexnet}
+
+Das Modell \textbf{CheXNet} der Stanford University demonstriert den realisierten Transfer
+exemplarisch. Ein 121-schichtiges DenseNet wurde auf ChestX-ray14 trainiert -- einem
+öffentlichen Datensatz des National Institutes of Health (NIH) mit über 100.000
+annotierten Röntgenaufnahmen und 14 Krankheitsklassen. Das Modell wurde anschließend in
+einem direkten Benchmark gegen vier praktizierende Fachradiologen evaluiert.
+
+CheXNet erzielte bei der Erkennung von Pneumonie einen F1-Score von 0{,}435, gegenüber
+dem Radiologen-Durchschnitt von 0{,}387 -- ein statistisch signifikanter Unterschied auf
+einem gemeinsamen, verblindeten Testdatensatz \cite{chexnet2017}. Die verbesserte
+Leistung erstreckte sich auf beide Dimensionen: Sowohl Sensitivität als auch Spezifität
+lagen über dem menschlichen Durchschnitt. Dieses Ergebnis ist repräsentativ für eine
+konsistente Befundlage in der Literatur: CNN-Architekturen, die in der Industrie für
+Defekterkennung eingesetzt werden, erzielen auf medizinischen Bilddaten
+Klassifikationsleistungen auf dem Niveau von Fachspezialisten. Die Anpassung dieser
+Architekturen an die medizinische Domäne erfordert domänenspezifisches Engineering,
+jedoch keine grundlegend neuen algorithmischen Ansätze.
+
+\subsection{KI als \glqq zweiter Leser\grqq{}: Kombinierter Einsatz von Mensch und System}
+\label{sec:zweiter_leser}
+
+Das praktisch wirksamste Einsatzmodell ist nicht die vollständige Automatisierung der
+Befundung, sondern der Einsatz von KI als ergänzenden zweiten Leser. Eine aktuelle
+Metaanalyse zur Brustkrebsfrüherkennung zeigt: KI-Unterstützung steigert die relative
+Sensitivität um einen Faktor von 1{,}12 bei gleichzeitiger Reduktion des Leseaufwands um
+44{,}47~\% \cite{breastScreening2025}. In diesem Modell übernimmt das System die
+Vorselektion: Eindeutig unauffällige Befunde werden automatisch klassifiziert,
+grenzwertige Fälle werden dem Radiologen mit Systemmarkierung zur abschließenden
+klinischen Entscheidung vorgelegt.
+
+Dieses Einsatzmodell entspricht dem in industriellen Anwendungen etablierten Prinzip
+der aufgabenspezifischen Aufgabenteilung: Das System übernimmt Routineklassifikationen
+mit hohem Volumen, menschliche Expertise wird auf komplexe Entscheidungsfälle
+konzentriert.

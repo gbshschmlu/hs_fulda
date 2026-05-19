@@ -2,14 +2,21 @@
 %%%%    ~~~~ Abstract ~~~~
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-    Industrielle KI-Bildanalyse und medizinische Diagnostik beruhen auf identischen methodischen
-    Grundlagen. Am Beispiel des Defekterkennungssystems \textit{ROSI} der Grenzebach BSH GmbH
-    und des Modells CheXNet der Stanford University wird gezeigt, dass Convolutional Neural
-    Networks mit Transfer-Learning-Ansatz direkt auf medizinische Bildgebung übertragbar sind.
-    CheXNet übertraf beim Erkennen von Pneumonie auf Röntgenaufnahmen den durchschnittlichen
-    F1-Score praktizierender Radiologen (0{,}435 vs. 0{,}387) \cite{chexnet2017}. Zur Bewertung
-    des Nutzens werden standardisierte Metriken (Sensitivität, Spezifität, F1-Score, AUC-ROC)
-    eingesetzt. Da medizinische Bilddaten besonders schutzwürdig sind (Art.\ 9 DSGVO), werden
-    datenschutzkonforme Systemarchitekturen -- insbesondere Federated Learning mit Differential
-    Privacy -- als Implementierungsoption analysiert \cite{federatedLearning2022}.
+    Industrielle Qualitätskontrollsysteme und medizinische Bilddiagnostik lösen
+    strukturell identische Aufgaben: die Lokalisation und Klassifikation von Anomalien
+    in Bilddaten durch trainierte neuronale Netze. Der vorliegende Artikel untersucht,
+    inwieweit die in der industriellen Bildanalyse etablierten Verfahren -- insbesondere
+    Convolutional Neural Networks und Transfer Learning -- auf die medizinische Bildgebung
+    übertragbar sind. Als empirischer Beleg dient das Modell CheXNet der Stanford
+    University, das bei der Pneumonieerkennung auf Röntgenaufnahmen den durchschnittlichen
+    F1-Score praktizierender Radiologen statistisch signifikant übertraf (0{,}435 vs.\
+    0{,}387) \cite{chexnet2017}. Der Einsatz von KI als ergänzender zweiter Leser steigert
+    die Sensitivität um den Faktor 1{,}12 bei gleichzeitiger Reduktion des Befundungsaufwands
+    um rund 44~\% \cite{breastScreening2025}. Zur Quantifizierung des Nutzens werden
+    standardisierte Metriken (Sensitivität, Spezifität, F1-Score, AUC-ROC) eingesetzt.
+    Da medizinische Bilddaten besondere Schutzwürdigkeit genießen (Art.~9 DSGVO) und
+    diagnostische KI-Systeme dem EU AI Act als Hochrisiko-KI unterliegen, werden
+    datenschutzkonforme Systemarchitekturen -- insbesondere Federated Learning mit
+    Differential Privacy sowie On-Premise-Infrastrukturen -- als Implementierungsoptionen
+    analysiert \cite{federatedLearning2022, euAiAct2024}.
 \end{abstract}

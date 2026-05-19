@@ -2,18 +2,42 @@
 
 \subsection{Problemstellung} \label{sec:problemstellung}
 
-Die Auswertung medizinischer Bilddaten -- Röntgen, CT, MRT -- ist zeit- und
-ressourcenintensiv. Die Diagnoseleistung ist von menschlichen Faktoren wie Arbeitsbelastung
-und Ermüdung abhängig. KI-gestützte Systeme können in klar abgegrenzten Aufgaben
-vergleichbare oder bessere Ergebnisse erzielen \cite{chexnet2017}.
+Die radiologische Befundung gehört zu den ressourcenintensivsten Aufgaben im klinischen
+Alltag. Röntgenaufnahmen, CT- und MRT-Untersuchungen müssen von hochspezialisierten
+Fachärztinnen und Fachärzten analysiert und befundet werden -- ein Prozess, der weder
+einfach skalierbar noch uneingeschränkt fehlertolerant ist. Das Untersuchungsvolumen
+ist in den vergangenen zehn Jahren um drei bis fünf Prozent jährlich gewachsen
+\cite{aiSecondReader2024}, während die Fachkräftebasis nicht proportional mitgewachsen
+ist: In Deutschland sind von 13.791 approbierten Fachärztinnen und Fachärzten für
+Radiologie lediglich 10.139 berufstätig \cite{statistaRadiologen2024}.
 
-Im industriellen Umfeld sind entsprechende Verfahren produktiv etabliert: Das System
-\textit{ROSI} der Grenzebach BSH GmbH erkennt Defekte auf Baustoffen automatisiert durch
-neuronale Netze. Die methodischen Grundlagen beider Domänen sind strukturell identisch --
-beide erkennen Anomalien in Bilddaten durch trainierte Mustererkennung.
+Die Folgen dieser Überlastung sind messbar: Die normierte Arbeitslast zum Zeitpunkt
+diagnostischer Fehler im CT-Befund betrug im Schnitt 121~\% des Normalwerts
+\cite{workloadErrors2023}; 44~\% der männlichen und 65~\% der weiblichen Radiologen
+berichten Burnout-Symptome \cite{burnoutACR2024}. Die Diagnoseleistung ist damit
+strukturell von Faktoren wie Arbeitsbelastung und Ermüdung abhängig.
 
-\subsection{Forschungsfrage} \label{sec:forschungsfrage}
+\subsection{Motivation: Methodischer Transfer aus der industriellen Bildanalyse}
+\label{sec:motivation}
 
-Der Artikel untersucht: (1) welche Verfahren dem Modelltraining medizinischer KI-Bildanalyse
-zugrunde liegen, (2) wie der Nutzen quantitativ messbar ist, und (3) welche Architektur
-eine DSGVO-konforme Implementierung ermöglicht.
+In der industriellen Qualitätskontrolle sind KI-gestützte Bildanalysesysteme seit über
+einem Jahrzehnt produktiv im Einsatz. Die methodische Grundlage dieser Systeme --
+Convolutional Neural Networks, Transfer Learning, Bildsegmentierung und Klassifikation --
+beschreibt allgemeine Verfahren zur Anomalieerkennung in Bilddaten, die auf die
+medizinische Bildgebung übertragbar sind. Empirische Studien belegen, dass der Transfer
+in die medizinische Diagnostik zu Ergebnissen auf radiologischem Niveau führt
+\cite{chexnet2017}. Dieser Artikel untersucht die methodischen Grundlagen, Leistungsmetriken
+und Systemarchitekturen, die diesen Transfer ermöglichen.
+
+\subsection{Forschungsfragen} \label{sec:zielsetzung}
+
+Der Artikel richtet sich an Studierende der Gesundheitstechnik mit technischem
+Grundverständnis und untersucht drei Forschungsfragen:
+
+\begin{enumerate}
+    \item Welche technischen Verfahren der industriellen Bildanalyse sind auf die
+          medizinische Diagnostik übertragbar?
+    \item Wie lässt sich der Nutzen KI-gestützter Systeme quantitativ messen und belegen?
+    \item Welche Systemarchitektur ermöglicht eine DSGVO-konforme Implementierung
+          im Krankenhaus?
+\end{enumerate}

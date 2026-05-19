@@ -1,48 +1,54 @@
-\section{Messbarkeit der Vorteile} \label{sec:messbarkeit}
+\section{Messbarkeit des Nutzens} \label{sec:messbarkeit}
 
 \subsection{Metriken zur Leistungsbewertung} \label{sec:metriken}
-% TODO: SMART-Metriken für KI-Bildanalyse erklären
-% - Sensitivität (Recall): Anteil korrekt erkannter positiver Fälle
-% - Spezifität: Anteil korrekt erkannter negativer Fälle
-% - AUC-ROC: Fläche unter der ROC-Kurve (Gesamtleistung)
-% - F1-Score: Harmonisches Mittel aus Precision und Recall
-% - Bezug zu Seminar: Metriken sollen SMART sein
-%   (Spezifisch, Messbar, Erreichbar, Relevant, Zeitgebunden)
+
+Für die Bewertung KI-gestützter Bildanalyse sind standardisierte Klassifikationsmetriken
+etabliert, die im Sinne der SMART-Kriterien eingesetzt werden. Die vier zentralen
+Messgrößen sind:
+
+\begin{itemize}
+    \item \textbf{Sensitivität (Recall):} Anteil der korrekt erkannten positiven Fälle.
+          In der medizinischen Diagnostik ist eine hohe Sensitivität besonders relevant,
+          da übersehene Befunde unmittelbare klinische Konsequenzen haben können.
+    \item \textbf{Spezifität:} Anteil der korrekt erkannten negativen Fälle. Falsch
+          positive Befunde erzeugen unnötige Folgeuntersuchungen.
+    \item \textbf{F1-Score:} Harmonisches Mittel aus Precision und Recall, besonders
+          relevant bei unausgewogener Klassenverteilung -- etwa bei seltenen
+          Krankheitsbildern.
+    \item \textbf{AUC-ROC:} Fläche unter der Receiver-Operating-Characteristic-Kurve;
+          klassenunabhängiges Gesamtmaß der Klassifikationsleistung, unabhängig vom
+          gewählten Entscheidungsschwellenwert.
+\end{itemize}
+
+Diese Metriken gelten für industrielle und medizinische KI-Systeme gleichermaßen und
+unterstreichen die methodische Konvergenz beider Domänen.
 
 \subsection{KI im Vergleich zum Menschen} \label{sec:ki_vs_mensch}
-% TODO: Benchmarking-Studien beschreiben und vergleichen
-%
-% Ergebnisse aus Meta-Analysen (Tabelle einfügen!):
-% - Pneumonieerkennung (Röntgen):  KI 88% Sens. / 90% Spez.  ~ Radiologen
-% - Frakturerkennung:              KI 91,4% Sens. / 92,1% Spez.  Radiologen spezifischer
-% - Krebsdiagnose (KI-assistiert): 79% Sens. / 87% Spez.  besser als allein
-% - ICH mit KI-Assistenz:          98,9% Sens.  sig. besser als KI allein
-%
-% Quelle: \cite{metaAnalysisChest2025}, \cite{fractureDetection2024}
-%
-% Kernerkenntnis: KI als "zweiter Leser" erhöht Sensitivität um ~9-10 Prozentpunkte
-% bei minimalem Spezifitätsverlust
 
-% Tabelle KI vs. Radiologe
+Der Standardbenchmark in der medizinischen KI-Forschung ist der direkte Vergleich
+zwischen KI-System und menschlichen Fachärzten auf einem gemeinsamen, verblindeten
+Testdatensatz. Tabelle~\ref{tab:ki_vergleich} fasst aktuelle Ergebnisse aus der Literatur
+zusammen:
+
 \begin{table}[htbp]
     \centering
-    \caption{Leistungsvergleich KI vs. Radiologen in ausgewählten Studien}
+    \caption{Leistungsvergleich KI vs.\ Radiologen in ausgewählten Studien}
     \label{tab:ki_vergleich}
     \begin{tabularx}{\textwidth}{|X|c|c|l|}
         \hline
-        \textbf{Anwendung} & \textbf{Sensitivität} & \textbf{Spezifität} & \textbf{Vergleich} \\
+        \textbf{Anwendung} & \textbf{Sensitivität} & \textbf{Spezifität} & \textbf{Einordnung} \\
         \hline
-        Pneumonie (Röntgen) & 88\,\% & 90\,\% & vergleichbar \\
-        Frakturerkennung    & 91,4\,\% & 92,1\,\% & Radiologen spezifischer \\
-        Krebsdiagnose (KI-ass.) & 79\,\% & 87\,\% & besser als allein \\
-        ICH (KI-Assistenz)  & 98,9\,\% & --      & sign.\ besser \\
+        Pneumonie (Röntgen)        & 88\,\%            & 90\,\%               & vergleichbar mit Radiologen \\
+        Lungenkarzinom (Röntgen)   & 85\,\%            & 88\,\%               & vergleichbar mit Radiologen \\
+        Krebsdiagnose (KI-assist.) & 79\,\%            & 87\,\%               & besser als ohne Unterstützung \\
+        Brustkrebsscreening        & \(\times\)1{,}12  & \(\approx\)1{,}00    & +12\,\% Sens., --44\,\% Aufwand \\
         \hline
     \end{tabularx}
-    \source{\cite{metaAnalysisChest2025}, \cite{fractureDetection2024}}
+    \source{\cite{metaAnalysisChest2025, breastScreening2025}}
 \end{table}
 
-\subsection{Weitere Messverfahren} \label{sec:tam}
-% TODO: Technology Acceptance Model (TAM) kurz erwähnen
-% - Aus Seminar: TAM für KI in der Medizin (PU, PEOU, Trust, ELC, TK, PAI)
-% - Ergänzung zum rein technischen Benchmark:
-%   Akzeptanz durch medizinisches Personal entscheidend für realen Nutzen
+Die Ergebnisse zeigen konsistent: Der Einsatz von KI als ergänzender zweiter Leser
+erhöht die Sensitivität bei minimalem Spezifitätsverlust. Der Nutzenzuwachs entsteht
+nicht durch Substitution des Radiologen, sondern durch Kombination: Das System reduziert
+den Befundungsaufwand und markiert auffällige Regionen; die abschließende klinische
+Entscheidung verbleibt beim Arzt \cite{aiSecondReader2024}.

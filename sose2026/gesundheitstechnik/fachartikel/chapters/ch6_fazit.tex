@@ -1,16 +1,39 @@
-\section{Fazit} \label{sec:fazit}
+\section{Fazit und Ausblick} \label{sec:fazit}
 
-% TODO: Fazit schreiben (ca. 0,5 Seiten)
-%
-% Kernaussagen zusammenfassen:
-% 1. Methodischer Transfer industieller CV auf Medizin ist belegt
-%    (Transfer Learning Studie: med. Vortraining > ImageNet bei industrieller Defekterkennung)
-% 2. Vorteile sind messbar: Sensitivität/Spezifität, AUC-ROC, F1 als SMART-Metriken
-%    KI als "zweiter Leser" zeigt konsistent bessere Ergebnisse als alleinige Diagnose
-% 3. Inhouse-Architektur / Federated Learning löst DSGVO-Konflikt
-%    EU-Cloud allein reicht nicht aus -- technische Souveränität muss aktiv gestaltet werden
-%
-% Ausblick:
-% - Multimodale Modelle (Bild + Klinikdaten + Text)
-% - Regulatorische Entwicklung (EU AI Act, Klasse IIb/III Medizinprodukte)
-% - Federated Learning als Standard in Klinikverbünden
+\subsection{Zusammenfassung} \label{sec:zusammenfassung}
+
+Der vorliegende Artikel hat gezeigt, dass das Gesundheitswesen bei der Einführung
+KI-gestützter Bildanalyse auf etablierte Methoden und Systemarchitekturen der
+industriellen Qualitätskontrolle zurückgreifen kann. Drei Kernaussagen lassen sich
+festhalten:
+
+\begin{enumerate}
+    \item \textbf{Methodischer Transfer ist empirisch belegt.} CNN-Architekturen und
+    Transfer Learning erzielen auf medizinischen Bilddaten radiologische Befundqualität.
+    CheXNet übertrifft den Radiologen-Durchschnitt in der Pneumonieerkennung statistisch
+    signifikant \cite{chexnet2017}. Die Anpassung erfordert domänenspezifisches
+    Engineering, jedoch keine grundlegend neuen algorithmischen Ansätze.
+
+    \item \textbf{Nutzen ist quantitativ messbar.} Standardisierte Metriken ermöglichen
+    einen reproduzierbaren Leistungsvergleich zwischen KI-System und Befunder. Der
+    kombinierte Einsatz reduziert den Befundungsaufwand um bis zu 44~\%
+    \cite{breastScreening2025} und wirkt dem Fehlerrisiko bei erhöhter Arbeitslast
+    entgegen \cite{workloadErrors2023}.
+
+    \item \textbf{Datenschutzkonforme Architektur ist verfügbar.} Federated Learning
+    mit Differential Privacy adressiert den Zielkonflikt zwischen Lernbedarf und
+    Datenschutz. On-Premise-Architekturen erfüllen die Anforderungen der DSGVO und des
+    EU AI Act strukturell zuverlässiger als kommerzielle Cloud-Lösungen
+    \cite{euAiAct2024, federatedLearning2022}.
+\end{enumerate}
+
+\subsection{Ausblick} \label{sec:ausblick}
+
+Drei Entwicklungen werden die weitere Konvergenz beider Domänen prägen: Multimodale
+Modelle, die Bilddaten mit klinischen Texten und Labordaten verbinden; die regulatorische
+Reife durch den EU AI Act, der einheitliche Qualitätsstandards für diagnostische
+KI-Systeme schafft \cite{euAiAct2024}; sowie Federated Learning als Standard für
+datensouveränes, standortübergreifendes Modelltraining in Klinikverbünden
+\cite{federatedAdvances2025}. Zusammenfassend zeigen die untersuchten Verfahren und
+Architekturen, dass der Transfer industrieller KI-Bildanalyse in das Gesundheitswesen
+methodisch fundiert und regulatorisch umsetzbar ist.

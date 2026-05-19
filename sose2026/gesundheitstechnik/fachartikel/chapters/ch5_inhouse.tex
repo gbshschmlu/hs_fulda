@@ -1,34 +1,43 @@
-\section{Inhouse-Architekturen und Datensouveränität} \label{sec:inhouse}
+\section{Datensouveränität und Systemarchitektur} \label{sec:inhouse}
 
-\subsection{Anforderungen im Gesundheitswesen} \label{sec:anforderungen}
-% TODO: Besonderheiten medizinischer Daten beschreiben
-% - Medizinische Bilddaten = besondere Kategorie personenbezogener Daten (Art. 9 DSGVO)
-% - Verarbeitung erfordert explizite Rechtsgrundlage
-% - Datenschutzbehörden (BSI, BfDI) und Big-Brother-Award 2023 als Kontext
-% Quelle: \cite{gdprMedical}
+\subsection{Rechtliche Anforderungen im Gesundheitswesen} \label{sec:anforderungen}
 
-\subsection{Cloud vs. On-Premise} \label{sec:cloud_onpremise}
-% TODO: Vergleich der Architekturansätze
-%
-% Cloud-Risiken:
-% - "EU-Region" bei AWS/Azure/Google ≠ EU-Souveränität
-%   (US CLOUD Act: US-Konzerne müssen Daten auch aus EU-Rechenzentren herausgeben)
-% - Datentransfer in Drittstaaten faktisch möglich
-%
-% On-Premise / Air-gapped:
-% - PHI (Protected Health Information) verlässt das Haus nicht
-% - DSGVO-Konformität einfacher nachweisbar
-% - Nachteil: Hoher Wartungsaufwand, begrenzte Rechenkapazität
-%
-% Sovereign Cloud (europäische Anbieter):
-% - Lösungsansatz: Edge AI im Krankenhaus, Inferenz in Echtzeit vor Ort
-% Quelle: \cite{nordcloudPrivacy}, \cite{radChestXray}
+Medizinische Bilddaten zählen nach Artikel~9 der Datenschutz-Grundverordnung (DSGVO) zu
+den besonderen Kategorien personenbezogener Daten. Ihre Verarbeitung erfordert eine
+explizite Rechtsgrundlage sowie organisatorische und technische Schutzmaßnahmen
+\cite{gdprMedical}. Ergänzend klassifiziert der EU AI Act -- seit August 2024 in Kraft --
+KI-gestützte Diagnosetools in Geräten der Klasse~IIb (z.\,B.\ Röntgen- oder CT-Systeme)
+als Hochrisiko-KI-Systeme \cite{euAiAct2024}. Hersteller und Betreiber müssen bis
+August 2026 vollständige Konformität nachweisen, einschließlich technischer Dokumentation,
+Transparenzanforderungen und Risikoklassifikation. Die Wahl der Systemarchitektur ist
+damit zugleich eine regulatorische Entscheidung.
 
-\subsection{Federated Learning als Kompromiss} \label{sec:federated}
-% TODO: Federated Learning erklären
-% - Modell-Gewichte werden geteilt, keine Rohdaten
-% - Mehrere Krankenhäuser trainieren gemeinsam, ohne Patientendaten auszutauschen
-% - Technische Sicherung: Differential Privacy, Homomorphic Encryption
-% - Vorteil: Größere Datenbasis ohne zentrale Datenspeicherung
-% - Nachteil: Koordinationsaufwand, heterogene Datenqualität
-% Quelle: \cite{federatedLearning2022}, \cite{federatedMedical2023}
+\subsection{Cloud vs.\ On-Premise} \label{sec:cloud_onpremise}
+
+Kommerzielle Cloud-Infrastruktur bietet Vorteile hinsichtlich Rechenkapazität und
+Skalierbarkeit. Jedoch ist eine geografisch \glqq EU-Region\grqq{} bei Anbietern wie
+AWS, Azure oder Google Cloud keine ausreichende Garantie für Datensouveränität: Der
+US CLOUD Act verpflichtet US-amerikanische Unternehmen, behördlichen Zugriffsanfragen
+auch aus europäischen Rechenzentren nachzukommen \cite{gdprMedical}. Ein faktischer
+Datentransfer in Drittstaaten ist damit möglich -- und mit den Anforderungen des
+Artikel~9 DSGVO nur schwer vereinbar.
+
+On-Premise-Architekturen schließen dieses Risiko strukturell aus: Patientendaten
+verbleiben vollständig innerhalb der Einrichtung, die Nachweispflichten der DSGVO sind
+leichter erfüllbar, und die Hochrisikoanforderungen des EU AI Act lassen sich
+kontrollierter umsetzen. In der industriellen Praxis wurde dieser Zielkonflikt durch
+Inhouse-Inferenzsysteme mit Edge-AI-Ansätzen adressiert -- eine Architektur, die eine
+analoge Umsetzung im Krankenhauskontext ermöglicht.
+
+\subsection{Federated Learning als datenschutzkonformer Lernverbund} \label{sec:federated}
+
+KI-Modelle profitieren von größeren Trainingsdatensätzen -- eine zentrale Aggregation
+von Patientendaten über Einrichtungsgrenzen hinweg ist jedoch datenschutzrechtlich nicht
+zulässig. Federated Learning adressiert diesen Zielkonflikt: Jede Einrichtung trainiert
+ein lokales Modell auf eigenen Daten; lediglich die aggregierten Modellgewichte werden
+geteilt. Rohdaten verbleiben vollständig innerhalb der jeweiligen Institution
+\cite{federatedLearning2022}. Ergänzende Techniken wie Differential Privacy -- durch
+statistisches Rauschen in den Gradienten -- und Secure Multi-Party Computation stärken
+den Datenschutz weiter. Aktuelle Forschungsergebnisse belegen, dass
+Federated-Learning-Modelle bei ausreichend großem Klinikverbund eine mit zentral
+trainierten Modellen vergleichbare Qualität erreichen \cite{federatedAdvances2025}.
