@@ -52,7 +52,7 @@ $$T = mat(a, b, c; d, e, f; g, h, i)$$
 
 - Durchmesser $d = 0.3 "m"$
 - Umfang $U = pi dot 0.3 "m" approx 0.9425 "m"$
-- Strecke pro Sektor ($ 45^circ $): $ U / 8 approx 0.1178 "m" $
+- Strecke pro Sektor ($45^degree$): $U / 8 approx 0.1178 "m"$
 - _Hinweis: Beide Strecken sind positiv, da beide Räder vorwärts rollen._
 
 | T             | 0     | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     | 9     |
