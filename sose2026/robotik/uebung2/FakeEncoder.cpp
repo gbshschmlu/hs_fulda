@@ -12,22 +12,17 @@
 #include <nav_msgs/msg/odometry.hpp>
 #include <sensor_msgs/msg/joint_state.hpp>
 
-#include <tf2/convert.h>
-#include <tf2_ros/transform_broadcaster.h>
-#include <tf2_ros/transform_listener.h>
-
 using namespace std::chrono_literals;
-using std::placeholders::_1;
 
 struct VolksbotParameters {
-  double wheel_radius = 0.0985;
+  double wheel_radius = 0.103; // Angepasst an den Wert aus der URDF
   double axis_length = 0.41;
   int64_t gear_ratio = 74;
   int64_t max_vel_l = 8250;
   int64_t max_vel_r = 8400;
   int64_t max_acc_l = 10000;
   int64_t max_acc_r = 10000;
-  int64_t num_wheels = 4;
+  int64_t num_wheels = 6; // Angepasst auf 6 Räder (URDF-Modell)
 };
 
 class FakeEncoder : public rclcpp::Node {
@@ -35,9 +30,10 @@ public:
   FakeEncoder()
       : Node("fake_encoder"), x_(0), y_(0), theta_(0), rotation_l_(0),
         rotation_r_(0) {
-    // Joint names of our URDF model
-    joint_names_ = {"left_front_wheel_joint", "left_rear_wheel_joint",
-                    "right_front_wheel_joint", "right_rear_wheel_joint"};
+    // Angepasst an das 6-Rad URDF-Modell
+    joint_names_ = {"left_front_wheel_joint",   "left_middle_wheel_joint",
+                    "left_rear_wheel_joint",    "right_front_wheel_joint",
+                    "right_middle_wheel_joint", "right_rear_wheel_joint"};
 
     // Setup publishers
     joint_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(
@@ -66,7 +62,10 @@ private:
     auto msg = sensor_msgs::msg::JointState();
     msg.header.stamp = this->now();
     msg.name = joint_names_;
-    msg.position = {rotation_l_, rotation_l_, rotation_r_, rotation_r_};
+
+    // Allen 6 Rädern ihre Rotationswerte zuweisen (3x links, 3x rechts)
+    msg.position = {rotation_l_, rotation_l_, rotation_l_,
+                    rotation_r_, rotation_r_, rotation_r_};
 
     // Publizieren
     joint_pub_->publish(msg);

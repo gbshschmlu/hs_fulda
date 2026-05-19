@@ -36,6 +36,7 @@ $$T = mat(a, b, c; d, e, f; g, h, i)$$
 - Um die Gelenke in RViz zu animieren, muss ein `JointState`-Publisher erstellt werden.
 - Ein Timer aktualisiert die Winkel periodisch um 1 Grad ($pi / 180$) und hält sie im Intervall $[0, 2 pi]$.
 - **Code-Lösung:** Siehe beiliegende Datei `FakeEncoder.cpp`.
+- Sie Bild `A2.2.png`
 
 ---
 
@@ -43,25 +44,28 @@ $$T = mat(a, b, c; d, e, f; g, h, i)$$
 
 ## (a) Wie ist der Roboter gefahren?
 
-- **Linker Motor ($M_l$):** Zählt vorwärts (101 -> 110 -> 111...). Dreht sich pro Zeitschritt um exakt 1 Sektor.
-- **Rechter Motor ($M_r$):** Zählt rückwärts (111 -> 110 -> 101...). Ändert den Sektor nur jeden _zweiten_ Zeitschritt.
-- **Fazit:** Linkes Rad dreht schnell vorwärts, rechtes Rad langsam rückwärts $->$ Roboter fährt eine **enge Rechtskurve** auf der Stelle.
+- **Linker Motor ($M_l$):** Zählt aufwärts (101 -> 110 -> 111 -> 000...). Dies entspricht laut Text einer Vorwärtsbewegung. Er dreht sich pro Zeitschritt um exakt 1 Sektor.
+- **Rechter Motor ($M_r$):** Zählt abwärts (000 -> 111 -> 110 -> 101...). Da die Motoren _entgegengesetzt_ montiert sind, bedeutet dieses Abwärtszählen, dass das rechte Rad **ebenfalls vorwärts** fährt! Es ändert den Sektor aber nur jeden _zweiten_ Zeitschritt (halbe Geschwindigkeit).
+- **Fazit:** Da beide Räder vorwärts fahren, das linke Rad aber doppelt so schnell ist wie das rechte, fährt der Roboter eine **Linkskurve**.
 
 ## (b) Zurückgelegte Strecke
 
 - Durchmesser $d = 0.3 "m"$
 - Umfang $U = pi dot 0.3 "m" approx 0.9425 "m"$
-- Strecke pro Sektor ($45 degree$): $U / 8 approx 0.1178 "m"$
+- Strecke pro Sektor ($ 45^circ $): $ U / 8 approx 0.1178 "m" $
+- _Hinweis: Beide Strecken sind positiv, da beide Räder vorwärts rollen._
 
-| T             | 0   | 1      | 2       | 3       | 4       | 5       | 6       | 7       | 8       | 9       |
-| :------------ | :-- | :----- | :------ | :------ | :------ | :------ | :------ | :------ | :------ | :------ |
-| **$D_l$ (m)** | 0   | 0.1178 | 0.2356  | 0.3534  | 0.4712  | 0.5890  | 0.7069  | 0.8247  | 0.9425  | 1.0603  |
-| **$D_r$ (m)** | 0   | 0      | -0.1178 | -0.1178 | -0.2356 | -0.2356 | -0.3534 | -0.3534 | -0.4712 | -0.4712 |
+| T             | 0     | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     | 9     |
+| :------------ | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| **$D_l$ (m)** | 0.000 | 0.118 | 0.236 | 0.353 | 0.471 | 0.589 | 0.707 | 0.825 | 0.942 | 1.060 |
+| **$D_r$ (m)** | 0.000 | 0.000 | 0.118 | 0.118 | 0.236 | 0.236 | 0.353 | 0.353 | 0.471 | 0.471 |
 
 ## (c) Probleme der Kodierung
 
-- **Problem:** Bei der Standard-Binärkodierung wechseln oft mehrere Bits gleichzeitig beim Sektorübergang (z.B. von 011 zu 100). Ungenaues Ablesen auf der Kante führt zu massiven Messfehlern.
-- **Lösung:** Nutzung eines **Gray-Codes**. Hier ändert sich pro Sektorübergang immer exakt nur 1 Bit.
+- **Problem:** Bei der Standard-Binärkodierung ändern sich beim Sektorübergang oft mehrere Bits gleichzeitig.
+- **Konkretes Beispiel:** Beim Übergang von `111 -> 000` (siehe linkes Rad bei $T=3$ zu $T=4$) ändern sich alle 3 Bits.
+- **Ursache & Folge:** Da physikalische Sensoren nie auf die Millisekunde exakt synchron schalten, entstehen kurzzeitig falsche Zwischenzustände (z.B. liest der Sensor kurz `110` oder `100`). Das verfälscht die Positions- und Geschwindigkeitsmessung massiv.
+- **Lösung:** Nutzung eines **Gray-Codes**. Bei diesem Code ändert sich pro Sektorübergang immer exakt nur 1 Bit, wodurch solche Zwischenzustände unmöglich werden.
 
 ---
 
