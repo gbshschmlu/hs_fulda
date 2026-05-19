@@ -110,6 +110,7 @@ Formeln: $Delta d = (s_l + s_r) / 2$ und $Delta theta = (s_r - s_l) / b$
 - Extrahiert die Werte `msg->pose.pose.position.x` und `y`.
 - Schreibt die Koordinaten zeilenweise in eine Textdatei.
 - **Code-Lösung:** Siehe beiliegende Datei `recorder.cpp`.
+- Sie Bild `B2.2.png`
 
 ## Bei welchen Operationen ist der Fehler hoch?
 

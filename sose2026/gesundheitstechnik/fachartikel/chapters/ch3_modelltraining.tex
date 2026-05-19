@@ -11,12 +11,9 @@ Fine-Tuning auf medizinische Bilddaten spezialisieren. Da medizinische Bildbest�
 annotationsaufwändig und im Vergleich zu allgemeinen Datensätzen deutlich kleiner sind,
 überbrückt dieser Ansatz den Datenmangel systematisch \cite{transferMedical2024}.
 
-Aktuelle Forschungsergebnisse zeigen, dass eine intermediäre Vortrainingsphase auf
-domänenverwandten Daten -- etwa mikroskopische Zellbilder als Zwischenschritt zwischen
-allgemeinen Bildern und klinischen Aufnahmen -- die Transferleistung weiter verbessert,
-da die Domänendistanz zum medizinischen Zieldatensatz sinkt \cite{aiMedicalImaging2025}.
-Das Verfahren entspricht dem in der industriellen Praxis bewährten Prinzip der
-schrittweisen Modellspezialisierung.
+Aktuelle Forschungsergebnisse zeigen, dass eine Vortrainingsphase auf domänenverwandten
+Daten die Transferleistung weiter verbessert, da die Domänendistanz zum Zieldatensatz
+sinkt \cite{aiMedicalImaging2025}.
 
 \subsection{CheXNet: Empirischer Beleg des Transfers} \label{sec:chexnet}
 
@@ -27,29 +24,18 @@ annotierten Röntgenaufnahmen und 14 Krankheitsklassen. Das Modell wurde anschli
 einem direkten Benchmark gegen vier praktizierende Fachradiologen evaluiert.
 
 CheXNet erzielte bei der Erkennung von Pneumonie einen F1-Score von 0{,}435, gegenüber
-dem Radiologen-Durchschnitt von 0{,}387 -- ein statistisch signifikanter Unterschied auf
-einem gemeinsamen, verblindeten Testdatensatz \cite{chexnet2017}. Die verbesserte
-Leistung erstreckte sich auf beide Dimensionen: Sowohl Sensitivität als auch Spezifität
-lagen über dem menschlichen Durchschnitt. Dieses Ergebnis ist repräsentativ für eine
-konsistente Befundlage in der Literatur: CNN-Architekturen, die in der Industrie für
-Defekterkennung eingesetzt werden, erzielen auf medizinischen Bilddaten
-Klassifikationsleistungen auf dem Niveau von Fachspezialisten. Die Anpassung dieser
-Architekturen an die medizinische Domäne erfordert domänenspezifisches Engineering,
-jedoch keine grundlegend neuen algorithmischen Ansätze.
+dem Radiologen-Durchschnitt von 0{,}387 -- statistisch signifikant auf einem gemeinsamen,
+verblindeten Testdatensatz \cite{chexnet2017}. Das Ergebnis belegt, dass CNN-Architekturen
+aus der industriellen Defekterkennung auf medizinischen Bilddaten Klassifikationsleistungen
+auf dem Niveau von Fachspezialisten erzielen.
 
 \subsection{KI als \glqq zweiter Leser\grqq{}: Kombinierter Einsatz von Mensch und System}
 \label{sec:zweiter_leser}
 
 Das praktisch wirksamste Einsatzmodell ist nicht die vollständige Automatisierung der
-Befundung, sondern der Einsatz von KI als ergänzenden zweiten Leser. Eine aktuelle
-Metaanalyse zur Brustkrebsfrüherkennung zeigt: KI-Unterstützung steigert die relative
-Sensitivität um einen Faktor von 1{,}12 bei gleichzeitiger Reduktion des Leseaufwands um
-44{,}47~\% \cite{breastScreening2025}. In diesem Modell übernimmt das System die
-Vorselektion: Eindeutig unauffällige Befunde werden automatisch klassifiziert,
-grenzwertige Fälle werden dem Radiologen mit Systemmarkierung zur abschließenden
-klinischen Entscheidung vorgelegt.
-
-Dieses Einsatzmodell entspricht dem in industriellen Anwendungen etablierten Prinzip
-der aufgabenspezifischen Aufgabenteilung: Das System übernimmt Routineklassifikationen
-mit hohem Volumen, menschliche Expertise wird auf komplexe Entscheidungsfälle
-konzentriert.
+Befundung, sondern der Einsatz von KI als ergänzenden zweiten Leser: Das System
+übernimmt die Vorselektion, grenzwertige Fälle werden dem Radiologen zur abschließenden
+klinischen Entscheidung vorgelegt. Dieses Prinzip entspricht dem in industriellen
+Anwendungen etablierten Modell der aufgabenspezifischen Arbeitsteilung zwischen System
+und Mensch. Die quantitativen Auswirkungen dieses Ansatzes werden in
+Abschnitt~\ref{sec:ki_vs_mensch} dargelegt.
