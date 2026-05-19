@@ -1,0 +1,45 @@
+% =============================================================================
+% Main LaTeX Document
+% =============================================================================
+% Document class: A4, 12pt, article
+\documentclass[a4paper, 12pt, openany]{article}
+
+% Load preamble with all packages and configurations
+\usepackage{preamble}
+
+% =============================================================================
+\begin{document}
+
+% ==================== Title Page ====================
+\pagestyle{empty}
+\newgeometry{top=25mm, bottom=25mm, left=25mm, right=25mm}
+
+\include{frontpage}
+
+\restoregeometry
+
+% ==================== Table of Contents ====================
+\begin{spacing}{1.1}
+    \tableofcontents
+\end{spacing}
+\clearpage
+
+% ==================== Main Content ====================
+\pagestyle{plain}
+
+\input{chapters/ch1_introduction}
+\input{chapters/ch2_content}
+% \input{chapters/ch3_content}
+% \input{chapters/ch4_conclusion}
+
+% ==================== Bibliography ====================
+\newpage
+\setstretch{1}
+\printbibliography[title={Literaturverzeichnis}]
+\addcontentsline{toc}{section}{Literaturverzeichnis}
+
+% ==================== Declaration of Authorship ====================
+\input{declaration}
+
+% =============================================================================
+\end{document}
