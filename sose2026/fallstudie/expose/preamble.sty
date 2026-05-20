@@ -95,5 +95,15 @@
 % No forced blank pages
 \let\cleardoublepage\clearpage
 
+% Allow last page to not be forced to fill entire height
+\raggedbottom
+
 % Footnote spacing
 \setlength{\skip\footins}{8mm}
+
+% =============================================================================
+% Section Spacing (tighter)
+% =============================================================================
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{8pt plus 2pt minus 2pt}{6pt plus 2pt minus 2pt}
+\titlespacing*{\subsection}{0pt}{6pt plus 2pt minus 2pt}{4pt plus 2pt minus 2pt}

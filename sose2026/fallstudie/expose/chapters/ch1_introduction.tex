@@ -7,22 +7,28 @@
 ROSI (\textit{Realtime Optical Surface Inspection}) ist ein von der Grenzebach BSH GmbH
 entwickeltes Inline-Scan-System zur automatisierten Qualitätskontrolle von Baustoffen.
 Im laufenden Produktionsprozess werden Materialoberflächen erfasst, Defekte per
-KI-Inferenz erkannt und das Material regelbasiert in Qualitätsstufen eingestuft.
-Der Betrieb erfolgt on-premise direkt in der Produktionsanlage des Kunden im
-24/7-Dauerbetrieb.
+KI-Inferenz erkannt und das Material anschließend regelbasiert in Qualitätsstufen
+klassifiziert. Der Betrieb erfolgt on-premise direkt in der Produktionsanlage des
+Kunden im 24/7-Dauerbetrieb.
 
-Das System befindet sich in aktiver Entwicklung; die erste Kundeninbetriebnahme ist
-für Mitte/Ende 2026 geplant. Mit dem bevorstehenden produktiven Einsatz steigen die
-Anforderungen an Verfügbarkeit und Fehlertoleranz erheblich: Ausfälle verursachen
-Produktionsstillstand, fehlende Inspektionsergebnisse und im schlimmsten Fall
-unbemerkte Qualitätsmängel beim Kunden.
+Technisch ist ROSI als Python-Multiprocessing-System aufgebaut: Mehrere langlebige
+Prozesse verarbeiten die Daten in einer Shared-Memory-basierten Pipeline, ergänzt
+durch Queues und flüchtigen Zwischenspeicher (z.\,B. tmpfs/RAM-Disk). Die in dieser
+Fallstudie untersuchten Fehlerklassen setzen genau an dieser Prozess- und
+Speicherarchitektur an.
+
+ROSI befindet sich in aktiver Entwicklung; die erste Kundeninbetriebnahme ist für
+Mitte bis Ende 2026 geplant. Mit dem bevorstehenden Produktiveinsatz steigen die
+Anforderungen an Verfügbarkeit und Fehlertoleranz erheblich: Ausfälle können
+Produktionsstillstände verursachen, Inspektionsergebnisse ausbleiben lassen und im
+schlimmsten Fall Qualitätsmängel unbemerkt passieren.
 
 \subsection{Zielsetzung}
 
 Ziel dieser Fallstudie ist es, sicherheitskritische Fehlerszenarien im industriellen
-Dauerbetrieb auf Prozess- und Betriebssystem-Ebene zu identifizieren, reproduzierbar
+Dauerbetrieb auf Prozess- und Betriebssystemebene zu identifizieren, reproduzierbar
 zu simulieren und anhand messbarer Kriterien systematisch zu bewerten.
 
 Im Fokus stehen stille, schleichende und kaskadierende Fehler, die im
 Entwicklungsbetrieb selten sichtbar werden, im 24/7-Dauerbetrieb jedoch
-systemkritische Auswirkungen haben können.
+systemkritische Auswirkungen entfalten können.
