@@ -1,0 +1,792 @@
+15:26:45.415 |     INFO | Logger Process started
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/logger_process.py:103
+15:26:45.792 |    DEBUG | [3996168] Inspection Data Handler initialized
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/handler.py:29
+15:26:45.793 |     INFO | [3996168] Inspection Data Handler Process started
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/insp_data_handler_process.py:138
+15:26:45.795 |    DEBUG | [3996168] Inspection Data created [ID=0]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:92
+15:26:46.003 |    DEBUG | [3996210] Frame Grabber Simulator initialized [found 462 images in /home/rosipc/ROSI/Images/Simulation (154 inspections)]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:171
+15:26:46.004 |     INFO | [3996210] Frame Grabber Process started
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/framegrabber_process.py:233
+15:26:46.200 |     INFO | [3996290] Pipeline Manager process started
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_manager_process.py:120
+15:26:48.709 |    DEBUG | [3996290] Reference Pipeline initialized
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:31
+15:26:48.714 |    DEBUG | [3996290] Step added to Reference pipeline [STEP_ID=1]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:51
+15:26:48.716 |    DEBUG | [3996290] Step added to Reference pipeline [STEP_ID=2]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:51
+15:26:48.716 |    DEBUG | [3996290] Step added to Reference pipeline [STEP_ID=3]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:51
+15:26:48.717 |    DEBUG | [3996290] Step added to Reference pipeline [STEP_ID=4]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:51
+15:26:48.718 |    DEBUG | [3996290] Step added to Reference pipeline [STEP_ID=5]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:51
+15:26:48.719 |    DEBUG | [3996290] Step added to Reference pipeline [STEP_ID=6]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:51
+15:26:48.722 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=0, PID=3996550]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.723 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=1, PID=3996551, JOB_CLASS=DefectAnalyzerSMP]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.725 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=2, PID=3996552]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.726 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=3, PID=3996553]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.730 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=4, PID=3996554]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.758 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=5, PID=3996555]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.762 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=6, PID=3996556]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.765 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=7, PID=3996557]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.768 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=8, PID=3996558]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.771 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=9, PID=3996559]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.773 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=10, PID=3996560]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.775 |    DEBUG | [3996290] MPWorker initialized [WORKER_ID=11, PID=3996561]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/worker.py:78
+15:26:48.936 |     INFO | [3996555] MPWorker running [WORKER_ID=5]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:48.966 |     INFO | [3996553] MPWorker running [WORKER_ID=3]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:48.969 |     INFO | [3996550] MPWorker running [WORKER_ID=0]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:49.051 |     INFO | [3996552] MPWorker running [WORKER_ID=2]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:49.054 |     INFO | [3996559] MPWorker running [WORKER_ID=9]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:49.058 |     INFO | [3996554] MPWorker running [WORKER_ID=4]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:49.103 |     INFO | [3996560] MPWorker running [WORKER_ID=10]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:49.106 |     INFO | [3996556] MPWorker running [WORKER_ID=6]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:49.118 |     INFO | [3996557] MPWorker running [WORKER_ID=7]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:49.248 |     INFO | [3996558] MPWorker running [WORKER_ID=8]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:49.622 |     INFO | [3996561] MPWorker running [WORKER_ID=11]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:50.940 |     INFO | [3996551] Hardware to be used for AI workload [DEVICE=NVIDIA GeForce RTX 5090, VRAM=31.3 GB]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:71
+15:26:51.158 |    DEBUG | [3996551] Optimized Thresholds loaded [[0.5, 0.53, 0.67, 0.54, 0.57, 0.29, 0.46, 0.51, 0.37, 0.54]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:302
+15:26:51.160 |    DEBUG | [3996551] Model checkpoint loaded [PATH=/home/rosipc/ROSI/ai_models/2025_08_26_beech_NEW_2026_v2.pth]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:318
+15:26:51.321 |     INFO | [3996551] Model created [ARCH=FPN, ENCODER=resnet50, IMAGE_CHANNELS=3, CLASSES=10]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:184
+15:26:51.341 |    DEBUG | [3996551] Model state dict loaded
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:202
+15:26:51.342 |    DEBUG | [3996551] DefectAnalyzer initialized
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:105
+15:26:51.343 |     INFO | [3996551] Job class initialized [WORKER_ID=1, JOB_CLASS=DefectAnalyzerSMP]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:74
+15:26:51.344 |     INFO | [3996551] MPWorker running [WORKER_ID=1, JOB_CLASS=<class 'gbbm_rosi_defect_analyzer_smp.defect_analyzer.DefectAnalyzerSMP'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:89
+15:26:51.347 |    DEBUG | [3996290] MPWorkerPool initialized [WORKER_COUNT=12]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:183
+15:26:51.349 |    DEBUG | [3996290] Given reference pipeline duplicated [COUNT=1]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_manager.py:132
+15:26:51.350 |    DEBUG | [3996290] PipelineManager initialized
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_manager.py:76
+15:26:51.351 |     INFO | [3996290] Warming up pipelines [PIPELINES=1, ITERATIONS=1]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_manager.py:87
+15:26:51.352 |    DEBUG | [3996290] Pipeline started [PIPELINE_ID=1]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:118
+15:26:51.353 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=1]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:51.353 |    DEBUG | [3996290] Waiting for frame grabber result [JOB_ID=-1]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/framegrabber_data_receiver.py:47
+15:26:51.510 |    DEBUG | [3996168] Inspection Data created [ID=1]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:92
+15:26:51.570 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Warmup/2025-11-05-07-42-40-802_raw_0.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:51.660 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Warmup/2025-11-05-07-42-40-802_raw_1.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:51.738 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Warmup/2025-11-05-07-42-40-802_raw_2.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:51.751 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=TRANSMISSION_GRAY, ID=ade63f33-c3b2-4a4c-9543-4f091ad86dae]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:51.770 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=TRANSMISSION_GRAY, ID=ade63f33-c3b2-4a4c-9543-4f091ad86dae]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:51.771 |     INFO | [3996210] Built frame [TRANSMISSION_GRAY]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:487
+15:26:51.806 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=OBJECT_MASK, ID=5442c613-25cf-4385-a54a-4bf5edf5ebc3]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:51.811 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=OBJECT_MASK, ID=5442c613-25cf-4385-a54a-4bf5edf5ebc3]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:51.811 |     INFO | [3996210] Built frame [OBJECT_MASK]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:598
+15:26:51.820 |     INFO | [3996210] Transmission frame enhanced [ClipLimit: 2.0, TileGridSize: (16, 16)]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:424
+15:26:51.843 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=REFLECTION, ID=410ad018-6be0-497e-94ea-8925a87e68a8]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:51.870 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=REFLECTION, ID=410ad018-6be0-497e-94ea-8925a87e68a8]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:51.870 |     INFO | [3996210] Built frame [REFLECTION]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:660
+15:26:52.123 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=TOPOGRAPHY_GRAY, ID=b2aa0b57-65cf-4301-866a-8f061814abcf]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:52.132 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=TOPOGRAPHY_GRAY, ID=b2aa0b57-65cf-4301-866a-8f061814abcf]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:52.132 |     INFO | [3996210] Built frame [TOPOGRAPHY_GRAY]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:750
+15:26:52.138 |    DEBUG | [3996168] Inspection Data created [ID=2]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:92
+15:26:52.138 |    DEBUG | [3996290] Received frame grabber result [JOB_ID=-1, ID=None]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/framegrabber_data_receiver.py:68
+15:26:52.139 |     INFO | [3996290] Shared memory frames stored [ID=None, FRAMES=['TRANSMISSION_GRAY', 'OBJECT_MASK', 'REFLECTION', 'TOPOGRAPHY_GRAY']]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:632
+15:26:52.141 |    DEBUG | [3996290] Framegrabber Result stored
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:700
+15:26:52.143 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=1, TOOK=789 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:52.146 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=2]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:52.172 |    DEBUG | [3996290] GeoMeas initialized
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:123
+15:26:52.173 |     INFO | [3996290] Images loaded [JOB_ID=-1, from inspection data id: None took: 0.0 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:368
+15:26:52.187 |    DEBUG | [3996290] Found contours [JOB_ID=-1, 3]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:620
+15:26:52.191 |     INFO | [3996290] Object area calculated [AREA=1.03 m2, STATE=OK]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/utils.py:347
+15:26:52.195 |     INFO | [3996290] Object average length calculated [JOB_ID=-1, 1028.1 mm]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:409
+15:26:52.197 |     INFO | [3996290] Object average width calculated [JOB_ID=-1, 1000.3 mm]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:409
+15:26:52.198 |     INFO | [3996290] Measurement took [JOB_ID=-1, 24 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:213
+15:26:52.198 |    DEBUG | [3996290] Sheet geometrics stored [ID=None]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:800
+15:26:52.199 |    DEBUG | [3996290] Set ROI to shared memory block [ID=ade63f33-c3b2-4a4c-9543-4f091ad86dae, ROI=[ 547 1150 3567 4253]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/block.py:74
+15:26:52.200 |    DEBUG | [3996290] Set ROI to shared memory block [ID=5442c613-25cf-4385-a54a-4bf5edf5ebc3, ROI=[ 547 1150 3567 4253]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/block.py:74
+15:26:52.202 |    DEBUG | [3996290] Set ROI to shared memory block [ID=410ad018-6be0-497e-94ea-8925a87e68a8, ROI=[ 547 1150 3567 4253]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/block.py:74
+15:26:52.203 |    DEBUG | [3996290] Set ROI to shared memory block [ID=b2aa0b57-65cf-4301-866a-8f061814abcf, ROI=[ 547 1150 3567 4253]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/block.py:74
+15:26:52.205 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=2, TOOK=60 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:52.207 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=3]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:52.212 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Simulation/2025-11-05-07-42-40-802_raw_0.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:52.212 |     INFO | [3996290] Trimming successful [JOB_ID=-1, TOOK: 0.2 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_roi_trimming/trimmer.py:180
+15:26:52.218 |    DEBUG | [3996290] ROI result stored [ID=None]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:772
+15:26:52.221 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=3, TOOK=13 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:52.223 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=4]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:52.228 |    DEBUG | [3996550] Job received [JOB_ID=0, WORKER_ID=0, JOB_TYPE=get_classic_defects, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:52.228 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=0, JOB_ID=0, JOB_TYPE=get_classic_defects, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:52.235 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=1, JOB_ID=1, JOB_CLASS=ABCMeta, JOB_TYPE=get_ai_defects, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:52.239 |    DEBUG | [3996290] Frame encoding distribution [Distribution: [3, 3, 2, 2]]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:117
+15:26:52.242 |    DEBUG | [3996552] Job received [JOB_ID=2, WORKER_ID=2, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:52.243 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=2, JOB_ID=2, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:52.244 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=2, JOB_ID=3, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:52.244 |    DEBUG | [3996550] Found open defects [JOB_ID=0, COUNT=11]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_classic_defect_detector/classic_defect_detector.py:142
+15:26:52.244 |    DEBUG | [3996550] Classic Defect Detector: Measurement took [ALL=16 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_classic_defect_detector/classic_defect_detector.py:147
+15:26:52.246 |     INFO | [3996550] Job completed [JOB_ID=0, WORKER_ID=0, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:52.247 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=3, JOB_ID=4, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:52.248 |    DEBUG | [3996553] Job received [JOB_ID=4, WORKER_ID=3, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:52.249 |    DEBUG | [3996554] Job received [JOB_ID=5, WORKER_ID=4, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:52.250 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=4, JOB_ID=5, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:52.252 |    DEBUG | [3996290] Result collected from worker [JOB_ID=0, WORKER_ID=0, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>, TOOK=27ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:52.253 |    DEBUG | [3996551] Job received [JOB_ID=1, WORKER_ID=1, JOB_CLASS=ABCMeta, JOB_TYPE=get_ai_defects, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:52.254 |    DEBUG | [3996290] Defects stored [ID=None, AI_CNT=0, CLASSIC_CNT=11]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:890
+15:26:52.261 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=TRANSMISSION_GRAY, RESOLUTION=FULL, ID=c1c7395b-248c-4537-b262-bc2dfc5c8b90]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.262 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=TRANSMISSION_GRAY, RESOLUTION=FULL, ID=c1c7395b-248c-4537-b262-bc2dfc5c8b90]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.268 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=TRANSMISSION_GRAY, RESOLUTION=MEDIUM, ID=de100bce-149e-4d2c-980f-f4c04a68af76]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.268 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=TRANSMISSION_GRAY, RESOLUTION=MEDIUM, ID=de100bce-149e-4d2c-980f-f4c04a68af76]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.270 |    DEBUG | [3996554] Shared memory encoded image created [FRAME_TYPE=TOPOGRAPHY_GRAY, RESOLUTION=FULL, ID=5153f522-7271-4fe0-9f68-a3eb7ca8453b]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.272 |    DEBUG | [3996554] Stored data to shared memory encoded image [FRAME_TYPE=TOPOGRAPHY_GRAY, RESOLUTION=FULL, ID=5153f522-7271-4fe0-9f68-a3eb7ca8453b]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.271 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=OBJECT_MASK, RESOLUTION=THUMB, ID=c03273e5-5de6-4e9f-a749-fa8d13a5434e]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.272 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=OBJECT_MASK, RESOLUTION=THUMB, ID=c03273e5-5de6-4e9f-a749-fa8d13a5434e]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.272 |     INFO | [3996552] Job completed [JOB_ID=2, WORKER_ID=2, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:52.274 |    DEBUG | [3996290] Result collected from worker [JOB_ID=2, WORKER_ID=2, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>, TOOK=34ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:52.274 |    DEBUG | [3996552] Job received [JOB_ID=3, WORKER_ID=2, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:52.276 |    DEBUG | [3996553] Shared memory encoded image created [FRAME_TYPE=REFLECTION, RESOLUTION=FULL, ID=e55229cd-1db6-4604-9c0d-86f0bf7b2c76]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.276 |    DEBUG | [3996553] Stored data to shared memory encoded image [FRAME_TYPE=REFLECTION, RESOLUTION=FULL, ID=e55229cd-1db6-4604-9c0d-86f0bf7b2c76]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.278 |    DEBUG | [3996554] Shared memory encoded image created [FRAME_TYPE=TOPOGRAPHY_GRAY, RESOLUTION=MEDIUM, ID=ae35386e-ac7b-4995-8b41-6b4f946e848c]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.279 |    DEBUG | [3996554] Stored data to shared memory encoded image [FRAME_TYPE=TOPOGRAPHY_GRAY, RESOLUTION=MEDIUM, ID=ae35386e-ac7b-4995-8b41-6b4f946e848c]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.279 |     INFO | [3996554] Job completed [JOB_ID=5, WORKER_ID=4, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:52.282 |    DEBUG | [3996290] Result collected from worker [JOB_ID=5, WORKER_ID=4, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>, TOOK=34ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:52.286 |    DEBUG | [3996553] Shared memory encoded image created [FRAME_TYPE=REFLECTION, RESOLUTION=MEDIUM, ID=12144384-2228-4063-b9ec-039a1d61b202]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.286 |    DEBUG | [3996553] Stored data to shared memory encoded image [FRAME_TYPE=REFLECTION, RESOLUTION=MEDIUM, ID=12144384-2228-4063-b9ec-039a1d61b202]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.286 |     INFO | [3996553] Job completed [JOB_ID=4, WORKER_ID=3, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:52.289 |    DEBUG | [3996290] Result collected from worker [JOB_ID=4, WORKER_ID=3, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>, TOOK=44ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:52.293 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Simulation/2025-11-05-07-42-40-802_raw_1.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:52.331 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=OBJECT_MASK, RESOLUTION=FULL, ID=e6d2da28-5936-4598-a5da-975bb8bf7be5]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.331 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=OBJECT_MASK, RESOLUTION=FULL, ID=e6d2da28-5936-4598-a5da-975bb8bf7be5]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.337 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=OBJECT_MASK, RESOLUTION=MEDIUM, ID=58f2792b-5ae2-44c7-b70e-19a07037479f]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.337 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=OBJECT_MASK, RESOLUTION=MEDIUM, ID=58f2792b-5ae2-44c7-b70e-19a07037479f]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.348 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=REFLECTION, RESOLUTION=THUMB, ID=b5e093bd-b2bf-4ff6-85e5-672a82c7450d]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:52.348 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=REFLECTION, RESOLUTION=THUMB, ID=b5e093bd-b2bf-4ff6-85e5-672a82c7450d]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:52.348 |     INFO | [3996552] Job completed [JOB_ID=3, WORKER_ID=2, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:52.350 |    DEBUG | [3996290] Result collected from worker [JOB_ID=3, WORKER_ID=2, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>, TOOK=107ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:52.360 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Simulation/2025-11-05-07-42-40-802_raw_2.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:52.382 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=TRANSMISSION_GRAY, ID=fb4c3f59-bfeb-4014-a0b3-5024f32f80fd]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:52.394 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=TRANSMISSION_GRAY, ID=fb4c3f59-bfeb-4014-a0b3-5024f32f80fd]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:52.395 |     INFO | [3996210] Built frame [TRANSMISSION_GRAY]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:487
+15:26:52.420 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=OBJECT_MASK, ID=6fb5fc58-ce14-4f87-9e65-20e441888d6c]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:52.428 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=OBJECT_MASK, ID=6fb5fc58-ce14-4f87-9e65-20e441888d6c]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:52.429 |     INFO | [3996210] Built frame [OBJECT_MASK]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:598
+15:26:52.441 |     INFO | [3996210] Transmission frame enhanced [ClipLimit: 2.0, TileGridSize: (16, 16)]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:424
+15:26:52.468 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=REFLECTION, ID=6a4ea215-2927-4072-844c-b98a75c37ccf]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:52.494 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=REFLECTION, ID=6a4ea215-2927-4072-844c-b98a75c37ccf]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:52.494 |     INFO | [3996210] Built frame [REFLECTION]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:660
+15:26:52.815 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=TOPOGRAPHY_GRAY, ID=fa9faaa3-10fa-4eb7-9c80-818072e12e60]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:52.823 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=TOPOGRAPHY_GRAY, ID=fa9faaa3-10fa-4eb7-9c80-818072e12e60]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:52.823 |     INFO | [3996210] Built frame [TOPOGRAPHY_GRAY]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:750
+15:26:52.823 |    DEBUG | [3996551] Found AI defects [JOB_ID=1, COUNT=21]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:543
+15:26:52.824 |    DEBUG | [3996551] Defect Analyzer: Measurement took [JOB_ID=1, FULL_INFERENCE_TIME=557 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:548
+15:26:52.830 |     INFO | [3996551] Job completed [JOB_ID=1, WORKER_ID=1, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:52.833 |    DEBUG | [3996290] Result collected from worker [JOB_ID=1, WORKER_ID=1, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>, TOOK=601ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:52.835 |    DEBUG | [3996168] Inspection Data created [ID=3]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:92
+15:26:52.837 |    DEBUG | [3996290] Defects stored [ID=None, AI_CNT=21, CLASSIC_CNT=0]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:890
+15:26:52.843 |    DEBUG | [3996290] Encoded images combined [Combined 10 encoded frames from 4 workers]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:148
+15:26:52.847 |    DEBUG | [3996290] Extracted defects combined [Using 2 defect object(s) with highest stage RAW]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:290
+15:26:52.852 |    DEBUG | [3996290] Defects stored [ID=None, AI_CNT=21, CLASSIC_CNT=11]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:890
+15:26:52.856 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=4, TOOK=631 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:52.861 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=5]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:52.866 |    DEBUG | [3996290] Base defects distributed [Distribution: [32]]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:377
+15:26:52.870 |    DEBUG | [3996556] Job received [JOB_ID=6, WORKER_ID=6, JOB_TYPE=extract_features, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:52.871 |    DEBUG | [3996556] Got base defects to extract [JOB_ID=6, COUNT=32]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_feature_extraction/geo_feature_extractor.py:315
+15:26:52.871 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=6, JOB_ID=6, JOB_TYPE=extract_features, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:52.877 |    DEBUG | [3996560] Job received [JOB_ID=7, WORKER_ID=10, JOB_TYPE=store_images_to_disk, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:52.877 |     INFO | [3996560] Job completed [JOB_ID=7, WORKER_ID=10, RESULT_TYPE=<class 'int'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:52.880 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=10, JOB_ID=7, JOB_TYPE=store_images_to_disk, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:52.884 |    DEBUG | [3996290] Result collected from worker [JOB_ID=7, WORKER_ID=10, RESULT_TYPE=<class 'int'>, TOOK=10ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:52.887 |  WARNING | [3996556] Defect too small [JOB_ID=6, Skipped 6 defects (degenerate or < 3px)]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_feature_extraction/geo_feature_extractor.py:221
+15:26:52.889 |    DEBUG | [3996561] Job received [JOB_ID=8, WORKER_ID=11, JOB_TYPE=encoded_images_to_cache, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:52.890 |     INFO | [3996561] Job completed [JOB_ID=8, WORKER_ID=11, RESULT_TYPE=<class 'int'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:52.891 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=11, JOB_ID=8, JOB_TYPE=encoded_images_to_cache, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:52.895 |    DEBUG | [3996290] Result collected from worker [JOB_ID=8, WORKER_ID=11, RESULT_TYPE=<class 'int'>, TOOK=9ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:52.892 |     INFO | [3996556] Extracted features [JOB_ID=6, SUM_DEFECTS=26, AI_DEFECTS=19, CLASSIC_DEFECTS=7, TOOK=21 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_feature_extraction/geo_feature_extractor.py:467
+15:26:52.897 |     INFO | [3996556] Job completed [JOB_ID=6, WORKER_ID=6, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:52.901 |    DEBUG | [3996290] Result collected from worker [JOB_ID=6, WORKER_ID=6, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>, TOOK=34ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:52.905 |    DEBUG | [3996290] Extracted defects combined [Combined 26 defects from 1 workers.]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:451
+15:26:52.908 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Simulation/2025-11-05-07-43-17-480_raw_0.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:52.909 |    DEBUG | [3996290] Defects stored [ID=None, AI_CNT=19, CLASSIC_CNT=7]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:890
+15:26:52.917 |    DEBUG | [3996290] Extracted defects combined [Using 1 defect object(s) with highest stage EXTRACTED (discarding 2 object(s) with lower stages)]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:290
+15:26:52.921 |    DEBUG | [3996290] Defects stored [ID=None, AI_CNT=19, CLASSIC_CNT=7]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:890
+15:26:52.925 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=5, TOOK=64 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:52.929 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=6]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:52.937 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=6, TOOK=7 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:52.942 |    DEBUG | [3996290] Pipeline finished [PIPELINE_ID=1, TOOK=798 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:122
+15:26:52.946 |     INFO | [3996290] Warming up complete [TOOK=1591 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_manager.py:104
+15:26:52.950 |     INFO | [3996290] Pipeline Manager is ready to accept jobs
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_manager.py:153
+15:26:52.954 |    DEBUG | [3996290] Pipeline started [PIPELINE_ID=1]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline.py:118
+15:26:52.958 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=1]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:52.962 |    DEBUG | [3996290] Waiting for frame grabber result [JOB_ID=-1]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/framegrabber_data_receiver.py:47
+15:26:52.967 |    DEBUG | [3996290] Received frame grabber result [JOB_ID=-1, ID=None]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/framegrabber_data_receiver.py:68
+15:26:52.972 |     INFO | [3996290] Shared memory frames stored [ID=None, FRAMES=['TRANSMISSION_GRAY', 'OBJECT_MASK', 'REFLECTION', 'TOPOGRAPHY_GRAY']]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:632
+15:26:52.976 |    DEBUG | [3996290] Framegrabber Result stored
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:700
+15:26:52.980 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=1, TOOK=21 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:52.982 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Simulation/2025-11-05-07-43-17-480_raw_1.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:52.986 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=2]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:52.995 |    DEBUG | [3996290] GeoMeas initialized
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:123
+15:26:52.999 |     INFO | [3996290] Images loaded [JOB_ID=-1, from inspection data id: None took: 0.0 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:368
+15:26:53.015 |    DEBUG | [3996290] Found contours [JOB_ID=-1, 3]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:620
+15:26:53.021 |     INFO | [3996290] Object area calculated [AREA=1.03 m2, STATE=OK]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/utils.py:347
+15:26:53.024 |     INFO | [3996024] Main Process started [READY_AFTER=8 s]
+ >> /home/rosipc/git/gbbm_rosi_main/main_sim.py:90
+15:26:53.026 |     INFO | [3996290] Object average length calculated [JOB_ID=-1, 1028.1 mm]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:409
+15:26:53.031 |     INFO | [3996290] Object average width calculated [JOB_ID=-1, 1000.3 mm]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:409
+15:26:53.036 |     INFO | [3996290] Measurement took [JOB_ID=-1, 36 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_meas/geo_meas.py:213
+15:26:53.040 |    DEBUG | [3996290] Sheet geometrics stored [ID=None]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:800
+15:26:53.045 |    DEBUG | [3996290] Set ROI to shared memory block [ID=fb4c3f59-bfeb-4014-a0b3-5024f32f80fd, ROI=[ 547 1150 3567 4253]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/block.py:74
+15:26:53.049 |    DEBUG | [3996290] Set ROI to shared memory block [ID=6fb5fc58-ce14-4f87-9e65-20e441888d6c, ROI=[ 547 1150 3567 4253]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/block.py:74
+15:26:53.053 |    DEBUG | [3996290] Set ROI to shared memory block [ID=6a4ea215-2927-4072-844c-b98a75c37ccf, ROI=[ 547 1150 3567 4253]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/block.py:74
+15:26:53.057 |    DEBUG | [3996290] Set ROI to shared memory block [ID=fa9faaa3-10fa-4eb7-9c80-818072e12e60, ROI=[ 547 1150 3567 4253]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/block.py:74
+15:26:53.062 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=2, TOOK=77 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:53.066 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Simulation/2025-11-05-07-43-17-480_raw_2.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:53.065 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=3]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:53.074 |     INFO | [3996290] Trimming successful [JOB_ID=-1, TOOK: 0.3 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_roi_trimming/trimmer.py:180
+15:26:53.078 |    DEBUG | [3996290] ROI result stored [ID=None]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:772
+15:26:53.082 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=3, TOOK=17 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:53.085 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=4]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:53.090 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=TRANSMISSION_GRAY, ID=7f1ded55-6f8c-4c18-956f-b4b28303634b]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:53.091 |    DEBUG | [3996550] Job received [JOB_ID=9, WORKER_ID=0, JOB_TYPE=get_classic_defects, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:53.091 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=0, JOB_ID=9, JOB_TYPE=get_classic_defects, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:53.098 |    DEBUG | [3996551] Job received [JOB_ID=10, WORKER_ID=1, JOB_CLASS=ABCMeta, JOB_TYPE=get_ai_defects, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:53.097 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=1, JOB_ID=10, JOB_CLASS=ABCMeta, JOB_TYPE=get_ai_defects, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:53.104 |    DEBUG | [3996290] Frame encoding distribution [Distribution: [3, 3, 2, 2]]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:117
+15:26:53.106 |    DEBUG | [3996552] Job received [JOB_ID=11, WORKER_ID=2, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:53.108 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=TRANSMISSION_GRAY, ID=7f1ded55-6f8c-4c18-956f-b4b28303634b]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:53.108 |     INFO | [3996210] Built frame [TRANSMISSION_GRAY]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:487
+15:26:53.109 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=2, JOB_ID=11, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:53.115 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=2, JOB_ID=12, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:53.118 |    DEBUG | [3996553] Job received [JOB_ID=13, WORKER_ID=3, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:53.124 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=TRANSMISSION_GRAY, RESOLUTION=FULL, ID=d533b2b9-2661-4697-80b1-358b0982181c]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.125 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=TRANSMISSION_GRAY, RESOLUTION=FULL, ID=d533b2b9-2661-4697-80b1-358b0982181c]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.126 |    DEBUG | [3996550] Found open defects [JOB_ID=9, COUNT=11]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_classic_defect_detector/classic_defect_detector.py:142
+15:26:53.121 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=3, JOB_ID=13, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:53.127 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=3, JOB_ID=14, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:53.130 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=TRANSMISSION_GRAY, RESOLUTION=MEDIUM, ID=67a4bb70-6aca-4642-80fd-f18f6e79c512]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.131 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=TRANSMISSION_GRAY, RESOLUTION=MEDIUM, ID=67a4bb70-6aca-4642-80fd-f18f6e79c512]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.127 |    DEBUG | [3996550] Classic Defect Detector: Measurement took [ALL=34 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_classic_defect_detector/classic_defect_detector.py:147
+15:26:53.132 |     INFO | [3996550] Job completed [JOB_ID=9, WORKER_ID=0, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:53.134 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=OBJECT_MASK, RESOLUTION=THUMB, ID=64f56ab2-80db-4095-b9d6-bf9ab6c84b4e]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.134 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=OBJECT_MASK, RESOLUTION=THUMB, ID=64f56ab2-80db-4095-b9d6-bf9ab6c84b4e]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.134 |     INFO | [3996552] Job completed [JOB_ID=11, WORKER_ID=2, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:53.136 |    DEBUG | [3996552] Job received [JOB_ID=12, WORKER_ID=2, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:53.137 |    DEBUG | [3996290] Result collected from worker [JOB_ID=9, WORKER_ID=0, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>, TOOK=49ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:53.139 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=OBJECT_MASK, ID=6e1bc6fd-69ab-4bdf-a15a-562b6c4c4630]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:53.142 |    DEBUG | [3996290] Defects stored [ID=None, AI_CNT=0, CLASSIC_CNT=11]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:890
+15:26:53.144 |    DEBUG | [3996290] Result collected from worker [JOB_ID=11, WORKER_ID=2, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>, TOOK=39ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:53.146 |    DEBUG | [3996553] Shared memory encoded image created [FRAME_TYPE=REFLECTION, RESOLUTION=FULL, ID=697aae76-9e89-491b-bab2-89b780a43f86]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.147 |    DEBUG | [3996553] Stored data to shared memory encoded image [FRAME_TYPE=REFLECTION, RESOLUTION=FULL, ID=697aae76-9e89-491b-bab2-89b780a43f86]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.148 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=OBJECT_MASK, ID=6e1bc6fd-69ab-4bdf-a15a-562b6c4c4630]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:53.148 |     INFO | [3996210] Built frame [OBJECT_MASK]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:598
+15:26:53.155 |    DEBUG | [3996553] Shared memory encoded image created [FRAME_TYPE=REFLECTION, RESOLUTION=MEDIUM, ID=6455eb38-353b-4ba5-8338-eaf52603dbe6]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.156 |    DEBUG | [3996553] Stored data to shared memory encoded image [FRAME_TYPE=REFLECTION, RESOLUTION=MEDIUM, ID=6455eb38-353b-4ba5-8338-eaf52603dbe6]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.156 |     INFO | [3996553] Job completed [JOB_ID=13, WORKER_ID=3, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:53.157 |     INFO | [3996210] Transmission frame enhanced [ClipLimit: 2.0, TileGridSize: (16, 16)]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:424
+15:26:53.158 |    DEBUG | [3996553] Job received [JOB_ID=14, WORKER_ID=3, JOB_TYPE=encode_frames, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:53.159 |    DEBUG | [3996290] Result collected from worker [JOB_ID=13, WORKER_ID=3, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>, TOOK=44ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:53.178 |    DEBUG | [3996553] Shared memory encoded image created [FRAME_TYPE=TOPOGRAPHY_GRAY, RESOLUTION=FULL, ID=6859be5c-f66a-4b91-a013-07284aac2fc3]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.181 |    DEBUG | [3996553] Stored data to shared memory encoded image [FRAME_TYPE=TOPOGRAPHY_GRAY, RESOLUTION=FULL, ID=6859be5c-f66a-4b91-a013-07284aac2fc3]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.186 |    DEBUG | [3996553] Shared memory encoded image created [FRAME_TYPE=TOPOGRAPHY_GRAY, RESOLUTION=MEDIUM, ID=ccd643c3-f76d-4b07-a4d2-fd2ef0ac4905]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.186 |    DEBUG | [3996553] Stored data to shared memory encoded image [FRAME_TYPE=TOPOGRAPHY_GRAY, RESOLUTION=MEDIUM, ID=ccd643c3-f76d-4b07-a4d2-fd2ef0ac4905]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.187 |     INFO | [3996553] Job completed [JOB_ID=14, WORKER_ID=3, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:53.189 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=REFLECTION, ID=ec5d8c21-ebfc-4d79-ad8b-1be6e86e113b]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:53.190 |    DEBUG | [3996290] Result collected from worker [JOB_ID=14, WORKER_ID=3, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>, TOOK=68ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:53.212 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=OBJECT_MASK, RESOLUTION=FULL, ID=8fafaaf4-6d7d-4fe9-a176-0df64d713595]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.212 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=OBJECT_MASK, RESOLUTION=FULL, ID=8fafaaf4-6d7d-4fe9-a176-0df64d713595]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.213 |    DEBUG | [3996551] Found AI defects [JOB_ID=10, COUNT=21]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:543
+15:26:53.215 |    DEBUG | [3996551] Defect Analyzer: Measurement took [JOB_ID=10, FULL_INFERENCE_TIME=97 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:548
+15:26:53.217 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=REFLECTION, ID=ec5d8c21-ebfc-4d79-ad8b-1be6e86e113b]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:53.221 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=OBJECT_MASK, RESOLUTION=MEDIUM, ID=80ab5566-81ea-47fd-81fa-db95421294ea]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.217 |     INFO | [3996210] Built frame [REFLECTION]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:660
+15:26:53.224 |     INFO | [3996551] Job completed [JOB_ID=10, WORKER_ID=1, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:53.221 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=OBJECT_MASK, RESOLUTION=MEDIUM, ID=80ab5566-81ea-47fd-81fa-db95421294ea]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.228 |    DEBUG | [3996290] Result collected from worker [JOB_ID=10, WORKER_ID=1, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>, TOOK=135ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:53.233 |    DEBUG | [3996290] Defects stored [ID=None, AI_CNT=21, CLASSIC_CNT=0]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:890
+15:26:53.235 |    DEBUG | [3996552] Shared memory encoded image created [FRAME_TYPE=REFLECTION, RESOLUTION=THUMB, ID=27bf0619-a4a9-441e-98d9-0ae38aeb898c]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:43
+15:26:53.235 |    DEBUG | [3996552] Stored data to shared memory encoded image [FRAME_TYPE=REFLECTION, RESOLUTION=THUMB, ID=27bf0619-a4a9-441e-98d9-0ae38aeb898c]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/encoded_image.py:180
+15:26:53.236 |     INFO | [3996552] Job completed [JOB_ID=12, WORKER_ID=2, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:53.239 |    DEBUG | [3996290] Result collected from worker [JOB_ID=12, WORKER_ID=2, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.image_encoding.ImageEncodingResult'>, TOOK=130ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:53.243 |    DEBUG | [3996290] Encoded images combined [Combined 10 encoded frames from 4 workers]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:148
+15:26:53.248 |    DEBUG | [3996290] Shared memory encoded images set [ID=None, ENCODED_IMAGES_CNT=10]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:743
+15:26:53.252 |    DEBUG | [3996290] Extracted defects combined [Using 2 defect object(s) with highest stage RAW]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:290
+15:26:53.258 |    DEBUG | [3996290] Defects stored [ID=None, AI_CNT=21, CLASSIC_CNT=11]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:890
+15:26:53.263 |    DEBUG | [3996290] Encoded images combined [Combined 10 unique encoded images from 3 branches]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:320
+15:26:53.267 |    DEBUG | [3996290] Shared memory encoded images set [ID=None, ENCODED_IMAGES_CNT=10]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:743
+15:26:53.272 |     INFO | [3996290] Step finished [PIPELINE_ID=1, STEP_ID=4, TOOK=185 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:201
+15:26:53.277 |     INFO | [3996290] Step executing [PIPELINE_ID=1, STEP_ID=5]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/step.py:136
+15:26:53.284 |    DEBUG | [3996290] Base defects distributed [Distribution: [32]]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:377
+15:26:53.287 |    DEBUG | [3996556] Job received [JOB_ID=15, WORKER_ID=6, JOB_TYPE=extract_features, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:53.291 |    DEBUG | [3996556] Got base defects to extract [JOB_ID=15, COUNT=32]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_feature_extraction/geo_feature_extractor.py:315
+15:26:53.290 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=6, JOB_ID=15, JOB_TYPE=extract_features, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'list'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:53.306 |  WARNING | [3996556] Defect too small [JOB_ID=15, Skipped 6 defects (degenerate or < 3px)]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_feature_extraction/geo_feature_extractor.py:221
+15:26:53.310 |     INFO | [3996556] Extracted features [JOB_ID=15, SUM_DEFECTS=26, AI_DEFECTS=19, CLASSIC_DEFECTS=7, TOOK=19 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_geo_feature_extraction/geo_feature_extractor.py:467
+15:26:53.313 |     INFO | [3996556] Job completed [JOB_ID=15, WORKER_ID=6, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:53.333 |    DEBUG | [3996560] Job received [JOB_ID=16, WORKER_ID=10, JOB_TYPE=store_images_to_disk, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:53.332 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=10, JOB_ID=16, JOB_TYPE=store_images_to_disk, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:53.335 |    ERROR | [3996560] Job execution failed [JOB_ID=16, WORKER_ID=10, ERROR=[Errno 28] No space left on device]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:160
+15:26:53.339 |    DEBUG | [3996561] Job received [JOB_ID=17, WORKER_ID=11, JOB_TYPE=encoded_images_to_cache, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:134
+15:26:53.341 |    DEBUG | [3996290] Provided work to pool worker [WORKER_ID=11, JOB_ID=17, JOB_TYPE=encoded_images_to_cache, JOB_ARGS=[<class 'gbbm_rosi_dependencies.inspection.data.InspectionData'>, <class 'NoneType'>]]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:303
+15:26:53.344 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_transmission_full.jpg]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.345 |    DEBUG | [3996290] Result collected from worker [JOB_ID=15, WORKER_ID=6, RESULT_TYPE=<class 'gbbm_rosi_dependencies.common.dataclasses.defect.DefectsNew'>, TOOK=60ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:53.345 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_transmission_medium.jpg]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.347 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_object_mask_thumb.png]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.347 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_object_mask_full.png]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.348 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_object_mask_medium.png]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.348 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_reflection_thumb.jpg]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.351 |    DEBUG | [3996290] Extracted defects combined [Combined 26 defects from 1 workers.]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_helper_functions.py:451
+15:26:53.352 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_reflection_full.jpg]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.354 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_reflection_medium.jpg]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.356 |    DEBUG | [3996290] Defects stored [ID=None, AI_CNT=19, CLASSIC_CNT=7]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:890
+15:26:53.357 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_topography_full.jpg]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.357 |     INFO | [3996561] Encoded image got successfully saved to django cache [JOB_ID=17, /home/rosipc/ROSI/Images/Out/2026/05/28/2026-05-28-15-26-52-972_topography_medium.jpg]
+ >> /home/rosipc/git/gbbm_rosi_django/gbbm_rosi_django/inspection/utils.py:232
+15:26:53.358 |     INFO | [3996561] Job completed [JOB_ID=17, WORKER_ID=11, RESULT_TYPE=<class 'int'>]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:154
+15:26:53.360 |    DEBUG | [3996290] Result collected from worker [JOB_ID=16, WORKER_ID=10, RESULT_TYPE=<class 'NoneType'>, TOOK=37ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:53.365 |    DEBUG | [3996290] Result collected from worker [JOB_ID=17, WORKER_ID=11, RESULT_TYPE=<class 'int'>, TOOK=30ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/collector.py:92
+15:26:53.370 |    ERROR | [3996290] Job not found. Cannot get work result [JOB_ID=16]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:338
+15:26:53.375 |    ERROR | [3996290] Exception occurred in function [JOB_ID=16, FUNCTION=store_images_to_disk, ERROR=Job not found. Cannot get work result. JOB_ID=16]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/function.py:378
+15:26:53.379 |    ERROR | [3996290] Exception occurred in function [ERROR=Exception occurred in functionJOB_ID=16, FUNCTION=store_images_to_disk, ERROR=Job not found. Cannot get work result. JOB_ID=16]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/branch.py:150
+15:26:53.383 |    ERROR | [3996290] Unknown error [Exception occurred in functionJOB_ID=16, FUNCTION=store_images_to_disk, ERROR=Job not found. Cannot get work result. JOB_ID=16]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_manager.py:180
+15:26:53.438 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=TOPOGRAPHY_GRAY, ID=8cf1f455-fe50-4a0e-acb6-96fb168a8a04]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:53.444 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=TOPOGRAPHY_GRAY, ID=8cf1f455-fe50-4a0e-acb6-96fb168a8a04]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:53.444 |     INFO | [3996210] Built frame [TOPOGRAPHY_GRAY]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:750
+15:26:53.456 |    DEBUG | [3996168] Inspection Data created [ID=4]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/inspection/data.py:92
+15:26:53.524 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Simulation/2025-11-05-07-44-05-450_raw_0.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:53.615 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Simulation/2025-11-05-07-44-05-450_raw_1.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:53.684 |     INFO | [3996210] Image loaded from disk [/home/rosipc/ROSI/Images/Simulation/2025-11-05-07-44-05-450_raw_2.jpg]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:348
+15:26:53.707 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=TRANSMISSION_GRAY, ID=61e0ce9b-da8e-4d1a-8887-14c52a4b6617]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:53.729 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=TRANSMISSION_GRAY, ID=61e0ce9b-da8e-4d1a-8887-14c52a4b6617]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:53.729 |     INFO | [3996210] Built frame [TRANSMISSION_GRAY]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:487
+15:26:53.744 |    DEBUG | [3996551] GPU memory cleared [USAGE=16.3% -> 0.4%, TOOK=15 ms]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_defect_analyzer_smp/defect_analyzer.py:118
+15:26:53.762 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=OBJECT_MASK, ID=905ff58a-b42b-4303-9e88-5f340c511cbe]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:53.772 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=OBJECT_MASK, ID=905ff58a-b42b-4303-9e88-5f340c511cbe]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:53.773 |     INFO | [3996210] Built frame [OBJECT_MASK]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:598
+15:26:53.792 |     INFO | [3996210] Transmission frame enhanced [ClipLimit: 2.0, TileGridSize: (16, 16)]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:424
+15:26:53.817 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=REFLECTION, ID=23e8061f-94b2-4882-98aa-a62486cc7f9b]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:53.837 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=REFLECTION, ID=23e8061f-94b2-4882-98aa-a62486cc7f9b]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:53.838 |     INFO | [3996210] Built frame [REFLECTION]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:660
+15:26:53.864 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=0, PID=3996550]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:26:53.865 |    DEBUG | [3996550] Non signal received from job queue [WORKER_ID=0]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:26:53.917 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=0, PID=3996550]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:26:53.922 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=1, PID=3996551]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:26:53.926 |    DEBUG | [3996551] Non signal received from job queue [WORKER_ID=1]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:26:54.089 |    DEBUG | [3996210] Shared memory frame created [FRAME_TYPE=TOPOGRAPHY_GRAY, ID=cba2fa6d-79de-447a-8977-8d9794529321]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:31
+15:26:54.093 |    DEBUG | [3996210] Stored data to shared memory frame [FRAME_TYPE=TOPOGRAPHY_GRAY, ID=cba2fa6d-79de-447a-8977-8d9794529321]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/shared_memory/frame.py:55
+15:26:54.093 |     INFO | [3996210] Built frame [TOPOGRAPHY_GRAY]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/base.py:750
+15:27:26.611 |     INFO | [3996290] MPWorker force-terminated after join timeout [WORKER_ID=1, PID=3996551]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:302
+15:27:27.791 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=1, PID=3996551]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:27.792 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=2, PID=3996552]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:27.795 |    DEBUG | [3996552] Non signal received from job queue [WORKER_ID=2]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:27.855 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=2, PID=3996552]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:27.856 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=3, PID=3996553]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:27.857 |    DEBUG | [3996553] Non signal received from job queue [WORKER_ID=3]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:27.969 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=3, PID=3996553]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:27.970 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=4, PID=3996554]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:27.971 |    DEBUG | [3996554] Non signal received from job queue [WORKER_ID=4]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:28.031 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=4, PID=3996554]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:28.035 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=5, PID=3996555]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:28.036 |    DEBUG | [3996555] Non signal received from job queue [WORKER_ID=5]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:28.073 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=5, PID=3996555]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:28.077 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=6, PID=3996556]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:28.078 |    DEBUG | [3996556] Non signal received from job queue [WORKER_ID=6]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:28.126 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=6, PID=3996556]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:28.131 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=7, PID=3996557]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:28.132 |    DEBUG | [3996557] Non signal received from job queue [WORKER_ID=7]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:28.202 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=7, PID=3996557]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:28.203 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=8, PID=3996558]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:28.204 |    DEBUG | [3996558] Non signal received from job queue [WORKER_ID=8]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:28.246 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=8, PID=3996558]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:28.248 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=9, PID=3996559]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:28.249 |    DEBUG | [3996559] Non signal received from job queue [WORKER_ID=9]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:28.288 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=9, PID=3996559]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:28.289 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=10, PID=3996560]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:28.289 |    DEBUG | [3996560] Non signal received from job queue [WORKER_ID=10]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:28.344 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=10, PID=3996560]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+XXX transmission_high
+XXX transmission
+XXX mask_thumb
+XXX mask_high
+XXX mask
+XXX thumb
+XXX rgb_high
+XXX rgb
+XXX topo_high
+XXX topo
+15:27:28.346 |     INFO | [3996290] MPWorker shutting down [WORKER_ID=11, PID=3996561]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:293
+15:27:28.347 |    DEBUG | [3996561] Non signal received from job queue [WORKER_ID=11]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:121
+15:27:28.508 |     INFO | [3996290] MPWorker shut down completed [WORKER_ID=11, PID=3996561]
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/types/base.py:309
+15:27:28.509 |    DEBUG | [3996290] MPWorkerPool deinitialized
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_dependencies/worker/worker_pool.py:369
+15:27:28.510 |    DEBUG | [3996290] PipelineManager deinitialized
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_manager.py:191
+15:27:28.511 |    ERROR | [3996290] Pipeline manager process crashed [ERROR=Exception occurred in functionJOB_ID=16, FUNCTION=store_images_to_disk, ERROR=Job not found. Cannot get work result. JOB_ID=16]
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/pipeline_manager_process.py:139
+15:27:30.599 |     INFO | [3996024] Main Process stopped [Pipeline Manager finished automatically.]
+ >> /home/rosipc/git/gbbm_rosi_main/main_sim.py:99
+15:27:30.599 |     INFO | [3996024] Main Process stopped [Shutting down all subsystems...]
+ >> /home/rosipc/git/gbbm_rosi_main/main_sim.py:108
+15:27:30.608 |    DEBUG | [3996210] Frame Grabber Simulator deinitialized
+ >> /home/rosipc/git/gbbm_rosi_main/.venv/lib/python3.13/site-packages/gbbm_rosi_framegrabber_base/simulator.py:278
+15:27:30.608 |     INFO | [3996210] Frame Grabber Process stopped
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/framegrabber_process.py:294
+15:27:30.652 |     INFO | [3996168] Inspection Data Handler Process stopped
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/insp_data_handler_process.py:157
+15:27:31.674 |     INFO | Logger Process stopped
+ >> /home/rosipc/git/gbbm_rosi_main/gbbm_rosi_main/logger_process.py:130
+/home/rosipc/snap/code/229/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/multiprocessing/resource_tracker.py:400: UserWarning: resource_tracker: There appear to be 16 leaked shared_memory objects to clean up at shutdown: {'/psm_583c7535', '/psm_386f19cc', '/psm_d40ef8b9', '/psm_1c9eed13', '/psm_71bdb058', '/psm_55f4543e', '/psm_947d4cad', '/psm_ab196c3a', '/psm_ab204464', '/psm_08275371', '/psm_69df797f', '/psm_7e5f2771', '/psm_3c7e8bf2', '/psm_dee4a3bf', '/psm_8c5b1ed1', '/psm_0479c217'}
+  warnings.warn(
