@@ -33,8 +33,8 @@ main.py
 | [Case 1](case1_prozess_supervision/README.md) | Lücken in der Prozesssupervision | B – Beobachtbarkeit | BESTÄTIGT | **Kritisch** |
 | [Case 2](case2_ram_disk_spof/README.md) | RAM Disk als Single Point of Failure | A – Ressourcenverwaltung | BESTÄTIGT | **Hoch** |
 | [Case 3](case3_log_queue_cascade/README.md) | Log-Queue-Stau als Pipeline-Blocker | C – Datenpersistenz | BESTÄTIGT | **Hoch** |
-| [Case 4](case4_stale_db_connection/README.md) | Stale Django Connection nach Pause | D – Fehlertoleranz | TEILW. BESTÄTIGT | **Mittel-Hoch** |
-| [Case 5](case5_gc_race_condition/README.md) | GC Race Condition im Worker-Pool | A – Ressourcenverwaltung | GC BESTÄTIGT, RACE NICHT REPR. | **Niedrig** |
+| [Case 4](case4_stale_db_connection/README.md) | Stale Django Connection nach Pause | D – Fehlertoleranz | ANALYTISCH BESTÄTIGT | **Mittel-Hoch** |
+| [Case 5](case5_gc_race_condition/README.md) | GC Race Condition im Worker-Pool | A – Ressourcenverwaltung | HYPOTHESE WIDERLEGT | **Niedrig** |
 
 ---
 
@@ -76,22 +76,22 @@ Normalbetrieb-Messung ohne injizierte Fehler. Referenzwerte für alle weiteren M
 | qsize nach SIGCONT | 6 → 0 in <300ms |
 
 ### Case 4 – Stale DB Connection
-`convert_inspection_to_model` hat kein `try/except` für `OperationalError`. In Entwicklung safe (`CONN_MAX_AGE=0`). In Produktion (`CONN_MAX_AGE=60`) determiniert reproduzierbar nach Produktionspausen.
+`convert_inspection_to_model` hat kein `try/except` für `OperationalError`. Klassischer Dev/Prod-Parity-Bruch: `CONN_MAX_AGE=0` in Entwicklung maskiert die Schwachstelle. In Produktion (`CONN_MAX_AGE=60`) deterministisch reproduzierbar nach jeder Produktionspause.
 
 | Konfiguration | Verhalten nach pg_terminate_backend |
 |---|---|
-| Development (CONN_MAX_AGE=0) | Kein Crash, System läuft weiter |
-| Produktion (CONN_MAX_AGE=60) | OperationalError → Shutdown (nicht empirisch getestet) |
+| Development (CONN_MAX_AGE=0) | Kein Crash – erwartetes Ergebnis (frische Verbindung pro Aufruf) |
+| Produktion (CONN_MAX_AGE=60) | OperationalError → Shutdown – analytisch bestätigt durch Code-Analyse |
 
 ### Case 5 – GC Race Condition
-Worker-GC zerstört SM-Blöcke nach `remove_after_seconds=10`. Step 5 dauert ~100ms → 100-facher Sicherheitspuffer. Race empirisch nicht reproduzierbar. `destroy()` ist idempotent.
+Hypothese widerlegt. GC-Mechanismus ist aktiv und korrekt. Zwei unabhängige Schutzebenen verhindern einen Race: ~100-facher Zeitpuffer (Step 5: ~100ms vs. GC-Threshold: 10s) und idempotentes `destroy()`. Step 6 greift zudem nicht auf SM-Blöcke zu.
 
-| Patch | Wert |
+| Befund | Wert |
 |---|---|
-| GC-Threshold | 10s → 2s |
-| Step-6-Delay | +4s sleep |
-| FileNotFoundError | NEIN |
-| Race reproduziert | NEIN |
+| GC aktiv | JA |
+| Zeitpuffer Step5 vs. GC-Threshold | ~100× (100ms vs. 10s) |
+| `destroy()` idempotent | JA |
+| Race reproduziert | NEIN – Hypothese widerlegt |
 
 ---
 

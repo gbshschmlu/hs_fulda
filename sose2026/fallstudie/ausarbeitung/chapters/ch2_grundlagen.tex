@@ -1,0 +1,112 @@
+% =============================================================================
+% Kapitel 2: Theoretische Grundlagen
+% =============================================================================
+
+\section{Theoretische Grundlagen}
+\label{sec:grundlagen}
+
+\subsection{Verfügbarkeit im Dauerbetrieb}
+\label{sec:grundlagen-verfuegbarkeit}
+
+Verfügbarkeit (\textit{Availability}) ist eine zentrale Eigenschaft zuverlässiger
+Systeme. Avizienis et al.\ definieren sie als die Bereitschaft eines Systems, seinen
+spezifizierten Dienst korrekt zu erbringen \cite{avizienis2004}. Formal ergibt sie sich
+aus der mittleren Betriebsdauer zwischen Ausfällen (\textit{Mean Time to Failure}, MTTF)
+und der mittleren Wiederherstellungszeit (\textit{Mean Time to Repair}, MTTR):
+
+\begin{equation}
+    A = \frac{\text{MTTF}}{\text{MTTF} + \text{MTTR}}
+    \label{eq:availability}
+\end{equation}
+
+Gleichung~\ref{eq:availability} verdeutlicht, dass hohe Verfügbarkeit nicht allein durch
+seltene Ausfälle, sondern ebenso durch kurze Wiederherstellungszeiten erreicht wird. Für
+ein System ohne automatische Fehlererkennung ist die MTTR untrennbar an die Zeit
+gebunden, bis ein Mensch den Ausfall bemerkt. Während Entwicklungsumgebungen typischerweise
+täglich neu gestartet werden und Fehler durch manuelle Beobachtung sichtbar sind,
+akkumulieren sich im Dauerbetrieb Effekte, die über kurze Beobachtungsfenster unsichtbar
+bleiben. Ein System, das im Entwicklungsbetrieb stabil läuft, kann daher im 24/7-Betrieb
+durch eine andere Klasse von Fehlern ausfallen.
+
+\subsection{Fehlerklassifikation}
+\label{sec:grundlagen-fehler}
+
+Cristian unterscheidet grundlegende Verhaltensklassen bei Prozessausfällen in verteilten
+Systemen \cite{cristian1991}. Für diese Fallstudie sind zwei Klassen relevant. Bei einem
+\textit{Fail-Stop}-Ausfall bricht ein fehlerhafter Prozess sofort ab und signalisiert
+seinen Ausfall unmissverständlich; der Fehler ist für das Gesamtsystem sichtbar und
+adressierbar. Bei einem \textit{Fail-Silent}-Ausfall stellt der Prozess seine Funktion
+ohne Meldung ein, das Gesamtsystem läuft scheinbar weiter -- ohne Alarm, ohne Neustart,
+ohne Log. Fail-Silent-Verhalten ist in industriellen Systemen besonders gefährlich, weil
+der Ausfall nicht durch technische Signale, sondern erst durch ausbleibende
+Produktionsergebnisse sichtbar wird.
+
+Davon abzugrenzen sind \textit{schleichende Fehler}, die nicht durch ein singuläres
+Ereignis, sondern durch die kontinuierliche Akkumulation eines Ressourcenverbrauchs
+entstehen. Charakteristisch ist die erhebliche Zeitspanne zwischen Ursache und sichtbarem
+Symptom; im 24/7-Betrieb kann diese Stunden oder ganze Schichten betragen. Birman
+beschreibt diesen Zustand als nominal laufendes System, das seinen eigentlichen Zweck
+nicht mehr erfüllt \cite{birman2012}.
+
+Ein \textit{Kaskadeneffekt} liegt vor, wenn der Ausfall oder die Verlangsamung einer
+Komponente über gemeinsame Schnittstellen den Ausfall weiterer Komponenten verursacht
+\cite{ieee_cascade2016}. Solche Effekte sind schwer zu diagnostizieren, da das sichtbare
+Symptom nicht die Ursache widerspiegelt: Das System kollabiert an einer anderen Stelle,
+als die ursprüngliche Schwachstelle liegt.
+
+\subsection{Prozesssupervision und das Watchdog-Pattern}
+\label{sec:grundlagen-supervision}
+
+In langlebigen Multiprocessing-Systemen ist es unzureichend, Prozesse nur beim Start zu
+überprüfen. Das \textit{Supervisor-Modell} sieht einen dedizierten Überwachungsprozess
+vor, der den Laufzeitstatus aller untergeordneten Prozesse kontinuierlich beobachtet und
+bei Ausfall automatisch reagiert -- durch Neustart, Alarm oder geordnetes Herunterfahren.
+Dieses Konzept ist im Erlang/OTP-Framework als \textit{Supervision Tree} etabliert, in
+dem Supervisoren ihre Kindprozesse überwachen und bei Absturz neu starten
+\cite{armstrong2007}. Das \textit{Watchdog-Pattern} ist eine konkrete Ausprägung: Der
+Supervisor erwartet in regelmäßigen Abständen ein Lebenszeichen (\textit{Heartbeat}) des
+überwachten Prozesses; bleibt es aus, gilt der Prozess als ausgefallen. Für eingebettete
+und industrielle Systeme beschreiben Pont und Ong mehrere Varianten dieses Musters mit
+unterschiedlichen Reaktionsstrategien \cite{pont_watchdog}.
+
+Fehlt eine solche Logik, entstehen zwei kritische Szenarien. Im ersten hält ein
+abgestürzter Prozess, dessen Ausgabe von anderen Prozessen erwartet wird, das System in
+einem wartenden Zustand gefangen -- ohne Timeout, ohne Alarm. Im zweiten läuft das System
+nach dem Ausfall eines Prozesses scheinbar weiter, Fehler werden erst durch ausbleibende
+Ausgaben sichtbar. Beide Szenarien erfordern manuelle Eingriffe, die im 24/7-Betrieb ohne
+Bereitschaftsdienst nicht zeitnah erfolgen.
+
+\subsection{Ressourcenerschöpfung und Backpressure}
+\label{sec:grundlagen-ressourcen}
+
+Eine \textit{unbounded Queue} wächst ohne Obergrenze; bei anhaltender Produktionsrate und
+gedrosseltem Konsum akkumuliert sie Einträge, bis der Speicher erschöpft ist. Eine
+\textit{bounded Queue} begrenzt das Wachstum, erzeugt dafür aber \textit{Backpressure}:
+Produzenten, die in eine volle Queue schreiben wollen, werden blockiert. Kleppmann
+beschreibt Backpressure als notwendigen, aber häufig fehlerhaft implementierten
+Mechanismus -- ein blockierendes \texttt{put()} ohne Timeout überträgt den Stau transitiv
+auf alle vorgelagerten Komponenten \cite{kleppmann2017}. In einem Multiprocessing-System
+mit gemeinsamer Queue kann so ein einzelner langsamer Konsument das gesamte System zum
+Einfrieren bringen.
+
+Flüchtige Dateisysteme wie \texttt{tmpfs} und RAM-Disks liegen ausschließlich im
+Arbeitsspeicher \cite{linux_tmpfs}. Sie bieten hohe I/O-Geschwindigkeit, sind jedoch auf
+eine feste Größe begrenzt: Überschreitet das Schreibvolumen diese Grenze, schlagen
+Schreiboperationen mit \texttt{OSError: No space left on device} fehl. Eine RAM-Disk, die
+als Puffer zwischen schnellem Schreiben und langsamem Lesen dient, ist strukturell ein
+\textit{Single Point of Failure} für alle abhängigen Komponenten.
+
+\subsection{Dev/Prod-Parity und Konfigurationsgefälle}
+\label{sec:grundlagen-parity}
+
+Das Prinzip der \textit{Dev/Prod-Parity} (Faktor X des \textit{Twelve-Factor App}-Modells)
+fordert, Entwicklungs- und Produktionsumgebung so ähnlich wie möglich zu halten
+\cite{wiggins2011}. Abweichungen in Konfigurationsparametern können dazu führen, dass
+Fehler in der Entwicklung nicht reproduzierbar sind, die in Produktion deterministisch
+auftreten. Ein typisches Muster ist das Konfigurationsgefälle beim Verbindungs-Pooling:
+Entwicklungsumgebungen öffnen pro Anfrage eine frische Verbindung, Produktionsumgebungen
+nutzen aus Performance-Gründen persistente Verbindungen mit langer Lebensdauer. Die
+Fehlerklasse der veralteten Verbindung (\textit{stale connection}) tritt damit im
+Entwicklungsbetrieb strukturell nicht auf. Fehlerbehandlungscode kann fehlen, ohne dass
+Tests darauf hinweisen; in Produktion führt das erste Auftreten der Fehlerbedingung zum
+unkontrollierten Absturz.

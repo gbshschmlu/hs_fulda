@@ -1,9 +1,28 @@
 % =============================================================================
-% Abstract
+% Zusammenfassung
 % =============================================================================
 
 \begin{abstract}
-    Write your abstract here. It should provide a concise summary of your work,
-    typically 150-250 words. Include the main research question, methodology,
-    key findings, and conclusions.
+    \justifying
+    Diese praxisorientierte Fallstudie analysiert die Verfügbarkeit und Fehlertoleranz
+    des ROSI-Systems (\textit{Realtime Optical Surface Inspection}) im industriellen
+    24/7-Betrieb. ROSI ist ein On-Premise-Inline-Scan-System der Grenzebach BSH GmbH
+    zur automatisierten Qualitätskontrolle von Baustoffen und technisch als
+    Python-Multiprocessing-System mit Shared-Memory-basierter Verarbeitungspipeline
+    realisiert.
+
+    Der Schwerpunkt liegt auf Fehlern, die im Dauerbetrieb schleichend entstehen, lange
+    unbemerkt bleiben oder kaskadieren und im Entwicklungsbetrieb daher selten sichtbar
+    werden. Fünf Failure Cases auf Prozess- und Betriebssystemebene wurden in einer
+    kontrollierten Testumgebung mittels Fault Injection reproduzierbar untersucht.
+
+    Die Messungen belegen erhebliche Lücken in der Fehlertoleranz: Drei von vier
+    Service-Prozessen fallen ohne Erkennung aus (Fail-Silent); eine volle RAM-Disk
+    führt nach einer Stillstandsphase von 35\,Sekunden zum Absturz der gesamten Anlage;
+    eine blockierende Log-Queue friert das System für 27\,Sekunden ohne Alarm ein.
+    Eine veraltete Datenbankverbindung erweist sich als produktionsspezifisches Risiko,
+    das durch die Entwicklungskonfiguration maskiert wird. Eine zunächst angenommene
+    Race Condition im Speichermanagement konnte hingegen als durch Timing-Reserven und
+    idempotente Freigabe abgesichert widerlegt werden. Auf Basis der Befunde werden für
+    jeden Case konkrete, aufwandsarme Handlungsempfehlungen abgeleitet.
 \end{abstract}

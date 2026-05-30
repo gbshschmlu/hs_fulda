@@ -2,7 +2,7 @@
 
 **Block:** A – Speicher- und Ressourcenverwaltung  
 **Forschungsfrage:** Kann der Worker-GC SharedMemory-Blöcke zerstören, während der PipelineManager sie noch benötigt?  
-**Status:** GC BESTÄTIGT, RACE NICHT REPRODUZIERT (Timing-Schutz aktiv)
+**Status:** HYPOTHESE WIDERLEGT – System durch zwei unabhängige Mechanismen geschützt
 
 ---
 
@@ -191,11 +191,15 @@ Konkret: Step 5 müsste in Produktion (`remove_after_seconds=10`) **länger als 
 
 ## Interpretation
 
-- Der GC ist aktiv und zerstört SM-Blöcke (bestätigt durch Test)
-- Die Race Condition ist theoretisch korrekt beschrieben
-- Praktisch: **~100-facher Zeitpuffer** (Step 5: ~100ms vs. GC-Threshold: 10s)
-- `destroy()` ist idempotent → selbst bei theoretischem Overlap kein Crash
-- Step 6 greift nicht auf SM-Blöcke zu → Delay-Patch schafft keine echte Race-Situation
+Die Untersuchung widerlegt die Ausgangshypothese durch zwei unabhängige Befunde:
+
+**Schutzebene 1 – Zeitpuffer:** Step 5 greift zuletzt auf SM-Blöcke zu und dauert typisch 45–107ms. Der GC-Threshold liegt bei 10s. Der Sicherheitspuffer beträgt damit das ~100-fache der tatsächlichen Zugriffsdauer. Die Hypothese setzte implizit voraus, dass Step 5 und GC in einem konkurrierenden Zeitfenster operieren – das tun sie nicht.
+
+**Schutzebene 2 – Idempotentes `destroy()`:** Selbst bei einem theoretischen Overlap würde `destroy()` beim zweiten Aufruf `False` zurückgeben statt zu crashen – kein `FileNotFoundError`, kein Double-Free.
+
+**Wichtiger Nebenbefund:** Step 6 (`convert_inspection_to_model`) greift überhaupt nicht auf SM-Blöcke zu. Das deserialisierte `InspectionData`-Objekt liegt im Python-Heap (RAM). Die ursprüngliche Annahme, dass ein langsamer Step 6 eine Race-Situation erzeugt, war falsch.
+
+Der GC-Mechanismus selbst ist aktiv und funktioniert korrekt – er zerstört Blöcke nach 10s. Das ist absichtliches Verhalten, kein Bug.
 
 ---
 

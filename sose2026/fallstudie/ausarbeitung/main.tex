@@ -2,13 +2,15 @@
 % Main LaTeX Document
 % =============================================================================
 % Document class: A4, 12pt, article
-\documentclass[a4paper, 12pt, openany]{article}
+\documentclass[a4paper, 12pt]{article}
 
 % Load preamble with all packages and configurations
 \usepackage{preamble}
 
 % =============================================================================
 \begin{document}
+\hypersetup{pageanchor=false}
+\pagenumbering{roman}
 
 % ==================== Title Page ====================
 \pagestyle{empty}
@@ -18,6 +20,14 @@
 
 \restoregeometry
 
+% ==================== Confidentiality Notice ====================
+\input{sperrvermerk}
+\clearpage
+
+% ==================== Abstract ====================
+\input{abstract}
+\clearpage
+
 % ==================== Table of Contents ====================
 \begin{spacing}{1.1}
     \tableofcontents
@@ -26,11 +36,15 @@
 
 % ==================== Main Content ====================
 \pagestyle{plain}
+\hypersetup{pageanchor=true}
+\pagenumbering{arabic}
+\justifying
 
-\input{chapters/ch1_introduction}
-\input{chapters/ch2_content}
-% \input{chapters/ch3_content}
-% \input{chapters/ch4_conclusion}
+\input{chapters/ch1_einleitung}
+\input{chapters/ch2_grundlagen}
+\input{chapters/ch3_methodik}
+\input{chapters/ch4_cases}
+\input{chapters/ch5_fazit}
 
 % ==================== Bibliography ====================
 \newpage

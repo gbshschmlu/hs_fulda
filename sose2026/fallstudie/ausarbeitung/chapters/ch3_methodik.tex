@@ -1,0 +1,72 @@
+% =============================================================================
+% Kapitel 3: Methodik
+% =============================================================================
+
+\section{Methodik}
+\label{sec:methodik}
+
+\subsection{Untersuchungsansatz}
+\label{sec:methodik-ansatz}
+
+Die Untersuchung folgt dem Prinzip der \textit{Fault Injection}: dem gezielten Einbringen
+definierter Fehlerzustände in ein laufendes System, um dessen Reaktion empirisch zu
+beobachten \cite{hsueh1997}. Für jeden Failure Case wird eine Hypothese über das erwartete
+Systemverhalten formuliert, ein reproduzierbares Fehlerszenario hergestellt und das
+tatsächliche Verhalten anhand definierter Messgrößen erfasst. Wo ein Fehlerzustand ohne
+Eingriff in den Quellcode herstellbar ist, werden ausschließlich POSIX-Signale oder
+externe Werkzeuge eingesetzt; wo ein Eingriff nötig ist, wird dieser minimal gehalten und
+nach der Messung automatisch zurückgenommen.
+
+\subsection{Testumgebung}
+\label{sec:methodik-umgebung}
+
+Alle Messungen erfolgen am Referenzsystem im Labor Bad Hersfeld. Das System wird über
+einen Simulator betrieben, der die Kamerahardware durch das Einspielen vorab erfasster
+Bilddaten ersetzt. Sämtliche Failure Cases sind dadurch ohne echte Kamerahardware unter
+kontrollierten Bedingungen reproduzierbar. Tabelle~\ref{tab:testumgebung} fasst die
+relevanten Eigenschaften zusammen.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Eigenschaften der Testumgebung}
+    \label{tab:testumgebung}
+    \begin{tabularx}{\textwidth}{lX}
+        \hline
+        \textbf{Eigenschaft} & \textbf{Wert} \\
+        \hline
+        Betriebssystem      & Linux 6.17 (x86\_64) \\
+        Arbeitsspeicher     & 64 GB \\
+        GPU                 & NVIDIA GeForce RTX 5090 (32 GB VRAM) \\
+        Laufzeitumgebung    & Python 3.13 \\
+        Startskript         & \texttt{main.py} (mit geänderter Konfiguration für Simulation) \\
+        Bilddatenquelle     & 462 Bilder = 154 Inspektionen \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\subsection{Referenzmessung (Baseline)}
+\label{sec:methodik-baseline}
+
+Vor der Fehlerinjektion wurde eine Referenzmessung im Normalbetrieb ohne injizierte Fehler
+durchgeführt. Sie dient als Vergleichsbasis für alle Failure Cases. Das System startet
+neben dem Hauptprozess vier Service-Prozesse für \texttt{Logger}, \texttt{FrameGrabber},
+\texttt{Inspection\allowbreak{}Data\allowbreak{}Handler} und \texttt{PipelineManager} sowie
+einen Pool von 12 Worker-Prozessen. Im stationären Zustand erreicht es einen Durchsatz von
+1,74~Inspektionen pro Sekunde bei einer mittleren Pipeline-Laufzeit von 383~ms. Die
+zentrale Log-Queue bleibt dabei nahezu leer.
+
+\subsection{Messgrößen}
+\label{sec:methodik-messgroessen}
+
+Für jeden Case werden vergleichbare Messgrößen erhoben:
+
+\begin{itemize}
+    \item \textit{Time-to-Detection (TTD):} Zeit von der Fehlerinjektion bis zur
+          Erkennung durch das System (Shutdown oder Statusmeldung).
+    \item \textit{Folgeverhalten:} qualitative Beschreibung der Reaktion der übrigen
+          Prozesse (Weiterlauf, Deadlock, Leerschleife, Absturz).
+    \item \textit{Queue-Tiefe und Speicherfüllstand über die Zeit:} quantitative
+          Erfassung schleichender und kaskadierender Effekte.
+    \item \textit{Graceful Degradation:} ob das System bei einem Teilausfall in einen
+          kontrollierten Zustand übergeht oder vollständig ausfällt.
+\end{itemize}

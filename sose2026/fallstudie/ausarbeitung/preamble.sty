@@ -13,11 +13,14 @@
 \usepackage{mathpazo}
 \usepackage{libertine}
 \usepackage[auto]{microtype}
-\urlstyle{same}
+
+% Math support (amsmath provides \text and equation environment)
+\usepackage{amsmath}
 
 % Spacing
 \usepackage{setspace}
 \onehalfspacing
+\usepackage{csquotes}
 
 % Document margins (25mm standard)
 \usepackage[top=25mm, bottom=25mm, left=25mm, right=25mm, headsep=10mm, footskip=12mm]{geometry}
@@ -58,13 +61,14 @@
 % =============================================================================
 \usepackage{hyperref}
 \usepackage[a-1b]{pdfx}
+\urlstyle{same}
 
 % PDF Metadata (adjust as needed)
 \hypersetup{
-    pdftitle={Your Title Here},
-    pdfsubject={Your Subject Here},
-    pdfauthor={Your Name},
-    pdfkeywords={keyword1, keyword2, keyword3},
+    pdftitle={Verfügbarkeit und Fehlertoleranz des ROSI-Systems im industriellen Dauerbetrieb},
+    pdfsubject={Praxisorientierte Fallstudie AI3955},
+    pdfauthor={Luca Michael Schmidt},
+    pdfkeywords={ROSI, Fehlertoleranz, Verfügbarkeit, Fault Injection, Multiprocessing},
     hidelinks
 }
 

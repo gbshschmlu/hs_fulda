@@ -1,0 +1,83 @@
+% =============================================================================
+% Kapitel 1: Einleitung und Problemstellung
+% =============================================================================
+
+\section{Einleitung und Problemstellung}
+\label{sec:einleitung}
+
+ROSI (\textit{Realtime Optical Surface Inspection}) ist ein von der Grenzebach BSH GmbH
+entwickeltes Inline-Scan-System zur automatisierten Qualitätskontrolle von Baustoffen.
+Im laufenden Produktionsprozess werden Materialoberflächen erfasst, Defekte per
+KI-Inferenz erkannt und das Material anschließend regelbasiert in Qualitätsstufen
+klassifiziert. Der Betrieb erfolgt On-Premise direkt in der Produktionsanlage des
+Kunden im 24/7-Dauerbetrieb.
+
+Technisch ist ROSI als Python-Multiprocessing-System aufgebaut. Mehrere langlebige
+Prozesse verarbeiten die Daten in einer Shared-Memory-basierten Pipeline, ergänzt durch
+Queues und flüchtigen Zwischenspeicher in Form eines tmpfs-RAM-Dateisystems. Große
+Bilddaten wandern dabei nicht durch Queues, sondern verbleiben in vom Betriebssystem
+verwalteten Speicherblöcken; die Queues transportieren ausschließlich Referenzen. Die
+in dieser Fallstudie untersuchten Fehlerklassen setzen genau an dieser Prozess- und
+Speicherarchitektur an.
+
+ROSI befindet sich in aktiver Entwicklung; die erste Kundeninbetriebnahme ist für Mitte
+bis Ende 2026 geplant. Mit dem bevorstehenden Produktiveinsatz steigen die Anforderungen
+an Verfügbarkeit und Fehlertoleranz erheblich: Ausfälle können Produktionsstillstände
+verursachen, Inspektionsergebnisse verhindern und im ungünstigsten Fall Qualitätsmängel
+unentdeckt lassen.
+
+\subsection{Problemstellung}
+\label{sec:problemstellung}
+
+Systeme im 24/7-Betrieb sind Fehlerklassen ausgesetzt, die im Entwicklungsbetrieb
+unsichtbar bleiben. Ein System, das täglich neu gestartet wird und unter manueller
+Beobachtung steht, durchläuft selten jene Zustände, in denen sich Ressourcen schleichend
+erschöpfen, Verbindungen veralten oder Teilprozesse still ausfallen. Für ROSI lassen
+sich die relevanten Risikokategorien wie folgt einteilen:
+
+\begin{itemize}
+    \item \textit{Speichererschöpfung:} Puffer, Logs oder Datenbanken wachsen
+          schleichend, bis Schreiboperationen systemweit fehlschlagen.
+    \item \textit{Stille Prozessausfälle:} Ein Teilprozess stürzt ab, das System läuft
+          scheinbar weiter -- ohne Alarm und ohne Neustart.
+    \item \textit{Verbindungsabbrüche:} Datenbankverbindungen veralten nach
+          Produktionspausen und führen beim nächsten Zugriff zu unkontrollierten
+          Prozessabstürzen.
+    \item \textit{Kaskadeneffekte:} Die Verlangsamung einer Komponente blockiert über
+          gemeinsame Queues und Shared-Memory-Schnittstellen das gesamte System.
+    \item \textit{Blinde Flecken im Monitoring:} Vorhandene Überwachungskomponenten
+          erfassen nicht alle kritischen Ressourcen, etwa flüchtige RAM-Dateisysteme
+          oder interne Queue-Tiefen.
+\end{itemize}
+
+ROSI verfügt aktuell über kein externes Alerting. Probleme werden erst durch
+ausbleibende Inspektionsergebnisse oder manuelle Beobachtung sichtbar.
+
+\subsection{Zielsetzung und Forschungsfragen}
+\label{sec:zielsetzung}
+
+Ziel dieser Fallstudie ist es, sicherheitskritische Fehlerszenarien im industriellen
+Dauerbetrieb auf Prozess- und Betriebssystemebene zu identifizieren, reproduzierbar zu
+simulieren und anhand messbarer Kriterien systematisch zu bewerten. Im Fokus stehen
+stille, schleichende und kaskadierende Fehler. Die untersuchten Failure Cases werden in
+drei Themenblöcke gegliedert, denen jeweils eine Forschungsfrage (FF) zugeordnet ist:
+
+\begin{itemize}
+    \item \textit{FF1 -- Speicher- und Ressourcenverwaltung:} Wie verhält sich das
+          System, wenn flüchtige Speicher\-subsysteme überlaufen oder Timing-Konflikte
+          im Shared-Memory-Management auftreten?
+    \item \textit{FF2 -- Systembeobachtbarkeit und Fehlertoleranz:} In welchem Zeitraum
+          erkennt das System eigene Prozessausfälle, und welche Reaktion erfolgt?
+    \item \textit{FF3 -- Datenpersistenz und Kaskadeneffekte:} Wie verhält sich das
+          System bei unterbrochenen Datenbankverbindungen oder blockierenden Queues,
+          und welche Folgeausfälle entstehen?
+\end{itemize}
+
+\subsection{Aufbau der Arbeit}
+\label{sec:aufbau}
+
+Kapitel~\ref{sec:grundlagen} legt den theoretischen Rahmen zu Verfügbarkeit,
+Fehlerklassifikation, Prozesssupervision und Ressourcenmanagement. Kapitel~\ref{sec:methodik}
+beschreibt die Testumgebung und die Methodik der Fehlerinjektion. Kapitel~\ref{sec:cases}
+stellt die fünf Failure Cases mit ihren Messergebnissen dar.
+Kapitel~\ref{sec:fazit} fasst die Befunde zusammen und leitet Handlungsempfehlungen ab.

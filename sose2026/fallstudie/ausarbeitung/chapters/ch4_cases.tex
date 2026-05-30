@@ -1,0 +1,205 @@
+% =============================================================================
+% Kapitel 4: Failure Cases
+% =============================================================================
+
+\section{Failure Cases}
+\label{sec:cases}
+
+Dieses Kapitel stellt die fünf untersuchten Failure Cases dar. Jeder Case erläutert den
+relevanten Systemkontext und die zugrunde liegende Schwachstelle, beschreibt das gemessene
+Verhalten und leitet daraus Interpretation und Handlungsempfehlung ab.
+
+% Hinweis: Pflicht "mind. eine Grafik" ist durch die zwei Mess-Plots (Abb. \ref{fig:case2},
+% \ref{fig:case3}) bereits erfüllt. Optional kann zusätzlich ein Architekturdiagramm der
+% Prozess-Topologie in Kap. \ref{sec:einleitung} oder \ref{sec:methodik} ergänzt werden
+% (Quelle: sammelsorium/misc/Process-Diagram.png bzw. eigene Darstellung aus Pipeline.md).
+
+\subsection{Case 1 -- Lücken in der Laufzeit-Prozesssupervision}
+\label{sec:case1}
+
+Im stationären Betrieb überwacht das System ausschließlich den \texttt{PipelineManager}
+über einen Poll im Sekundentakt. Die drei weiteren Service-Prozesse für Frame-Grabbing,
+Datenbereitstellung und Logging laufen nach erfolgreichem Start ohne jede
+Laufzeitüberwachung; eine Supervisor-Logik im Sinne von
+Abschnitt~\ref{sec:grundlagen-supervision} existiert nicht. Um die Auswirkung dieser
+Lücke zu quantifizieren, wurde jeder Service-Prozess einzeln per \texttt{SIGKILL} zum
+Absturz gebracht und die Time-to-Detection erfasst (Tabelle~\ref{tab:case1}).
+
+\begin{table}[htbp]
+    \centering
+    \caption{Reaktion auf den gezielten Ausfall einzelner Service-Prozesse}
+    \label{tab:case1}
+    \begin{tabularx}{\textwidth}{lllX}
+        \hline
+        \textbf{Zielprozess} & \textbf{Detektiert} & \textbf{TTD} & \textbf{Verhalten} \\
+        \hline
+        PipelineManager  & ja   & 0,992\,s & geordneter Shutdown aller Subsysteme \\
+        FrameGrabber     & nein & --       & Deadlock in Pipeline-Schritt 1 \\
+        InspDataHandler  & nein & --       & stiller Ausfall, laufende Inspektionen enden \\
+        Logger           & nein & --       & stiller Ausfall, kein Log-Output mehr \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+Lediglich der Absturz des PipelineManagers wird erkannt, und zwar nach rund einer Sekunde,
+was dem Poll-Intervall entspricht. Alle übrigen Ausfälle bleiben unbemerkt und entsprechen
+dem Fail-Silent-Verhalten nach Cristian \cite{cristian1991}. Besonders kritisch ist der
+Ausfall des FrameGrabbers: Die Pipeline wartet unbegrenzt auf das nächste Bild, die Anlage
+steht still, ohne dass ein Alarm ausgelöst wird. Abhilfe schafft eine Erweiterung der
+Überwachungsschleife auf alle Service-Prozesse oder die Auslagerung der Supervision an
+eine \texttt{systemd}-Unit mit \texttt{Restart=on-failure}.
+
+\subsection{Case 2 -- Flüchtiger Bildspeicher als Single Point of Failure}
+\label{sec:case2}
+
+Verarbeitete Bilder werden auf einer als tmpfs-RAM-Disk gemounteten Partition abgelegt.
+Die zuständige Funktion \texttt{store\_images\_to\_disk} enthält keine Fehlerbehandlung für
+\texttt{OSError}, und der Füllstand wird nicht überwacht. Da eine RAM-Disk auf eine feste
+Größe begrenzt ist (Abschnitt~\ref{sec:grundlagen-ressourcen}), schlagen
+Schreiboperationen bei Erschöpfung fehl. Im Normalbetrieb wächst das Bildverzeichnis um
+rund 21,8~MB pro Inspektion, was bei Produktionsdurchsatz einer Schreibrate von etwa
+38~MB/s entspricht. Bei 12~GB freiem Speicher wäre die RAM-Disk damit nach ungefähr fünf
+Minuten erschöpft, sofern keine Rotation oder Auslagerung greift. Abbildung~\ref{fig:case2}
+zeigt den gemessenen Anstieg des Bildverzeichnisses im Referenzlauf. Zur Analyse des
+Fehlerfalls wurde eine volle Disk durch das gezielte Auslösen eines \texttt{OSError(28)}
+nachgebildet (Tabelle~\ref{tab:case2}).
+
+\begin{table}[htbp]
+    \centering
+    \caption{Verhalten bei erschöpftem Bildspeicher}
+    \label{tab:case2}
+    \begin{tabularx}{\textwidth}{lX}
+        \hline
+        \textbf{Messgröße} & \textbf{Wert} \\
+        \hline
+        Schreibrate (Hochrechnung Produktionslast) & $\approx$ 38 MB/s \\
+        Zeit von \texttt{OSError} bis PM-Absturz   & 35,2 s \\
+        PM-Absturz bis Shutdown                    & 2,1 s \\
+        Graceful Degradation                       & nein \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{assets/img/case2_image_out_usage.pdf}
+    \caption[Belegung des Bildverzeichnisses über die Zeit]{Belegung des
+        Bildverzeichnisses \texttt{Images/Out} über die Messdauer. In der
+        Entwicklungsumgebung liegt dieser Pfad auf einem regulären Dateisystem; in der
+        Produktionskonfiguration ist er als tmpfs-RAM-Disk vorgesehen.}
+    \source{Eigene Darstellung auf Basis eigener Messdaten}
+    \label{fig:case2}
+\end{figure}
+
+Ein einzelner fehlgeschlagener Schreibvorgang fährt das gesamte System herunter. Zwischen
+dem Fehler und dem erkannten Absturz liegt eine Stillstandsphase von gut 35~Sekunden, in
+der der PipelineManager vergeblich auf das Ergebnis des abgestürzten Workers wartet. Die
+RAM-Disk ist damit ein Single Point of Failure ohne Rückfallebene. Wichtig ist die
+Abgrenzung zu \texttt{/dev/shm}: Shared-Memory-Blöcke und Bildarchiv liegen auf
+unterschiedlichen Pfaden, teilen sich aber denselben physischen Arbeitsspeicher. Eine
+Fehlerbehandlung in \texttt{store\_images\_to\_disk}, die die Inspektion fortsetzt und
+lediglich die Bildarchivierung überspringt, sowie ein Füllstands-Monitoring mit Alarm
+unterhalb von 20\,\% freiem Speicher würden diesen Ausfall verhindern.
+
+\subsection{Case 3 -- Log-Queue-Stau als Pipeline-Blocker}
+\label{sec:case3}
+
+Alle Worker und der PipelineManager schreiben Log-Einträge synchron über
+\texttt{log\_\allowbreak{}queue.\allowbreak{}put()} in eine zentrale, auf 1000 Einträge
+begrenzte Queue. Der Aufruf
+erfolgt blockierend ohne Timeout, und der Zustand \texttt{queue.Full} wird nicht abgefangen
+-- eine Konstruktion, die Backpressure im Sinne von Abschnitt~\ref{sec:grundlagen-ressourcen}
+erzeugt. Um eine hängende Datenbankschicht nachzubilden, wurde der Logger per
+\texttt{SIGSTOP} eingefroren (Tabelle~\ref{tab:case3}).
+
+\begin{table}[htbp]
+    \centering
+    \caption{Verhalten bei eingefrorenem Logger-Prozess}
+    \label{tab:case3}
+    \begin{tabularx}{\textwidth}{lX}
+        \hline
+        \textbf{Messgröße} & \textbf{Wert} \\
+        \hline
+        Durchsatz vor Eingriff             & 17 Pipelines / 5 s \\
+        Pipelines nach \texttt{SIGSTOP}    & 5 (bereits in Bearbeitung) \\
+        Zeit bis vollständiger Freeze      & $\approx$ 1,3 s \\
+        Freeze-Dauer (Beobachtung)         & 27,7 s, kein Alarm \\
+        Drain nach \texttt{SIGCONT}        & $<$ 0,3 s \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{assets/img/case3_queue_depth.pdf}
+    \caption[Queue-Tiefe der Log-Queue über die Zeit]{Queue-Tiefe der Log-Queue über die
+        Zeit. Im Normalbetrieb bleibt sie nahe null. Während des per \texttt{SIGSTOP}
+        erzwungenen Logger-Freeze (schattiert) pausiert der Mess-Thread mit, sodass keine
+        Messpunkte vorliegen; die Queue läuft inferiert auf ihr Maximum von 1000. Nach
+        \texttt{SIGCONT} bei 40~s drainiert sie in unter 0,3~s.}
+    \source{Eigene Darstellung auf Basis eigener Messdaten}
+    \label{fig:case3}
+\end{figure}
+
+Wie Abbildung~\ref{fig:case3} zeigt, bleibt die Queue im Normalbetrieb nahezu leer. Sobald
+sie gefüllt ist, blockieren sämtliche schreibenden Prozesse beim nächsten Log-Aufruf, und
+die gesamte Pipeline friert ein -- eine eigentlich nebensächliche Komponente wirkt so als
+systemweites Backpressure-Ventil. In der Messung drainiert die Queue nach Freigabe in
+unter 0,3~Sekunden; der Engpass liegt damit nicht in der normalen Schreibgeschwindigkeit
+des Loggers, sondern in der fehlenden Entkopplung beim Blockadefall. Es handelt sich um
+einen Kaskadeneffekt nach \cite{ieee_cascade2016}: Das Symptom (Pipeline-Freeze) liegt
+fern der Ursache (blockierende Log-Queue). Eine Umstellung auf \texttt{put(timeout=0.1)}
+mit Drop-on-Full hält das System im Stau stabil, indem einzelne Log-Einträge verworfen
+werden.
+
+\subsection{Case 4 -- Veraltete Datenbankverbindung nach Produktionspause}
+\label{sec:case4}
+
+Die Persistierung der Inspektionsergebnisse erfolgt über das Django-ORM in der Funktion
+\texttt{convert\_inspection\_to\_model}, die weder einen \texttt{OperationalError} abfängt
+noch \texttt{close\_old\_connections()} aufruft. Entscheidend ist ein Konfigurationsgefälle
+(Abschnitt~\ref{sec:grundlagen-parity}): Während die Entwicklung mit
+\texttt{CONN\_\allowbreak{}MAX\_\allowbreak{}AGE = 0} pro Aufruf eine frische Verbindung
+öffnet, hält die Produktion mit \texttt{CONN\_\allowbreak{}MAX\_\allowbreak{}AGE = 60} eine
+persistente Verbindung. Zur Prüfung wurden in der Entwicklungsumgebung während des
+Betriebs alle Datenbankverbindungen über \texttt{pg\_terminate\_backend} getrennt. Vor dem
+Eingriff waren rund 27 Inspektionen verarbeitet; 27 Datenbankverbindungen wurden
+terminiert. Das System verarbeitete unverändert weiter, ein \texttt{OperationalError} trat
+nicht auf. Dieses Ergebnis ist erwartungskonform, da ohne persistente Verbindung keine
+veralten kann -- das Experiment bestätigt damit gerade, weshalb die Schwachstelle im Labor
+unsichtbar bleibt.
+
+Das Risiko ist produktionsspezifisch. Nach einer Pause trennt PostgreSQL oder eine
+vorgelagerte Firewall die inaktive Verbindung; der erste Schreibzugriff danach trifft auf
+eine für gültig gehaltene, tatsächlich tote Verbindung und löst einen
+\texttt{OperationalError} aus, der mangels Behandlung zum Systemabsturz führt. Der Fehler
+tritt damit deterministisch beim ersten Materialdurchlauf nach jeder Produktionspause auf
+und wird durch die Entwicklungskonfiguration vollständig maskiert. Ein Aufruf von
+\texttt{close\_old\_connections()} vor dem Schreibzugriff oder das Setzen von
+\texttt{CONN\_\allowbreak{}MAX\_\allowbreak{}AGE = 0} auch in Produktion behebt das Problem;
+die zusätzliche Latenz ist bei lokaler Datenbank vernachlässigbar
+\cite{django_persistent_connections}.
+
+\subsection{Case 5 -- Vermutete Race Condition im Speichermanagement}
+\label{sec:case5}
+
+Worker-Prozesse geben ihre Shared-Memory-Blöcke über eine Routine frei, die Blöcke nach
+mehr als zehn Sekunden ohne Zugriff zerstört \cite{python_shm}. Die Ausgangshypothese
+lautete, dass diese Freigabe unter Last Blöcke zerstören könnte, die der PipelineManager
+noch benötigt, und so einen \texttt{FileNotFoundError} auslöst. Um den vermuteten Konflikt
+zu provozieren, wurde die Freigabeschwelle von zehn auf zwei Sekunden gesenkt und ein
+nachgelagerter Verarbeitungsschritt künstlich um vier Sekunden verzögert. Über 120~Sekunden
+Laufzeit trat jedoch weder ein \texttt{FileNotFoundError} noch ein \texttt{BrokenPipeError}
+oder ein Absturz auf.
+
+Die Hypothese wird durch zwei unabhängige Mechanismen widerlegt. Erstens greift der letzte
+lesende Schritt typisch nach 45 bis 107~Millisekunden auf die Blöcke zu, während die
+Freigabe frühestens nach zehn Sekunden erfolgt -- ein Sicherheitspuffer von rund dem
+Hundertfachen. Zweitens ist die Freigabeoperation idempotent und gibt bei einem zweiten
+Aufruf lediglich einen negativen Status zurück, statt abzustürzen. Der zunächst vermutete
+kritische Pfad über einen langsamen Persistierungsschritt entfällt zudem, da dieser nicht
+auf die Speicherblöcke zugreift. Damit besteht kein unmittelbarer Handlungsbedarf; der
+Befund unterstreicht vielmehr den Wert der empirischen Prüfung, da sich eine plausibel
+erscheinende Schwachstelle als hinreichend abgesichert erweist. Zur defensiven Absicherung
+kämen langfristig ein Referenzzähler für Speicherblöcke sowie ein Monitoring der Laufzeit
+des lesenden Schritts in Betracht.

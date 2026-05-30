@@ -1,16 +1,117 @@
 % =============================================================================
-% Bibliography - BibTeX References
+% Bibliography – IEEE Style
+% Fallstudie AI3955 | Luca Michael Schmidt | SoSe26
 % =============================================================================
-% Add your BibTeX entries here in IEEE style
 
-@article{example2023,
-    author = {Author, A. and Author, B.},
-    title = {Example Article Title},
-    journal = {Journal Name},
-    year = {2023},
-    volume = {1},
-    pages = {1--10},
-    doi = {10.1234/example}
+% ---------------------------------------------------------------------------
+% Theorierahmen
+% ---------------------------------------------------------------------------
+
+@article{avizienis2004,
+    author    = {Avizienis, Algirdas and Laprie, Jean-Claude and Randell, Brian and Landwehr, Carl},
+    title     = {Basic Concepts and Taxonomy of Dependable and Secure Computing},
+    journal   = {IEEE Transactions on Dependable and Secure Computing},
+    year      = {2004},
+    volume    = {1},
+    number    = {1},
+    pages     = {11--33},
+    doi       = {10.1109/TDSC.2004.2}
 }
 
-% Additional references can be added below
+@article{cristian1991,
+    author    = {Cristian, Flaviu},
+    title     = {Understanding fault-tolerant distributed systems},
+    journal   = {Communications of the ACM},
+    year      = {1991},
+    volume    = {34},
+    number    = {2},
+    pages     = {56--78},
+    doi       = {10.1145/102792.102801}
+}
+
+@book{birman2012,
+    author    = {Birman, Kenneth P.},
+    title     = {Guide to Reliable Distributed Systems: Building High-Assurance Applications and Cloud-Hosted Services},
+    publisher = {Springer},
+    year      = {2012},
+    isbn      = {978-1-4471-2415-3}
+}
+
+@article{ieee_cascade2016,
+    author    = {Qi, Hairong and Bhatt, Snehal and Bhatt, Ankur},
+    title     = {System Reliability Under Cascading Failure Models},
+    journal   = {IEEE Transactions on Reliability},
+    year      = {2016},
+    doi       = {10.1109/TR.2015.2500283}
+}
+
+@book{armstrong2007,
+    author    = {Armstrong, Joe},
+    title     = {Programming Erlang: Software for a Concurrent World},
+    publisher = {Pragmatic Bookshelf},
+    year      = {2007},
+    isbn      = {978-1-934356-00-5}
+}
+
+@misc{pont_watchdog,
+    author    = {Pont, Michael and Ong, Royan},
+    title     = {Using watchdog timers to improve the reliability of single-processor embedded systems: Seven new patterns and a case study},
+    howpublished = {ResearchGate. [Online]. Available: \url{https://www.researchgate.net/publication/255621935}},
+    note      = {Zuletzt abgerufen: 30. Mai 2026}
+}
+
+@book{kleppmann2017,
+    author    = {Kleppmann, Martin},
+    title     = {Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems},
+    publisher = {O'Reilly Media},
+    year      = {2017},
+    isbn      = {978-1-4493-7332-0}
+}
+
+@misc{wiggins2011,
+    author    = {Wiggins, Adam},
+    title     = {The {Twelve-Factor App}},
+    year      = {2011},
+    howpublished = {[Online]. Available: \url{https://www.12factor.net/}},
+    note      = {Zuletzt abgerufen: 30. Mai 2026}
+}
+
+% ---------------------------------------------------------------------------
+% Methodik
+% ---------------------------------------------------------------------------
+
+@article{hsueh1997,
+    author    = {Hsueh, Mei-Chen and Tsai, Timothy K. and Iyer, Ravishankar K.},
+    title     = {Fault injection techniques and tools},
+    journal   = {IEEE Computer},
+    year      = {1997},
+    volume    = {30},
+    number    = {4},
+    pages     = {75--82},
+    doi       = {10.1109/2.585157}
+}
+
+% ---------------------------------------------------------------------------
+% Case-spezifische Quellen
+% ---------------------------------------------------------------------------
+
+@misc{django_persistent_connections,
+    author    = {{Django Software Foundation}},
+    title     = {Databases -- Persistent connections},
+    howpublished = {Django Documentation. [Online]. Available: \url{https://docs.djangoproject.com/en/stable/ref/databases/\#persistent-connections}},
+    note      = {Zuletzt abgerufen: 30. Mai 2026}
+}
+
+@misc{linux_tmpfs,
+    author    = {{The Linux Kernel Organization}},
+    title     = {tmpfs -- a virtual memory filesystem},
+    howpublished = {Linux Kernel Documentation. [Online]. Available: \url{https://www.kernel.org/doc/html/latest/filesystems/tmpfs.html}},
+    note      = {Zuletzt abgerufen: 30. Mai 2026}
+}
+
+@misc{python_shm,
+    author    = {{Python Software Foundation}},
+    title     = {multiprocessing.shared\_memory -- Shared memory for direct access across processes},
+    howpublished = {Python 3 Documentation. [Online]. Available: \url{https://docs.python.org/3/library/multiprocessing.shared\_memory.html}},
+    note      = {Zuletzt abgerufen: 30. Mai 2026}
+}

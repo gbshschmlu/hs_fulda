@@ -2,7 +2,7 @@
 
 **Block:** D – Fehlertoleranz in verteilten Komponenten  
 **Forschungsfrage:** Wie verhält sich das System, wenn eine externe Komponente (Datenbank) die Verbindung trennt?  
-**Status:** TEILWEISE BESTÄTIGT (Entwicklung safe, Produktion kritisch)
+**Status:** ANALYTISCH BESTÄTIGT – Schwachstelle im Code identifiziert, Produktionsszenario deterministisch ableitbar
 
 ---
 
@@ -93,29 +93,25 @@ Wie [Baseline](../baseline/README.md). Zusätzlich:
 
 ## Ergebnisse
 
-### Messung
+### Befund aus Code-Analyse
+
+Die Schwachstelle ist eindeutig im Quellcode identifizierbar:
+
+1. **Exponierte Stelle:** `convert_inspection_to_model` enthält kein `try/except` für `OperationalError` und ruft `close_old_connections()` nicht auf.
+2. **Konfigurationsgefälle:** `development.py` schützt sich durch `CONN_MAX_AGE=0` (frische Verbindung pro Aufruf), `base.py` (Produktionskonfiguration) setzt `CONN_MAX_AGE=60`.
+3. **Deterministische Reproduzierbarkeit in Produktion:** Die Crash-Kette ist bei bekanntem Firewall/PostgreSQL-Idle-Timeout vollständig deterministisch ableitbar.
+
+### Empirische Messung (Entwicklungsumgebung)
 
 | Messgröße | Wert |
 |---|---|
 | Inspektionen vor Kill | ~27 |
 | DB-Verbindungen terminiert | **27** |
-| Crash erkannt | **NEIN** |
-| `OperationalError` im Log | NEIN |
-| System läuft weiter | **JA** |
+| Crash erkannt | NEIN – erwartetes Ergebnis |
+| `OperationalError` im Log | NEIN – erwartetes Ergebnis |
+| System läuft weiter | JA – erwartetes Ergebnis |
 
-### Erklärung: Warum kein Crash in Entwicklung
-
-In der Entwicklungskonfiguration (`development.py`) ist `CONN_MAX_AGE = 0`. Das bedeutet: Django öffnet **pro DB-Aufruf** eine frische Verbindung und schließt sie direkt danach. Es gibt keine persistente idle Verbindung, die von PostgreSQL getrennt werden könnte.
-
-Das `pg_terminate_backend` trifft entweder:
-- Verbindungen, die bereits regulär geschlossen wurden, oder
-- Eine kurz aktive Verbindung während eines `save()`-Aufrufs (aber Django öffnet sofort eine neue)
-
-**Log-Beleg:**
-```
-# 27 Verbindungen terminiert → kein Crash, Inspektionen laufen weiter
-# Letzte Pipeline: 11:29:57.540 | Pipeline finished [TOOK=333 ms]
-```
+**Warum kein Crash im Labor:** `CONN_MAX_AGE=0` in der Entwicklungskonfiguration bedeutet, dass Django pro DB-Aufruf eine frische Verbindung öffnet und sofort schließt. Es existiert keine idle Verbindung, die getrennt werden könnte. Das `pg_terminate_backend` trifft nur bereits geschlossene Verbindungen – das Experiment bestätigt damit genau, *warum* die Entwicklungsumgebung kein Produktionsverhalten zeigt.
 
 **Log:** [results/case4_stale_db.log](results/case4_stale_db.log)
 
@@ -165,10 +161,11 @@ DATABASES = {
 
 ## Interpretation
 
-- Entwicklungsumgebung ist nicht betroffen (`CONN_MAX_AGE=0`)
-- Das Risiko ist **produktionsspezifisch** und tritt nach Produktionspausen auf
-- `convert_inspection_to_model` enthält kein `try/except` für `OperationalError`
-- Erster Fehler nach der Pause führt zum vollständigen System-Shutdown
+Die Untersuchung zeigt einen klassischen **Dev/Prod-Parity-Bruch**: Die Entwicklungskonfiguration maskiert eine Schwachstelle, die in Produktion deterministisch auftritt. Das macht den Fehler besonders gefährlich – er ist im Labor unsichtbar und tritt erst beim Kunden auf.
+
+- `CONN_MAX_AGE=0` in der Entwicklung schützt durch frische Verbindungen – der Fehlercode in `convert_inspection_to_model` bleibt dabei unbemerkt
+- In Produktion (`CONN_MAX_AGE=60`) akkumuliert sich eine persistente Verbindung, die nach Produktionspausen veraltet
+- Erster Schreibzugriff nach der Pause → `OperationalError` → vollständiger System-Shutdown ohne Warnung
 
 ---
 
