@@ -1,0 +1,113 @@
+<p><strong>Autor:</strong> [Dein Name]</p>
+<p><strong>Datum der inhaltlichen Diskussion</strong> in der LV: <s>hier ergänzen</s></p>
+
+<p><strong>Geforderte Aufgabentypen / Lernergebnisse:</strong></p>
+<p>1) Einen Ableitungsbaum sowie die zugehörige Links- und Rechtsableitung angeben können.</p>
+<p>
+    2) Die Arbeitsweise einer Stackmaschine mit Hilfe von Konfigurationswechseln illustrieren können, die die Erstellung
+    des Ableitungsbaums als Rekonstruktion der Linksableitung einbezieht.
+</p>
+
+<p>___________________</p>
+
+<p><strong>Einleitender Text (inkl. Verlinkung):</strong></p>
+<p>
+    Ein [[Ableitungsbaum]] veranschaulicht die syntaktische Struktur eines Wortes, das von einer [[Kontext-freie
+    Grammatik|kontext-freien Grammatik]] erzeugt wurde. Er blendet aus, in welcher Reihenfolge die Ersetzungen
+    stattgefunden haben. Wenn wir ein Wort manuell ableiten, gibt es zwei systematische Wege:
+</p>
+<ul>
+    <li>
+        <strong>Linksableitung:</strong> Es wird in jedem Schritt immer die am weitesten <em>links</em> stehende
+        Variable im Wort ersetzt.
+    </li>
+    <li><strong>Rechtsableitung:</strong> Es wird immer die am weitesten <em>rechts</em> stehende Variable ersetzt.</li>
+</ul>
+<p>Beide Wege führen am Ende exakt zum selben Ableitungsbaum (sofern die Grammatik nicht mehrdeutig ist).</p>
+
+<p>
+    Die [[Stackmaschine]] (der Parser) liest ein Wort von links nach rechts ein und rekonstruiert dabei den
+    Ableitungsbaum von der Wurzel abwärts (Top-Down-Parsing). Das entspricht exakt der <strong>Linksableitung</strong>.
+    Damit die Maschine weiß, an welcher Stelle im bisherigen Baum ein neuer Teilbaum eingehängt werden muss, speichert
+    sie keine einfachen Symbole auf dem Stack, sondern <strong>Tupel</strong>:
+    <code>(Stacksymbol, ID des Vaterknotens)</code>. Jeder erstellte Knoten erhält eine fortlaufende natürliche Zahl als
+    ID.
+</p>
+
+<p>
+    <strong><i>Beispiel:</i></strong
+    ><br />
+    <i
+        >Gegeben sei die Grammatik mit S &rarr; 0SE | 1T, T &rarr; 0E und E &rarr; 1.<br />
+        Für das Wort <strong>01011</strong> sehen die Ableitungen so aus:<br />
+        <strong>Linksableitung:</strong> S &rArr; 0<u>S</u>E &rArr; 01<u>T</u>E &rArr; 010<u>E</u>E &rArr; 0101<u>E</u>
+        &rArr; 01011<br />
+        <strong>Rechtsableitung:</strong> S &rArr; 0S<u>E</u> &rArr; 0<u>S</u>1 &rArr; 01<u>T</u>1 &rArr; 010<u>E</u>1
+        &rArr; 01011<br />
+        (Die unterstrichene Variable ist diejenige, die im nächsten Schritt ersetzt wird).</i
+    >
+</p>
+
+<p>___________________</p>
+
+<p><strong>Konkrete Aufgaben und Lösungen:</strong></p>
+<p>
+    <strong
+        ><a
+            href="https://elearning.hs-fulda.de/ai/pluginfile.php/167478/mod_resource/content/1/Arbeitsblatt%20-%20Syntaxbaum%20und%20Stackmaschine.pdf"
+            >Arbeitsblatt – Ableitungsbaum und Stackmaschine</a
+        ></strong
+    >
+</p>
+
+<p><strong>Lösung zu Aufgabe 1 (Ableitungsbäume der 3 kürzesten Wörter):</strong></p>
+<p>
+    Die drei kürzesten Wörter der Grammatik sind <strong>101</strong>, <strong>01011</strong> und
+    <strong>0010111</strong>. Hier sind die zugehörigen Ableitungsbäume:
+</p>
+
+<pre>
+ Wort: 101          Wort: 01011            Wort: 0010111
+    S                   S                        S
+   / \                 /|\                      /|\
+  1   T               0 S E                    0 S E
+     / \               / \ \                    / \ \
+    0   E             1   T 1                  0   S 1
+        |                / \                      / \
+        1               0   E                    1   T
+                            |                       / \
+                            1                      0   E
+                                                       |
+                                                       1
+</pre>
+
+<p><strong>Lösung zu Aufgabe 5 & 6 (Stackmaschine mit Baumaufbau):</strong></p>
+<p>
+    Wir rekonstruieren die Linksableitung für das Wort <strong>01011</strong> mit der deterministischen Stackmaschine M.
+    <br />
+    Start ist die Wurzel <code>R</code> (ID = 1). Die Startkonfiguration ist somit <code>(01011, (R,0))</code>.
+</p>
+
+<ul>
+    <li><strong>Start:</strong> <code>(01011, (R,0))</code> &rarr; Knoten 1 (Wurzel) wird erstellt.</li>
+    <li>
+        <strong>Schritt 1:</strong> <code>(1011, (R,1)(S,1))</code> &rarr; Lese 0. Regel: &delta;(R,0)=RS. Die neuen
+        Knoten wissen: Ihr Vater ist Knoten 1.
+    </li>
+    <li>
+        <strong>Schritt 2:</strong> <code>(011, (E,2)(S,1))</code> &rarr; Lese 1. Knoten R wird zu Knoten 2 expandiert.
+        Regel: &delta;(R,1)=E. Neues Kind E weiß: Vater ist Knoten 2.
+    </li>
+    <li>
+        <strong>Schritt 3:</strong> <code>(11, (S,3)(S,1))</code> &rarr; Lese 0. Knoten E wird zu Knoten 3. Regel:
+        &delta;(E,0)=S.
+    </li>
+    <li>
+        <strong>Schritt 4:</strong> <code>(1, (S,1))</code> &rarr; Lese 1. Knoten S wird zu Knoten 4. Regel:
+        &delta;(S,1)=&epsilon; (Blattknoten erreicht, kein neuer Push).
+    </li>
+    <li>
+        <strong>Schritt 5:</strong> <code>(&epsilon;, &epsilon;)</code> &rarr; Lese 1. Das verbleibende S vom Anfang
+        (Knoten 5) wird durch &delta;(S,1)=&epsilon; abgebaut. Wort gelesen, Stack leer. Erfolgreich geparst!
+    </li>
+</ul>
