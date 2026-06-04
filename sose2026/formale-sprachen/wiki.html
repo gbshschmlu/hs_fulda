@@ -1,4 +1,4 @@
-<p><strong>Autor:</strong> [Dein Name]</p>
+<p><strong>Autor:</strong> Luca M. Schmidt</p>
 <p><strong>Datum der inhaltlichen Diskussion</strong> in der LV: <s>hier ergänzen</s></p>
 
 <p><strong>Geforderte Aufgabentypen / Lernergebnisse:</strong></p>
@@ -12,9 +12,10 @@
 
 <p><strong>Einleitender Text (inkl. Verlinkung):</strong></p>
 <p>
-    Ein [[Ableitungsbaum]] veranschaulicht die syntaktische Struktur eines Wortes, das von einer [[Kontext-freie
-    Grammatik|kontext-freien Grammatik]] erzeugt wurde. Er blendet aus, in welcher Reihenfolge die Ersetzungen
-    stattgefunden haben. Wenn wir ein Wort manuell ableiten, gibt es zwei systematische Wege:
+    Ein <strong>Ableitungsbaum</strong> veranschaulicht die syntaktische Struktur eines Wortes, das von einer
+    <a href="https://elearning.hs-fulda.de/ai/mod/page/view.php?id=88578">kontext-freien Grammatik</a> erzeugt wurde. Er
+    blendet aus, in welcher Reihenfolge die Ersetzungen stattgefunden haben. Wenn wir ein Wort manuell ableiten, gibt es
+    zwei systematische Wege:
 </p>
 <ul>
     <li>
@@ -26,12 +27,12 @@
 <p>Beide Wege führen am Ende exakt zum selben Ableitungsbaum (sofern die Grammatik nicht mehrdeutig ist).</p>
 
 <p>
-    Die [[Stackmaschine]] (der Parser) liest ein Wort von links nach rechts ein und rekonstruiert dabei den
-    Ableitungsbaum von der Wurzel abwärts (Top-Down-Parsing). Das entspricht exakt der <strong>Linksableitung</strong>.
-    Damit die Maschine weiß, an welcher Stelle im bisherigen Baum ein neuer Teilbaum eingehängt werden muss, speichert
-    sie keine einfachen Symbole auf dem Stack, sondern <strong>Tupel</strong>:
-    <code>(Stacksymbol, ID des Vaterknotens)</code>. Jeder erstellte Knoten erhält eine fortlaufende natürliche Zahl als
-    ID.
+    Die <a href="https://elearning.hs-fulda.de/ai/mod/page/view.php?id=88604">Stackmaschine</a> (der Parser) liest ein
+    Wort von links nach rechts ein und rekonstruiert dabei den Ableitungsbaum von der Wurzel abwärts (Top-Down-Parsing).
+    Das entspricht exakt der <strong>Linksableitung</strong>. Damit die Maschine weiß, an welcher Stelle im bisherigen
+    Baum ein neuer Teilbaum eingehängt werden muss, speichert sie keine einfachen Symbole auf dem Stack, sondern
+    <strong>Tupel</strong>: <code>(Stacksymbol, ID des Vaterknotens)</code>. Jeder erstellte Knoten erhält eine
+    fortlaufende natürliche Zahl als ID.
 </p>
 
 <p>
@@ -60,25 +61,49 @@
     >
 </p>
 
-<p><strong>Lösung zu Aufgabe 1 (Ableitungsbäume der 3 kürzesten Wörter):</strong></p>
+<p><strong>Lösung zu Aufgabe 1:</strong></p>
 <p>
     Die drei kürzesten Wörter der Grammatik sind <strong>101</strong>, <strong>01011</strong> und
-    <strong>0010111</strong>. Hier sind die zugehörigen Ableitungsbäume:
+    <strong>0010111</strong>.
 </p>
 
+<p><strong>Zugehörige Links- und Rechtsableitungen:</strong></p>
+<ul>
+    <li>
+        <strong>Wort 101:</strong><br />
+        Linksableitung: S &rArr; 1T &rArr; 10E &rArr; 101<br />
+        Rechtsableitung: S &rArr; 1T &rArr; 10E &rArr; 101<br />
+        <em>(Hier sind beide Wege identisch, da immer nur eine Variable vorhanden ist).</em>
+    </li>
+    <br />
+    <li>
+        <strong>Wort 01011:</strong><br />
+        Linksableitung: S &rArr; 0SE &rArr; 01TE &rArr; 010EE &rArr; 0101E &rArr; 01011<br />
+        Rechtsableitung: S &rArr; 0SE &rArr; 0S1 &rArr; 01T1 &rArr; 010E1 &rArr; 01011
+    </li>
+    <br />
+    <li>
+        <strong>Wort 0010111:</strong><br />
+        Linksableitung: S &rArr; 0SE &rArr; 00SEE &rArr; 001TEE &rArr; 0010EEE &rArr; 00101EE &rArr; 001011E &rArr;
+        0010111<br />
+        Rechtsableitung: S &rArr; 0SE &rArr; 0S1 &rArr; 00SE1 &rArr; 00S11 &rArr; 001T11 &rArr; 0010E11 &rArr; 0010111
+    </li>
+</ul>
+
+<p><strong>Zugehörige Ableitungsbäume:</strong></p>
 <pre>
  Wort: 101          Wort: 01011            Wort: 0010111
     S                   S                        S
-   / \                 /|\                      /|\
-  1   T               0 S E                    0 S E
-     / \               / \ \                    / \ \
-    0   E             1   T 1                  0   S 1
-        |                / \                      / \
-        1               0   E                    1   T
-                            |                       / \
-                            1                      0   E
-                                                       |
-                                                       1
+   / \                 /|\                     / | \
+  1   T               0 S E                   0  S  E
+     / \               / \ \                    /|\  \
+    0   E             1   T 1                  0 S E  1
+        |                / \                    /|  \
+        1               0   E                  1 T   1
+                            |                   / \
+                            1                  0   E
+                                                   |
+                                                   1
 </pre>
 
 <p><strong>Lösung zu Aufgabe 5 & 6 (Stackmaschine mit Baumaufbau):</strong></p>
