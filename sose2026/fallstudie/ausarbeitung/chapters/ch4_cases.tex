@@ -162,19 +162,20 @@ noch \texttt{close\_old\_connections()} aufruft. Entscheidend ist ein Konfigurat
 \texttt{CONN\_\allowbreak{}MAX\_\allowbreak{}AGE = 0} pro Aufruf eine frische Verbindung
 öffnet, hält die Produktion mit \texttt{CONN\_\allowbreak{}MAX\_\allowbreak{}AGE = 60} eine
 persistente Verbindung. Zur Prüfung wurden in der Entwicklungsumgebung während des
-Betriebs alle Datenbankverbindungen über \texttt{pg\_terminate\_backend} getrennt. Vor dem
-Eingriff waren rund 27 Inspektionen verarbeitet; 27 Datenbankverbindungen wurden
-terminiert. Das System verarbeitete unverändert weiter, ein \texttt{OperationalError} trat
-nicht auf. Dieses Ergebnis ist erwartungskonform, da ohne persistente Verbindung keine
-veralten kann -- das Experiment bestätigt damit gerade, weshalb die Schwachstelle im Labor
-unsichtbar bleibt.
+Betriebs alle Datenbankverbindungen über \texttt{pg\_terminate\_backend} getrennt. Dieser
+Versuch ist als Negativkontrolle für das Konfigurationsgefälle zu verstehen, nicht als
+direkter Produktions-Crash-Test. Vor dem Eingriff waren rund 27 Inspektionen verarbeitet;
+27 Datenbankverbindungen wurden terminiert. Das System verarbeitete unverändert weiter,
+ein \texttt{OperationalError} trat nicht auf. Dieses Ergebnis ist erwartungskonform, da ohne
+persistente Verbindung keine veralten kann -- das Experiment bestätigt damit gerade,
+weshalb die Schwachstelle im Labor unsichtbar bleibt.
 
-Das Risiko ist produktionsspezifisch. Nach einer Pause trennt PostgreSQL oder eine
-vorgelagerte Firewall die inaktive Verbindung; der erste Schreibzugriff danach trifft auf
-eine für gültig gehaltene, tatsächlich tote Verbindung und löst einen
-\texttt{OperationalError} aus, der mangels Behandlung zum Systemabsturz führt. Der Fehler
-tritt damit deterministisch beim ersten Materialdurchlauf nach jeder Produktionspause auf
-und wird durch die Entwicklungskonfiguration vollständig maskiert. Ein Aufruf von
+Das Risiko ist daher produktionsspezifisch und analytisch hergeleitet. Nach einer Pause
+trennt PostgreSQL oder eine vorgelagerte Firewall die inaktive Verbindung; der erste
+Schreibzugriff danach trifft auf eine für gültig gehaltene, tatsächlich tote Verbindung
+und löst einen \texttt{OperationalError} aus, der mangels Behandlung zum Systemabsturz
+führt. Der Fehler tritt damit deterministisch beim ersten Materialdurchlauf nach jeder
+Produktionspause auf und wird durch die Entwicklungskonfiguration vollständig maskiert. Ein Aufruf von
 \texttt{close\_old\_connections()} vor dem Schreibzugriff oder das Setzen von
 \texttt{CONN\_\allowbreak{}MAX\_\allowbreak{}AGE = 0} auch in Produktion behebt das Problem;
 die zusätzliche Latenz ist bei lokaler Datenbank vernachlässigbar

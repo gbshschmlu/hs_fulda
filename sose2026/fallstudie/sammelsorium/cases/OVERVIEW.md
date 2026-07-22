@@ -33,7 +33,7 @@ main.py
 | [Case 1](case1_prozess_supervision/README.md) | Lücken in der Prozesssupervision     | B – Beobachtbarkeit      | BESTÄTIGT            | **Kritisch**    |
 | [Case 2](case2_ram_disk_spof/README.md)       | RAM Disk als Single Point of Failure | A – Ressourcenverwaltung | BESTÄTIGT            | **Hoch**        |
 | [Case 3](case3_log_queue_cascade/README.md)   | Log-Queue-Stau als Pipeline-Blocker  | C – Datenpersistenz      | BESTÄTIGT            | **Hoch**        |
-| [Case 4](case4_stale_db_connection/README.md) | Stale Django Connection nach Pause   | D – Fehlertoleranz       | ANALYTISCH BESTÄTIGT | **Mittel-Hoch** |
+| [Case 4](case4_stale_db_connection/README.md) | Stale Django Connection nach Pause   | C – Datenpersistenz      | ANALYTISCH BESTÄTIGT | **Mittel-Hoch** |
 | [Case 5](case5_gc_race_condition/README.md)   | GC Race Condition im Worker-Pool     | A – Ressourcenverwaltung | HYPOTHESE WIDERLEGT  | **Niedrig**     |
 
 ---
@@ -82,7 +82,7 @@ Normalbetrieb-Messung ohne injizierte Fehler. Referenzwerte für alle weiteren M
 
 ### Case 4 – Stale DB Connection
 
-`convert_inspection_to_model` hat kein `try/except` für `OperationalError`. Klassischer Dev/Prod-Parity-Bruch: `CONN_MAX_AGE=0` in Entwicklung maskiert die Schwachstelle. In Produktion (`CONN_MAX_AGE=60`) deterministisch reproduzierbar nach jeder Produktionspause.
+`convert_inspection_to_model` hat kein `try/except` für `OperationalError`. Klassischer Dev/Prod-Parity-Bruch: `CONN_MAX_AGE=0` in Entwicklung maskiert die Schwachstelle. Der Laborversuch zeigt deshalb erwartungsgemäß keinen Crash; die produktive Konfiguration (`CONN_MAX_AGE=60`) bleibt anhand Codepfad und Konfiguration als deterministisches Produktionsrisiko nach Pausen ableitbar.
 
 | Konfiguration                | Verhalten nach pg_terminate_backend                                   |
 | ---------------------------- | --------------------------------------------------------------------- |

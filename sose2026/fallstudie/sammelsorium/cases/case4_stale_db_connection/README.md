@@ -1,8 +1,8 @@
 # Case 4 – Stale Django Connection nach Produktionspause
 
-**Block:** D – Fehlertoleranz in verteilten Komponenten  
+**Block:** C – Datenpersistenz und Kaskadeneffekte  
 **Forschungsfrage:** Wie verhält sich das System, wenn eine externe Komponente (Datenbank) die Verbindung trennt?  
-**Status:** ANALYTISCH BESTÄTIGT – Schwachstelle im Code identifiziert, Produktionsszenario deterministisch ableitbar
+**Status:** ANALYTISCH BESTÄTIGT – Schwachstelle im Code identifiziert; das Laborergebnis erklärt die Entwicklungs-/Produktionsabweichung, das Produktionsszenario ist deterministisch ableitbar
 
 ---
 
@@ -103,6 +103,8 @@ Die Schwachstelle ist eindeutig im Quellcode identifizierbar:
 
 ### Empirische Messung (Entwicklungsumgebung)
 
+Der Laborversuch ist nicht als direkter Produktions-Crash-Test zu verstehen, sondern als Negativkontrolle für das Konfigurationsgefälle. In der Entwicklungsumgebung wird durch `CONN_MAX_AGE=0` pro Datenbankzugriff eine frische Verbindung geöffnet. Genau deshalb kann dort keine stale Verbindung entstehen; ein ausbleibender Crash ist somit das erwartete Ergebnis und stützt die Einordnung als produktionsspezifisches Risiko.
+
 | Messgröße | Wert |
 |---|---|
 | Inspektionen vor Kill | ~27 |
@@ -117,7 +119,7 @@ Die Schwachstelle ist eindeutig im Quellcode identifizierbar:
 
 ---
 
-## Produktions-Szenario (nicht empirisch reproduziert)
+## Produktions-Szenario (analytisch bestätigt, nicht im Labor reproduziert)
 
 Das Risiko besteht **nur in der Produktionskonfiguration** (`CONN_MAX_AGE=60`):
 
