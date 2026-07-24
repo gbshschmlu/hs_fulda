@@ -31,8 +31,8 @@ durch eine andere Klasse von Fehlern ausfallen.
 \subsection{Fehlerklassifikation}
 \label{sec:grundlagen-fehler}
 
-Cristian unterscheidet grundlegende Verhaltensklassen bei Prozessausfällen in verteilten
-Systemen \cite{cristian1991}. Für diese Fallstudie sind zwei Klassen relevant. Bei einem
+Für diese Fallstudie sind zwei Verhaltensklassen bei Prozessausfällen relevant
+\cite{cristian1991}. Bei einem
 \textit{Fail-Stop}-Ausfall bricht ein fehlerhafter Prozess sofort ab und signalisiert
 seinen Ausfall unmissverständlich; der Fehler ist für das Gesamtsystem sichtbar und
 adressierbar. Bei einem \textit{Fail-Silent}-Ausfall stellt der Prozess seine Funktion
@@ -43,10 +43,10 @@ Produktionsergebnisse sichtbar wird.
 
 Davon abzugrenzen sind \textit{schleichende Fehler}, die nicht durch ein singuläres
 Ereignis, sondern durch die kontinuierliche Akkumulation eines Ressourcenverbrauchs
-entstehen. Charakteristisch ist die erhebliche Zeitspanne zwischen Ursache und sichtbarem
-Symptom; im 24/7-Betrieb kann diese Stunden oder ganze Schichten betragen. Birman
-beschreibt diesen Zustand als nominal laufendes System, das seinen eigentlichen Zweck
-nicht mehr erfüllt \cite{birman2012}.
+entstehen. Charakteristisch ist die lange Zeitspanne zwischen Ursache und sichtbarem
+Symptom; im 24/7-Betrieb kann diese Stunden oder ganze Schichten betragen. Der Zustand
+ist besonders problematisch, wenn das System nach außen betriebsbereit wirkt, seinen
+eigentlichen Zweck aber nicht mehr erfüllt \cite{birman2012}.
 
 Ein \textit{Kaskadeneffekt} liegt vor, wenn der Ausfall oder die Verlangsamung einer
 Komponente über gemeinsame Schnittstellen den Ausfall weiterer Komponenten verursacht
@@ -59,17 +59,17 @@ als die ursprüngliche Schwachstelle liegt.
 
 In langlebigen Multiprocessing-Systemen ist es unzureichend, Prozesse nur beim Start zu
 überprüfen. Das \textit{Supervisor-Modell} sieht einen dedizierten Überwachungsprozess
-vor, der den Laufzeitstatus aller untergeordneten Prozesse kontinuierlich beobachtet und
+vor, der den Laufzeitstatus aller untergeordneten Prozesse kontinuierlich überwacht und
 bei Ausfall automatisch reagiert -- durch Neustart, Alarm oder geordnetes Herunterfahren.
-Dieses Konzept ist im Erlang/OTP-Framework als \textit{Supervision Tree} etabliert, in
-dem Supervisoren ihre Kindprozesse überwachen und bei Absturz neu starten
+Dieses Konzept ist im Erlang/OTP-Framework als \textit{Supervision Tree} etabliert: Dort
+überwachen Supervisoren ihre Kindprozesse und starten sie bei Absturz neu
 \cite{armstrong2007}. Das \textit{Watchdog-Pattern} ist eine konkrete Ausprägung: Der
 Supervisor erwartet in regelmäßigen Abständen ein Lebenszeichen (\textit{Heartbeat}) des
 überwachten Prozesses; bleibt es aus, gilt der Prozess als ausgefallen. Für eingebettete
-und industrielle Systeme beschreiben Pont und Ong mehrere Varianten dieses Musters mit
-unterschiedlichen Reaktionsstrategien \cite{pont_watchdog}.
+und industrielle Systeme sind mehrere Varianten dieses Musters mit unterschiedlichen
+Reaktionsstrategien dokumentiert \cite{pont_watchdog}.
 
-Fehlt eine solche Logik, entstehen zwei kritische Szenarien. Im ersten hält ein
+Fehlt eine solche Logik, entstehen zwei Ausfallbilder. Im ersten hält ein
 abgestürzter Prozess, dessen Ausgabe von anderen Prozessen erwartet wird, das System in
 einem wartenden Zustand gefangen -- ohne Timeout, ohne Alarm. Im zweiten läuft das System
 nach dem Ausfall eines Prozesses scheinbar weiter, Fehler werden erst durch ausbleibende
@@ -84,8 +84,8 @@ gedrosseltem Konsum akkumuliert sie Einträge, bis der Speicher erschöpft ist. 
 \textit{bounded Queue} begrenzt das Wachstum, erzeugt dafür aber \textit{Backpressure}:
 Produzenten, die in eine volle Queue schreiben wollen, werden blockiert. Kleppmann
 beschreibt Backpressure als notwendigen, aber häufig fehlerhaft implementierten
-Mechanismus -- ein blockierendes \texttt{put()} ohne Timeout überträgt den Stau transitiv
-auf alle vorgelagerten Komponenten \cite{kleppmann2017}. In einem Multiprocessing-System
+Mechanismus. Ein blockierendes \texttt{put()} ohne Timeout überträgt den Stau auf alle
+vorgelagerten Komponenten \cite{kleppmann2017}. In einem Multiprocessing-System
 mit gemeinsamer Queue kann so ein einzelner langsamer Konsument das gesamte System zum
 Einfrieren bringen.
 

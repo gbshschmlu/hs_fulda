@@ -16,13 +16,12 @@
     werden. Fünf Failure Cases auf Prozess- und Betriebssystemebene wurden in einer
     kontrollierten Testumgebung mittels Fault Injection reproduzierbar untersucht.
 
-    Die Messungen belegen erhebliche Lücken in der Fehlertoleranz: Drei von vier
-    Service-Prozessen fallen ohne Erkennung aus (Fail-Silent); eine volle RAM-Disk
-    führt nach einer Stillstandsphase von 35\,Sekunden zum Absturz der gesamten Anlage;
-    eine blockierende Log-Queue friert das System für 27\,Sekunden ohne Alarm ein.
-    Eine veraltete Datenbankverbindung erweist sich als produktionsspezifisches Risiko,
-    das durch die Entwicklungskonfiguration maskiert wird. Eine zunächst angenommene
-    Race Condition im Speichermanagement konnte hingegen als durch Timing-Reserven und
-    idempotente Freigabe abgesichert widerlegt werden. Auf Basis der Befunde werden für
-    jeden Case konkrete, aufwandsarme Handlungsempfehlungen abgeleitet.
+    Die Messungen zeigen konkrete Lücken in der Fehlertoleranz: Drei von vier
+    Service-Prozessen fallen ohne Erkennung aus; eine volle RAM-Disk führt nach
+    35\,s Stillstand zum Absturz der Anlage; eine blockierende Log-Queue hält die
+    Pipeline ohne Alarm an. Eine veraltete Datenbankverbindung bleibt in der
+    Entwicklungsumgebung unsichtbar, ist in der Produktionskonfiguration aber als Risiko
+    ableitbar. Eine angenommene Race Condition im Speichermanagement wurde widerlegt. Aus
+    den Befunden werden aufwandsarme Maßnahmen zur besseren Überwachung und
+    Fehlerentkopplung abgeleitet.
 \end{abstract}

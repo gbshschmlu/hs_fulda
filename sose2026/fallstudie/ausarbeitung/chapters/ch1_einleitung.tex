@@ -22,7 +22,7 @@ Speicherarchitektur an.
 
 ROSI befindet sich in aktiver Entwicklung; die erste Kundeninbetriebnahme ist für Mitte
 bis Ende 2026 geplant. Mit dem bevorstehenden Produktiveinsatz steigen die Anforderungen
-an Verfügbarkeit und Fehlertoleranz erheblich: Ausfälle können Produktionsstillstände
+an Verfügbarkeit und Fehlertoleranz: Ausfälle können Produktionsstillstände
 verursachen, Inspektionsergebnisse verhindern und im ungünstigsten Fall Qualitätsmängel
 unentdeckt lassen.
 
@@ -46,7 +46,7 @@ sich die relevanten Risikokategorien wie folgt einteilen:
     \item \textit{Kaskadeneffekte:} Die Verlangsamung einer Komponente blockiert über
           gemeinsame Queues und Shared-Memory-Schnittstellen das gesamte System.
     \item \textit{Blinde Flecken im Monitoring:} Vorhandene Überwachungskomponenten
-          erfassen nicht alle kritischen Ressourcen, etwa flüchtige RAM-Dateisysteme
+          erfassen nicht alle relevanten Ressourcen, etwa flüchtige RAM-Dateisysteme
           oder interne Queue-Tiefen.
 \end{itemize}
 
@@ -56,7 +56,7 @@ ausbleibende Inspektionsergebnisse oder manuelle Beobachtung sichtbar.
 \subsection{Zielsetzung und Forschungsfragen}
 \label{sec:zielsetzung}
 
-Ziel dieser Fallstudie ist es, sicherheitskritische Fehlerszenarien im industriellen
+Ziel dieser Fallstudie ist es, verfügbarkeitskritische Fehlerszenarien im industriellen
 Dauerbetrieb auf Prozess- und Betriebssystemebene zu identifizieren, reproduzierbar zu
 simulieren und anhand messbarer Kriterien systematisch zu bewerten. Im Fokus stehen
 stille, schleichende und kaskadierende Fehler. Die untersuchten Failure Cases werden in

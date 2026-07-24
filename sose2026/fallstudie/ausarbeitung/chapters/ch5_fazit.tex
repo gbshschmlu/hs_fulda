@@ -9,37 +9,35 @@ Die Fallstudie hat fünf Failure Cases des ROSI-Systems auf Prozess- und
 Betriebssystemebene untersucht und damit die drei eingangs formulierten
 Forschungsfragen beantwortet.
 
-Zu FF2 (Systembeobachtbarkeit) zeigt Case~1 die gravierendste Lücke: Drei von vier
+Zu FF2 (Systembeobachtbarkeit) zeigt Case~1 die größte Lücke: Drei von vier
 Service-Prozessen fallen ohne Erkennung aus. Da das System über kein externes Alerting
-verfügt, bleibt die Time-to-Detection in diesen Fällen unbegrenzt, was sich unmittelbar
-negativ auf die Wiederherstellungszeit und damit die Verfügbarkeit nach
-Gleichung~\ref{eq:availability} auswirkt. Zu FF1 (Ressourcenverwaltung) belegt Case~2 die
-fehlende Rückfallebene des flüchtigen Bildspeichers, während Case~5 verdeutlicht, dass
-nicht jede plausible Schwachstelle auch real ist. Zu FF3 (Datenpersistenz und Kaskaden)
-zeigen Case~3 und Case~4 zwei unterschiedliche Mechanismen: einen systemweiten Freeze durch
-Backpressure sowie ein durch die Entwicklungskonfiguration maskiertes,
-produktionsspezifisches Verbindungsrisiko.
+verfügt, bleibt die Time-to-Detection in diesen Fällen unbegrenzt. Das erhöht die
+Wiederherstellungszeit und senkt nach Gleichung~\ref{eq:availability} die Verfügbarkeit.
+Zu FF1 (Ressourcenverwaltung) belegt Case~2 die fehlende Rückfallebene des flüchtigen
+Bildspeichers, während Case~5 eine angenommene Race Condition widerlegt. Zu FF3
+(Datenpersistenz und Kaskaden) zeigen Case~3 und Case~4 zwei unterschiedliche Mechanismen:
+einen systemweiten Stillstand durch Backpressure sowie ein durch die
+Entwicklungskonfiguration maskiertes Verbindungsrisiko.
 
 \subsection{Übergreifende Befunde}
 \label{sec:fazit-uebergreifend}
 
-Zwei Muster ziehen sich durch die Ergebnisse. Erstens fehlt durchgängig eine
+Zwei Muster ziehen sich durch die Ergebnisse. Erstens fehlt eine durchgängige
 \textit{Graceful Degradation}: Ein lokaler Fehler -- ein abgestürzter Prozess, ein
-fehlgeschlagener Schreibvorgang, eine tote Verbindung -- führt regelmäßig zum Ausfall des
+fehlgeschlagener Schreibvorgang, eine tote Verbindung -- führt zum Ausfall des
 Gesamtsystems statt zu einem kontrollierten Teilbetrieb. Zweitens bestehen
 \textit{blinde Flecken im Monitoring}: Weder Queue-Tiefen noch Speicherfüllstände noch der
-Zustand der Service-Prozesse werden zur Laufzeit überwacht. Die Cases~3, 4 und 5 stehen
-zudem in einem Kaskadenzusammenhang, da eine verlangsamte Datenbank über die Log-Queue das
-gesamte System ausbremsen und so weitere Fehlerzustände begünstigen kann.
+Zustand der Service-Prozesse werden zur Laufzeit überwacht. Besonders Case~3 zeigt, dass
+eine verlangsamte Hilfskomponente über eine gemeinsame Queue die eigentliche Pipeline
+blockieren kann.
 
 \subsection{Priorisierte Handlungsempfehlungen}
 \label{sec:fazit-empfehlungen}
 
 Tabelle~\ref{tab:empfehlungen} fasst die abgeleiteten Maßnahmen zusammen. Die ersten vier
-Maßnahmen greifen direkt in die Verfügbarkeit ein, weil sie entweder die
-Time-to-Detection verkürzen oder einen lokalen Fehler vom Gesamtsystem entkoppeln. Case~5
-erfordert dagegen keinen Sofortfix, sollte aber als Monitoring-Indikator für langsame
-Bildspeicherung genutzt werden.
+Maßnahmen verbessern direkt die Verfügbarkeit: Sie verkürzen entweder die
+Time-to-Detection oder entkoppeln einen lokalen Fehler vom Gesamtsystem. Case~5 erfordert
+keinen Sofortfix, eignet sich aber als Anlass für Step-5-Monitoring.
 
 \begin{table}[htbp]
     \centering
@@ -61,10 +59,10 @@ Bildspeicherung genutzt werden.
 \subsection{Ausblick}
 \label{sec:fazit-ausblick}
 
-Die größten Hebel für die Produktionsreife liegen in einer durchgängigen
-Laufzeit-Supervision aller Prozesse sowie einem Monitoring der bislang unbeobachteten
-Ressourcen. Beide Maßnahmen adressieren nicht nur einzelne Cases, sondern die
-übergreifenden Muster fehlender Beobachtbarkeit und fehlender Graceful Degradation. Eine
+Die wichtigsten Hebel für die Produktionsreife liegen in einer durchgängigen
+Prozessüberwachung sowie einem Monitoring der bislang unbeobachteten Ressourcen. Beide
+Maßnahmen adressieren nicht nur einzelne Cases, sondern die übergreifenden Muster
+fehlender Beobachtbarkeit und fehlender Graceful Degradation. Eine
 Übertragung der Untersuchung auf das spätere Kundensystem -- mit abweichender Hardware und
 aktiver Produktionskonfiguration -- bleibt offen und würde insbesondere das in Case~4
 analytisch hergeleitete Verbindungsrisiko empirisch absichern.
