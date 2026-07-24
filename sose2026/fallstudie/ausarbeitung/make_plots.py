@@ -4,9 +4,19 @@ import csv
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 
 
 ROOT = Path(__file__).resolve().parent
+
+# Farbpalette (identisch zu den Mess-Plots)
+BLUE = "#1f4e79"
+BLUE_BG = "#f4f7fb"
+BLUE_EDGE = "#b9c7d6"
+RED = "#902020"
+RED_BG = "#fff4f4"
+RED_EDGE = "#d49a9a"
+GRAY = "#8a97a3"
 CASES = ROOT.parent / "sammelsorium" / "cases"
 OUT = ROOT / "assets" / "img"
 OUT.mkdir(parents=True, exist_ok=True)
@@ -142,9 +152,110 @@ def save_case3() -> None:
     plt.close(fig)
 
 
+def save_topology() -> None:
+    fig, ax = plt.subplots(figsize=(7.0, 4.3))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 6)
+    ax.axis("off")
+
+    def box(cx, cy, w, h, text, *, fill, edge, tc, bold=False):
+        ax.add_patch(
+            FancyBboxPatch(
+                (cx - w / 2, cy - h / 2),
+                w,
+                h,
+                boxstyle="round,pad=0.02,rounding_size=0.10",
+                linewidth=1.2,
+                facecolor=fill,
+                edgecolor=edge,
+                mutation_aspect=0.7,
+            )
+        )
+        ax.text(
+            cx,
+            cy,
+            text,
+            ha="center",
+            va="center",
+            fontsize=9.5,
+            color=tc,
+            fontweight="bold" if bold else "normal",
+        )
+
+    def arrow(p0, p1, color, *, style="-", lw=1.6, rad=0.0):
+        ax.add_patch(
+            FancyArrowPatch(
+                p0,
+                p1,
+                arrowstyle="-|>",
+                mutation_scale=12,
+                linewidth=lw,
+                linestyle=style,
+                color=color,
+                connectionstyle=f"arc3,rad={rad}",
+                shrinkA=0,
+                shrinkB=0,
+            )
+        )
+
+    def flabel(x, y, text, color, size=8):
+        ax.text(
+            x,
+            y,
+            text,
+            ha="center",
+            va="center",
+            fontsize=size,
+            color=color,
+            bbox={"boxstyle": "round,pad=0.15", "fc": "white", "ec": "none"},
+        )
+
+    # Supervisor
+    box(5.0, 5.05, 2.5, 0.8, "main.py\nSupervisor", fill=BLUE, edge=BLUE, tc="white", bold=True)
+    # Service-Prozesse (Reihenfolge = Datenfluss von links nach rechts)
+    box(1.4, 3.0, 2.2, 0.95, "Inspection-\nDataHandler", fill=RED_BG, edge=RED_EDGE, tc=RED, bold=True)
+    box(3.8, 3.0, 2.2, 0.95, "Frame-\nGrabber", fill=RED_BG, edge=RED_EDGE, tc=RED, bold=True)
+    box(6.2, 3.0, 2.2, 0.95, "Pipeline-\nManager", fill=BLUE_BG, edge=BLUE_EDGE, tc=BLUE, bold=True)
+    box(8.6, 3.0, 2.2, 0.95, "Logger-\nProcess", fill=RED_BG, edge=RED_EDGE, tc=RED, bold=True)
+    # Worker-Pool
+    box(6.2, 1.35, 3.6, 0.9, "MPWorkerPool: 12 Worker\nPipeline Steps 1–6 (sequenziell)", fill="white", edge=BLUE_EDGE, tc=BLUE)
+
+    # Datenfluss (grau), Labels unter den Pfeilen
+    arrow((2.5, 3.0), (2.7, 3.0), GRAY, lw=1.4)
+    arrow((4.9, 3.0), (5.1, 3.0), GRAY, lw=1.4)
+    arrow((7.3, 3.0), (7.5, 3.0), GRAY, lw=1.4)
+    arrow((6.2, 2.525), (6.2, 1.80), GRAY, lw=1.4)
+    flabel(2.6, 2.55, "leere\nContainer", GRAY, size=7.5)
+    flabel(5.0, 2.55, "SM-Ref.", GRAY, size=7.5)
+    flabel(7.4, 2.55, "Log-Queue", GRAY, size=7.5)
+    flabel(6.95, 2.15, "Map / Reduce", BLUE, size=7.5)
+
+    # Supervision: blau durchgezogen = ueberwacht, rot gestrichelt = keine Supervision
+    arrow((5.3, 4.65), (6.2, 3.48), BLUE, lw=1.8, rad=-0.15)
+    arrow((4.5, 4.65), (1.55, 3.48), RED, style=(0, (5, 3)), lw=1.4, rad=0.18)
+    arrow((4.7, 4.65), (3.8, 3.48), RED, style=(0, (5, 3)), lw=1.4, rad=0.12)
+    arrow((5.7, 4.65), (8.55, 3.48), RED, style=(0, (5, 3)), lw=1.4, rad=-0.18)
+    flabel(6.35, 4.05, "1 s-Poll", BLUE)
+    flabel(2.55, 4.35, "keine Laufzeit-\nSupervision", RED)
+
+    # Legende
+    y = 0.4
+    ax.plot([0.4, 1.0], [y, y], color=BLUE, lw=1.8)
+    ax.text(1.1, y, "Supervision (1 s-Poll)", va="center", fontsize=8, color="#444")
+    ax.plot([4.0, 4.6], [y, y], color=RED, lw=1.4, linestyle=(0, (5, 3)))
+    ax.text(4.7, y, "keine Supervision", va="center", fontsize=8, color="#444")
+    ax.plot([7.0, 7.6], [y, y], color=GRAY, lw=1.4)
+    ax.text(7.7, y, "Datenfluss", va="center", fontsize=8, color="#444")
+
+    fig.tight_layout()
+    fig.savefig(OUT / "topology.pdf")
+    plt.close(fig)
+
+
 def main() -> None:
     save_case2()
     save_case3()
+    save_topology()
     print(f"plots written to {OUT}")
 
 

@@ -17,6 +17,37 @@ Eingriff in den Quellcode herstellbar ist, werden ausschließlich POSIX-Signale 
 externe Werkzeuge eingesetzt; wo ein Eingriff nötig ist, wird dieser minimal gehalten und
 nach der Messung automatisch zurückgenommen.
 
+\subsection{Verfahren der Fehlerinjektion}
+\label{sec:methodik-injektion}
+
+Jeder Failure Case bildet einen realen Fehlerzustand durch ein möglichst direktes
+technisches Äquivalent nach. Tabelle~\ref{tab:injektion} ordnet die eingesetzten Verfahren
+dem jeweils emulierten Fehler zu. Die ersten drei Verfahren kommen ohne jede
+Code-Änderung aus: Ein \texttt{SIGKILL} beendet einen Prozess hart und entspricht damit
+einem Absturz; \texttt{SIGSTOP} friert einen Prozess ein und bildet einen hängenden
+Aufruf nach, etwa einen blockierenden Datenbank-Call; \texttt{pg\_terminate\_backend}
+trennt eine Datenbankverbindung serverseitig. Nur zwei Cases erfordern einen minimalen,
+nach der Messung automatisch zurückgenommenen Eingriff: das gezielte Auslösen eines
+\texttt{OSError(28)} für die volle RAM-Disk sowie das Verschärfen von Timing-Parametern
+zur Provokation der vermuteten Race Condition.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Injektionsverfahren und emulierte Fehlerzustände}
+    \label{tab:injektion}
+    \begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}Xl}
+        \hline
+        \textbf{Verfahren} & \textbf{Emulierter Fehlerzustand} & \textbf{Case} \\
+        \hline
+        \texttt{SIGKILL}               & harter Prozessabsturz                         & 1 \\
+        \texttt{OSError(28)}           & volle RAM-Disk (\texttt{No space left})       & 2 \\
+        \texttt{SIGSTOP}/\texttt{SIGCONT} & eingefrorener Prozess (hängender DB-Call)  & 3 \\
+        \texttt{pg\_terminate\_backend}   & serverseitig getrennte DB-Verbindung       & 4 \\
+        Timing-Parameter                  & verschärftes Freigabe-Timing               & 5 \\
+        \hline
+    \end{tabularx}
+\end{table}
+
 \subsection{Testumgebung}
 \label{sec:methodik-umgebung}
 
@@ -70,3 +101,20 @@ Für jeden Case werden vergleichbare Messgrößen erhoben:
     \item \textit{Graceful Degradation:} ob das System bei einem Teilausfall in einen
           kontrollierten Zustand übergeht oder vollständig ausfällt.
 \end{itemize}
+
+\subsection{Grenzen der Untersuchung}
+\label{sec:methodik-grenzen}
+
+Die Ergebnisse sind vor dem Hintergrund mehrerer methodischer Einschränkungen zu lesen.
+Erstens erfolgen alle Messungen am Referenzsystem im Labor, nicht auf der späteren
+Kundenhardware; die absoluten Zeiten sind daher nur eingeschränkt übertragbar, während die
+zugrunde liegenden Fehlermechanismen von der Hardware unabhängig sind. Zweitens ersetzt der
+Simulator die Kamerahardware: Hardwarespezifische Fehler wie ein Kamera-Disconnect werden
+nicht direkt erzeugt, ihr Effekt auf das System aber über den Ausfall des FrameGrabbers
+abgebildet. Drittens sind die Beobachtungsfenster mit 20 bis 120~Sekunden bewusst kurz
+gehalten; schleichende Effekte über ganze Schichten werden aus den gemessenen Raten
+hochgerechnet, nicht über die volle Dauer beobachtet. Viertens ist Case~4 aufgrund der
+maskierenden Entwicklungskonfiguration analytisch statt empirisch belegt. Schließlich
+stützt sich jeder Case auf Einzelmessungen; der Fokus liegt auf den qualitativen
+Fehlermechanismen und ihren Größenordnungen, nicht auf statistisch abgesicherten
+Verteilungen.

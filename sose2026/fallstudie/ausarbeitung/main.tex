@@ -29,9 +29,12 @@
 \clearpage
 
 % ==================== Table of Contents ====================
-\begin{spacing}{1.1}
+\begingroup
+\setlength{\parskip}{0pt}
+\begin{spacing}{1.05}
     \tableofcontents
 \end{spacing}
+\endgroup
 \clearpage
 
 % ==================== Main Content ====================
@@ -41,6 +44,7 @@
 \justifying
 
 \input{chapters/ch1_einleitung}
+\input{chapters/ch2_architektur}
 \input{chapters/ch2_grundlagen}
 \input{chapters/ch3_methodik}
 \input{chapters/ch4_cases}
