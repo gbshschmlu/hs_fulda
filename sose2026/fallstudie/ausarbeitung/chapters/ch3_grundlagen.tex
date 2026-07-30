@@ -1,9 +1,12 @@
 % =============================================================================
-% Kapitel 2: Theoretische Grundlagen
+% Kapitel 3: Theoretische Grundlagen
 % =============================================================================
 
 \section{Theoretische Grundlagen}
 \label{sec:grundlagen}
+
+Dieses Kapitel führt die Konzepte ein, mit denen die Failure Cases in
+Kapitel~\ref{sec:cases} eingeordnet werden.
 
 \subsection{Verfügbarkeit im Dauerbetrieb}
 \label{sec:grundlagen-verfuegbarkeit}
@@ -52,7 +55,8 @@ Ein \textit{Kaskadeneffekt} liegt vor, wenn der Ausfall oder die Verlangsamung e
 Komponente über gemeinsame Schnittstellen den Ausfall weiterer Komponenten verursacht
 \cite{ieee_cascade2016}. Solche Effekte sind schwer zu diagnostizieren, da das sichtbare
 Symptom nicht die Ursache widerspiegelt: Das System kollabiert an einer anderen Stelle,
-als die ursprüngliche Schwachstelle liegt.
+als die ursprüngliche Schwachstelle liegt. Case~1 (Abschnitt~\ref{sec:case1}) zeigt
+Fail-Silent-Verhalten empirisch, Case~3 (Abschnitt~\ref{sec:case3}) einen Kaskadeneffekt.
 
 \subsection{Prozesssupervision und das Watchdog-Pattern}
 \label{sec:grundlagen-supervision}
@@ -74,7 +78,8 @@ abgestürzter Prozess, dessen Ausgabe von anderen Prozessen erwartet wird, das S
 einem wartenden Zustand gefangen -- ohne Timeout, ohne Alarm. Im zweiten läuft das System
 nach dem Ausfall eines Prozesses scheinbar weiter, Fehler werden erst durch ausbleibende
 Ausgaben sichtbar. Beide Szenarien erfordern manuelle Eingriffe, die im 24/7-Betrieb ohne
-Bereitschaftsdienst nicht zeitnah erfolgen.
+Bereitschaftsdienst nicht zeitnah erfolgen. Case~1 (Abschnitt~\ref{sec:case1}) quantifiziert
+beide Ausfallbilder für ROSI.
 
 \subsection{Ressourcenerschöpfung und Backpressure}
 \label{sec:grundlagen-ressourcen}
@@ -94,7 +99,9 @@ Arbeitsspeicher \cite{linux_tmpfs}. Sie bieten hohe I/O-Geschwindigkeit, sind je
 eine feste Größe begrenzt: Überschreitet das Schreibvolumen diese Grenze, schlagen
 Schreiboperationen mit \texttt{OSError: No space left on device} fehl. Eine RAM-Disk, die
 als Puffer zwischen schnellem Schreiben und langsamem Lesen dient, ist strukturell ein
-\textit{Single Point of Failure} für alle abhängigen Komponenten.
+\textit{Single Point of Failure} für alle abhängigen Komponenten. Case~2
+(Abschnitt~\ref{sec:case2}) untersucht diesen Mechanismus für ROSI, Case~3
+(Abschnitt~\ref{sec:case3}) die blockierende Queue.
 
 \subsection{Dev/Prod-Parity und Konfigurationsgefälle}
 \label{sec:grundlagen-parity}
@@ -109,4 +116,5 @@ nutzen aus Performance-Gründen persistente Verbindungen mit langer Lebensdauer.
 Fehlerklasse der veralteten Verbindung (\textit{stale connection}) tritt damit im
 Entwicklungsbetrieb strukturell nicht auf. Fehlerbehandlungscode kann fehlen, ohne dass
 Tests darauf hinweisen; in Produktion führt das erste Auftreten der Fehlerbedingung zum
-unkontrollierten Absturz.
+unkontrollierten Absturz. Case~4 (Abschnitt~\ref{sec:case4}) prüft dieses Muster für die
+Datenbankverbindung von ROSI.

@@ -1,5 +1,5 @@
 % =============================================================================
-% Kapitel 4: Failure Cases
+% Kapitel 5: Failure Cases
 % =============================================================================
 
 \section{Failure Cases}
@@ -9,22 +9,15 @@ Dieses Kapitel stellt die fünf untersuchten Failure Cases dar. Jeder Case erlä
 relevanten Systemkontext und die zugrunde liegende Schwachstelle, beschreibt das gemessene
 Verhalten und leitet daraus Interpretation und Handlungsempfehlung ab.
 
-% Hinweis: Pflicht "mind. eine Grafik" ist durch die zwei Mess-Plots (Abb. \ref{fig:case2},
-% \ref{fig:case3}) bereits erfüllt. Optional kann zusätzlich ein Architekturdiagramm der
-% Prozess-Topologie in Kap. \ref{sec:einleitung} oder \ref{sec:methodik} ergänzt werden
-% (Quelle: sammelsorium/misc/Process-Diagram.png bzw. eigene Darstellung aus Pipeline.md).
-
-\subsection{Case 1 -- Lücken in der Laufzeit-Prozesssupervision}
+\subsection[Case 1 -- Lücken in der Laufzeit-Prozesssupervision]{Case 1 -- Lücken in der Laufzeit-Prozesssupervision (FF2)}
 \label{sec:case1}
 
-Im stationären Betrieb überwacht das System ausschließlich den \texttt{PipelineManager}
-über einen Poll im Sekundentakt. Die drei weiteren Service-Prozesse für Frame-Grabbing,
-Datenbereitstellung und Logging laufen nach erfolgreichem Start ohne jede
-Laufzeitüberwachung; eine Supervisor-Logik im Sinne von
-Abschnitt~\ref{sec:grundlagen-supervision} existiert nicht. Um die Auswirkung dieser
-Lücke zu quantifizieren, wurde jeder Service-Prozess einzeln per \texttt{SIGKILL} zum
-Absturz gebracht. Tabelle~\ref{tab:case1} zeigt, ob der Hauptprozess den Ausfall erkennt
-und welche Systemreaktion daraus folgt.
+Wie in Abschnitt~\ref{sec:architektur-topologie} beschrieben, überwacht das System zur
+Laufzeit ausschließlich den PipelineManager; eine Supervisor-Logik im Sinne von
+Abschnitt~\ref{sec:grundlagen-supervision} existiert für die drei übrigen Service-Prozesse
+nicht. Um die Auswirkung dieser Lücke zu quantifizieren, wurde jeder Service-Prozess
+einzeln per \texttt{SIGKILL} zum Absturz gebracht. Tabelle~\ref{tab:case1} zeigt, ob der
+Hauptprozess den Ausfall erkennt und welche Systemreaktion daraus folgt.
 
 \begin{table}[htbp]
     \centering
@@ -52,7 +45,7 @@ Fail-Silent-Verhalten \cite{cristian1991}. Abhilfe schafft eine Überwachung all
 Service-Prozesse oder eine externe Supervision, etwa über eine \texttt{systemd}-Unit mit
 \texttt{Restart=on-failure}.
 
-\subsection{Case 2 -- Flüchtiger Bildspeicher als Single Point of Failure}
+\subsection[Case 2 -- Flüchtiger Bildspeicher als Single Point of Failure]{Case 2 -- Flüchtiger Bildspeicher als Single Point of Failure (FF1)}
 \label{sec:case2}
 
 Verarbeitete Bilder werden auf einer als tmpfs-RAM-Disk gemounteten Partition abgelegt.
@@ -103,7 +96,7 @@ Eine Fehlerbehandlung in \texttt{store\_images\_to\_disk}, die bei vollem Bildsp
 die Archivierung überspringt, sowie ein Füllstands-Monitoring mit Alarm unterhalb von
 20\,\% freiem Speicher würden diesen Ausfall verhindern.
 
-\subsection{Case 3 -- Log-Queue-Stau als Pipeline-Blocker}
+\subsection[Case 3 -- Log-Queue-Stau als Pipeline-Blocker]{Case 3 -- Log-Queue-Stau als Pipeline-Blocker (FF3)}
 \label{sec:case3}
 
 Alle Worker und der PipelineManager schreiben Log-Einträge synchron über
@@ -151,7 +144,7 @@ Schreibgeschwindigkeit, sondern das blockierende Verhalten im Fehlerfall. Eine U
 auf \texttt{put(timeout=0.1)} mit Drop-on-Full entkoppelt Logging und Pipeline: einzelne
 Log-Einträge gehen verloren, die Verarbeitung bleibt jedoch lauffähig.
 
-\subsection{Case 4 -- Veraltete Datenbankverbindung nach Produktionspause}
+\subsection[Case 4 -- Veraltete Datenbankverbindung nach Produktionspause]{Case 4 -- Veraltete Datenbankverbindung nach Produktionspause (FF3)}
 \label{sec:case4}
 
 Die Persistierung der Inspektionsergebnisse erfolgt über das Django-ORM in der Funktion
@@ -180,11 +173,12 @@ auf und wird durch die Entwicklungskonfiguration maskiert. Ein Aufruf von
 die zusätzliche Latenz ist bei lokaler Datenbank vernachlässigbar
 \cite{django_persistent_connections}.
 
-\subsection{Case 5 -- Vermutete Race Condition im Speichermanagement}
+\subsection[Case 5 -- Vermutete Race Condition im Speichermanagement]{Case 5 -- Vermutete Race Condition im Speichermanagement (FF1)}
 \label{sec:case5}
 
-Worker-Prozesse geben ihre Shared-Memory-Blöcke über eine Routine frei, die Blöcke nach
-mehr als zehn Sekunden ohne Zugriff zerstört \cite{python_shm}. Die Ausgangshypothese
+Der in Abschnitt~\ref{sec:architektur-speicher} beschriebene Garbage Collector zerstört
+Shared-Memory-Blöcke, auf die mehr als zehn Sekunden nicht zugegriffen wurde
+\cite{python_shm}. Die Ausgangshypothese
 lautete, dass diese Freigabe unter Last Blöcke zerstören könnte, die der PipelineManager
 noch benötigt, und so einen \texttt{FileNotFoundError} auslöst. Um den vermuteten Konflikt
 zu provozieren, wurde die Freigabeschwelle von zehn auf zwei Sekunden gesenkt und ein

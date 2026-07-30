@@ -1,0 +1,41 @@
+% =============================================================================
+% Glossar der Komponentennamen
+% =============================================================================
+
+\section*{Glossar}
+\addcontentsline{toc}{section}{Glossar}
+\label{sec:glossar}
+
+Dieses Glossar erklärt die Prozess- und Komponentennamen des ROSI-Systems, die in
+Kapitel~\ref{sec:architektur} eingeführt und im weiteren Text ohne erneute Erläuterung
+verwendet werden.
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{lX}
+        \hline
+        \textbf{Begriff} & \textbf{Erklärung} \\
+        \hline
+        FrameGrabber & Service-Prozess, der die Kamerahardware anbindet, rohe Pixeldaten
+        in Shared-Memory-Blöcke schreibt und Referenzen darauf an den PipelineManager
+        weiterreicht. \\
+        HealthMonitor & Hintergrund-Thread im MPWorkerPool, der Heartbeats der
+        Worker-Prozesse überwacht und einen nicht mehr antwortenden Worker neu startet. \\
+        InspectionDataHandler & Service-Prozess, der fortlaufend leere Daten-Container
+        erzeugt und über eine begrenzte Queue bereitstellt; wirkt bei voller Queue als
+        Backpressure-Ventil gegen unbegrenzte Speicherallokation. \\
+        LoggerProcess & Service-Prozess, der Lognachrichten aller übrigen Prozesse und
+        Worker über eine zentrale Queue entgegennimmt und asynchron persistiert. \\
+        main.py & Startprozess von ROSI; einziger Supervisor im System, überwacht zur
+        Laufzeit ausschließlich den PipelineManager. \\
+        MPWorkerPool & Pool aus zwölf Worker-Prozessen, der rechenintensive
+        Pipeline-Schritte über ein Map-Reduce-Muster parallel verarbeitet. \\
+        PipelineManager & Orchestriert die sechsstufige Verarbeitungspipeline jeder
+        Inspektion; einziger vom Hauptprozess laufzeitüberwachter Service-Prozess. \\
+        ResultCollector & Hintergrund-Thread im MPWorkerPool, der Teilergebnisse der
+        Worker nicht blockierend einsammelt und die Pipeline nach Abschluss aller
+        Teiljobs benachrichtigt. \\
+        \hline
+    \end{tabularx}
+\end{table}

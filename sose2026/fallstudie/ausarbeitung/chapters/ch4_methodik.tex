@@ -1,5 +1,5 @@
 % =============================================================================
-% Kapitel 3: Methodik
+% Kapitel 4: Methodik
 % =============================================================================
 
 \section{Methodik}
@@ -80,9 +80,9 @@ relevanten Eigenschaften zusammen.
 
 Vor der Fehlerinjektion wurde eine Referenzmessung im Normalbetrieb ohne injizierte Fehler
 durchgeführt. Sie dient als Vergleichsbasis für alle Failure Cases. Das System startet
-neben dem Hauptprozess vier Service-Prozesse für \texttt{Logger}, \texttt{FrameGrabber},
-\texttt{Inspection\allowbreak{}Data\allowbreak{}Handler} und \texttt{PipelineManager} sowie
-einen Pool von 12 Worker-Prozessen. Im stationären Zustand erreicht es einen Durchsatz von
+neben dem Hauptprozess vier Service-Prozesse für LoggerProcess, FrameGrabber,
+InspectionDataHandler und PipelineManager sowie einen Pool von zwölf Worker-Prozessen. Im
+stationären Zustand erreicht es einen Durchsatz von
 1,74~Inspektionen pro Sekunde bei einer mittleren Pipeline-Laufzeit von 383~ms. Die
 zentrale Log-Queue bleibt dabei nahezu leer.
 
@@ -113,8 +113,8 @@ Simulator die Kamerahardware: Hardwarespezifische Fehler wie ein Kamera-Disconne
 nicht direkt erzeugt, ihr Effekt auf das System aber über den Ausfall des FrameGrabbers
 abgebildet. Drittens sind die Beobachtungsfenster mit 20 bis 120~Sekunden bewusst kurz
 gehalten; schleichende Effekte über ganze Schichten werden aus den gemessenen Raten
-hochgerechnet, nicht über die volle Dauer beobachtet. Viertens ist Case~4 aufgrund der
-maskierenden Entwicklungskonfiguration analytisch statt empirisch belegt. Schließlich
-stützt sich jeder Case auf Einzelmessungen; der Fokus liegt auf den qualitativen
-Fehlermechanismen und ihren Größenordnungen, nicht auf statistisch abgesicherten
-Verteilungen.
+hochgerechnet, nicht über die volle Dauer beobachtet. Die veraltete Datenbankverbindung
+(Case~4) ist zudem aufgrund der maskierenden Entwicklungskonfiguration analytisch statt
+empirisch belegt. Schließlich stützt sich jeder Case auf Einzelmessungen; der Fokus liegt
+auf den qualitativen Fehlermechanismen und ihren Größenordnungen, nicht auf statistisch
+abgesicherten Verteilungen.

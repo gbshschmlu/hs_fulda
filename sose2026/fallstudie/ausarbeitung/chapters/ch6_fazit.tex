@@ -1,5 +1,5 @@
 % =============================================================================
-% Kapitel 5: Fazit und Handlungsempfehlungen
+% Kapitel 6: Fazit und Handlungsempfehlungen
 % =============================================================================
 
 \section{Fazit und Handlungsempfehlungen}
@@ -31,14 +31,14 @@ Zustand der Service-Prozesse werden zur Laufzeit überwacht. Besonders Case~3 ze
 eine verlangsamte Hilfskomponente über eine gemeinsame Queue die eigentliche Pipeline
 blockieren kann.
 
-Beide Muster wirken über die MTTR auf die Verfügbarkeit. Solange ein Ausfall erst durch
-ausbleibende Inspektionsergebnisse oder manuelle Beobachtung auffällt, ist die
-Time-to-Detection an die Anwesenheit von Personal gebunden und kann im 24/7-Betrieb ohne
-Bereitschaftsdienst Stunden betragen. Nach Gleichung~\ref{eq:availability} senkt jede
-Verlängerung der MTTR die Verfügbarkeit unmittelbar -- unabhängig davon, wie selten der
-Fehler auftritt. Eine automatische Erkennung, die die Time-to-Detection von Stunden auf
-Sekunden verkürzt, verbessert die Verfügbarkeit damit selbst dann deutlich, wenn die
-Ausfallrate unverändert bleibt. Genau hier setzen die folgenden Empfehlungen an.
+Beide Muster wirken über die MTTR auf die Verfügbarkeit. Ohne automatische Erkennung
+(Abschnitt~\ref{sec:problemstellung}) bleibt die Time-to-Detection an die Anwesenheit von
+Personal gebunden und kann im 24/7-Betrieb ohne Bereitschaftsdienst Stunden betragen.
+Nach Gleichung~\ref{eq:availability} senkt jede Verlängerung der MTTR die Verfügbarkeit
+unmittelbar -- unabhängig davon, wie selten der Fehler auftritt. Eine automatische
+Erkennung, die die Time-to-Detection von Stunden auf Sekunden verkürzt, verbessert die
+Verfügbarkeit damit selbst dann deutlich, wenn die Ausfallrate unverändert bleibt. Genau
+hier setzen die folgenden Empfehlungen an.
 
 \subsection{Priorisierte Handlungsempfehlungen}
 \label{sec:fazit-empfehlungen}
