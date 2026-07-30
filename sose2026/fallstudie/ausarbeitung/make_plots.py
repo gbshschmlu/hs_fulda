@@ -152,10 +152,13 @@ def save_case3() -> None:
     plt.close(fig)
 
 
+LOGC = "#6b7887"
+
+
 def save_topology() -> None:
-    fig, ax = plt.subplots(figsize=(7.0, 4.3))
+    fig, ax = plt.subplots(figsize=(7.0, 4.6))
     ax.set_xlim(0, 10)
-    ax.set_ylim(0, 6)
+    ax.set_ylim(-0.3, 6)
     ax.axis("off")
 
     def box(cx, cy, w, h, text, *, fill, edge, tc, bold=False):
@@ -223,12 +226,20 @@ def save_topology() -> None:
     # Datenfluss (grau), Labels unter den Pfeilen
     arrow((2.5, 3.0), (2.7, 3.0), GRAY, lw=1.4)
     arrow((4.9, 3.0), (5.1, 3.0), GRAY, lw=1.4)
-    arrow((7.3, 3.0), (7.5, 3.0), GRAY, lw=1.4)
     arrow((6.2, 2.525), (6.2, 1.80), GRAY, lw=1.4)
     flabel(2.6, 2.55, "leere\nContainer", GRAY, size=7.5)
     flabel(5.0, 2.55, "SM-Ref.", GRAY, size=7.5)
-    flabel(7.4, 2.55, "Log-Queue", GRAY, size=7.5)
     flabel(6.95, 2.15, "Map / Reduce", BLUE, size=7.5)
+
+    # Gemeinsame Log-Queue: alle Prozesse (inkl. Worker) schreiben in denselben Bus,
+    # der Logger-Process konsumiert daraus (siehe Pipeline.md, Abschnitt 2.4)
+    bus_y = 2.15
+    ax.plot([1.4, 8.6], [bus_y, bus_y], color=LOGC, lw=1.3, linestyle=(0, (4, 2.5)), zorder=1)
+    for sx in (1.4, 3.8, 5.9):
+        ax.plot([sx, sx], [2.525, bus_y], color=LOGC, lw=1.1, linestyle=(0, (4, 2.5)), zorder=1)
+    ax.plot([6.5, 6.5], [1.80, bus_y], color=LOGC, lw=1.1, linestyle=(0, (4, 2.5)), zorder=1)
+    arrow((8.6, bus_y), (8.6, 2.525), LOGC, lw=1.5)
+    flabel(2.2, 1.93, "gemeinsame\nLog-Queue", LOGC, size=7.5)
 
     # Supervision: blau durchgezogen = ueberwacht, rot gestrichelt = keine Supervision
     arrow((5.3, 4.65), (6.2, 3.48), BLUE, lw=1.8, rad=-0.15)
@@ -238,14 +249,16 @@ def save_topology() -> None:
     flabel(6.35, 4.05, "1 s-Poll", BLUE)
     flabel(2.55, 4.35, "keine Laufzeit-\nSupervision", RED)
 
-    # Legende
-    y = 0.4
-    ax.plot([0.4, 1.0], [y, y], color=BLUE, lw=1.8)
-    ax.text(1.1, y, "Supervision (1 s-Poll)", va="center", fontsize=8, color="#444")
-    ax.plot([4.0, 4.6], [y, y], color=RED, lw=1.4, linestyle=(0, (5, 3)))
-    ax.text(4.7, y, "keine Supervision", va="center", fontsize=8, color="#444")
-    ax.plot([7.0, 7.6], [y, y], color=GRAY, lw=1.4)
-    ax.text(7.7, y, "Datenfluss", va="center", fontsize=8, color="#444")
+    # Legende (zwei Zeilen)
+    y1, y2 = 0.55, 0.10
+    ax.plot([0.4, 1.0], [y1, y1], color=BLUE, lw=1.8)
+    ax.text(1.1, y1, "Supervision (1 s-Poll)", va="center", fontsize=8, color="#444")
+    ax.plot([4.2, 4.8], [y1, y1], color=RED, lw=1.4, linestyle=(0, (5, 3)))
+    ax.text(4.9, y1, "keine Supervision", va="center", fontsize=8, color="#444")
+    ax.plot([0.4, 1.0], [y2, y2], color=GRAY, lw=1.4)
+    ax.text(1.1, y2, "Datenfluss", va="center", fontsize=8, color="#444")
+    ax.plot([4.2, 4.8], [y2, y2], color=LOGC, lw=1.3, linestyle=(0, (4, 2.5)))
+    ax.text(4.9, y2, "Log-Queue (alle Prozesse)", va="center", fontsize=8, color="#444")
 
     fig.tight_layout()
     fig.savefig(OUT / "topology.pdf")

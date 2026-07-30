@@ -37,21 +37,24 @@ sich die relevanten Risikokategorien wie folgt einteilen:
 
 \begin{itemize}
     \item \textit{Speichererschöpfung:} Puffer, Logs oder Datenbanken wachsen
-          schleichend, bis Schreiboperationen systemweit fehlschlagen.
-    \item \textit{Stille Prozessausfälle:} Ein Teilprozess stürzt ab, das System läuft
-          scheinbar weiter -- ohne Alarm und ohne Neustart.
+          schleichend, bis Schreiboperationen systemweit fehlschlagen
+          (Abschnitt~\ref{sec:grundlagen-ressourcen}).
+    \item \textit{Stille Prozessausfälle:} Ein Teilprozess stürzt ab, ohne dass das
+          System dies erkennt (Fail-Silent-Verhalten, Abschnitt~\ref{sec:grundlagen-fehler}).
     \item \textit{Verbindungsabbrüche:} Datenbankverbindungen veralten nach
           Produktionspausen und führen beim nächsten Zugriff zu unkontrollierten
-          Prozessabstürzen.
+          Prozessabstürzen (Abschnitt~\ref{sec:grundlagen-parity}).
     \item \textit{Kaskadeneffekte:} Die Verlangsamung einer Komponente blockiert über
-          gemeinsame Queues und Shared-Memory-Schnittstellen das gesamte System.
+          gemeinsame Queues und Shared-Memory-Schnittstellen das gesamte System
+          (Abschnitt~\ref{sec:grundlagen-fehler}).
     \item \textit{Blinde Flecken im Monitoring:} Vorhandene Überwachungskomponenten
           erfassen nicht alle relevanten Ressourcen, etwa flüchtige RAM-Dateisysteme
           oder interne Queue-Tiefen.
 \end{itemize}
 
 ROSI verfügt aktuell über kein externes Alerting. Probleme werden erst durch
-ausbleibende Inspektionsergebnisse oder manuelle Beobachtung sichtbar.
+ausbleibende Inspektionsergebnisse oder manuelle Beobachtung sichtbar -- die
+Konsequenzen dieser Lücke werden in Kapitel~\ref{sec:fazit} quantitativ eingeordnet.
 
 \subsection{Zielsetzung und Forschungsfragen}
 \label{sec:zielsetzung}

@@ -15,20 +15,22 @@ Worker-Pool und das Shared-Memory-basierte Speichermanagement.
 
 ROSI ist bewusst als Multiprocessing-System ausgelegt, um den \textit{Global Interpreter
 Lock} von Python zu umgehen und große Bilddatenmengen nicht durch teure
-Inter-Prozess-Kommunikation zu blockieren. Der Startprozess \texttt{main.py} teilt das
+Inter-Prozess-Kommunikation zu blockieren. Der Startprozess main.py teilt das
 System in vier langlebige Service-Prozesse auf, die über threadsichere Queues und
 Event-Primitive kommunizieren (Abbildung~\ref{fig:topologie}). Der
-\texttt{InspectionDataHandler} erzeugt fortlaufend leere Daten-Container und schiebt sie
+InspectionDataHandler erzeugt fortlaufend leere Daten-Container und schiebt sie
 über eine begrenzte Queue in das System; ist die Queue voll, blockiert er und wirkt so als
 systemweites Backpressure-Ventil gegen unbegrenzte Speicherallokation. Der
-\texttt{FrameGrabber} bindet die Kamerahardware an, schreibt die rohen Pixeldaten in
-Shared-Memory-Blöcke und reicht Referenzen darauf an den \texttt{PipelineManager} weiter.
-Dieser orchestriert die eigentliche Verarbeitung. Der \texttt{LoggerProcess} nimmt die
+FrameGrabber bindet die Kamerahardware an, schreibt die rohen Pixeldaten in
+Shared-Memory-Blöcke und reicht Referenzen darauf an den PipelineManager weiter.
+Dieser orchestriert die eigentliche Verarbeitung. Der LoggerProcess nimmt die
 Lognachrichten aller Prozesse über eine zentrale Queue entgegen und schreibt sie
 asynchron nach PostgreSQL, sodass I/O-Latenzen die Bildverarbeitung nicht ausbremsen.
+Eine Übersicht aller Komponentennamen findet sich im Glossar auf
+Seite~\pageref{sec:glossar}.
 
 Für die Fehlertoleranz ist eine Eigenschaft dieser Topologie zentral:
-\texttt{main.py} überwacht zur Laufzeit ausschließlich den \texttt{PipelineManager}
+main.py überwacht zur Laufzeit ausschließlich den PipelineManager
 über einen Poll im Sekundentakt. Die drei übrigen Service-Prozesse laufen nach
 erfolgreichem Start ohne jede Laufzeit-Supervision. Genau an dieser Lücke setzt
 Case~1 (Abschnitt~\ref{sec:case1}) an; in Abbildung~\ref{fig:topologie} sind die
@@ -38,7 +40,7 @@ unüberwachten Prozesse rot markiert.
     \centering
     \includegraphics[width=0.95\textwidth]{assets/img/topology.pdf}
     \caption[Prozess-Topologie von ROSI]{Prozess-Topologie von ROSI.
-        \texttt{main.py} überwacht zur Laufzeit nur den \texttt{PipelineManager}
+        main.py überwacht zur Laufzeit nur den PipelineManager
         (1\,s-Poll); die drei rot markierten Service-Prozesse laufen ohne
         Laufzeit-Supervision (Case~1). Graue Pfeile zeigen den Datenfluss; große
         Bilddaten wandern nicht durch die Queues, sondern als
@@ -50,15 +52,15 @@ unüberwachten Prozesse rot markiert.
 \subsection{Verarbeitungspipeline und Worker-Pool}
 \label{sec:architektur-pipeline}
 
-Der \texttt{PipelineManager} führt jede Inspektion durch eine streng sequenzielle
+Der PipelineManager führt jede Inspektion durch eine streng sequenzielle
 Pipeline aus sechs Schritten. Rechenintensive Schritte -- KI-Inferenz, Geometrievermessung
-und Bildkompression -- lagert er über ein Map-Reduce-Muster in den \texttt{MPWorkerPool}
+und Bildkompression -- lagert er über ein Map-Reduce-Muster in den MPWorkerPool
 mit zwölf Worker-Prozessen aus: Ein Schritt wird in Teiljobs zerlegt (Map), auf freie
 Worker verteilt und das Ergebnis wieder zusammengeführt (Reduce). Ein Scheduler wählt
 dabei den Worker mit der kürzesten Job-Queue. Zwei Hintergrund-Threads ergänzen den Pool:
-Der \texttt{ResultCollector} sammelt die Teilergebnisse nicht blockierend ein und
+Der ResultCollector sammelt die Teilergebnisse nicht blockierend ein und
 benachrichtigt die Pipeline erst, wenn alle Teiljobs abgeschlossen sind; ein
-\texttt{HealthMonitor} überwacht die Heartbeats der Worker und startet einen nicht mehr
+HealthMonitor überwacht die Heartbeats der Worker und startet einen nicht mehr
 antwortenden Worker neu. Diese Worker-Überwachung ist damit deutlich engmaschiger als die
 Supervision der Service-Prozesse -- ein Gefälle, das für die Fehlerbilder in
 Kapitel~\ref{sec:cases} bedeutsam ist.
