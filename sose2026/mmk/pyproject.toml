@@ -5,8 +5,12 @@ description = "Video Codec Project"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "matplotlib",
     "numpy",
-    "ruff>=0.16.3",
     "tqdm",
+]
+
+[project.optional-dependencies]
+dev = [
+    "matplotlib",
+    "ruff>=0.16.3",
 ]

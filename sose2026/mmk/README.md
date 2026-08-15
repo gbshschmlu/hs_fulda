@@ -25,7 +25,7 @@ The program creates `output/` automatically and writes:
 - `lossy.bin`
 - `lossy_reconstructed.y4m`
 
-Both reconstructed Y4M files can be opened in VLC. The implementation requires Python 3.14 and obtains NumPy and tqdm through `uv`.
+Both reconstructed Y4M files can be opened in VLC. The implementation requires Python 3.14 and obtains NumPy and tqdm through `uv`. Matplotlib and Ruff are optional development dependencies and can be installed with `uv sync --extra dev`; they are not used for compression.
 
 ## 1. Architecture
 
@@ -63,8 +63,10 @@ Every plane payload begins with a one-byte coding method:
 
 - `0` stores all residual bytes directly.
 - `1` stores a one-bit non-zero mask for every residual sample, followed by only the non-zero bytes in raster order.
+- `2` uses a PackBits-style run-length representation with repeated runs and literal blocks.
+- `3` applies canonical Huffman coding to the RLE byte stream. Its header stores the RLE length, 256 code lengths, the encoded bit count, and the packed bits.
 
-The encoder calculates both sizes and selects the smaller representation per plane. Therefore, the mask cannot enlarge a noisy plane. Plane dimensions are derived from the header, so sample counts do not need to be repeated in each frame.
+The encoder creates these candidates and selects the smallest representation independently for each plane. Huffman is only used when its code table is worth the overhead; trees requiring codes longer than 15 bits are skipped. Raw storage bounds the worst case for noisy data. All four representations are self-written and lossless. Plane dimensions are derived from the header, so sample counts do not need to be repeated in each frame.
 
 ## 2. Algorithms
 
@@ -80,7 +82,7 @@ This is spatial compression because smooth horizontal areas produce many zero re
 
 For a P-frame, the sample at the same position in the previous frame is the prediction. Unchanged image areas therefore become zero. The previous frame is always an already reconstructed reference, and unsigned modulo-256 arithmetic makes subtraction and addition exactly reversible. Periodic I-frames bound dependencies and allow decoding to recover at the next GOP after damaged data.
 
-The residual is then encoded with the adaptive raw/zero-mask representation described above. This final stage is lossless and was implemented directly rather than delegated to `zlib`, `gzip`, FFmpeg, or another codec.
+The residual is then encoded with the adaptive representation described above. RLE groups repeated residual bytes, and optional canonical Huffman coding gives frequent RLE symbols shorter codes. This final stage is lossless and was implemented directly rather than delegated to `zlib`, `gzip`, FFmpeg, or another codec.
 
 ![Lossless original on the left and reconstruction on the right](assets/lossless_comparison.png)
 
@@ -97,13 +99,13 @@ Y code     = round(Y / 8)
 Cb/Cr code = round(Cb/Cr / 16)
 ```
 
-The decoder multiplies these codes by their steps and clips the result to the byte range. Chroma receives the coarser step because human vision is generally more sensitive to luminance detail than to small colour differences. Quantization also makes neighbouring and consecutive samples more likely to share the same code, improving zero-mask compression.
+The decoder multiplies these codes by their steps and clips the result to the byte range. Chroma receives the coarser step because human vision is generally more sensitive to luminance detail than to small colour differences. Quantization also makes neighbouring and consecutive samples more likely to share the same code, which improves RLE and Huffman coding.
 
-Spatial and temporal prediction are then applied to the quantized codes exactly as in lossless mode. P-frames reference the previous quantized code planes, not the original input. Encoder and decoder therefore use identical references and do not accumulate quantization drift. This intentionally simple design uses no motion estimation, transform blocks, or B-frames.
+Spatial and temporal differencing are then applied to the quantized codes exactly as in lossless mode. P-frames reference the previous quantized code planes, not the original input. Encoder and decoder therefore use identical references and do not accumulate quantization drift. This intentionally simple design uses no DCT, transform blocks, motion estimation, motion vectors, or B-frames.
 
 ## 3. Evaluation
 
-The following measurements use the official 300-frame, 1280×720, 30 fps `source.y4m`. Compression ratio is defined as `original size / encoded size`; MB uses 1,000,000 bytes.
+The following measurements use the official 300-frame, 1280×720, 30 fps `source.y4m`. The Y4M container stores uncompressed sample planes, but its `C420jpeg` input already has 4:2:0 chroma subsampling and therefore only one Cb and one Cr sample per 2×2 luma area. Compression ratio is defined as `original size / encoded size`; MB uses 1,000,000 bytes.
 
 All benchmarks and performance evaluations were executed on an Apple Mac mini M4 (24 GB RAM) under macOS and Python 3.14 via `uv`. Processing times on other hardware configurations may vary accordingly.
 
@@ -112,8 +114,8 @@ All benchmarks and performance evaluations were executed on an Apple Mac mini M4
 | File / mode    | Size (bytes) | Size (MB) | Compression ratio | Size reduction |
 | -------------- | -----------: | --------: | ----------------: | -------------: |
 | `source.y4m`   |  414,721,883 |    414.72 |            1.00:1 |          0.00% |
-| `lossless.bin` |  171,418,418 |    171.42 |            2.42:1 |         58.67% |
-| `lossy.bin`    |  110,920,689 |    110.92 |            3.74:1 |         73.25% |
+| `lossless.bin` |  113,359,496 |    113.36 |            3.66:1 |         72.67% |
+| `lossy.bin`    |   54,748,873 |     54.75 |            7.57:1 |         86.80% |
 
 A streaming byte comparison confirmed that all 300 decoded lossless Y, Cb, and Cr planes exactly match the source. The reconstructed Y4M file is 35 bytes smaller only because the writer normalizes the Y4M header and omits optional source tags; its actual frame payload is identical.
 
@@ -125,7 +127,14 @@ The lossy reconstruction produced these objective sample-domain results:
 | Cb    | 23.263 | 34.46 dB |                      8 |
 | Cr    | 21.742 | 34.76 dB |                      8 |
 
-These maximum errors follow directly from rounding to the nearest quantization level with steps 8 and 16. The experimental sweep and its design rationale are included in section 3.3 below, so the README stays understandable without an additional development document.
+MSE and PSNR were calculated over every sample of every reconstructed plane as full-reference metrics:
+
+```text
+MSE  = sum((source - reconstruction)²) / sample count
+PSNR = 10 × log10(255² / MSE)
+```
+
+The maximum errors follow directly from rounding to the nearest quantization level: half of step 8 for Y and half of step 16 for Cb/Cr. PSNR quantifies sample error but does not fully describe human perception, so the objective values are complemented by side-by-side images and difference maps. No MOS is reported because no controlled test with multiple participants was performed.
 
 ### 3.2 Visual artifact analysis
 
@@ -141,41 +150,47 @@ The Lossy difference map shows the quantization error in the reconstructed Y pla
 
 ### 3.3 Experimental Design Rationale & Benchmarks
 
-The experiments were designed to compare the important implementation choices on the same data. The first 12 frames of the official 1280×720 Y4M source were used as a common sample. They contain 16,588,800 bytes of uncompressed Y, Cb, and Cr payload. For the residual-coding comparison, the first frame was stored without a temporal reference and later frames were subtracted from their predecessors at the same sample positions. Container metadata and length fields were excluded, so the comparison focuses on the residual representation itself. After the final design was selected, the complete 300-frame video was used for the authoritative size and quality measurements in section 3.1.
+The first 12 frames of the official source were used as a common development sample. They contain 16,588,800 bytes of Y, Cb, and Cr payload. The first frame used left-neighbour spatial differencing and later frames used same-position differences to their predecessors. Container metadata and chunk length fields were excluded so the comparison isolates the plane payloads. The complete 300-frame video was then used for the authoritative measurements in section 3.1.
 
 All benchmarks and performance evaluations were executed on an Apple Mac mini M4 (24 GB RAM) under macOS and Python 3.14 via `uv`. Processing times on other hardware configurations may vary accordingly.
 
-#### PackBits-RLE versus zero-mask bitmap
+#### Adaptive residual coding
 
-The first candidate was a self-written PackBits-style run-length encoder. Runs of at least three equal bytes were stored using a control byte and the repeated value; other bytes were collected into literal blocks. This can represent repeated residual values other than zero, which is useful for repeated gradients or constant brightness changes.
+The self-written PackBits-style RLE stores runs of at least three equal bytes as a control byte and one value; other values are grouped into literal blocks. The zero mask is effective for sparse residuals, while RLE can also represent repeated non-zero values. Canonical Huffman coding is tested only after RLE and stores its code lengths in the payload, allowing the decoder to reconstruct the same codes without an external table.
 
-The second candidate stored one bit per residual sample in a non-zero bitmap, followed by only the non-zero residual bytes in raster order. NumPy can create the mask and select the non-zero values in vectorized operations, so it does not need a slow Python-level sample loop.
+| Residual method                         | Encoded payload | Compression ratio |
+| --------------------------------------- | --------------: | ----------------: |
+| Zero-mask only                          | 5,629,568 bytes |            2.95:1 |
+| RLE only                                | 4,912,592 bytes |            3.38:1 |
+| Adaptive raw / mask / RLE               | 4,732,192 bytes |            3.51:1 |
+| Adaptive raw / mask / RLE / RLE-Huffman | 4,426,508 bytes |            3.75:1 |
 
-| Residual method  |       Raw sample | Encoded payload | Compression ratio | Processing time |
-| ---------------- | ---------------: | --------------: | ----------------: | --------------: |
-| PackBits-RLE     | 16,588,800 bytes | 4,849,259 bytes |            3.42:1 |         0.974 s |
-| Zero-mask bitmap | 16,588,800 bytes | 6,098,886 bytes |            2.72:1 |         0.004 s |
+On the 36 planes in this excerpt, the final encoder selected the zero mask 13 times, plain RLE 7 times, and RLE-Huffman 16 times. Raw storage was not needed for this source excerpt but remains a safe fallback for other material. Huffman reduced the adaptive payload by another 305,684 bytes (6.46%) without changing reconstruction quality.
 
-PackBits produced the smaller residual payload, but the byte-by-byte Python scanner needed almost one second for the 12-frame excerpt. The bitmap payload was about 25.8% larger, but its measured processing time was roughly 240 times lower and it is especially effective when temporal prediction produces many zero values. The final codec therefore uses the bitmap where it is smaller and falls back to raw residual bytes otherwise. The one-byte method field tells the decoder which representation was selected, so noisy I-frames are not enlarged by a fixed mask.
-
-![PackBits-RLE and zero-mask benchmark comparison](assets/performance_comparison.png)
+![Residual payload comparison](assets/performance_comparison.png)
 
 #### Quantization-step sweep
 
-Three luma/chroma step pairs were tested for lossy mode. For each pair, the planes were rounded to the nearest quantization level, reconstructed, and evaluated with PSNR. The payload estimates use temporal prediction and the adaptive bitmap representation; container overhead is excluded from this small comparison.
+Three luma/chroma step pairs were tested for lossy mode. For each pair, the planes were rounded to the nearest quantization level, reconstructed, and evaluated with PSNR. The payload estimates use the final adaptive residual representation; container overhead is excluded from this small comparison.
 
 | Y / chroma step | Estimated payload |   Y PSNR |  Cb PSNR |  Cr PSNR | Assessment                              |
 | --------------: | ----------------: | -------: | -------: | -------: | --------------------------------------- |
-|           4 / 8 |   4,593,578 bytes | 46.37 dB | 40.48 dB | 40.35 dB | High quality, but the payload is larger |
-|          8 / 16 |   4,145,621 bytes | 40.73 dB | 34.66 dB | 34.98 dB | Balanced middle setting                 |
-|         16 / 32 |   3,828,914 bytes | 34.89 dB | 27.94 dB | 29.93 dB | Strong posterization and colour loss    |
+|           4 / 8 |   2,655,094 bytes | 46.37 dB | 40.48 dB | 40.35 dB | High quality, but the payload is larger |
+|          8 / 16 |   1,962,209 bytes | 40.73 dB | 34.66 dB | 34.98 dB | Balanced middle setting                 |
+|         16 / 32 |   1,349,213 bytes | 34.89 dB | 27.94 dB | 29.93 dB | Strong posterization and colour loss    |
 
-The 4/8 setting had the best objective quality, but its estimated payload was about 10.8% larger than the 8/16 result. The 16/32 setting saved only another 316,707 bytes, or about 7.6% in this sample, while luma PSNR dropped by nearly 6 dB and chroma PSNR reached only about 28–30 dB. Steps 8 for Y and 16 for Cb/Cr were therefore selected as the middle trade-off: luma stays above 40 dB PSNR while the coarser chroma step improves repeated-code compression without excessive visible colour contouring.
+The 4/8 setting had the best objective quality, but its payload was 35.3% larger than the 8/16 result. The 16/32 setting saved another 612,996 bytes (31.2%), while luma PSNR dropped by nearly 6 dB and chroma PSNR reached only about 28–30 dB. Steps 8 for Y and 16 for Cb/Cr were selected as the middle rate-distortion trade-off: luma stays above 40 dB PSNR while the coarser chroma step improves entropy coding without excessive visible colour contouring.
 
 ![Quantization payload and PSNR trade-off](assets/quantization_tradeoff.png)
 
-The experiments have limits. They use one early 12-frame excerpt, so videos with more noise, camera movement, or scene cuts may favour another residual representation. The adaptive raw fallback reduces this dependency but does not remove it. The final 300-frame measurements in section 3.1 remain the authoritative evaluation, while this section explains why the selected implementation was chosen.
+The experiments have limits. They use one early 12-frame excerpt, so videos with more noise, camera movement, or scene cuts may favour another residual representation. The adaptive raw fallback reduces this dependency but does not remove it. Both the excerpt and full-video measurements are full-reference tests because the complete source samples are available; the excerpt is only a smaller development sample. The final measurements in section 3.1 remain authoritative.
 
 ## 4. Verification
 
-The implementation was checked with synthetic round-trip tests across a GOP boundary, malformed payload tests, a complete run on the official source, byte-exact lossless payload hashing, and full-video lossy MSE/PSNR calculation. The benchmark alternatives and their measured trade-offs are documented in section 3.3, so no separate development directory is required to understand these results.
+The implementation was checked with synthetic round-trip tests across a GOP boundary, dedicated RLE and canonical Huffman round-trips, malformed payload tests, a complete run on the official source, byte-exact lossless payload hashing, and full-video lossy MSE/PSNR calculation. The codec itself only uses Python, NumPy, and tqdm; Matplotlib is used solely by the optional asset-generation script.
+
+```bash
+uv run --extra dev python -m unittest discover -s tests -p 'test_*.py'
+uv run --extra dev ruff check main.py tests
+uv run --extra dev python tests/generate_assets.py source.y4m
+```

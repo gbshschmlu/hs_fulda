@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import matplotlib
 
@@ -9,7 +9,6 @@ matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 import numpy as np
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ASSET_DIR = PROJECT_ROOT / "assets"
@@ -35,7 +34,11 @@ def read_first_frame(path: Path) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         y_plane = file.read(y_size)
         cb_plane = file.read(uv_size)
         cr_plane = file.read(uv_size)
-        if len(y_plane) != y_size or len(cb_plane) != uv_size or len(cr_plane) != uv_size:
+        if (
+            len(y_plane) != y_size
+            or len(cb_plane) != uv_size
+            or len(cr_plane) != uv_size
+        ):
             raise ValueError(f"Incomplete first Y plane in {path}")
         return (
             np.frombuffer(y_plane, dtype=np.uint8).reshape(height, width),
@@ -59,11 +62,13 @@ def ycbcr_to_rgb(frame: tuple[np.ndarray, np.ndarray, np.ndarray]) -> np.ndarray
     return np.clip(np.stack((red, green, blue), axis=-1), 0, 255).astype(np.uint8)
 
 
-def create_lossless_comparison(original_path: Path) -> None:
+def create_comparison(
+    original_path: Path, reconstruction_path: Path, output_name: str
+) -> None:
     original = ycbcr_to_rgb(read_first_frame(original_path))
-    reconstructed = ycbcr_to_rgb(read_first_frame(LOSSLESS_RECONSTRUCTION))
+    reconstructed = ycbcr_to_rgb(read_first_frame(reconstruction_path))
     comparison = np.concatenate((original, reconstructed), axis=1)
-    plt.imsave(ASSET_DIR / "lossless_comparison.png", comparison)
+    plt.imsave(ASSET_DIR / output_name, comparison)
 
 
 def create_diff_image(
@@ -98,24 +103,24 @@ def create_diff_image(
 
 
 def create_performance_comparison() -> None:
-    methods = ["PackBits RLE", "Zero-mask bitmap"]
-    runtimes = np.array([0.974, 0.004])
-    compression_ratios = np.array([3.42, 2.72])
+    methods = ["Zero mask", "RLE", "Adaptive", "+ Huffman"]
+    payload_mb = np.array([5.629568, 4.912592, 4.732192, 4.426508])
+    compression_ratios = np.array([2.9467, 3.3768, 3.5055, 3.7476])
+    colors = ["#4C78A8", "#F58518", "#54A24B", "#B279A2"]
 
     figure, axes = plt.subplots(1, 2, figsize=(10, 4.5), constrained_layout=True)
-    runtime_bars = axes[0].bar(methods, runtimes, color=["#4C78A8", "#F58518"])
-    axes[0].set_title("Processing time")
-    axes[0].set_ylabel("Seconds, logarithmic scale")
-    axes[0].set_yscale("log")
+    payload_bars = axes[0].bar(methods, payload_mb, color=colors)
+    axes[0].set_title("Encoded residual payload")
+    axes[0].set_ylabel("MB")
     axes[0].tick_params(axis="x", rotation=18)
 
-    ratio_bars = axes[1].bar(methods, compression_ratios, color=["#4C78A8", "#F58518"])
+    ratio_bars = axes[1].bar(methods, compression_ratios, color=colors)
     axes[1].set_title("Compression ratio")
     axes[1].set_ylabel("Original / encoded size")
     axes[1].tick_params(axis="x", rotation=18)
 
     for axis, bars, values, suffix in (
-        (axes[0], runtime_bars, runtimes, " s"),
+        (axes[0], payload_bars, payload_mb, " MB"),
         (axes[1], ratio_bars, compression_ratios, ":1"),
     ):
         for bar, value in zip(bars, values):
@@ -134,7 +139,7 @@ def create_performance_comparison() -> None:
 
 def create_quantization_tradeoff() -> None:
     labels = np.array(["4 / 8", "8 / 16", "16 / 32"])
-    payload_mb = np.array([4.593578, 4.145621, 3.828914])
+    payload_mb = np.array([2.655094, 1.962209, 1.349213])
     psnr_values = {
         "Y": np.array([46.37, 40.73, 34.89]),
         "Cb": np.array([40.48, 34.66, 27.94]),
@@ -167,7 +172,8 @@ def create_quantization_tradeoff() -> None:
 def main() -> None:
     source_file = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_SOURCE_FILE
     ASSET_DIR.mkdir(parents=True, exist_ok=True)
-    create_lossless_comparison(source_file)
+    create_comparison(source_file, LOSSLESS_RECONSTRUCTION, "lossless_comparison.png")
+    create_comparison(source_file, LOSSY_RECONSTRUCTION, "lossy_comparison.png")
     create_diff_image(
         source_file,
         LOSSLESS_RECONSTRUCTION,

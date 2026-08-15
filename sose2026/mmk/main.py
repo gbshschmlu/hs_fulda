@@ -19,9 +19,8 @@ LOSSY_Y4M_FILE = OUTPUT_DIR / "lossy_reconstructed.y4m"
 
 # ============================================================================
 # Data model
-# Students edit: no | purpose: store metadata and decoded frame planes
+# Students edit: no | purpose: store metadata and decoded frame planes.
 # ============================================================================
-
 
 @dataclass
 class Y4MMetadata:
@@ -52,9 +51,8 @@ class Frame:
 
 # ============================================================================
 # File system
-# Students edit: no | purpose: create the output directory
+# Students edit: no | purpose: create the output directory.
 # ============================================================================
-
 
 def ensure_output_directory() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -62,9 +60,8 @@ def ensure_output_directory() -> None:
 
 # ============================================================================
 # Y4M I/O
-# Students edit: no | purpose: read input Y4M and write reconstructed Y4M
+# Students edit: no | purpose: read input Y4M and write reconstructed Y4M.
 # ============================================================================
-
 
 def parse_y4m_header(header_line: str) -> Y4MMetadata:
     parts = header_line.strip().split()
@@ -147,9 +144,8 @@ def write_y4m(path: Path, metadata: Y4MMetadata, frames: list[Frame]) -> None:
 
 # ============================================================================
 # Bitstream I/O
-# Students edit: no | purpose: save and load encoded binary data
+# Students edit: no | purpose: save and load encoded binary data.
 # ============================================================================
-
 
 def write_bitstream(path: Path, bitstream: bytes) -> None:
     path.write_bytes(bitstream)
@@ -161,9 +157,8 @@ def read_bitstream(path: Path) -> bytes:
 
 # ============================================================================
 # Binary helpers
-# Students edit: no | purpose: simplify custom container parsing
+# Students edit: no | purpose: simplify custom container parsing.
 # ============================================================================
-
 
 class ByteReader:
     def __init__(self, data: bytes) -> None:
@@ -171,7 +166,7 @@ class ByteReader:
         self.offset = 0
 
     def read_bytes(self, length: int) -> bytes:
-        chunk = self.data[self.offset : self.offset + length]
+        chunk = self.data[self.offset:self.offset + length]
         if len(chunk) != length:
             raise ValueError("Unexpected end of bitstream")
         self.offset += length
@@ -179,9 +174,6 @@ class ByteReader:
 
     def read_u32(self) -> int:
         return struct.unpack("<I", self.read_bytes(4))[0]
-
-    def read_u8(self) -> int:
-        return self.read_bytes(1)[0]
 
     def read_text(self) -> str:
         return self.read_bytes(self.read_u32()).decode("ascii")
@@ -231,6 +223,10 @@ P_FRAME = 1
 
 RAW_PAYLOAD = 0
 ZERO_MASK_PAYLOAD = 1
+RLE_PAYLOAD = 2
+RLE_HUFFMAN_PAYLOAD = 3
+HUFFMAN_SYMBOL_COUNT = 256
+HUFFMAN_MAX_CODE_LENGTH = 15
 
 
 def append_chunk(buffer: bytearray, payload: bytes) -> None:
@@ -281,16 +277,243 @@ def reconstruct_temporal(residual: np.ndarray, reference: np.ndarray) -> np.ndar
     return reconstructed
 
 
+def encode_rle(values: np.ndarray) -> bytes:
+    """Encode repeated runs and literal blocks with one-byte control values."""
+    source = values.tobytes()
+    encoded = bytearray()
+    index = 0
+
+    while index < len(source):
+        run_length = 1
+        while (
+            index + run_length < len(source)
+            and source[index + run_length] == source[index]
+            and run_length < 130
+        ):
+            run_length += 1
+
+        if run_length >= 3:
+            encoded.extend((0x80 | (run_length - 3), source[index]))
+            index += run_length
+            continue
+
+        literal_start = index
+        index += run_length
+        while index < len(source) and index - literal_start < 128:
+            next_run = 1
+            while (
+                index + next_run < len(source)
+                and source[index + next_run] == source[index]
+                and next_run < 3
+            ):
+                next_run += 1
+            if next_run >= 3:
+                break
+            index += min(next_run, 128 - (index - literal_start))
+
+        literal_length = index - literal_start
+        encoded.append(literal_length - 1)
+        encoded.extend(source[literal_start:index])
+
+    return bytes(encoded)
+
+
+def decode_rle(payload: bytes, sample_count: int) -> np.ndarray:
+    """Decode the custom run/literal representation and validate its size."""
+    reader = ByteReader(payload)
+    decoded = bytearray()
+
+    while reader.offset < len(payload) and len(decoded) < sample_count:
+        control = reader.read_bytes(1)[0]
+        if control < 0x80:
+            decoded.extend(reader.read_bytes(control + 1))
+        else:
+            run_length = (control & 0x7F) + 3
+            decoded.extend(reader.read_bytes(1) * run_length)
+
+        if len(decoded) > sample_count:
+            raise ValueError("RLE payload expands beyond the plane size")
+
+    if len(decoded) != sample_count or reader.offset != len(payload):
+        raise ValueError("RLE payload has the wrong decoded size")
+    return np.frombuffer(decoded, dtype=np.uint8).copy()
+
+
+def build_huffman_code_lengths(data: bytes) -> np.ndarray | None:
+    """Build Huffman code lengths, or reject trees that need long codes."""
+    from heapq import heappop, heappush
+
+    frequencies = np.bincount(
+        np.frombuffer(data, dtype=np.uint8), minlength=HUFFMAN_SYMBOL_COUNT
+    )
+    heap: list[tuple[int, int, int | tuple[object, object]]] = []
+    order = 0
+    for symbol, frequency in enumerate(frequencies):
+        if frequency:
+            heappush(heap, (int(frequency), order, symbol))
+            order += 1
+
+    if not heap:
+        return None
+
+    lengths = np.zeros(HUFFMAN_SYMBOL_COUNT, dtype=np.uint8)
+    if len(heap) == 1:
+        lengths[int(heap[0][2])] = 1
+        return lengths
+
+    while len(heap) > 1:
+        left_frequency, _, left = heappop(heap)
+        right_frequency, _, right = heappop(heap)
+        heappush(
+            heap,
+            (left_frequency + right_frequency, order, (left, right)),
+        )
+        order += 1
+
+    stack: list[tuple[int | tuple[object, object], int]] = [(heap[0][2], 0)]
+    while stack:
+        node, depth = stack.pop()
+        if isinstance(node, int):
+            if depth > HUFFMAN_MAX_CODE_LENGTH:
+                return None
+            lengths[node] = depth
+        else:
+            left, right = node
+            stack.append((right, depth + 1))
+            stack.append((left, depth + 1))
+    return lengths
+
+
+def canonical_huffman_codes(lengths: np.ndarray) -> np.ndarray:
+    """Derive deterministic canonical codes from a 256-entry length table."""
+    codes = np.zeros(HUFFMAN_SYMBOL_COUNT, dtype=np.uint32)
+    entries = sorted(
+        (int(length), symbol) for symbol, length in enumerate(lengths) if length
+    )
+    code = 0
+    previous_length = 0
+    for length, symbol in entries:
+        code <<= length - previous_length
+        if code >= 1 << length:
+            raise ValueError("Invalid Huffman code lengths")
+        codes[symbol] = code
+        code += 1
+        previous_length = length
+    return codes
+
+
+def encode_huffman(data: bytes) -> bytes | None:
+    """Encode bytes with a canonical Huffman table stored in the payload."""
+    lengths = build_huffman_code_lengths(data)
+    if lengths is None:
+        return None
+
+    source = np.frombuffer(data, dtype=np.uint8)
+    codes = canonical_huffman_codes(lengths)
+    source_lengths = lengths[source].astype(np.int64)
+    bit_count = int(source_lengths.sum())
+    starts = np.empty(source.size, dtype=np.int64)
+    if source.size:
+        starts[0] = 0
+        np.cumsum(source_lengths[:-1], out=starts[1:])
+
+    bits = np.zeros(bit_count, dtype=np.uint8)
+    source_codes = codes[source]
+    for bit_index in range(int(lengths.max())):
+        active = source_lengths > bit_index
+        shifts = source_lengths[active] - bit_index - 1
+        bits[starts[active] + bit_index] = (
+            source_codes[active] >> shifts.astype(np.uint32)
+        ) & 1
+
+    output = bytearray()
+    append_u32(output, len(data))
+    output.extend(lengths.tobytes())
+    append_u32(output, bit_count)
+    output.extend(np.packbits(bits, bitorder="big").tobytes())
+    return bytes(output)
+
+
+def decode_huffman(payload: bytes, maximum_output_size: int) -> bytes:
+    """Decode and validate a canonical Huffman payload."""
+    reader = ByteReader(payload)
+    output_size = reader.read_u32()
+    if not 0 < output_size <= maximum_output_size:
+        raise ValueError("Invalid Huffman output size")
+
+    lengths = np.frombuffer(
+        reader.read_bytes(HUFFMAN_SYMBOL_COUNT), dtype=np.uint8
+    ).copy()
+    maximum_length = int(lengths.max())
+    if not 1 <= maximum_length <= HUFFMAN_MAX_CODE_LENGTH:
+        raise ValueError("Invalid Huffman code length")
+    codes = canonical_huffman_codes(lengths)
+
+    bit_count = reader.read_u32()
+    packed = reader.read_bytes((bit_count + 7) // 8)
+    if reader.offset != len(payload):
+        raise ValueError("Trailing data in Huffman payload")
+
+    table_size = 1 << maximum_length
+    symbols = np.full(table_size, -1, dtype=np.int16)
+    code_lengths = np.zeros(table_size, dtype=np.uint8)
+    for symbol, length_value in enumerate(lengths):
+        length = int(length_value)
+        if not length:
+            continue
+        prefix = int(codes[symbol]) << (maximum_length - length)
+        repetitions = 1 << (maximum_length - length)
+        if np.any(code_lengths[prefix : prefix + repetitions]):
+            raise ValueError("Overlapping Huffman codes")
+        symbols[prefix : prefix + repetitions] = symbol
+        code_lengths[prefix : prefix + repetitions] = length
+
+    decoded = bytearray(output_size)
+    bit_buffer = 0
+    buffered_bits = 0
+    consumed_bits = 0
+    packed_index = 0
+    table_mask = table_size - 1
+    for output_index in range(output_size):
+        while buffered_bits < maximum_length and packed_index < len(packed):
+            bit_buffer = (bit_buffer << 8) | packed[packed_index]
+            buffered_bits += 8
+            packed_index += 1
+
+        if buffered_bits >= maximum_length:
+            table_index = (bit_buffer >> (buffered_bits - maximum_length)) & table_mask
+        else:
+            table_index = (bit_buffer << (maximum_length - buffered_bits)) & table_mask
+        code_length = int(code_lengths[table_index])
+        symbol = int(symbols[table_index])
+        if code_length == 0 or symbol < 0 or consumed_bits + code_length > bit_count:
+            raise ValueError("Invalid Huffman bit sequence")
+
+        decoded[output_index] = symbol
+        buffered_bits -= code_length
+        consumed_bits += code_length
+        bit_buffer &= (1 << buffered_bits) - 1
+
+    if consumed_bits != bit_count:
+        raise ValueError("Huffman payload has unused encoded symbols")
+    return bytes(decoded)
+
+
 def encode_plane_payload(values: np.ndarray) -> bytes:
-    """Choose raw bytes or a bitmap followed by only non-zero samples."""
-    # Bitmap is normally smaller for prediction residuals, raw is safer for noise
+    """Choose the smallest available lossless residual representation."""
     nonzero = values != 0
     mask = np.packbits(nonzero, bitorder="little").tobytes()
     sparse_values = values[nonzero].tobytes()
-
-    if len(mask) + len(sparse_values) < values.size:
-        return bytes((ZERO_MASK_PAYLOAD,)) + mask + sparse_values
-    return bytes((RAW_PAYLOAD,)) + values.tobytes()
+    rle = encode_rle(values)
+    candidates = [
+        bytes((RAW_PAYLOAD,)) + values.tobytes(),
+        bytes((ZERO_MASK_PAYLOAD,)) + mask + sparse_values,
+        bytes((RLE_PAYLOAD,)) + rle,
+    ]
+    huffman = encode_huffman(rle)
+    if huffman is not None:
+        candidates.append(bytes((RLE_HUFFMAN_PAYLOAD,)) + huffman)
+    return min(candidates, key=len)
 
 
 def decode_plane_payload(payload: bytes, sample_count: int) -> np.ndarray:
@@ -302,6 +525,14 @@ def decode_plane_payload(payload: bytes, sample_count: int) -> np.ndarray:
         if len(payload) != sample_count + 1:
             raise ValueError("Invalid raw plane payload size")
         return np.frombuffer(payload, dtype=np.uint8, offset=1).copy()
+
+    if payload_type == RLE_PAYLOAD:
+        return decode_rle(payload[1:], sample_count)
+
+    if payload_type == RLE_HUFFMAN_PAYLOAD:
+        maximum_rle_size = sample_count + (sample_count + 127) // 128
+        rle = decode_huffman(payload[1:], maximum_rle_size)
+        return decode_rle(rle, sample_count)
 
     if payload_type != ZERO_MASK_PAYLOAD:
         raise ValueError(f"Unknown plane payload type: {payload_type}")
@@ -402,7 +633,7 @@ def unpack_lossless_bitstream(data: bytes) -> tuple[Y4MMetadata, list[Frame]]:
     previous_planes: tuple[np.ndarray, ...] | None = None
     layout = plane_layout(metadata)
     for frame_index in tqdm(range(frame_count), desc="Lossless decode", unit="frame"):
-        frame_type = reader.read_u8()
+        frame_type = reader.read_bytes(1)[0]
         expected_type = I_FRAME if frame_index % gop_size == 0 else P_FRAME
         if frame_type != expected_type:
             raise ValueError("Unexpected frame type in lossless bitstream")
@@ -488,7 +719,7 @@ def unpack_lossy_bitstream(data: bytes) -> tuple[Y4MMetadata, list[Frame]]:
     layout = plane_layout(metadata)
     steps = (y_step, chroma_step, chroma_step)
     for frame_index in tqdm(range(frame_count), desc="Lossy decode", unit="frame"):
-        frame_type = reader.read_u8()
+        frame_type = reader.read_bytes(1)[0]
         expected_type = I_FRAME if frame_index % gop_size == 0 else P_FRAME
         if frame_type != expected_type:
             raise ValueError("Unexpected frame type in lossy bitstream")
@@ -544,7 +775,7 @@ def decode_lossy(bitstream: bytes) -> tuple[Y4MMetadata, list[Frame]]:
 
 # ============================================================================
 # Pipeline
-# Students edit: no | purpose: run both encode/decode pipelines automatically
+# Students edit: no | purpose: run both encode/decode pipelines automatically.
 # ============================================================================
 
 
@@ -552,9 +783,7 @@ def run_lossless_pipeline(metadata: Y4MMetadata, frames: list[Frame]) -> None:
     bitstream = encode_lossless(metadata, frames)
     write_bitstream(LOSSLESS_BIN_FILE, bitstream)
 
-    decoded_metadata, decoded_frames = decode_lossless(
-        read_bitstream(LOSSLESS_BIN_FILE)
-    )
+    decoded_metadata, decoded_frames = decode_lossless(read_bitstream(LOSSLESS_BIN_FILE))
     write_y4m(LOSSLESS_Y4M_FILE, decoded_metadata, decoded_frames)
 
 
@@ -568,7 +797,7 @@ def run_lossy_pipeline(metadata: Y4MMetadata, frames: list[Frame]) -> None:
 
 # ============================================================================
 # Entry point
-# Students edit: no | purpose: execute the full workflow
+# Students edit: no | purpose: execute the full workflow.
 # ============================================================================
 
 

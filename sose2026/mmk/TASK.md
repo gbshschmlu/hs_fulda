@@ -1,8 +1,8 @@
 # Ausarbeitung Multimedia-Kommunikation
 
 **Modul:** Multimedia-Kommunikation (AI1033)
-**Semester:** Sommersemester 2026
-**Thema:** Entwicklung eines einfachen Video-Encoders und -Decoders
+**Semester:** Sommersemester 2026 
+**Thema:** Entwicklung eines einfachen Video-Encoders und -Decoders  
 **Gruppengröße:** 3 bis 4 Personen
 
 ---
@@ -38,9 +38,9 @@ Ohne zusätzliche Benutzereingabe soll die Pipeline dabei folgende Schritte durc
 3. **Lossless Pipeline:** Kompression der Frames in eine `.bin`-Datei und anschließende Dekompression in eine im VLC Player abspielbare `.y4m`-Datei
 4. **Lossy Pipeline:** Kompression der Frames in eine `.bin`-Datei und anschließende Dekompression in eine im VLC Player abspielbare `.y4m`-Datei
 
-_Hinweis:_ Sobald bei einem Verarbeitungsschritt Informationen verändert werden (z. B. durch Rundungsfehler bei einer Umwandlung wie YCbCr → RGB), ist das Ergebnis nicht mehr vollständig lossless.
+*Hinweis:* Sobald bei einem Verarbeitungsschritt Informationen verändert werden (z. B. durch Rundungsfehler bei einer Umwandlung wie YCbCr → RGB), ist das Ergebnis nicht mehr vollständig lossless.
 
----
+------
 
 ## 3. Fachliche Kernideen
 
@@ -54,7 +54,7 @@ Für eine gelungene Ausarbeitung sollen im Code die beiden folgenden Grundideen 
 Wichtig ist dabei vor allem, dass eure gewählten Verfahren **fachlich sinnvoll**, **nachvollziehbar implementiert** und in der Dokumentation **verständlich erklärt** sind.
 Es geht also nicht darum, möglichst komplexe Verfahren zu bauen, sondern die zugrunde liegenden Konzepte klar und sauber umzusetzen.
 
----
+------
 
 ## 4. Hinweise zur Implementierung
 
@@ -69,7 +69,7 @@ Es geht also nicht darum, möglichst komplexe Verfahren zu bauen, sondern die zu
 - **KI-Nutzung:**
   Der unterstützende Einsatz von KI-Tools ist erlaubt, muss aber in der `DECLARATION.md` **transparent und ehrlich** dokumentiert werden. Diese Offenlegung ist Teil der Prüfungsleistung.
 
----
+------
 
 ## 5. Dokumentation
 
@@ -85,7 +85,7 @@ Bitte ergänzt in der **README.md** die folgenden technischen Abschnitte (in **e
 
 In der **DECLARATION.md** dokumentiert ihr zusätzlich die Beiträge der einzelnen Teammitglieder sowie die Nutzung von KI-Unterstützung.
 
----
+------
 
 ## 6. Abgabe
 
@@ -103,13 +103,13 @@ submission.zip
 └── pyproject.toml
 ```
 
-_Bitte beachtet:_ Die Datei `source.y4m` gehört **nicht** in die Abgabe.
+*Bitte beachtet:* Die Datei `source.y4m` gehört **nicht** in die Abgabe.
 
 Auch **unvollständige, aber lauffähige Lösungen** werden bewertet. Teilpunkte gibt es für korrekt implementierte Teilfunktionen.
 
 Eine **erneute Abgabe ist bis zur angegebenen Deadline jederzeit möglich**.
 
----
+------
 
 ## 7. Bewertung
 
@@ -119,19 +119,15 @@ Eine **erneute Abgabe ist bis zur angegebenen Deadline jederzeit möglich**.
 | **Documentation**         | **1/3**        | Technische Tiefe der README und Korrektheit der DECLARATION |
 
 ### Bewertungshinweis und Leistungsniveaus:
-
 Die Bewertung richtet sich nicht nach der absoluten Effizienz oder visuellen Qualität der Kompression. Maßgeblich sind vielmehr die fachlich sinnvolle, nachvollziehbare und robuste Umsetzung der grundlegenden Kompressionsprinzipien, die Funktionsfähigkeit der Pipeline sowie die Qualität von Code, Dokumentation und Evaluation. Eine einfache, aber sauber umgesetzte und gut erklärte Lösung kann daher ausdrücklich sehr gut bewertet werden.
 
 **Wichtig:** Eine einfache, stabile I-/P-Frame-Lösung ohne Motion Estimation, B-Frames oder sonstige komplexe Prädiktionsverfahren liegt vollständig im Erwartungshorizont. Zusätzliche Komplexität führt nicht automatisch zu einer besseren Bewertung. **Eine einfache, aber sauber umgesetzte Lösung kann mit sehr gut bewertet werden.**
 
 #### Ausreichend bis befriedigend:
-
 Die Lösung ist insgesamt funktionsfähig, weist jedoch kleinere Mängel im Code oder in der Umsetzung auf. Die geforderten Grundideen sind erkennbar umgesetzt, die Dokumentation ist jedoch eher knapp, teilweise ungenau oder nicht durchgehend überzeugend. Insgesamt handelt es sich um eine solide, aber noch nicht vollständig ausgereifte Leistung.
 
 #### Gut:
-
 Die Lösung ist robust und fachlich sinnvoll implementiert. Die gewählten Verfahren sind nachvollziehbar umgesetzt, der Code ist überwiegend sauber strukturiert und die Pipeline funktioniert zuverlässig. Die Dokumentation ist ordentlich und verständlich, auch wenn sie in einzelnen Punkten noch nicht die volle technische Tiefe erreicht. Insgesamt ist dies eine überzeugende und klar über dem Mindestniveau liegende Leistung.
 
 #### Sehr gut:
-
 Die Lösung ist robust, sauber und fachlich überzeugend implementiert. Der Code ist klar strukturiert, nachvollziehbar und zuverlässig ausführbar. Die Dokumentation geht deutlich über das Mindestmaß hinaus, erläutert Architektur und Algorithmen präzise und enthält eine herausragende, einsichtsreiche Evaluation, die die Ergebnisse kritisch reflektiert und fachlich einordnet. Insgesamt handelt es sich um eine besonders gelungene Leistung.

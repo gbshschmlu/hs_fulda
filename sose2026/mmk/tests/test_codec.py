@@ -5,14 +5,19 @@ import unittest
 import numpy as np
 
 from main import (
+    RLE_HUFFMAN_PAYLOAD,
     Frame,
     Y4MMetadata,
+    decode_huffman,
     decode_lossless,
     decode_lossy,
     decode_plane_payload,
+    decode_rle,
+    encode_huffman,
     encode_lossless,
     encode_lossy,
     encode_plane_payload,
+    encode_rle,
 )
 
 
@@ -68,6 +73,45 @@ class CodecTests(unittest.TestCase):
             np.testing.assert_array_equal(
                 decode_plane_payload(payload, values.size), values
             )
+
+    def test_run_length_payload_round_trip(self) -> None:
+        values = np.concatenate(
+            (
+                np.zeros(300, dtype=np.uint8),
+                np.arange(200, dtype=np.uint8),
+                np.full(260, 17, dtype=np.uint8),
+            )
+        )
+        encoded = encode_rle(values)
+        self.assertLess(len(encoded), values.size)
+        np.testing.assert_array_equal(decode_rle(encoded, values.size), values)
+
+    def test_invalid_run_length_payload_is_rejected(self) -> None:
+        with self.assertRaises(ValueError):
+            decode_rle(bytes((0xFF, 7)), 10)
+
+    def test_canonical_huffman_round_trip(self) -> None:
+        source = bytes(range(16)) * 100 + bytes((3,)) * 2_000
+        encoded = encode_huffman(source)
+        self.assertIsNotNone(encoded)
+        assert encoded is not None
+        self.assertLess(len(encoded), len(source))
+        self.assertEqual(decode_huffman(encoded, len(source)), source)
+
+    def test_adaptive_payload_selects_huffman_when_useful(self) -> None:
+        values = np.tile(np.array([0, 0, 0, 1, 1, 1], dtype=np.uint8), 10_000)
+        payload = encode_plane_payload(values)
+        self.assertEqual(payload[0], RLE_HUFFMAN_PAYLOAD)
+        np.testing.assert_array_equal(
+            decode_plane_payload(payload, values.size), values
+        )
+
+    def test_truncated_huffman_payload_is_rejected(self) -> None:
+        encoded = encode_huffman(bytes((1, 2, 3)) * 1_000)
+        self.assertIsNotNone(encoded)
+        assert encoded is not None
+        with self.assertRaises(ValueError):
+            decode_huffman(encoded[:-1], 3_000)
 
     def test_truncated_bitstream_is_rejected(self) -> None:
         bitstream = encode_lossless(self.metadata, self.frames[:1])
