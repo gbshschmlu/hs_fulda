@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "ppt-cli": {
+      "source": "trsdn/mcp-server-ppt",
+      "sourceType": "github",
+      "skillPath": "skills/ppt-cli/SKILL.md",
+      "computedHash": "4c176e2377fb7f56d0342d9b8d4954d748df56776d9ea6b91a1f3c39ab90326a"
+    },
+    "ppt-mcp": {
+      "source": "trsdn/mcp-server-ppt",
+      "sourceType": "github",
+      "skillPath": "skills/ppt-mcp/SKILL.md",
+      "computedHash": "47e0a650867f08a529907813f0372010f54deb794f1e977d2dd680dd49daeb1f"
+    }
+  }
+}
